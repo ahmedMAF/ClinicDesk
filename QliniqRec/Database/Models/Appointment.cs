@@ -16,12 +16,3 @@ public class Appointment
 
     public DateTime CreatedAt { get; set; } = DateTime.Now;
 }
-
-public enum AppointmentStatus : byte
-{
-    Pending,
-    Attended,
-    Cancelled,
-    Missed,
-    Rescheduled
-}

@@ -9,13 +9,13 @@ public partial class WelcomeForm : Form
 
     private void secretBtn_Click(object sender, EventArgs e)
     {
-        SecretaryForm.ShowInstance();
-        Hide();
+        AppContext.ShowForm<SecretaryForm>();
+        AppContext.CloseForm<WelcomeForm>();
     }
 
     private void docBtn_Click(object sender, EventArgs e)
     {
-        DoctorForm.ShowInstance();
-        Hide();
+        AppContext.ShowForm<DoctorForm>();
+        AppContext.CloseForm<WelcomeForm>();
     }
 }

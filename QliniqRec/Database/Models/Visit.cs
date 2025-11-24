@@ -21,9 +21,3 @@ public class Visit
 
     public List<Invoice> Invoices { get; set; } = [];
 }
-
-public enum VisitType : byte
-{
-    FirstVisit,
-    Followup
-}

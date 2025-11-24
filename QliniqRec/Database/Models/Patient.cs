@@ -25,29 +25,3 @@ public class Patient
     [NotMapped]
     public TimeSpan Age => DateTime.Now - DateOfBirth;
 }
-
-public enum Sex : byte
-{
-    Male,
-    Female
-}
-
-public enum MaritalStatus : byte
-{
-    Single,
-    Maried,
-    Divorced,
-    Widowed
-}
-
-public enum BloodType : byte
-{
-    Apos,
-    Aneg,
-    Bpos,
-    Bneg,
-    ABpos,
-    ABneg,
-    Opos,
-    Oneg
-}

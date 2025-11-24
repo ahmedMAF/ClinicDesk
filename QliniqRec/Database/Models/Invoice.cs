@@ -14,10 +14,3 @@ public class Invoice
 
     public List<Payment> Payments { get; set; } = [];
 }
-
-public enum InvoiceStatus : byte
-{
-    Unpaid,
-    PartiallyPaid,
-    Paid
-}

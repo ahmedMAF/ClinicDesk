@@ -2,25 +2,9 @@
 
 public partial class SecretaryForm : Form
 {
-    public static SecretaryForm? Instance { get; private set; }
-
     public SecretaryForm()
     {
         InitializeComponent();
-    }
-
-    public static void ShowInstance()
-    {
-        if (Instance == null || Instance.IsDisposed)
-            Instance = new SecretaryForm();
-
-        Instance.Show();
-    }
-
-    public static void CloseInstance()
-    {
-        Instance?.Close();
-        Instance = null;
     }
 
     private void monthCalendar1_DateSelected(object sender, DateRangeEventArgs e)
@@ -30,11 +14,10 @@ public partial class SecretaryForm : Form
 
     private void newAppBtn_Click(object sender, EventArgs e)
     {
-        NewAppointmentForm.ShowInstance();
+        AppContext.ShowForm<NewAppointmentForm>();
     }
 
     private void billingBtn_Click(object sender, EventArgs e)
     {
-
     }
 }

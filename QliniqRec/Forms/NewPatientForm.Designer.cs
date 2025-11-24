@@ -1,6 +1,6 @@
 ﻿namespace QliniqRec.Forms
 {
-    partial class NewPatient
+    partial class NewPatientForm
     {
         /// <summary>
         /// Required designer variable.
