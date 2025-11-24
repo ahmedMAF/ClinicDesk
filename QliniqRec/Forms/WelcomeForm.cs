@@ -1,4 +1,4 @@
-namespace QliniqRec;
+namespace QliniqRec.Forms;
 
 public partial class WelcomeForm : Form
 {

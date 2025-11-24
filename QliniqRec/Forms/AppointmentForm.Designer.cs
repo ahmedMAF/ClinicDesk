@@ -1,6 +1,6 @@
-﻿namespace QliniqRec
+﻿namespace QliniqRec.Forms
 {
-    partial class PatientProfilesForm
+    partial class AppointmentForm
     {
         /// <summary>
         /// Required designer variable.
@@ -44,15 +44,23 @@
             label2 = new Label();
             textBox1 = new TextBox();
             label1 = new Label();
+            groupBox5 = new GroupBox();
+            label9 = new Label();
+            textBox3 = new TextBox();
+            label8 = new Label();
+            textBox2 = new TextBox();
             groupBox6 = new GroupBox();
             listView1 = new ListView();
             columnHeader1 = new ColumnHeader();
             columnHeader2 = new ColumnHeader();
+            columnHeader3 = new ColumnHeader();
+            columnHeader4 = new ColumnHeader();
             button1 = new Button();
             button2 = new Button();
             groupBox4.SuspendLayout();
             groupBox3.SuspendLayout();
             groupBox1.SuspendLayout();
+            groupBox5.SuspendLayout();
             groupBox6.SuspendLayout();
             SuspendLayout();
             // 
@@ -228,6 +236,56 @@
             label1.TabIndex = 0;
             label1.Text = "Full Name";
             // 
+            // groupBox5
+            // 
+            groupBox5.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            groupBox5.Controls.Add(label9);
+            groupBox5.Controls.Add(textBox3);
+            groupBox5.Controls.Add(label8);
+            groupBox5.Controls.Add(textBox2);
+            groupBox5.Location = new Point(12, 640);
+            groupBox5.Name = "groupBox5";
+            groupBox5.Size = new Size(1068, 334);
+            groupBox5.TabIndex = 26;
+            groupBox5.TabStop = false;
+            groupBox5.Text = "Patient Assessment";
+            // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(6, 174);
+            label9.Name = "label9";
+            label9.Size = new Size(76, 20);
+            label9.TabIndex = 20;
+            label9.Text = "Treatment";
+            // 
+            // textBox3
+            // 
+            textBox3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            textBox3.Location = new Point(132, 171);
+            textBox3.Multiline = true;
+            textBox3.Name = "textBox3";
+            textBox3.Size = new Size(930, 151);
+            textBox3.TabIndex = 21;
+            // 
+            // label8
+            // 
+            label8.AutoSize = true;
+            label8.Location = new Point(6, 29);
+            label8.Name = "label8";
+            label8.Size = new Size(74, 20);
+            label8.TabIndex = 8;
+            label8.Text = "Diagnosis";
+            // 
+            // textBox2
+            // 
+            textBox2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            textBox2.Location = new Point(132, 26);
+            textBox2.Multiline = true;
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(930, 139);
+            textBox2.TabIndex = 19;
+            // 
             // groupBox6
             // 
             groupBox6.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
@@ -241,12 +299,10 @@
             // 
             // listView1
             // 
-            listView1.Activation = ItemActivation.OneClick;
+            listView1.Activation = ItemActivation.TwoClick;
             listView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            listView1.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2 });
+            listView1.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4 });
             listView1.FullRowSelect = true;
-            listView1.HotTracking = true;
-            listView1.HoverSelection = true;
             listView1.Location = new Point(6, 26);
             listView1.MultiSelect = false;
             listView1.Name = "listView1";
@@ -264,9 +320,19 @@
             columnHeader2.Text = "Time";
             columnHeader2.Width = 120;
             // 
+            // columnHeader3
+            // 
+            columnHeader3.Text = "Diagnosis";
+            columnHeader3.Width = 400;
+            // 
+            // columnHeader4
+            // 
+            columnHeader4.Text = "Treatment";
+            columnHeader4.Width = 400;
+            // 
             // button1
             // 
-            button1.Location = new Point(986, 640);
+            button1.Location = new Point(986, 980);
             button1.Name = "button1";
             button1.Size = new Size(94, 29);
             button1.TabIndex = 27;
@@ -275,27 +341,28 @@
             // 
             // button2
             // 
-            button2.Location = new Point(886, 640);
+            button2.Location = new Point(886, 980);
             button2.Name = "button2";
             button2.Size = new Size(94, 29);
             button2.TabIndex = 28;
             button2.Text = "Cancel";
             button2.UseVisualStyleBackColor = true;
             // 
-            // PatientProfilesForm
+            // AppointmentForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1092, 682);
+            ClientSize = new Size(1092, 1023);
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(groupBox6);
+            Controls.Add(groupBox5);
             Controls.Add(groupBox4);
             Controls.Add(groupBox3);
             Controls.Add(groupBox1);
-            Name = "PatientProfilesForm";
+            Name = "AppointmentForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Patient Profile";
+            Text = "Appointment";
             WindowState = FormWindowState.Maximized;
             groupBox4.ResumeLayout(false);
             groupBox4.PerformLayout();
@@ -303,6 +370,8 @@
             groupBox3.PerformLayout();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            groupBox5.ResumeLayout(false);
+            groupBox5.PerformLayout();
             groupBox6.ResumeLayout(false);
             ResumeLayout(false);
         }
@@ -323,10 +392,17 @@
         private Label label2;
         private TextBox textBox1;
         private Label label1;
+        private GroupBox groupBox5;
+        private Label label9;
+        private TextBox textBox3;
+        private Label label8;
+        private TextBox textBox2;
         private GroupBox groupBox6;
         private ListView listView1;
         private ColumnHeader columnHeader1;
         private ColumnHeader columnHeader2;
+        private ColumnHeader columnHeader3;
+        private ColumnHeader columnHeader4;
         private ListBox listBox1;
         private Button button1;
         private Button button2;

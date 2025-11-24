@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-
-namespace QliniqRec;
+﻿namespace QliniqRec.Forms;
 
 public partial class SecretaryForm : Form
 {
@@ -39,5 +31,10 @@ public partial class SecretaryForm : Form
     private void newAppBtn_Click(object sender, EventArgs e)
     {
         NewAppointmentForm.ShowInstance();
+    }
+
+    private void billingBtn_Click(object sender, EventArgs e)
+    {
+
     }
 }

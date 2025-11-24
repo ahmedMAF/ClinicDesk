@@ -1,4 +1,4 @@
-﻿namespace QliniqRec
+﻿namespace QliniqRec.Forms
 {
     partial class SecretaryForm
     {
@@ -34,7 +34,7 @@
             columnHeader2 = new ColumnHeader();
             columnHeader3 = new ColumnHeader();
             monthCalendar1 = new MonthCalendar();
-            button1 = new Button();
+            billingBtn = new Button();
             SuspendLayout();
             // 
             // newAppBtn
@@ -85,22 +85,23 @@
             monthCalendar1.TabIndex = 2;
             monthCalendar1.DateSelected += monthCalendar1_DateSelected;
             // 
-            // button1
+            // billingBtn
             // 
-            button1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            button1.Location = new Point(546, 68);
-            button1.Name = "button1";
-            button1.Size = new Size(168, 44);
-            button1.TabIndex = 3;
-            button1.Text = "Billing";
-            button1.UseVisualStyleBackColor = true;
+            billingBtn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            billingBtn.Location = new Point(546, 68);
+            billingBtn.Name = "billingBtn";
+            billingBtn.Size = new Size(168, 44);
+            billingBtn.TabIndex = 3;
+            billingBtn.Text = "Billing";
+            billingBtn.UseVisualStyleBackColor = true;
+            billingBtn.Click += billingBtn_Click;
             // 
             // SecretaryForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(726, 529);
-            Controls.Add(button1);
+            Controls.Add(billingBtn);
             Controls.Add(monthCalendar1);
             Controls.Add(listView1);
             Controls.Add(newAppBtn);
@@ -119,6 +120,6 @@
         private ColumnHeader columnHeader2;
         private ColumnHeader columnHeader3;
         private MonthCalendar monthCalendar1;
-        private Button button1;
+        private Button billingBtn;
     }
 }

@@ -1,0 +1,53 @@
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace QliniqRec.Database.Models;
+
+public class Patient
+{
+    public int Id { get; set; }
+
+    [Required, MaxLength(256)]
+    public string Name { get; set; } = null!;
+    public Sex Sex { get; set; }
+    public MaritalStatus MaritalStatus { get; set; }
+    public DateTime DateOfBirth { get; set; }
+
+    public string? Phone { get; set; }
+
+    public BloodType BloodType { get; set; }
+    public List<string> ChronicDiseases { get; set; } = [];
+    public string? Notes { get; set; }
+
+    public List<Appointment> Appointments { get; set; } = [];
+    public List<Visit> Visits { get; set; } = [];
+
+    [NotMapped]
+    public TimeSpan Age => DateTime.Now - DateOfBirth;
+}
+
+public enum Sex : byte
+{
+    Male,
+    Female
+}
+
+public enum MaritalStatus : byte
+{
+    Single,
+    Maried,
+    Divorced,
+    Widowed
+}
+
+public enum BloodType : byte
+{
+    Apos,
+    Aneg,
+    Bpos,
+    Bneg,
+    ABpos,
+    ABneg,
+    Opos,
+    Oneg
+}

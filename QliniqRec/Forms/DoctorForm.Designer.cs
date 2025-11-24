@@ -1,4 +1,4 @@
-﻿namespace QliniqRec
+﻿namespace QliniqRec.Forms
 {
     partial class DoctorForm
     {

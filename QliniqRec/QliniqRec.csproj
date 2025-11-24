@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Update="PatientProfilesForm.cs">
+    <Compile Update="Forms\PatientProfilesForm.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
@@ -21,6 +21,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0" />
+    <PackageReference Include="YAXLib" Version="4.3.0" />
   </ItemGroup>
 
 </Project>
