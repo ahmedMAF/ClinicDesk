@@ -147,6 +147,7 @@
             saveBtn.Name = "saveBtn";
             saveBtn.Size = new Size(94, 29);
             saveBtn.TabIndex = 4;
+            saveBtn.Enabled = false;
             saveBtn.Text = "Save";
             saveBtn.UseVisualStyleBackColor = true;
             saveBtn.Click += saveBtn_Click;

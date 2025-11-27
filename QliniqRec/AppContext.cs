@@ -34,6 +34,20 @@ public class AppContext : ApplicationContext
         return form;
     }
     
+    public static DialogResult ShowDialog<T>(Action<T> actionBeforeShow = null, Action<T, DialogResult> actionAfterShow = null) where T : Form, new()
+    {
+        T form = new T();
+        _openForms[typeof(T)] = form;
+
+        form.FormClosed += (s, e) => _openForms.Remove(formType);
+        
+        actionBeforeShow?.Invoke(form);
+        var result = form.ShowDialog();
+        actionAfterShow?.Invoke(form, result);
+        
+        return result;
+    }
+    
     public static void CloseForm<T>() where T : Form, new()
     {
         Type formType = typeof(T);

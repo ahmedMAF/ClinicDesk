@@ -50,12 +50,10 @@
             // 
             // listView1
             // 
-            listView1.Activation = ItemActivation.OneClick;
+            listView1.Activation = ItemActivation.TwoClick;
             listView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             listView1.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3 });
             listView1.FullRowSelect = true;
-            listView1.HotTracking = true;
-            listView1.HoverSelection = true;
             listView1.Location = new Point(18, 237);
             listView1.MultiSelect = false;
             listView1.Name = "listView1";
