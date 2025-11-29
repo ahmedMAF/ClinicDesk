@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             label1 = new Label();
-            textBox1 = new TextBox();
+            nameTxt = new TextBox();
             groupBox1 = new GroupBox();
             searchPhoneBtn = new Button();
             searchNameBtn = new Button();
-            textBox4 = new TextBox();
+            phoneTxt = new TextBox();
             label4 = new Label();
             groupBox2 = new GroupBox();
-            dateTimePicker1 = new DateTimePicker();
+            datePkr = new DateTimePicker();
             label8 = new Label();
             saveBtn = new Button();
             cancelBtn = new Button();
@@ -53,21 +53,21 @@
             label1.TabIndex = 0;
             label1.Text = "Full Name";
             // 
-            // textBox1
+            // nameTxt
             // 
-            textBox1.Location = new Point(120, 26);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(342, 27);
-            textBox1.TabIndex = 1;
+            nameTxt.Location = new Point(120, 26);
+            nameTxt.Name = "nameTxt";
+            nameTxt.Size = new Size(342, 27);
+            nameTxt.TabIndex = 1;
             // 
             // groupBox1
             // 
             groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             groupBox1.Controls.Add(searchPhoneBtn);
             groupBox1.Controls.Add(searchNameBtn);
-            groupBox1.Controls.Add(textBox4);
+            groupBox1.Controls.Add(phoneTxt);
             groupBox1.Controls.Add(label4);
-            groupBox1.Controls.Add(textBox1);
+            groupBox1.Controls.Add(nameTxt);
             groupBox1.Controls.Add(label1);
             groupBox1.Location = new Point(12, 12);
             groupBox1.Name = "groupBox1";
@@ -96,12 +96,12 @@
             searchNameBtn.UseVisualStyleBackColor = true;
             searchNameBtn.Click += searchNameBtn_Click;
             // 
-            // textBox4
+            // phoneTxt
             // 
-            textBox4.Location = new Point(120, 59);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(342, 27);
-            textBox4.TabIndex = 7;
+            phoneTxt.Location = new Point(120, 59);
+            phoneTxt.Name = "phoneTxt";
+            phoneTxt.Size = new Size(342, 27);
+            phoneTxt.TabIndex = 7;
             // 
             // label4
             // 
@@ -115,7 +115,7 @@
             // groupBox2
             // 
             groupBox2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            groupBox2.Controls.Add(dateTimePicker1);
+            groupBox2.Controls.Add(datePkr);
             groupBox2.Controls.Add(label8);
             groupBox2.Location = new Point(12, 143);
             groupBox2.Name = "groupBox2";
@@ -124,12 +124,12 @@
             groupBox2.TabStop = false;
             groupBox2.Text = "Appointment Data";
             // 
-            // dateTimePicker1
+            // datePkr
             // 
-            dateTimePicker1.Location = new Point(53, 26);
-            dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(290, 27);
-            dateTimePicker1.TabIndex = 1;
+            datePkr.Location = new Point(53, 26);
+            datePkr.Name = "datePkr";
+            datePkr.Size = new Size(290, 27);
+            datePkr.TabIndex = 1;
             // 
             // label8
             // 
@@ -143,11 +143,11 @@
             // saveBtn
             // 
             saveBtn.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            saveBtn.Enabled = false;
             saveBtn.Location = new Point(593, 226);
             saveBtn.Name = "saveBtn";
             saveBtn.Size = new Size(94, 29);
             saveBtn.TabIndex = 4;
-            saveBtn.Enabled = false;
             saveBtn.Text = "Save";
             saveBtn.UseVisualStyleBackColor = true;
             saveBtn.Click += saveBtn_Click;
@@ -175,6 +175,7 @@
             Name = "NewAppointmentForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "New Appointment";
+            Load += NewAppointmentForm_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             groupBox2.ResumeLayout(false);
@@ -185,9 +186,9 @@
         #endregion
 
         private Label label1;
-        private TextBox textBox1;
+        private TextBox nameTxt;
         private GroupBox groupBox1;
-        private TextBox textBox4;
+        private TextBox phoneTxt;
         private Label label4;
         private TextBox textBox3;
         private Label label3;
@@ -195,7 +196,7 @@
         private Label label2;
         private GroupBox groupBox2;
         private Label label8;
-        private DateTimePicker dateTimePicker1;
+        private DateTimePicker datePkr;
         private Button saveBtn;
         private Button cancelBtn;
         private Button searchNameBtn;

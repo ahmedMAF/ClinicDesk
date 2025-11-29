@@ -29,19 +29,19 @@
         private void InitializeComponent()
         {
             groupBox1 = new GroupBox();
-            comboBox2 = new ComboBox();
+            maritalCbo = new ComboBox();
             label5 = new Label();
-            comboBox1 = new ComboBox();
+            sexCbo = new ComboBox();
             label3 = new Label();
-            dateTimePicker1 = new DateTimePicker();
+            dobPkr = new DateTimePicker();
             label2 = new Label();
-            textBox1 = new TextBox();
+            nameTxt = new TextBox();
             label1 = new Label();
-            textBox4 = new TextBox();
+            phoneTxt = new TextBox();
             label4 = new Label();
             groupBox2 = new GroupBox();
             groupBox3 = new GroupBox();
-            comboBox3 = new ComboBox();
+            bloodTypeCbo = new ComboBox();
             disOtherTxt = new TextBox();
             disOtherChk = new CheckBox();
             checkBox7 = new CheckBox();
@@ -53,10 +53,10 @@
             checkBox1 = new CheckBox();
             label7 = new Label();
             label6 = new Label();
-            textBox5 = new TextBox();
+            notesTxt = new TextBox();
             groupBox4 = new GroupBox();
-            button1 = new Button();
-            button2 = new Button();
+            saveBtn = new Button();
+            cancelBtn = new Button();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -66,13 +66,13 @@
             // groupBox1
             // 
             groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            groupBox1.Controls.Add(comboBox2);
+            groupBox1.Controls.Add(maritalCbo);
             groupBox1.Controls.Add(label5);
-            groupBox1.Controls.Add(comboBox1);
+            groupBox1.Controls.Add(sexCbo);
             groupBox1.Controls.Add(label3);
-            groupBox1.Controls.Add(dateTimePicker1);
+            groupBox1.Controls.Add(dobPkr);
             groupBox1.Controls.Add(label2);
-            groupBox1.Controls.Add(textBox1);
+            groupBox1.Controls.Add(nameTxt);
             groupBox1.Controls.Add(label1);
             groupBox1.Location = new Point(12, 12);
             groupBox1.Name = "groupBox1";
@@ -81,15 +81,15 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Patient Data";
             // 
-            // comboBox2
+            // maritalCbo
             // 
-            comboBox2.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Items.AddRange(new object[] { "Single", "Maried", "Divorced", "Widowed" });
-            comboBox2.Location = new Point(132, 125);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(330, 28);
-            comboBox2.TabIndex = 13;
+            maritalCbo.DropDownStyle = ComboBoxStyle.DropDownList;
+            maritalCbo.FormattingEnabled = true;
+            maritalCbo.Items.AddRange(new object[] { "Single", "Maried", "Divorced", "Widowed" });
+            maritalCbo.Location = new Point(132, 125);
+            maritalCbo.Name = "maritalCbo";
+            maritalCbo.Size = new Size(330, 28);
+            maritalCbo.TabIndex = 13;
             // 
             // label5
             // 
@@ -100,15 +100,15 @@
             label5.TabIndex = 12;
             label5.Text = "Marital Status";
             // 
-            // comboBox1
+            // sexCbo
             // 
-            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "Male", "Female" });
-            comboBox1.Location = new Point(132, 59);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(330, 28);
-            comboBox1.TabIndex = 11;
+            sexCbo.DropDownStyle = ComboBoxStyle.DropDownList;
+            sexCbo.FormattingEnabled = true;
+            sexCbo.Items.AddRange(new object[] { "Male", "Female" });
+            sexCbo.Location = new Point(132, 59);
+            sexCbo.Name = "sexCbo";
+            sexCbo.Size = new Size(330, 28);
+            sexCbo.TabIndex = 11;
             // 
             // label3
             // 
@@ -119,13 +119,13 @@
             label3.TabIndex = 10;
             label3.Text = "Sex";
             // 
-            // dateTimePicker1
+            // dobPkr
             // 
-            dateTimePicker1.Location = new Point(132, 92);
-            dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(330, 27);
-            dateTimePicker1.TabIndex = 9;
-            dateTimePicker1.Value = new DateTime(2000, 1, 1, 0, 0, 0, 0);
+            dobPkr.Location = new Point(132, 92);
+            dobPkr.Name = "dobPkr";
+            dobPkr.Size = new Size(330, 27);
+            dobPkr.TabIndex = 9;
+            dobPkr.Value = new DateTime(2000, 1, 1, 0, 0, 0, 0);
             // 
             // label2
             // 
@@ -136,12 +136,12 @@
             label2.TabIndex = 8;
             label2.Text = "Date of Birth";
             // 
-            // textBox1
+            // nameTxt
             // 
-            textBox1.Location = new Point(132, 26);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(330, 27);
-            textBox1.TabIndex = 1;
+            nameTxt.Location = new Point(132, 26);
+            nameTxt.Name = "nameTxt";
+            nameTxt.Size = new Size(330, 27);
+            nameTxt.TabIndex = 1;
             // 
             // label1
             // 
@@ -152,12 +152,12 @@
             label1.TabIndex = 0;
             label1.Text = "Full Name";
             // 
-            // textBox4
+            // phoneTxt
             // 
-            textBox4.Location = new Point(132, 26);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(330, 27);
-            textBox4.TabIndex = 7;
+            phoneTxt.Location = new Point(132, 26);
+            phoneTxt.Name = "phoneTxt";
+            phoneTxt.Size = new Size(330, 27);
+            phoneTxt.TabIndex = 7;
             // 
             // label4
             // 
@@ -171,7 +171,7 @@
             // groupBox2
             // 
             groupBox2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            groupBox2.Controls.Add(textBox4);
+            groupBox2.Controls.Add(phoneTxt);
             groupBox2.Controls.Add(label4);
             groupBox2.Location = new Point(12, 188);
             groupBox2.Name = "groupBox2";
@@ -183,7 +183,7 @@
             // groupBox3
             // 
             groupBox3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            groupBox3.Controls.Add(comboBox3);
+            groupBox3.Controls.Add(bloodTypeCbo);
             groupBox3.Controls.Add(disOtherTxt);
             groupBox3.Controls.Add(disOtherChk);
             groupBox3.Controls.Add(checkBox7);
@@ -202,15 +202,15 @@
             groupBox3.TabStop = false;
             groupBox3.Text = "Medical Info";
             // 
-            // comboBox3
+            // bloodTypeCbo
             // 
-            comboBox3.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBox3.FormattingEnabled = true;
-            comboBox3.Items.AddRange(new object[] { "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" });
-            comboBox3.Location = new Point(132, 26);
-            comboBox3.Name = "comboBox3";
-            comboBox3.Size = new Size(330, 28);
-            comboBox3.TabIndex = 14;
+            bloodTypeCbo.DropDownStyle = ComboBoxStyle.DropDownList;
+            bloodTypeCbo.FormattingEnabled = true;
+            bloodTypeCbo.Items.AddRange(new object[] { "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" });
+            bloodTypeCbo.Location = new Point(132, 26);
+            bloodTypeCbo.Name = "bloodTypeCbo";
+            bloodTypeCbo.Size = new Size(330, 28);
+            bloodTypeCbo.TabIndex = 14;
             // 
             // disOtherTxt
             // 
@@ -242,6 +242,7 @@
             checkBox7.TabIndex = 15;
             checkBox7.Text = "Liver Disease";
             checkBox7.UseVisualStyleBackColor = true;
+            checkBox7.CheckedChanged += chronicDiseasesChk_CheckedChanged;
             // 
             // checkBox6
             // 
@@ -252,6 +253,7 @@
             checkBox6.TabIndex = 14;
             checkBox6.Text = "Anemia";
             checkBox6.UseVisualStyleBackColor = true;
+            checkBox6.CheckedChanged += chronicDiseasesChk_CheckedChanged;
             // 
             // checkBox5
             // 
@@ -262,6 +264,7 @@
             checkBox5.TabIndex = 13;
             checkBox5.Text = "Asthma";
             checkBox5.UseVisualStyleBackColor = true;
+            checkBox5.CheckedChanged += chronicDiseasesChk_CheckedChanged;
             // 
             // checkBox4
             // 
@@ -272,6 +275,7 @@
             checkBox4.TabIndex = 12;
             checkBox4.Text = "Heart Disease";
             checkBox4.UseVisualStyleBackColor = true;
+            checkBox4.CheckedChanged += chronicDiseasesChk_CheckedChanged;
             // 
             // checkBox3
             // 
@@ -282,6 +286,7 @@
             checkBox3.TabIndex = 11;
             checkBox3.Text = "Hypertension";
             checkBox3.UseVisualStyleBackColor = true;
+            checkBox3.CheckedChanged += chronicDiseasesChk_CheckedChanged;
             // 
             // checkBox2
             // 
@@ -292,6 +297,7 @@
             checkBox2.TabIndex = 10;
             checkBox2.Text = "Hypotension";
             checkBox2.UseVisualStyleBackColor = true;
+            checkBox2.CheckedChanged += chronicDiseasesChk_CheckedChanged;
             // 
             // checkBox1
             // 
@@ -302,6 +308,7 @@
             checkBox1.TabIndex = 9;
             checkBox1.Text = "Diabetes";
             checkBox1.UseVisualStyleBackColor = true;
+            checkBox1.CheckedChanged += chronicDiseasesChk_CheckedChanged;
             // 
             // label7
             // 
@@ -321,19 +328,19 @@
             label6.TabIndex = 6;
             label6.Text = "Blood Type";
             // 
-            // textBox5
+            // notesTxt
             // 
-            textBox5.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            textBox5.Location = new Point(6, 26);
-            textBox5.Multiline = true;
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(665, 93);
-            textBox5.TabIndex = 18;
+            notesTxt.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            notesTxt.Location = new Point(6, 26);
+            notesTxt.Multiline = true;
+            notesTxt.Name = "notesTxt";
+            notesTxt.Size = new Size(665, 93);
+            notesTxt.TabIndex = 18;
             // 
             // groupBox4
             // 
             groupBox4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            groupBox4.Controls.Add(textBox5);
+            groupBox4.Controls.Add(notesTxt);
             groupBox4.Location = new Point(12, 524);
             groupBox4.Name = "groupBox4";
             groupBox4.Size = new Size(677, 125);
@@ -341,36 +348,38 @@
             groupBox4.TabStop = false;
             groupBox4.Text = "Notes";
             // 
-            // button1
+            // saveBtn
             // 
-            button1.Location = new Point(595, 655);
-            button1.Name = "button1";
-            button1.Size = new Size(94, 29);
-            button1.TabIndex = 20;
-            button1.Text = "Save";
-            button1.UseVisualStyleBackColor = true;
+            saveBtn.Location = new Point(595, 655);
+            saveBtn.Name = "saveBtn";
+            saveBtn.Size = new Size(94, 29);
+            saveBtn.TabIndex = 20;
+            saveBtn.Text = "Save";
+            saveBtn.UseVisualStyleBackColor = true;
+            saveBtn.Click += saveBtn_Click;
             // 
-            // button2
+            // cancelBtn
             // 
-            button2.Location = new Point(495, 655);
-            button2.Name = "button2";
-            button2.Size = new Size(94, 29);
-            button2.TabIndex = 21;
-            button2.Text = "Cancel";
-            button2.UseVisualStyleBackColor = true;
+            cancelBtn.Location = new Point(495, 655);
+            cancelBtn.Name = "cancelBtn";
+            cancelBtn.Size = new Size(94, 29);
+            cancelBtn.TabIndex = 21;
+            cancelBtn.Text = "Cancel";
+            cancelBtn.UseVisualStyleBackColor = true;
+            cancelBtn.Click += cancelBtn_Click;
             // 
-            // NewPatient
+            // NewPatientForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(701, 700);
-            Controls.Add(button2);
-            Controls.Add(button1);
+            Controls.Add(cancelBtn);
+            Controls.Add(saveBtn);
             Controls.Add(groupBox4);
             Controls.Add(groupBox3);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
-            Name = "NewPatient";
+            Name = "NewPatientForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Add New Patient";
             groupBox1.ResumeLayout(false);
@@ -387,16 +396,16 @@
         #endregion
 
         private GroupBox groupBox1;
-        private DateTimePicker dateTimePicker1;
+        private DateTimePicker dobPkr;
         private Label label2;
-        private TextBox textBox4;
+        private TextBox phoneTxt;
         private Label label4;
-        private TextBox textBox1;
+        private TextBox nameTxt;
         private Label label1;
         private Label label3;
-        private ComboBox comboBox2;
+        private ComboBox maritalCbo;
         private Label label5;
-        private ComboBox comboBox1;
+        private ComboBox sexCbo;
         private GroupBox groupBox2;
         private GroupBox groupBox3;
         private Label label6;
@@ -410,10 +419,10 @@
         private TextBox disOtherTxt;
         private CheckBox disOtherChk;
         private CheckBox checkBox7;
-        private TextBox textBox5;
+        private TextBox notesTxt;
         private GroupBox groupBox4;
-        private Button button1;
-        private Button button2;
-        private ComboBox comboBox3;
+        private Button saveBtn;
+        private Button cancelBtn;
+        private ComboBox bloodTypeCbo;
     }
 }

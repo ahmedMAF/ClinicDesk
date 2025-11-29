@@ -28,44 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            ListViewItem listViewItem1 = new ListViewItem(new string[] { "", "1" }, -1);
-            patientsLst = new ListView();
-            columnHeader1 = new ColumnHeader();
-            columnHeader2 = new ColumnHeader();
-            columnHeader3 = new ColumnHeader();
             label1 = new Label();
+            appointmentsGrd = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)appointmentsGrd).BeginInit();
             SuspendLayout();
-            // 
-            // patientsLst
-            // 
-            patientsLst.Activation = ItemActivation.TwoClick;
-            patientsLst.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            patientsLst.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3 });
-            patientsLst.FullRowSelect = true;
-            patientsLst.Items.AddRange(new ListViewItem[] { listViewItem1 });
-            patientsLst.Location = new Point(12, 87);
-            patientsLst.MultiSelect = false;
-            patientsLst.Name = "patientsLst";
-            patientsLst.Size = new Size(700, 445);
-            patientsLst.TabIndex = 2;
-            patientsLst.UseCompatibleStateImageBehavior = false;
-            patientsLst.View = View.Details;
-            patientsLst.MouseClick += patientsLst_MouseClick;
-            patientsLst.MouseDoubleClick += patientsLst_MouseDoubleClick;
-            // 
-            // columnHeader1
-            // 
-            columnHeader1.Text = "ID";
-            // 
-            // columnHeader2
-            // 
-            columnHeader2.Text = "Name";
-            columnHeader2.Width = 480;
-            // 
-            // columnHeader3
-            // 
-            columnHeader3.Text = "Time";
-            columnHeader3.Width = 120;
             // 
             // label1
             // 
@@ -78,26 +44,41 @@
             label1.Text = "Today's Patients";
             label1.TextAlign = ContentAlignment.MiddleCenter;
             // 
+            // appointmentsGrd
+            // 
+            appointmentsGrd.AllowUserToAddRows = false;
+            appointmentsGrd.AllowUserToDeleteRows = false;
+            appointmentsGrd.AllowUserToOrderColumns = true;
+            appointmentsGrd.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            appointmentsGrd.BackgroundColor = Color.White;
+            appointmentsGrd.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            appointmentsGrd.Location = new Point(12, 86);
+            appointmentsGrd.Name = "appointmentsGrd";
+            appointmentsGrd.ReadOnly = true;
+            appointmentsGrd.RowHeadersWidth = 51;
+            appointmentsGrd.Size = new Size(702, 446);
+            appointmentsGrd.TabIndex = 5;
+            appointmentsGrd.CellFormatting += appointmentsGrd_CellFormatting;
+            appointmentsGrd.CellMouseDoubleClick += appointmentsGrd_CellMouseDoubleClick;
+            // 
             // DoctorForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(724, 544);
+            Controls.Add(appointmentsGrd);
             Controls.Add(label1);
-            Controls.Add(patientsLst);
             Name = "DoctorForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Doctor Form";
             WindowState = FormWindowState.Maximized;
+            Load += DoctorForm_Load;
+            ((System.ComponentModel.ISupportInitialize)appointmentsGrd).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
-
-        private ListView patientsLst;
-        private ColumnHeader columnHeader1;
-        private ColumnHeader columnHeader2;
-        private ColumnHeader columnHeader3;
         private Label label1;
+        private DataGridView appointmentsGrd;
     }
 }

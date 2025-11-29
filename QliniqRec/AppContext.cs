@@ -47,12 +47,4 @@ public class AppContext : ApplicationContext
         
         return result;
     }
-    
-    public static void CloseForm<T>() where T : Form, new()
-    {
-        Type formType = typeof(T);
-
-        if (_openForms.TryGetValue(formType, out Form? form) && !form.IsDisposed)
-            form.Close();
-    }
 }

@@ -29,14 +29,10 @@
         private void InitializeComponent()
         {
             newAppBtn = new Button();
-            listView1 = new ListView();
-            columnHeader1 = new ColumnHeader();
-            columnHeader2 = new ColumnHeader();
-            columnHeader3 = new ColumnHeader();
             monthCalendar1 = new MonthCalendar();
             billingBtn = new Button();
-            dataGridView1 = new DataGridView();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            appointmentsGrd = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)appointmentsGrd).BeginInit();
             SuspendLayout();
             // 
             // newAppBtn
@@ -49,34 +45,6 @@
             newAppBtn.Text = "New Appointment";
             newAppBtn.UseVisualStyleBackColor = true;
             newAppBtn.Click += newAppBtn_Click;
-            // 
-            // listView1
-            // 
-            listView1.Activation = ItemActivation.TwoClick;
-            listView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            listView1.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3 });
-            listView1.FullRowSelect = true;
-            listView1.Location = new Point(18, 237);
-            listView1.MultiSelect = false;
-            listView1.Name = "listView1";
-            listView1.Size = new Size(696, 280);
-            listView1.TabIndex = 1;
-            listView1.UseCompatibleStateImageBehavior = false;
-            listView1.View = View.Details;
-            // 
-            // columnHeader1
-            // 
-            columnHeader1.Text = "ID";
-            // 
-            // columnHeader2
-            // 
-            columnHeader2.Text = "Name";
-            columnHeader2.Width = 480;
-            // 
-            // columnHeader3
-            // 
-            columnHeader3.Text = "Time";
-            columnHeader3.Width = 120;
             // 
             // monthCalendar1
             // 
@@ -96,46 +64,45 @@
             billingBtn.UseVisualStyleBackColor = true;
             billingBtn.Click += billingBtn_Click;
             // 
-            // dataGridView1
+            // appointmentsGrd
             // 
-            dataGridView1.AllowUserToAddRows = false;
-            dataGridView1.AllowUserToDeleteRows = false;
-            dataGridView1.AllowUserToOrderColumns = true;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(18, 18);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.ReadOnly = true;
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.Size = new Size(300, 188);
-            dataGridView1.TabIndex = 4;
+            appointmentsGrd.AllowUserToAddRows = false;
+            appointmentsGrd.AllowUserToDeleteRows = false;
+            appointmentsGrd.AllowUserToOrderColumns = true;
+            appointmentsGrd.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            appointmentsGrd.BackgroundColor = Color.White;
+            appointmentsGrd.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            appointmentsGrd.Location = new Point(12, 237);
+            appointmentsGrd.Name = "appointmentsGrd";
+            appointmentsGrd.ReadOnly = true;
+            appointmentsGrd.RowHeadersWidth = 51;
+            appointmentsGrd.Size = new Size(702, 280);
+            appointmentsGrd.TabIndex = 4;
+            appointmentsGrd.CellFormatting += appointmentsGrd_CellFormatting;
             // 
             // SecretaryForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(726, 529);
-            Controls.Add(dataGridView1);
+            Controls.Add(appointmentsGrd);
             Controls.Add(billingBtn);
             Controls.Add(monthCalendar1);
-            Controls.Add(listView1);
             Controls.Add(newAppBtn);
             Name = "SecretaryForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "SecretaryForm";
             WindowState = FormWindowState.Maximized;
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            Load += SecretaryForm_Load;
+            ((System.ComponentModel.ISupportInitialize)appointmentsGrd).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
         private Button newAppBtn;
-        private ListView listView1;
-        private ColumnHeader columnHeader1;
-        private ColumnHeader columnHeader2;
-        private ColumnHeader columnHeader3;
         private MonthCalendar monthCalendar1;
         private Button billingBtn;
-        private DataGridView dataGridView1;
+        private DataGridView appointmentsGrd;
     }
 }

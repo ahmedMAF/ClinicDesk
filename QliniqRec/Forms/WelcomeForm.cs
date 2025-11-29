@@ -10,12 +10,12 @@ public partial class WelcomeForm : Form
     private void secretBtn_Click(object sender, EventArgs e)
     {
         AppContext.ShowForm<SecretaryForm>();
-        AppContext.CloseForm<WelcomeForm>();
+        Close();
     }
 
     private void docBtn_Click(object sender, EventArgs e)
     {
         AppContext.ShowForm<DoctorForm>();
-        AppContext.CloseForm<WelcomeForm>();
+        Close();
     }
 }
