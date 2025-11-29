@@ -35,6 +35,8 @@
             columnHeader3 = new ColumnHeader();
             monthCalendar1 = new MonthCalendar();
             billingBtn = new Button();
+            dataGridView1 = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
             // newAppBtn
@@ -94,11 +96,25 @@
             billingBtn.UseVisualStyleBackColor = true;
             billingBtn.Click += billingBtn_Click;
             // 
+            // dataGridView1
+            // 
+            dataGridView1.AllowUserToAddRows = false;
+            dataGridView1.AllowUserToDeleteRows = false;
+            dataGridView1.AllowUserToOrderColumns = true;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(18, 18);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.ReadOnly = true;
+            dataGridView1.RowHeadersWidth = 51;
+            dataGridView1.Size = new Size(300, 188);
+            dataGridView1.TabIndex = 4;
+            // 
             // SecretaryForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(726, 529);
+            Controls.Add(dataGridView1);
             Controls.Add(billingBtn);
             Controls.Add(monthCalendar1);
             Controls.Add(listView1);
@@ -107,6 +123,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "SecretaryForm";
             WindowState = FormWindowState.Maximized;
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
         }
 
@@ -119,5 +136,6 @@
         private ColumnHeader columnHeader3;
         private MonthCalendar monthCalendar1;
         private Button billingBtn;
+        private DataGridView dataGridView1;
     }
 }

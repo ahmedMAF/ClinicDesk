@@ -1,6 +1,5 @@
 ﻿using YAXLib;
 using YAXLib.Attributes;
-using YAXLib.Enums;
 
 namespace QliniqRec;
 
@@ -26,12 +25,23 @@ public class Settings
     internal static void Initialize()
     {
         YAXSerializer serial = new(typeof(Settings));
-        Instance = (Settings)serial.DeserializeFromFile("settings.xml");
 
-        if (Instance == null)
+        try
         {
-            Instance = new Settings();
-            serial.SerializeToFile(Instance, "settings.xml");
+            Instance = (Settings)serial.DeserializeFromFile("settings.xml")!;
+
+            if (Instance == null)
+                CreateSettings(serial);
         }
+        catch
+        {
+            CreateSettings(serial);
+        }
+    }
+
+    private static void CreateSettings(YAXSerializer serial)
+    {
+        Instance = new Settings();
+        serial.SerializeToFile(Instance, "settings.xml");
     }
 }

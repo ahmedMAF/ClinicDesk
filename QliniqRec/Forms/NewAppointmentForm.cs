@@ -1,4 +1,6 @@
-﻿using QliniqRec.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using QliniqRec.Database;
+using QliniqRec.Database.Models;
 
 namespace QliniqRec.Forms;
 
@@ -15,6 +17,7 @@ public partial class NewAppointmentForm : Form
     {
         AppContext.CloseForm<NewAppointmentForm>();
     }
+
     private void saveBtn_Click(object sender, EventArgs e)
     {
         Appointment appointment = new()
@@ -29,11 +32,11 @@ public partial class NewAppointmentForm : Form
         AppContext.CloseForm<NewAppointmentForm>();
     }
 
-    private void searchNameBtn_Click(object sender, EventArgs e)
+    private async void searchNameBtn_Click(object sender, EventArgs e)
     {
-        List<Patient> patients = ClinicDb.Instance.Patients
+        List<Patient> patients = await ClinicDb.Instance.Patients
             .Where(p => p.Name.Contains(textBox1.Text))
-            .ToList();
+            .ToListAsync();
                 
         if (patients.Count == 1)
         {
@@ -60,11 +63,11 @@ public partial class NewAppointmentForm : Form
         }
     }
 
-    private void searchPhoneBtn_Click(object sender, EventArgs e)
+    private async void searchPhoneBtn_Click(object sender, EventArgs e)
     {
-        List<Patient> patients = ClinicDb.Instance.Patients
-            .Where(p => p.Phone.Contains(textBox2.Text))
-            .ToList();
+        List<Patient> patients = await ClinicDb.Instance.Patients
+            .Where(p => p.Phone != null && p.Phone.Contains(textBox2.Text))
+            .ToListAsync();
                 
         if (patients.Count == 1)
         {

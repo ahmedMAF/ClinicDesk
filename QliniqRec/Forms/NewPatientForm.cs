@@ -1,18 +1,20 @@
-﻿namespace QliniqRec.Forms;
+﻿using QliniqRec.Database.Models;
+
+namespace QliniqRec.Forms;
 
 public partial class NewPatientForm : Form
 {
-    internal Patient Patient { get; private set; }
+    internal Patient Patient { get; private set; } = null!;
     
-    public NewPatient()
+    public NewPatientForm()
     {
         InitializeComponent();
     }
     
     internal void SetData(string name, string phone)
     {
-        textbox1.Text = name;
-        textbox2.Text = phone;
+        textBox1.Text = name;
+        textBox4.Text = phone;
     }
 
     private void disOtherChk_CheckedChanged(object sender, EventArgs e)

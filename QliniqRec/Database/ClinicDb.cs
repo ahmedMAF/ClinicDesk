@@ -5,8 +5,6 @@ namespace QliniqRec.Database;
 
 public class ClinicDb : DbContext
 {
-    private string _conn = null!;
-
     public static ClinicDb Instance { get; private set; } = null!;
 
     public DbSet<Patient> Patients { get; set; }
@@ -15,18 +13,26 @@ public class ClinicDb : DbContext
     public DbSet<Invoice> Invoices { get; set; }
     public DbSet<Payment> Payments { get; set; }
 
-    internal static void Initialize(string conn)
+    internal ClinicDb(DbContextOptions<ClinicDb> options) : base(options)
     {
-        Instance = new ClinicDb
-        {
-            _conn = conn
-        };
+        Database.Migrate();
     }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    internal static void Initialize()
     {
-        if (!optionsBuilder.IsConfigured)
-            optionsBuilder.UseMySql(_conn, ServerVersion.AutoDetect(_conn));
+        Instance = Create();
+    }
+
+    internal static ClinicDb Create()
+    {
+        Settings settings = Settings.Instance;
+
+        string conn = $"Server={settings.Server};Port={settings.Port};Database={settings.Database};User={settings.User};Password={settings.Password};";
+
+        DbContextOptionsBuilder<ClinicDb> optionsBuilder = new();
+        optionsBuilder.UseMySql(conn, ServerVersion.AutoDetect(conn));
+
+        return new ClinicDb(optionsBuilder.Options);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

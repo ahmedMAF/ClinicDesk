@@ -1,5 +1,6 @@
-﻿using QliniqRec;
-using QliniqRec.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using QliniqRec.Database;
+using QliniqRec.Database.Dto;
 
 namespace QliniqRec.Forms;
 
@@ -10,18 +11,20 @@ public partial class SecretaryForm : Form
         InitializeComponent();
     }
 
-    private void monthCalendar1_DateSelected(object sender, DateRangeEventArgs e)
+    private async void monthCalendar1_DateSelected(object sender, DateRangeEventArgs e)
     {
         listView1.Items.Clear();
-        
-        List<Appointment> appointments = ClinicDb.Instance.Appointments
-            .Where(a => a.Date == monthCalendar1.StartValue)
-            .ToList();
-            
-        foreach (Appointment appointment in appointments)
+
+        List<AppointmentDto> appointments = await ClinicDb.Instance.Appointments
+            .AsNoTracking()
+            .Where(a => a.Date == monthCalendar1.SelectionStart)
+            .Select(a => new AppointmentDto { Id = a.Id, Date = a.Date })
+            .ToListAsync();
+
+        dataGridView1.DataSource = new BindingSource()
         {
-            listView1.Items.Add(new ListViewItem([ "", "1" ], -1));
-        }
+            DataSource = appointments
+        };
     }
 
     private void newAppBtn_Click(object sender, EventArgs e)

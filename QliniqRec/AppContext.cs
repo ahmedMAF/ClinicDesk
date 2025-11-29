@@ -1,6 +1,4 @@
-using QliniqRec.Database;
 using QliniqRec.Forms;
-using YAXLib;
 
 namespace QliniqRec;
 
@@ -8,7 +6,7 @@ public class AppContext : ApplicationContext
 {
     private static Dictionary<Type, Form> _openForms = [];
     
-    public MyAppContext()
+    public AppContext()
     {
         ShowForm<WelcomeForm>();
     }
@@ -17,7 +15,7 @@ public class AppContext : ApplicationContext
     {
         Type formType = typeof(T);
 
-        if (_openForms.TryGetValue(formType, out T form) && !form.IsDisposed)
+        if (_openForms.TryGetValue(formType, out Form form) && !form.IsDisposed)
         {
             form.BringToFront();
             form.Focus();
@@ -31,18 +29,20 @@ public class AppContext : ApplicationContext
             form.Show();
         }
         
-        return form;
+        return (T)form;
     }
     
-    public static DialogResult ShowDialog<T>(Action<T> actionBeforeShow = null, Action<T, DialogResult> actionAfterShow = null) where T : Form, new()
+    public static DialogResult ShowDialog<T>(Action<T>? actionBeforeShow = null, Action<T, DialogResult>? actionAfterShow = null) where T : Form, new()
     {
-        T form = new T();
-        _openForms[typeof(T)] = form;
+        Type formType = typeof(T);
+
+        T form = new();
+        _openForms[formType] = form;
 
         form.FormClosed += (s, e) => _openForms.Remove(formType);
         
         actionBeforeShow?.Invoke(form);
-        var result = form.ShowDialog();
+        DialogResult result = form.ShowDialog();
         actionAfterShow?.Invoke(form, result);
         
         return result;
@@ -52,7 +52,7 @@ public class AppContext : ApplicationContext
     {
         Type formType = typeof(T);
 
-        if (_openForms.TryGetValue(formType, out T form) && !form.IsDisposed)
+        if (_openForms.TryGetValue(formType, out Form? form) && !form.IsDisposed)
             form.Close();
     }
 }

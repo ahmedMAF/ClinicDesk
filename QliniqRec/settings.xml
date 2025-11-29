@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Settings>
+  <Database>
+    <Connection Server="127.0.0.1" Port="3306" Database="qliniq_rec_db" />
+    <Credentials User="root" Password="" />
+  </Database>
+</Settings>
