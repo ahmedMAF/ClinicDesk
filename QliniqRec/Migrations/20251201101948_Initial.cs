@@ -47,7 +47,7 @@ namespace QliniqRec.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     PatientId = table.Column<int>(type: "int", nullable: false),
-                    CheckInAt = table.Column<DateTimeOffset>(type: "datetime(6)", nullable: false),
+                    CheckInAt = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     Type = table.Column<byte>(type: "tinyint unsigned", nullable: false),
                     Diagnosis = table.Column<string>(type: "longtext", nullable: false)
                         .Annotation("MySql:CharSet", "utf8mb4"),
@@ -83,12 +83,18 @@ namespace QliniqRec.Migrations
                     Status = table.Column<byte>(type: "tinyint unsigned", nullable: false),
                     Notes = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    OriginalAppointmentId = table.Column<int>(type: "int", nullable: true),
                     VisitId = table.Column<int>(type: "int", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime(6)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Appointments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Appointments_Appointments_OriginalAppointmentId",
+                        column: x => x.OriginalAppointmentId,
+                        principalTable: "Appointments",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Appointments_Patients_PatientId",
                         column: x => x.PatientId,
@@ -151,6 +157,11 @@ namespace QliniqRec.Migrations
                 .Annotation("MySql:CharSet", "utf8mb4");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Appointments_OriginalAppointmentId",
+                table: "Appointments",
+                column: "OriginalAppointmentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Appointments_PatientId",
                 table: "Appointments",
                 column: "PatientId");
@@ -163,7 +174,8 @@ namespace QliniqRec.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Invoices_VisitId",
                 table: "Invoices",
-                column: "VisitId");
+                column: "VisitId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Payments_InvoiceId",

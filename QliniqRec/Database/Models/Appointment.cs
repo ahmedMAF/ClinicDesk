@@ -11,6 +11,10 @@ public class Appointment
     public AppointmentStatus Status { get; set; }
     public string? Notes { get; set; }
 
+    public int? OriginalAppointmentId { get; set; }
+    public Appointment? OriginalAppointment { get; set; }
+    public List<Appointment> FollowUps { get; set; } = [];
+
     public int? VisitId { get; set; }
     public Visit? Visit { get; set; }
 

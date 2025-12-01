@@ -4,7 +4,7 @@ namespace QliniqRec;
 
 public class AppContext : ApplicationContext
 {
-    private static Dictionary<Type, Form> _openForms = [];
+    private static readonly Dictionary<Type, Form> _openForms = [];
     
     public AppContext()
     {
@@ -14,25 +14,27 @@ public class AppContext : ApplicationContext
     public static T ShowForm<T>(Action<T>? actionBeforeShow = null, Action<T>? actionAfterShow = null) where T : Form, new()
     {
         Type formType = typeof(T);
+        T formT = null!;
 
-        if (_openForms.TryGetValue(formType, out Form form) && !form.IsDisposed)
+        if (_openForms.TryGetValue(formType, out Form? form) && !form.IsDisposed)
         {
-            form.BringToFront();
-            form.Focus();
+            formT = (T)form;
+            formT.BringToFront();
+            formT.Focus();
         }
         else
         {
-            form = new T();
-            _openForms[formType] = form;
+            formT = new();
+            _openForms[formType] = formT;
 
-            form.FormClosed += (s, e) => _openForms.Remove(formType);
+            formT.FormClosed += (s, e) => _openForms.Remove(formType);
             
-            actionBeforeShow?.Invoke(form);
-            form.Show();
-            actionAfterShow?.Invoke(form);
+            actionBeforeShow?.Invoke(formT);
+            formT.Show();
+            actionAfterShow?.Invoke(formT);
         }
         
-        return (T)form;
+        return formT;
     }
     
     public static DialogResult ShowDialog<T>(Action<T>? actionBeforeShow = null, Action<T, DialogResult>? actionAfterShow = null) where T : Form, new()

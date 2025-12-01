@@ -1,16 +1,20 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using QliniqRec.Database;
 using QliniqRec.Database.Dto;
+using QliniqRec.Database.Models;
+using System.Windows.Forms;
 
 namespace QliniqRec.Forms;
 
 public partial class SecretaryForm : Form
 {
+    private List<AppointmentDto> _appointments = null!;
+
     public SecretaryForm()
     {
         InitializeComponent();
-        
-        FormClosed += (s, e) => Application.ExitThread();
+
+        FormClosed += (s, e) => Application.Exit();
         Utils.SetupAppointmentsDataGrid(appointmentsGrd);
     }
 
@@ -21,7 +25,7 @@ public partial class SecretaryForm : Form
 
     private async void monthCalendar1_DateSelected(object sender, DateRangeEventArgs e)
     {
-        List<AppointmentDto> appointments = await ClinicDb.Instance.Appointments
+        _appointments = await ClinicDb.Instance.Appointments
             .AsNoTracking()
             .Where(a => a.Date.Date == monthCalendar1.SelectionStart.Date)
             .OrderBy(a => a.Date)
@@ -30,14 +34,14 @@ public partial class SecretaryForm : Form
                 Id = a.Id,
                 Time = a.Date.TimeOfDay,
                 PatientName = a.Patient.Name,
-                Phone = a.Patient.Phone
+                Phone = a.Patient.Phone!
             })
             .ToListAsync();
 
-        for (int i = 0; i < appointments.Count; i++)
-            appointments[i].Serial = i + 1;
+        for (int i = 0; i < _appointments.Count; i++)
+            _appointments[i].Serial = i + 1;
 
-        appointmentsGrd.DataSource = appointments;
+        appointmentsGrd.DataSource = _appointments;
     }
 
     private void newAppBtn_Click(object sender, EventArgs e)
@@ -55,6 +59,18 @@ public partial class SecretaryForm : Form
         {
             e.Value = DateTime.Today.Add(ts).ToString("hh:mm tt");
             e.FormattingApplied = true;
+        }
+    }
+
+    private async void appointmentsGrd_CellClick(object sender, DataGridViewCellEventArgs e)
+    {
+        if (e.RowIndex >= 0 && appointmentsGrd.Columns[e.ColumnIndex] is DataGridViewButtonColumn)
+        {
+            Appointment? appointment = await ClinicDb.Instance.Appointments
+                .Include(a => a.Patient)
+                .FirstOrDefaultAsync(a => a.Id == _appointments[e.RowIndex].Id);
+
+            AppContext.ShowForm<NewAppointmentForm>(form => form.SetData(appointment!));
         }
     }
 }

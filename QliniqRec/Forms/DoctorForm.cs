@@ -7,13 +7,13 @@ namespace QliniqRec.Forms;
 
 public partial class DoctorForm : Form
 {
-    private List<AppointmentDto> _appointments;
+    private List<AppointmentDto> _appointments = null!;
 
     public DoctorForm()
     {
         InitializeComponent();
         
-        FormClosed += (s, e) => Application.ExitThread();
+        FormClosed += (s, e) => Application.Exit();
         Utils.SetupAppointmentsDataGrid(appointmentsGrd);
     }
 
@@ -28,7 +28,7 @@ public partial class DoctorForm : Form
                 Id = a.Id,
                 Time = a.Date.TimeOfDay,
                 PatientName = a.Patient.Name,
-                Phone = a.Patient.Phone
+                Phone = a.Patient.Phone!
             })
             .ToListAsync();
 
@@ -38,6 +38,16 @@ public partial class DoctorForm : Form
         appointmentsGrd.DataSource = _appointments;
     }
 
+    private async void appointmentsGrd_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+    {
+        Appointment? appointment = await ClinicDb.Instance.Appointments
+            .Include(a => a.Patient)
+            .Include(a => a.OriginalAppointment)
+            .FirstOrDefaultAsync(a => a.Id == _appointments[e.RowIndex].Id);
+
+        AppContext.ShowForm<AppointmentForm>(form => form.SetData(appointment!));
+    }
+
     private void appointmentsGrd_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
     {
         if (e.Value is TimeSpan ts)
@@ -45,16 +55,5 @@ public partial class DoctorForm : Form
             e.Value = DateTime.Today.Add(ts).ToString("hh:mm tt");
             e.FormattingApplied = true;
         }
-    }
-
-    private async void appointmentsGrd_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
-    {
-        Appointment? appointment = await ClinicDb.Instance.Appointments
-            .Include(a => a.Patient)
-            .FirstOrDefaultAsync(a => a.Id == _appointments[e.RowIndex].Id);
-
-        PatientProfilesForm form = AppContext.ShowForm<PatientProfilesForm>();
-
-        form.SetData(appointment);
     }
 }

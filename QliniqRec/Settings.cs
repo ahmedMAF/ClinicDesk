@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using MemoryPack;
+﻿using MemoryPack;
 
 namespace QliniqRec;
 
@@ -42,7 +40,7 @@ public partial class Settings
         }
     }
     
-    private static Settings LoadSettings()
+    private static void LoadSettings()
     {
         var bytes = File.ReadAllBytes(SettingsPath);
         Instance = MemoryPackSerializer.Deserialize<Settings>(bytes) ?? new Settings();

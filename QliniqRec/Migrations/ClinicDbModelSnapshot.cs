@@ -39,6 +39,9 @@ namespace QliniqRec.Migrations
                     b.Property<string>("Notes")
                         .HasColumnType("longtext");
 
+                    b.Property<int?>("OriginalAppointmentId")
+                        .HasColumnType("int");
+
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
 
@@ -49,6 +52,8 @@ namespace QliniqRec.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("OriginalAppointmentId");
 
                     b.HasIndex("PatientId");
 
@@ -79,7 +84,8 @@ namespace QliniqRec.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("VisitId");
+                    b.HasIndex("VisitId")
+                        .IsUnique();
 
                     b.ToTable("Invoices");
                 });
@@ -160,7 +166,7 @@ namespace QliniqRec.Migrations
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTimeOffset>("CheckInAt")
+                    b.Property<DateTime>("CheckInAt")
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Diagnosis")
@@ -191,6 +197,10 @@ namespace QliniqRec.Migrations
 
             modelBuilder.Entity("QliniqRec.Database.Models.Appointment", b =>
                 {
+                    b.HasOne("QliniqRec.Database.Models.Appointment", "OriginalAppointment")
+                        .WithMany("FollowUps")
+                        .HasForeignKey("OriginalAppointmentId");
+
                     b.HasOne("QliniqRec.Database.Models.Patient", "Patient")
                         .WithMany("Appointments")
                         .HasForeignKey("PatientId")
@@ -201,6 +211,8 @@ namespace QliniqRec.Migrations
                         .WithMany()
                         .HasForeignKey("VisitId");
 
+                    b.Navigation("OriginalAppointment");
+
                     b.Navigation("Patient");
 
                     b.Navigation("Visit");
@@ -209,8 +221,8 @@ namespace QliniqRec.Migrations
             modelBuilder.Entity("QliniqRec.Database.Models.Invoice", b =>
                 {
                     b.HasOne("QliniqRec.Database.Models.Visit", "Visit")
-                        .WithMany("Invoices")
-                        .HasForeignKey("VisitId")
+                        .WithOne("Invoice")
+                        .HasForeignKey("QliniqRec.Database.Models.Invoice", "VisitId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -245,6 +257,11 @@ namespace QliniqRec.Migrations
                     b.Navigation("Patient");
                 });
 
+            modelBuilder.Entity("QliniqRec.Database.Models.Appointment", b =>
+                {
+                    b.Navigation("FollowUps");
+                });
+
             modelBuilder.Entity("QliniqRec.Database.Models.Invoice", b =>
                 {
                     b.Navigation("Payments");
@@ -261,7 +278,8 @@ namespace QliniqRec.Migrations
                 {
                     b.Navigation("FollowUps");
 
-                    b.Navigation("Invoices");
+                    b.Navigation("Invoice")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

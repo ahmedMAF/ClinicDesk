@@ -34,5 +34,13 @@ internal static class Utils
             DataPropertyName = "Phone",
             HeaderText = "Phone"
         });
+
+        appointmentsGrd.Columns.Add(new DataGridViewButtonColumn
+        {
+            Width = 120,
+            HeaderText = "",
+            Text = "Follow Up",
+            UseColumnTextForButtonValue = true
+        });
     }
 }

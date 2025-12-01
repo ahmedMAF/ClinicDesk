@@ -6,11 +6,23 @@ namespace QliniqRec.Forms;
 
 public partial class NewAppointmentForm : Form
 {
-    private int _patientId;
+    private Patient _patient = null!;
+    private Appointment? _appointment;
 
     public NewAppointmentForm()
     {
         InitializeComponent();
+    }
+
+    internal void SetData(Appointment appointment)
+    {
+        _appointment = appointment;
+        _patient = _appointment.Patient;
+
+        nameTxt.Text = _patient.Name;
+        phoneTxt.Text = _patient.Phone;
+
+        saveBtn.Enabled = true;
     }
 
     private void NewAppointmentForm_Load(object sender, EventArgs e)
@@ -27,7 +39,8 @@ public partial class NewAppointmentForm : Form
     {
         Appointment appointment = new()
         {
-            PatientId = _patientId,
+            PatientId = _patient.Id,
+            OriginalAppointmentId = _appointment?.Id,
             Date = datePkr.Value
         };
 
@@ -46,9 +59,9 @@ public partial class NewAppointmentForm : Form
         if (patients.Count == 1)
         {
             // Patient found.
-            _patientId = patients[0].Id;
-            nameTxt.Text = patients[0].Name;
-            phoneTxt.Text = patients[0].Phone;
+            _patient = patients[0];
+            nameTxt.Text = _patient.Name;
+            phoneTxt.Text = _patient.Phone;
             saveBtn.Enabled = true;
 
             return;
@@ -78,9 +91,9 @@ public partial class NewAppointmentForm : Form
         if (patients.Count == 1)
         {
             // Patient found.
-            _patientId = patients[0].Id;
-            nameTxt.Text = patients[0].Name;
-            phoneTxt.Text = patients[0].Phone;
+            _patient = patients[0];
+            nameTxt.Text = _patient.Name;
+            phoneTxt.Text = _patient.Phone;
             saveBtn.Enabled = true;
 
             return;
@@ -110,11 +123,10 @@ public partial class NewAppointmentForm : Form
         if (result == DialogResult.Cancel)
             return;
 
-        Patient p = form.Patient;
-        _patientId = p.Id;
+        _patient = form.Patient;
 
-        nameTxt.Text = p.Name;
-        phoneTxt.Text = p.Phone;
+        nameTxt.Text = _patient.Name;
+        phoneTxt.Text = _patient.Phone;
         saveBtn.Enabled = true;
     }
 }
