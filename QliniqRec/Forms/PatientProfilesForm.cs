@@ -5,11 +5,17 @@ namespace QliniqRec.Forms;
 
 public partial class PatientProfilesForm : Form
 {
-    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-    internal Appointment Appointment { get; set; } = null!;
+    private Appointment _appointment = null!;
+    private Patient _patient = null!;
 
     public PatientProfilesForm()
     {
         InitializeComponent();
+    }
+    
+    internal void SetData(Appointment appointment)
+    {
+        _appointment = appointment;
+        _patient = _appointment.Patient;
     }
 }

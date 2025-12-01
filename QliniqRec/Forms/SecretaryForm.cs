@@ -9,6 +9,8 @@ public partial class SecretaryForm : Form
     public SecretaryForm()
     {
         InitializeComponent();
+        
+        FormClosed += (s, e) => Application.ExitThread();
         Utils.SetupAppointmentsDataGrid(appointmentsGrd);
     }
 

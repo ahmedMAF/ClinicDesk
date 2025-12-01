@@ -11,7 +11,7 @@ public class AppContext : ApplicationContext
         ShowForm<WelcomeForm>();
     }
     
-    public static T ShowForm<T>() where T : Form, new()
+    public static T ShowForm<T>(Action<T>? actionBeforeShow = null, Action<T>? actionAfterShow = null) where T : Form, new()
     {
         Type formType = typeof(T);
 
@@ -26,7 +26,10 @@ public class AppContext : ApplicationContext
             _openForms[formType] = form;
 
             form.FormClosed += (s, e) => _openForms.Remove(formType);
+            
+            actionBeforeShow?.Invoke(form);
             form.Show();
+            actionAfterShow?.Invoke(form);
         }
         
         return (T)form;

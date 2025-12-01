@@ -12,6 +12,8 @@ public partial class DoctorForm : Form
     public DoctorForm()
     {
         InitializeComponent();
+        
+        FormClosed += (s, e) => Application.ExitThread();
         Utils.SetupAppointmentsDataGrid(appointmentsGrd);
     }
 
@@ -53,6 +55,6 @@ public partial class DoctorForm : Form
 
         PatientProfilesForm form = AppContext.ShowForm<PatientProfilesForm>();
 
-        form.Appointment = appointment;
+        form.SetData(appointment);
     }
 }
