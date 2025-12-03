@@ -44,7 +44,7 @@ public partial class AppointmentForm : Form
         }
     }
 
-    private void saveTxt_Click(object sender, EventArgs e)
+    private void saveBtn_Click(object sender, EventArgs e)
     {
         Visit visit = new()
         {
@@ -62,6 +62,7 @@ public partial class AppointmentForm : Form
         };
 
         _appointment.Visit = visit;
+        _appointment.Status = AppointmentStatus.Attended;
 
         ClinicDb.Instance.Visits.Add(visit);
         ClinicDb.Instance.Invoices.Add(invoice);

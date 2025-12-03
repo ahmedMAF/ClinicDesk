@@ -6,6 +6,7 @@ namespace QliniqRec.Database;
 public class ClinicDb : DbContext
 {
     public static ClinicDb Instance { get; private set; } = null!;
+    public static bool IsRunning { get; private set; }
 
     public DbSet<Patient> Patients { get; set; }
     public DbSet<Appointment> Appointments { get; set; }
@@ -16,6 +17,7 @@ public class ClinicDb : DbContext
     internal ClinicDb(DbContextOptions<ClinicDb> options) : base(options)
     {
         Database.Migrate();
+        IsRunning = true;
     }
 
     internal static void Initialize()

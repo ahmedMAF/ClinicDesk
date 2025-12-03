@@ -8,6 +8,7 @@ namespace QliniqRec.Forms;
 
 public partial class SecretaryForm : Form
 {
+    private readonly Dictionary<string, Action<int>> _columnActions;
     private List<AppointmentDto> _appointments = null!;
 
     public SecretaryForm()
@@ -15,33 +16,25 @@ public partial class SecretaryForm : Form
         InitializeComponent();
 
         FormClosed += (s, e) => Application.Exit();
-        Utils.SetupAppointmentsDataGrid(appointmentsGrd);
+        Utils.SetupAppointmentsDataGrid(appointmentsGrd, true);
+        
+        _columnActions = new Dictionary<string, Action<int>>
+        {
+            ["followupBtn"] = followupBtn_Click,
+            ["rescheduleBtn"] = rescheduleBtn_Click,
+            ["cancelBtn"] = cancelBtn_Click
+        };
     }
 
-    private void SecretaryForm_Load(object sender, EventArgs e)
+    private async void SecretaryForm_Load(object sender, EventArgs e)
     {
         monthCalendar1.SelectionStart = DateTime.Now;
+        _appointments = await Utils.PopulateAppointmentGrid(appointmentsGrd, monthCalendar1.SelectionStart.Date);
     }
 
     private async void monthCalendar1_DateSelected(object sender, DateRangeEventArgs e)
     {
-        _appointments = await ClinicDb.Instance.Appointments
-            .AsNoTracking()
-            .Where(a => a.Date.Date == monthCalendar1.SelectionStart.Date)
-            .OrderBy(a => a.Date)
-            .Select(a => new AppointmentDto
-            {
-                Id = a.Id,
-                Time = a.Date.TimeOfDay,
-                PatientName = a.Patient.Name,
-                Phone = a.Patient.Phone!
-            })
-            .ToListAsync();
-
-        for (int i = 0; i < _appointments.Count; i++)
-            _appointments[i].Serial = i + 1;
-
-        appointmentsGrd.DataSource = _appointments;
+        _appointments = await Utils.PopulateAppointmentGrid(appointmentsGrd, monthCalendar1.SelectionStart.Date);
     }
 
     private void newAppBtn_Click(object sender, EventArgs e)
@@ -52,25 +45,44 @@ public partial class SecretaryForm : Form
     private void billingBtn_Click(object sender, EventArgs e)
     {
     }
-
-    private void appointmentsGrd_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+    
+    private void followupBtn_Click(int rowIndex)
     {
-        if (e.Value is TimeSpan ts)
-        {
-            e.Value = DateTime.Today.Add(ts).ToString("hh:mm tt");
-            e.FormattingApplied = true;
-        }
+        Appointment? appointment = await ClinicDb.Instance.Appointments
+            .Include(a => a.Patient)
+            .FirstOrDefaultAsync(a => a.Id == _appointments[rowIndex].Id);
+
+        AppContext.ShowForm<NewAppointmentForm>(form => form.SetData(appointment!, AppointmentAction.FollowUp));
+    }
+    
+    private void rescheduleBtn_Click(int rowIndex)
+    {
+        Appointment? appointment = await ClinicDb.Instance.Appointments
+            .Include(a => a.Patient)
+            .FirstOrDefaultAsync(a => a.Id == _appointments[rowIndex].Id);
+
+        _appointment.Status = AppointmentStatus.Rescheduled;
+        AppContext.ShowForm<NewAppointmentForm>(form => form.SetData(appointment!, AppointmentAction.Reschedule));
+    }
+    
+    private void cancelBtn_Click(int rowIndex)
+    {
+        Appointment? appointment = await ClinicDb.Instance.Appointments
+            .Include(a => a.Patient)
+            .FirstOrDefaultAsync(a => a.Id == _appointments[rowIndex].Id);
+
+        _appointment.Status = AppointmentStatus.Cancelled;
+        ClinicDb.Instance.SaveChanges();
+        
+        _appointments = await Utils.PopulateAppointmentGrid(appointmentsGrd, monthCalendar1.SelectionStart.Date);
     }
 
     private async void appointmentsGrd_CellClick(object sender, DataGridViewCellEventArgs e)
     {
-        if (e.RowIndex >= 0 && appointmentsGrd.Columns[e.ColumnIndex] is DataGridViewButtonColumn)
-        {
-            Appointment? appointment = await ClinicDb.Instance.Appointments
-                .Include(a => a.Patient)
-                .FirstOrDefaultAsync(a => a.Id == _appointments[e.RowIndex].Id);
-
-            AppContext.ShowForm<NewAppointmentForm>(form => form.SetData(appointment!));
-        }
+        if (e.RowIndex == -1 || e.ColumnIndex == -1 || appointmentsGrd.Columns[e.ColumnIndex] is not DataGridViewButtonColumn)
+            return;
+            
+        string colName = appointmentsGrd.Columns[e.ColumnIndex].Name;
+        _columnActions[colName](e.RowIndex);
     }
 }

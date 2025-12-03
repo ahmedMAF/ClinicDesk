@@ -46,7 +46,7 @@
             columnHeader2 = new ColumnHeader();
             columnHeader3 = new ColumnHeader();
             columnHeader4 = new ColumnHeader();
-            saveTxt = new Button();
+            saveBtn = new Button();
             cancelBtn = new Button();
             groupBox1 = new GroupBox();
             ageTxt = new TextBox();
@@ -235,16 +235,16 @@
             columnHeader4.Text = "Treatment";
             columnHeader4.Width = 400;
             // 
-            // saveTxt
+            // saveBtn
             // 
-            saveTxt.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            saveTxt.Location = new Point(986, 980);
-            saveTxt.Name = "saveTxt";
-            saveTxt.Size = new Size(94, 29);
-            saveTxt.TabIndex = 27;
-            saveTxt.Text = "Save";
-            saveTxt.UseVisualStyleBackColor = true;
-            saveTxt.Click += saveTxt_Click;
+            saveBtn.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            saveBtn.Location = new Point(986, 980);
+            saveBtn.Name = "saveBtn";
+            saveBtn.Size = new Size(94, 29);
+            saveBtn.TabIndex = 27;
+            saveBtn.Text = "Save";
+            saveBtn.UseVisualStyleBackColor = true;
+            saveBtn.Click += saveBtn_Click;
             // 
             // cancelBtn
             // 
@@ -379,7 +379,7 @@
             ClientSize = new Size(1092, 1023);
             Controls.Add(groupBox1);
             Controls.Add(cancelBtn);
-            Controls.Add(saveTxt);
+            Controls.Add(saveBtn);
             Controls.Add(groupBox6);
             Controls.Add(groupBox5);
             Controls.Add(groupBox4);
@@ -420,7 +420,7 @@
         private ColumnHeader columnHeader3;
         private ColumnHeader columnHeader4;
         private ListBox chronicDiseasesLst;
-        private Button saveTxt;
+        private Button saveBtn;
         private Button cancelBtn;
         private GroupBox groupBox1;
         private TextBox ageTxt;
