@@ -49,6 +49,9 @@ public partial class AppointmentForm : Form
             Treatment = v.Treatment,
         }).ToList();
 
+        for (int i = 0; i < visits.Count; i++)
+            visits[i].Serial = i + 1;
+
         visitsGrd.DataSource = visits;
     }
 

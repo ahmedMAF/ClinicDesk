@@ -5,6 +5,7 @@ namespace QliniqRec.Database.Dto;
 internal class VisitDto
 {
     public int Id { get; set; }
+    public int Serial { get; internal set; }
     public DateTime CheckInAt { get; set; }
     public VisitType Type { get; set; }
     public string Diagnosis { get; set; } = null!;
