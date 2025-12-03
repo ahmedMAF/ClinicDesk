@@ -30,10 +30,5 @@ public partial class PatientProfileForm : Form
             chronicDiseasesLst.Items.Add(disease);
 
         notesTxt.Text = _patient.Notes;
-
-        foreach (Visit visit in _patient.Visits)
-        {
-
-        }
     }
 }

@@ -97,7 +97,7 @@ internal static class Utils
         visitsGrd.Columns.Add(new DataGridViewTextBoxColumn
         {
             Width = 200,
-            DataPropertyName = "Date",
+            DataPropertyName = "CheckInAt",
             HeaderText = "Date",
             DefaultCellStyle = { Format = "dd-MM-yyyy hh:mm tt" }
         });

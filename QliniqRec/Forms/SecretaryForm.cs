@@ -52,6 +52,8 @@ public partial class SecretaryForm : Form
         Appointment? appointment = await ClinicDb.Instance.Appointments
             .Include(a => a.Patient)
             .FirstOrDefaultAsync(a => a.Id == _appointments[rowIndex].Id);
+
+        AppContext.ShowForm<PatientProfileForm>(form => form.SetData(appointment!.Patient));
     }
 
     private async void followupBtn_Click(int rowIndex)
