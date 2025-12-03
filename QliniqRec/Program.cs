@@ -1,4 +1,3 @@
-using Portable.Licensing;
 using QliniqRec.Database;
 
 namespace QliniqRec;
@@ -23,7 +22,7 @@ internal static class Program
     [STAThread]
     private static void Main()
     {
-        AppLicense.Validate();
+        //AppLicense.Validate();
         Settings.Initialize();
         
         if (!Settings.Instance.Initialized)
@@ -48,6 +47,9 @@ internal static class Program
         
         // TODO: Run MySQL if server.
         ClinicDb.Initialize();
+
+        if (!ClinicDb.IsRunning)
+            return;
 
         // To customize application configuration such as set high DPI settings or default font,
         // see https://aka.ms/applicationconfiguration.

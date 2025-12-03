@@ -1,5 +1,5 @@
 using Portable.Licensing;
-using QliniqRec.Database;
+using Portable.Licensing.Validation;
 
 namespace QliniqRec;
 
@@ -12,18 +12,19 @@ public static class AppLicense
     internal static void Validate()
     {
         string licenseText = File.ReadAllText("license.lic");
-        
-        var license = License.Load(licenseText);
+
+        License license = License.Load(licenseText);
         
         var validationResult = license.Validate()
-            .Signature(publicKey)
+            .Signature(PublicKey)
+            .And()
             .ExpirationDate()
             .AssertValidLicense();
         
         if (!validationResult.Any())
         {
-            var storedId = license.AdditionalAttributes.Get("HardwareId");
-            var actualId = Utils.GetHardwareId().GetHashCode();
+            int storedId = int.Parse(license.AdditionalAttributes.Get("HardwareId"));
+            int actualId = Utils.GetHardwareId().GetHashCode();
             
             if (storedId != actualId)
             {

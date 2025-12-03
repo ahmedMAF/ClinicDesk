@@ -30,9 +30,25 @@ public class ClinicDb : DbContext
         Settings settings = Settings.Instance;
 
         string conn = $"Server={settings.Server};Port={settings.Port};Database={settings.Database};User={settings.User};Password={settings.Password};";
-
         DbContextOptionsBuilder<ClinicDb> optionsBuilder = new();
-        optionsBuilder.UseMySql(conn, ServerVersion.AutoDetect(conn));
+
+        DialogResult result = default;
+
+        do
+        {
+            try
+            {
+                optionsBuilder.UseMySql(conn, ServerVersion.AutoDetect(conn));
+            }
+            catch (Exception ex)
+            {
+                result = MessageBox.Show($"Can't connect to MySQL. Is it running?{Environment.NewLine}Error: {ex.Message}", "Database Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+
+                if (result == DialogResult.Cancel)
+                    return null!;
+            }
+        }
+        while (result == DialogResult.Retry);
 
         return new ClinicDb(optionsBuilder.Options);
     }

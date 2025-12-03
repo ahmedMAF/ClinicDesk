@@ -59,6 +59,7 @@
             nameTxt.Name = "nameTxt";
             nameTxt.Size = new Size(342, 27);
             nameTxt.TabIndex = 1;
+            nameTxt.KeyPress += nameTxt_KeyPress;
             // 
             // groupBox1
             // 
@@ -102,6 +103,7 @@
             phoneTxt.Name = "phoneTxt";
             phoneTxt.Size = new Size(342, 27);
             phoneTxt.TabIndex = 7;
+            phoneTxt.KeyPress += phoneTxt_KeyPress;
             // 
             // label4
             // 

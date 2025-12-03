@@ -20,6 +20,7 @@ public partial class SecretaryForm : Form
         
         _columnActions = new Dictionary<string, Action<int>>
         {
+            ["profileBtn"] = profileBtn_Click,
             ["followupBtn"] = followupBtn_Click,
             ["rescheduleBtn"] = rescheduleBtn_Click,
             ["cancelBtn"] = cancelBtn_Click
@@ -45,8 +46,15 @@ public partial class SecretaryForm : Form
     private void billingBtn_Click(object sender, EventArgs e)
     {
     }
-    
-    private void followupBtn_Click(int rowIndex)
+
+    private async void profileBtn_Click(int rowIndex)
+    {
+        Appointment? appointment = await ClinicDb.Instance.Appointments
+            .Include(a => a.Patient)
+            .FirstOrDefaultAsync(a => a.Id == _appointments[rowIndex].Id);
+    }
+
+    private async void followupBtn_Click(int rowIndex)
     {
         Appointment? appointment = await ClinicDb.Instance.Appointments
             .Include(a => a.Patient)
@@ -55,23 +63,23 @@ public partial class SecretaryForm : Form
         AppContext.ShowForm<NewAppointmentForm>(form => form.SetData(appointment!, AppointmentAction.FollowUp));
     }
     
-    private void rescheduleBtn_Click(int rowIndex)
+    private async void rescheduleBtn_Click(int rowIndex)
     {
         Appointment? appointment = await ClinicDb.Instance.Appointments
             .Include(a => a.Patient)
             .FirstOrDefaultAsync(a => a.Id == _appointments[rowIndex].Id);
 
-        _appointment.Status = AppointmentStatus.Rescheduled;
+        appointment.Status = AppointmentStatus.Rescheduled;
         AppContext.ShowForm<NewAppointmentForm>(form => form.SetData(appointment!, AppointmentAction.Reschedule));
     }
     
-    private void cancelBtn_Click(int rowIndex)
+    private async void cancelBtn_Click(int rowIndex)
     {
         Appointment? appointment = await ClinicDb.Instance.Appointments
             .Include(a => a.Patient)
             .FirstOrDefaultAsync(a => a.Id == _appointments[rowIndex].Id);
 
-        _appointment.Status = AppointmentStatus.Cancelled;
+        appointment.Status = AppointmentStatus.Cancelled;
         ClinicDb.Instance.SaveChanges();
         
         _appointments = await Utils.PopulateAppointmentGrid(appointmentsGrd, monthCalendar1.SelectionStart.Date);
@@ -85,4 +93,11 @@ public partial class SecretaryForm : Form
         string colName = appointmentsGrd.Columns[e.ColumnIndex].Name;
         _columnActions[colName](e.RowIndex);
     }
+}
+
+public enum AppointmentAction
+{
+    New,
+    FollowUp,
+    Reschedule
 }

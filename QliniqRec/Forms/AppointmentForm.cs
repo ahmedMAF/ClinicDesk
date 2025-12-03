@@ -1,4 +1,5 @@
 ﻿using QliniqRec.Database;
+using QliniqRec.Database.Dto;
 using QliniqRec.Database.Models;
 
 namespace QliniqRec.Forms;
@@ -12,12 +13,13 @@ public partial class AppointmentForm : Form
     public AppointmentForm()
     {
         InitializeComponent();
+        Utils.SetupVisitsDataGrid(visitsGrd);
     }
 
-    internal void SetData(Appointment appointment)
+    internal void SetData(Appointment appointment, Patient patient)
     {
         _appointment = appointment;
-        _patient = _appointment.Patient;
+        _patient = patient;
 
         if (appointment.OriginalAppointment != null)
             _originalVisit = appointment.OriginalAppointment.Visit;
@@ -38,10 +40,16 @@ public partial class AppointmentForm : Form
 
         notesTxt.Text = _patient.Notes;
 
-        foreach (Visit visit in _patient.Visits)
+        List<VisitDto> visits = _patient.Visits.Select(v => new VisitDto
         {
+            Id = v.Id,
+            CheckInAt = v.CheckInAt,
+            Type = v.Type,
+            Diagnosis = v.Diagnosis,
+            Treatment = v.Treatment,
+        }).ToList();
 
-        }
+        visitsGrd.DataSource = visits;
     }
 
     private void saveBtn_Click(object sender, EventArgs e)
@@ -58,7 +66,7 @@ public partial class AppointmentForm : Form
         Invoice invoice = new()
         {
             Visit = visit,
-            TotalAmount = 0
+            TotalAmount = billTxt.Text == "" ? 0 : decimal.Parse(billTxt.Text)
         };
 
         _appointment.Visit = visit;
@@ -67,5 +75,17 @@ public partial class AppointmentForm : Form
         ClinicDb.Instance.Visits.Add(visit);
         ClinicDb.Instance.Invoices.Add(invoice);
         ClinicDb.Instance.SaveChanges();
+
+        Close();
+    }
+
+    private void billTxt_KeyPress(object sender, KeyPressEventArgs e)
+    {
+        if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+            e.Handled = true;
+
+        // Allow only ONE decimal point
+        if (e.KeyChar == '.' && ((TextBox)sender).Text.Contains('.'))
+            e.Handled = true;
     }
 }

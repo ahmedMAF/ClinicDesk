@@ -1,0 +1,12 @@
+﻿using QliniqRec.Database.Models;
+
+namespace QliniqRec.Database.Dto;
+
+internal class VisitDto
+{
+    public int Id { get; set; }
+    public DateTime CheckInAt { get; set; }
+    public VisitType Type { get; set; }
+    public string Diagnosis { get; set; } = null!;
+    public string Treatment { get; set; } = null!;
+}

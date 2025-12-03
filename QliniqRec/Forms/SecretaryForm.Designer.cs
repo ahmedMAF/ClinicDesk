@@ -79,7 +79,6 @@
             appointmentsGrd.Size = new Size(702, 280);
             appointmentsGrd.TabIndex = 4;
             appointmentsGrd.CellClick += appointmentsGrd_CellClick;
-            appointmentsGrd.CellFormatting += appointmentsGrd_CellFormatting;
             // 
             // SecretaryForm
             // 

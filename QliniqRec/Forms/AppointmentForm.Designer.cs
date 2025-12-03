@@ -41,11 +41,6 @@
             label8 = new Label();
             diagnosisTxt = new TextBox();
             groupBox6 = new GroupBox();
-            listView1 = new ListView();
-            columnHeader1 = new ColumnHeader();
-            columnHeader2 = new ColumnHeader();
-            columnHeader3 = new ColumnHeader();
-            columnHeader4 = new ColumnHeader();
             saveBtn = new Button();
             cancelBtn = new Button();
             groupBox1 = new GroupBox();
@@ -59,11 +54,15 @@
             label2 = new Label();
             nameTxt = new TextBox();
             label1 = new Label();
+            billTxt = new TextBox();
+            label10 = new Label();
+            visitsGrd = new DataGridView();
             groupBox4.SuspendLayout();
             groupBox3.SuspendLayout();
             groupBox5.SuspendLayout();
             groupBox6.SuspendLayout();
             groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)visitsGrd).BeginInit();
             SuspendLayout();
             // 
             // groupBox4
@@ -148,7 +147,7 @@
             groupBox5.Controls.Add(treatmentTxt);
             groupBox5.Controls.Add(label8);
             groupBox5.Controls.Add(diagnosisTxt);
-            groupBox5.Location = new Point(12, 640);
+            groupBox5.Location = new Point(12, 606);
             groupBox5.Name = "groupBox5";
             groupBox5.Size = new Size(1068, 334);
             groupBox5.TabIndex = 26;
@@ -194,51 +193,18 @@
             // groupBox6
             // 
             groupBox6.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            groupBox6.Controls.Add(listView1);
+            groupBox6.Controls.Add(visitsGrd);
             groupBox6.Location = new Point(12, 319);
             groupBox6.Name = "groupBox6";
-            groupBox6.Size = new Size(1068, 315);
+            groupBox6.Size = new Size(1068, 281);
             groupBox6.TabIndex = 22;
             groupBox6.TabStop = false;
             groupBox6.Text = "Past Visits";
             // 
-            // listView1
-            // 
-            listView1.Activation = ItemActivation.TwoClick;
-            listView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            listView1.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2, columnHeader3, columnHeader4 });
-            listView1.FullRowSelect = true;
-            listView1.Location = new Point(6, 26);
-            listView1.MultiSelect = false;
-            listView1.Name = "listView1";
-            listView1.Size = new Size(1056, 283);
-            listView1.TabIndex = 3;
-            listView1.UseCompatibleStateImageBehavior = false;
-            listView1.View = View.Details;
-            // 
-            // columnHeader1
-            // 
-            columnHeader1.Text = "ID";
-            // 
-            // columnHeader2
-            // 
-            columnHeader2.Text = "Time";
-            columnHeader2.Width = 120;
-            // 
-            // columnHeader3
-            // 
-            columnHeader3.Text = "Diagnosis";
-            columnHeader3.Width = 400;
-            // 
-            // columnHeader4
-            // 
-            columnHeader4.Text = "Treatment";
-            columnHeader4.Width = 400;
-            // 
             // saveBtn
             // 
             saveBtn.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            saveBtn.Location = new Point(986, 980);
+            saveBtn.Location = new Point(986, 970);
             saveBtn.Name = "saveBtn";
             saveBtn.Size = new Size(94, 29);
             saveBtn.TabIndex = 27;
@@ -249,7 +215,7 @@
             // cancelBtn
             // 
             cancelBtn.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            cancelBtn.Location = new Point(886, 980);
+            cancelBtn.Location = new Point(886, 970);
             cancelBtn.Name = "cancelBtn";
             cancelBtn.Size = new Size(94, 29);
             cancelBtn.TabIndex = 28;
@@ -372,11 +338,47 @@
             label1.TabIndex = 0;
             label1.Text = "Full Name";
             // 
+            // billTxt
+            // 
+            billTxt.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            billTxt.Location = new Point(144, 946);
+            billTxt.Name = "billTxt";
+            billTxt.Size = new Size(225, 27);
+            billTxt.TabIndex = 31;
+            billTxt.Text = "0";
+            billTxt.KeyPress += billTxt_KeyPress;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Location = new Point(18, 949);
+            label10.Name = "label10";
+            label10.Size = new Size(30, 20);
+            label10.TabIndex = 30;
+            label10.Text = "Bill";
+            // 
+            // visitsGrd
+            // 
+            visitsGrd.AllowUserToAddRows = false;
+            visitsGrd.AllowUserToDeleteRows = false;
+            visitsGrd.AllowUserToOrderColumns = true;
+            visitsGrd.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            visitsGrd.BackgroundColor = Color.White;
+            visitsGrd.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            visitsGrd.Location = new Point(12, 26);
+            visitsGrd.Name = "visitsGrd";
+            visitsGrd.ReadOnly = true;
+            visitsGrd.RowHeadersWidth = 51;
+            visitsGrd.Size = new Size(1050, 249);
+            visitsGrd.TabIndex = 6;
+            // 
             // AppointmentForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1092, 1023);
+            ClientSize = new Size(1092, 1013);
+            Controls.Add(billTxt);
+            Controls.Add(label10);
             Controls.Add(groupBox1);
             Controls.Add(cancelBtn);
             Controls.Add(saveBtn);
@@ -398,7 +400,9 @@
             groupBox6.ResumeLayout(false);
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)visitsGrd).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -414,11 +418,6 @@
         private Label label8;
         private TextBox diagnosisTxt;
         private GroupBox groupBox6;
-        private ListView listView1;
-        private ColumnHeader columnHeader1;
-        private ColumnHeader columnHeader2;
-        private ColumnHeader columnHeader3;
-        private ColumnHeader columnHeader4;
         private ListBox chronicDiseasesLst;
         private Button saveBtn;
         private Button cancelBtn;
@@ -433,5 +432,8 @@
         private Label label2;
         private TextBox nameTxt;
         private Label label1;
+        private TextBox billTxt;
+        private Label label10;
+        private DataGridView visitsGrd;
     }
 }

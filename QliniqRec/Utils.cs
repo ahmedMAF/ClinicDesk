@@ -42,9 +42,18 @@ internal static class Utils
             HeaderText = "Phone"
         });
 
+        appointmentsGrd.Columns.Add(new DataGridViewButtonColumn
+        {
+            Name = "profileBtn",
+            Width = 180,
+            HeaderText = "",
+            Text = "View Profile",
+            UseColumnTextForButtonValue = true
+        });
+
         if (!addButtonColumns)
             return;
-            
+
         appointmentsGrd.Columns.Add(new DataGridViewButtonColumn
         {
             Name = "followupBtn",
@@ -72,12 +81,56 @@ internal static class Utils
             UseColumnTextForButtonValue = true
         });
     }
-    
+
+    public static void SetupVisitsDataGrid(DataGridView visitsGrd)
+    {
+        visitsGrd.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(240, 240, 240);
+        visitsGrd.AutoGenerateColumns = false;
+
+        visitsGrd.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Width = 50,
+            DataPropertyName = "Serial",
+            HeaderText = "No."
+        });
+
+        visitsGrd.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Width = 200,
+            DataPropertyName = "Date",
+            HeaderText = "Date",
+            DefaultCellStyle = { Format = "dd-MM-yyyy hh:mm tt" }
+        });
+
+        visitsGrd.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Width = 300,
+            DataPropertyName = "Diagnosis",
+            HeaderText = "Diagnosis"
+        });
+
+        visitsGrd.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Width = 300,
+            DataPropertyName = "Treatment",
+            HeaderText = "Treatment"
+        });
+
+        visitsGrd.Columns.Add(new DataGridViewButtonColumn
+        {
+            Name = "showBtn",
+            Width = 120,
+            HeaderText = "",
+            Text = "Show More",
+            UseColumnTextForButtonValue = true
+        });
+    }
+
     public static async Task<List<AppointmentDto>> PopulateAppointmentGrid(DataGridView appointmentsGrd, DateTime date)
     {
         List<AppointmentDto> appointments = await ClinicDb.Instance.Appointments
             .AsNoTracking()
-            .Where(a => a.Date.Date == date)
+            .Where(a => a.Date.Date == date && a.Status == AppointmentStatus.Pending)
             .OrderBy(a => a.Date)
             .Select(a => new AppointmentDto
             {
@@ -88,7 +141,7 @@ internal static class Utils
             })
             .ToListAsync();
 
-        for (int i = 0; i < _appointments.Count; i++)
+        for (int i = 0; i < appointments.Count; i++)
             appointments[i].Serial = i + 1;
 
         appointmentsGrd.DataSource = appointments;
@@ -101,6 +154,7 @@ internal static class Utils
         string cpu = GetWMI("Win32_Processor", "ProcessorId");
         string disk = GetWMI("Win32_DiskDrive", "SerialNumber");
         string board = GetWMI("Win32_BaseBoard", "SerialNumber");
+
         return $"{cpu}-{disk}-{board}";
     }
     
@@ -108,7 +162,7 @@ internal static class Utils
     {
         using ManagementObjectSearcher searcher = new($"SELECT {wmiProperty} FROM {wmiClass}");
         
-        foreach (var obj in searcher.Get())
+        foreach (ManagementBaseObject? obj in searcher.Get())
             return obj[wmiProperty]?.ToString() ?? "";
             
         return "";
