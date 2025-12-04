@@ -72,7 +72,7 @@
             groupBox1.Controls.Add(label1);
             groupBox1.Location = new Point(12, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(675, 125);
+            groupBox1.Size = new Size(622, 100);
             groupBox1.TabIndex = 2;
             groupBox1.TabStop = false;
             groupBox1.Text = "Patient Data";
@@ -116,12 +116,12 @@
             // 
             // groupBox2
             // 
-            groupBox2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            groupBox2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             groupBox2.Controls.Add(datePkr);
             groupBox2.Controls.Add(label8);
-            groupBox2.Location = new Point(12, 143);
+            groupBox2.Location = new Point(12, 118);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(675, 77);
+            groupBox2.Size = new Size(622, 77);
             groupBox2.TabIndex = 3;
             groupBox2.TabStop = false;
             groupBox2.Text = "Appointment Data";
@@ -146,7 +146,7 @@
             // 
             saveBtn.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             saveBtn.Enabled = false;
-            saveBtn.Location = new Point(593, 226);
+            saveBtn.Location = new Point(540, 209);
             saveBtn.Name = "saveBtn";
             saveBtn.Size = new Size(94, 29);
             saveBtn.TabIndex = 4;
@@ -157,7 +157,7 @@
             // cancelBtn
             // 
             cancelBtn.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            cancelBtn.Location = new Point(493, 226);
+            cancelBtn.Location = new Point(440, 209);
             cancelBtn.Name = "cancelBtn";
             cancelBtn.Size = new Size(94, 29);
             cancelBtn.TabIndex = 5;
@@ -169,12 +169,16 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(700, 268);
+            ClientSize = new Size(647, 251);
             Controls.Add(cancelBtn);
             Controls.Add(saveBtn);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "NewAppointmentForm";
+            ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "New Appointment";
             Load += NewAppointmentForm_Load;

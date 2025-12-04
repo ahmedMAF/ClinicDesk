@@ -41,6 +41,7 @@
             label8 = new Label();
             diagnosisTxt = new TextBox();
             groupBox6 = new GroupBox();
+            visitsGrd = new DataGridView();
             saveBtn = new Button();
             cancelBtn = new Button();
             groupBox1 = new GroupBox();
@@ -56,13 +57,12 @@
             label1 = new Label();
             billTxt = new TextBox();
             label10 = new Label();
-            visitsGrd = new DataGridView();
             groupBox4.SuspendLayout();
             groupBox3.SuspendLayout();
             groupBox5.SuspendLayout();
             groupBox6.SuspendLayout();
-            groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)visitsGrd).BeginInit();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // groupBox4
@@ -200,6 +200,21 @@
             groupBox6.TabIndex = 22;
             groupBox6.TabStop = false;
             groupBox6.Text = "Past Visits";
+            // 
+            // visitsGrd
+            // 
+            visitsGrd.AllowUserToAddRows = false;
+            visitsGrd.AllowUserToDeleteRows = false;
+            visitsGrd.AllowUserToOrderColumns = true;
+            visitsGrd.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            visitsGrd.BackgroundColor = Color.White;
+            visitsGrd.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            visitsGrd.Location = new Point(12, 26);
+            visitsGrd.Name = "visitsGrd";
+            visitsGrd.ReadOnly = true;
+            visitsGrd.RowHeadersWidth = 51;
+            visitsGrd.Size = new Size(1050, 249);
+            visitsGrd.TabIndex = 6;
             // 
             // saveBtn
             // 
@@ -357,21 +372,6 @@
             label10.TabIndex = 30;
             label10.Text = "Bill";
             // 
-            // visitsGrd
-            // 
-            visitsGrd.AllowUserToAddRows = false;
-            visitsGrd.AllowUserToDeleteRows = false;
-            visitsGrd.AllowUserToOrderColumns = true;
-            visitsGrd.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            visitsGrd.BackgroundColor = Color.White;
-            visitsGrd.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            visitsGrd.Location = new Point(12, 26);
-            visitsGrd.Name = "visitsGrd";
-            visitsGrd.ReadOnly = true;
-            visitsGrd.RowHeadersWidth = 51;
-            visitsGrd.Size = new Size(1050, 249);
-            visitsGrd.TabIndex = 6;
-            // 
             // AppointmentForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -398,9 +398,9 @@
             groupBox5.ResumeLayout(false);
             groupBox5.PerformLayout();
             groupBox6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)visitsGrd).EndInit();
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)visitsGrd).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }

@@ -7,4 +7,5 @@ internal class AppointmentDto
     public string PatientName { get; set; } = "";
     public DateTime Time { get; set; }
     public string Phone { get; set; } = "";
+    public int PatientId { get; internal set; }
 }

@@ -55,7 +55,7 @@ public partial class AppointmentForm : Form
         visitsGrd.DataSource = visits;
     }
 
-    private void saveBtn_Click(object sender, EventArgs e)
+    private async void saveBtn_Click(object sender, EventArgs e)
     {
         Visit visit = new()
         {
@@ -66,18 +66,22 @@ public partial class AppointmentForm : Form
             Treatment = treatmentTxt.Text
         };
 
-        Invoice invoice = new()
+        ClinicDb.Instance.Visits.Add(visit);
+
+        if (decimal.TryParse(billTxt.Text, out decimal bill) && bill > 0)
         {
-            Visit = visit,
-            TotalAmount = billTxt.Text == "" ? 0 : decimal.Parse(billTxt.Text)
-        };
+            Invoice invoice = new()
+            {
+                Visit = visit,
+                TotalAmount = bill
+            };
+
+            ClinicDb.Instance.Invoices.Add(invoice);
+        }
 
         _appointment.Visit = visit;
         _appointment.Status = AppointmentStatus.Attended;
-
-        ClinicDb.Instance.Visits.Add(visit);
-        ClinicDb.Instance.Invoices.Add(invoice);
-        ClinicDb.Instance.SaveChanges();
+        await ClinicDb.Instance.SaveChangesAsync();
 
         Close();
     }

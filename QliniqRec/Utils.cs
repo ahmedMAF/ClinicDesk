@@ -56,6 +56,15 @@ internal static class Utils
 
         appointmentsGrd.Columns.Add(new DataGridViewButtonColumn
         {
+            Name = "billingBtn",
+            Width = 120,
+            HeaderText = "",
+            Text = "Billing",
+            UseColumnTextForButtonValue = true
+        });
+
+        appointmentsGrd.Columns.Add(new DataGridViewButtonColumn
+        {
             Name = "followupBtn",
             Width = 120,
             HeaderText = "",
@@ -126,6 +135,69 @@ internal static class Utils
         });
     }
 
+    public static void SetupInvoicesDataGrid(DataGridView invoicesGrd)
+    {
+        invoicesGrd.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(240, 240, 240);
+        invoicesGrd.AutoGenerateColumns = false;
+
+        invoicesGrd.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Width = 50,
+            DataPropertyName = "Serial",
+            HeaderText = "No."
+        });
+
+        invoicesGrd.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Width = 200,
+            DataPropertyName = "IssuedAt",
+            HeaderText = "Issued At",
+            DefaultCellStyle = { Format = "dd-MM-yyyy hh:mm tt" }
+        });
+
+        invoicesGrd.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Width = 180,
+            DataPropertyName = "TotalAmount",
+            HeaderText = "Total Amount",
+            DefaultCellStyle = { Format = "0.00" }
+        });
+
+        invoicesGrd.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Width = 180,
+            DataPropertyName = "PaidAmount",
+            HeaderText = "Paid Amount",
+            DefaultCellStyle = { Format = "0.00" }
+        });
+
+        invoicesGrd.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Width = 180,
+            DataPropertyName = "RemainingAmount",
+            HeaderText = "Remaining Amount",
+            DefaultCellStyle = { Format = "0.00" }
+        });
+
+        invoicesGrd.Columns.Add(new DataGridViewButtonColumn
+        {
+            Name = "payBtn",
+            Width = 120,
+            HeaderText = "",
+            Text = "Pay",
+            UseColumnTextForButtonValue = true
+        });
+
+        invoicesGrd.Columns.Add(new DataGridViewButtonColumn
+        {
+            Name = "payFullBtn",
+            Width = 120,
+            HeaderText = "",
+            Text = "Pay Full",
+            UseColumnTextForButtonValue = true
+        });
+    }
+
     public static async Task<List<AppointmentDto>> PopulateAppointmentGrid(DataGridView appointmentsGrd, DateTime date)
     {
         List<AppointmentDto> appointments = await ClinicDb.Instance.Appointments
@@ -137,6 +209,7 @@ internal static class Utils
                 Id = a.Id,
                 Time = a.Date,
                 PatientName = a.Patient.Name,
+                PatientId = a.Patient.Id,
                 Phone = a.Patient.Phone!
             })
             .ToListAsync();

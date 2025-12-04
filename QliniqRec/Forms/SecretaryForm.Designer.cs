@@ -62,7 +62,7 @@
             billingBtn.TabIndex = 3;
             billingBtn.Text = "Billing";
             billingBtn.UseVisualStyleBackColor = true;
-            billingBtn.Click += billingBtn_Click;
+            billingBtn.Click += billingSearchBtn_Click;
             // 
             // appointmentsGrd
             // 
