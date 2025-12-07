@@ -41,12 +41,23 @@ public partial class SecretaryForm : Form
 
     private void newAppBtn_Click(object sender, EventArgs e)
     {
-        AppContext.ShowDialog<NewAppointmentForm>();
+        Patient patient = null!;
+        
+        if (AppContext.ShowDialog<PatientSearchForm>(actionAfterShow: (form, _) => patient = form.Patient) == DialogResult.Cancel)
+            return;
+        
+        AppContext.ShowDialog<NewAppointmentForm>(form => form.SetData(patient));
+        _appointments = await Utils.PopulateAppointmentGrid(appointmentsGrd, monthCalendar1.SelectionStart.Date);
     }
 
     private void billingSearchBtn_Click(object sender, EventArgs e)
     {
-        AppContext.ShowDialog<BillingForm>();
+        Patient patient = null!;
+        
+        if (AppContext.ShowDialog<PatientSearchForm>(actionAfterShow: (form, _) => patient = form.Patient) == DialogResult.Cancel)
+            return;
+            
+        AppContext.ShowDialog<BillingForm>(form => form.SetData(patient));
     }
 
     private async void profileBtn_Click(int rowIndex)
@@ -59,7 +70,10 @@ public partial class SecretaryForm : Form
 
     private async void billingBtn_Click(int rowIndex)
     {
-        AppContext.ShowDialog<BillingForm>(form => form.SetData(_appointments[rowIndex].PatientId));
+        Patient? patient = await ClinicDb.Instance.Patients
+            .FirstOrDefaultAsync(p => p.Id == _appointments[rowIndex].PatientId);
+
+        AppContext.ShowDialog<BillingForm>(form => form.SetData(patient!));
     }
 
     private async void followupBtn_Click(int rowIndex)
@@ -69,6 +83,8 @@ public partial class SecretaryForm : Form
             .FirstOrDefaultAsync(a => a.Id == _appointments[rowIndex].Id);
 
         AppContext.ShowForm<NewAppointmentForm>(form => form.SetData(appointment!, AppointmentAction.FollowUp));
+        
+        _appointments = await Utils.PopulateAppointmentGrid(appointmentsGrd, monthCalendar1.SelectionStart.Date);
     }
     
     private async void rescheduleBtn_Click(int rowIndex)
@@ -79,6 +95,8 @@ public partial class SecretaryForm : Form
 
         appointment!.Status = AppointmentStatus.Rescheduled;
         AppContext.ShowForm<NewAppointmentForm>(form => form.SetData(appointment!, AppointmentAction.Reschedule));
+        
+        _appointments = await Utils.PopulateAppointmentGrid(appointmentsGrd, monthCalendar1.SelectionStart.Date);
     }
     
     private async void cancelBtn_Click(int rowIndex)
@@ -88,7 +106,7 @@ public partial class SecretaryForm : Form
             .FirstOrDefaultAsync(a => a.Id == _appointments[rowIndex].Id);
 
         appointment!.Status = AppointmentStatus.Cancelled;
-        ClinicDb.Instance.SaveChanges();
+        await ClinicDb.Instance.SaveChangesAsync();
         
         _appointments = await Utils.PopulateAppointmentGrid(appointmentsGrd, monthCalendar1.SelectionStart.Date);
     }

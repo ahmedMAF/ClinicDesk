@@ -8,7 +8,19 @@ public class AppContext : ApplicationContext
     
     public AppContext()
     {
-        ShowForm<WelcomeForm>();
+        switch (Settings.Instance.AccountType)
+        {
+            case AccountType.Doctor:
+                ShowForm<DoctorForm>();
+                break;
+                
+            case AccountType.Secretary:
+                ShowForm<SecretaryForm>();
+                break;
+                
+            default:
+                ShowForm<WelcomeForm>();
+        }
     }
     
     public static T ShowForm<T>(Action<T>? actionBeforeShow = null, Action<T>? actionAfterShow = null) where T : Form, new()

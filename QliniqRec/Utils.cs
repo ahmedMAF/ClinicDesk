@@ -178,6 +178,15 @@ internal static class Utils
             HeaderText = "Remaining Amount",
             DefaultCellStyle = { Format = "0.00" }
         });
+        
+        invoicesGrd.Columns.Add(new DataGridViewButtonColumn
+        {
+            Name = "detailsBtn",
+            Width = 120,
+            HeaderText = "",
+            Text = "Details",
+            UseColumnTextForButtonValue = true
+        });
 
         invoicesGrd.Columns.Add(new DataGridViewButtonColumn
         {
@@ -222,13 +231,13 @@ internal static class Utils
         return appointments;
     }
     
-    public static string GetHardwareId()
+    public static int GetHardwareId()
     {
         string cpu = GetWMI("Win32_Processor", "ProcessorId");
         string disk = GetWMI("Win32_DiskDrive", "SerialNumber");
         string board = GetWMI("Win32_BaseBoard", "SerialNumber");
 
-        return $"{cpu}-{disk}-{board}";
+        return $"{cpu}-{disk}-{board}".GetHashCode();
     }
     
     private static string GetWMI(string wmiClass, string wmiProperty)

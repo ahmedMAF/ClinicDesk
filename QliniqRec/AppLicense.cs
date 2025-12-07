@@ -5,7 +5,7 @@ namespace QliniqRec;
 
 public static class AppLicense
 {
-    private const string PublicKey = "<Your RSA public key here>";
+    private const byte[] PublicKey = Convert.FromBase64String("MIIBCgKCAQEAtc426lD/UHZL6ea9Zo7TBiKM2YR9TEoeC+Xwl55uvLsX/Q8XInDKw1rP8rfTs6EJOAxfuvOeQdAr587P7LnYBRJJBgU774z9xCuiXzXcGHM1c79+HGErUeg1LPmgfiD7znZYLFNHy0fW0EixsmXVzhsqXrDa6jr9fqfyo6y97kkVB4IvvUxfpbEmRk2CxxkSl+MFWiIoSH/VoPWrzFEorpxRLABTS0eOZxvSIDXM1ynIYafLV0iKLlE7LuI2TlOEA4s2T1VfqXAgovgkutYcrd38Z56Fu4nq8zCZEhhToCN/jEVtAGUzlgsRRfR1gLXbMPOvi83Pea1En/x+t1qt9wIDAQAB");
     
     public static bool IsValid { get; private set; }
 
@@ -24,7 +24,7 @@ public static class AppLicense
         if (!validationResult.Any())
         {
             int storedId = int.Parse(license.AdditionalAttributes.Get("HardwareId"));
-            int actualId = Utils.GetHardwareId().GetHashCode();
+            int actualId = Utils.GetHardwareId();
             
             if (storedId != actualId)
             {

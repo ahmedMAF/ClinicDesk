@@ -9,7 +9,8 @@ namespace QliniqRec.Forms;
 
 public partial class BillingForm : MaterialForm
 {
-    private int? _patientId;
+    private Patient? _patient;
+    
     private List<InvoiceDto> _invoices = null!;
     private readonly Dictionary<string, Action<int>> _columnActions;
 
@@ -20,31 +21,30 @@ public partial class BillingForm : MaterialForm
 
         _columnActions = new Dictionary<string, Action<int>>
         {
+            ["detailsBtn"] = detailsBtn_Click,
             ["payBtn"] = payBtn_Click,
             ["payFullBtn"] = payFullBtn_Click
         };
     }
-
-    internal void SetData(int patientId)
+    
+    internal void SetData(Patient patient)
     {
-        _patientId = patientId;
+        _patient = patient;
+        nameTxt.Text = patient.Name;
+        phoneTxt.Text = patient.Phone;
     }
 
     private async void BillingForm_Load(object sender, EventArgs e)
     {
-        if (_patientId.HasValue)
-            await Query();
+        await RefreshList();
     }
-
-    private async Task Query()
+    
+    private async Task RefreshList()
     {
-        Patient? patient = await ClinicDb.Instance.Patients
-            .FirstOrDefaultAsync(p => p.Id == _patientId);
-
         _invoices = await ClinicDb.Instance.Invoices
             .AsNoTracking()
             .Include(i => i.Payments)
-            .Where(i => i.Visit.PatientId == _patientId)
+            .Where(i => i.Visit.PatientId == _patient.Id)
             .Select(i => new InvoiceDto
             {
                 Id = i.Id,
@@ -61,40 +61,52 @@ public partial class BillingForm : MaterialForm
             invoice.RemainingAmount = invoice.TotalAmount - invoice.PaidAmount;
         }
 
-        nameTxt.Text = patient!.Name;
-        phoneTxt.Text = patient.Phone;
         invoicesGrd.DataSource = _invoices;
+    }
+    
+    private async void detailsBtn_Click(int rowIndex)
+    {
+        Invoice? invoice = await ClinicDb.Instance.Invoices
+            .AsNoTracking()
+            .Include(i => i.Payments)
+            .FirstOrDefaultAsync(i => i.Id == _invoices[rowIndex].Id)
+            
+        AppContext.ShowDialog<InvoiceDetailsForm>(form => form.SetData(invoice!));
     }
 
     private async void payBtn_Click(int rowIndex)
     {
         InvoiceDto invoice = _invoices[rowIndex];
-
-        Payment payment = new()
-        {
-            InvoiceId = invoice.Id,
-            Amount = invoice.RemainingAmount
-        };
-
-        ClinicDb.Instance.Payments.Add(payment);
-        await ClinicDb.Instance.SaveChangesAsync();
+        decimal paymentAmount = 0;
+        
+        if (AppContext.ShowDialog<PaymentForm>(actionAfterShow: (form, _) => paymentAmount = form.PaymentAmount) == DialogResult.Cancel)
+            return;
+        
+        await PerformPayment(invoice, paymentAmount);
     }
 
     private async void payFullBtn_Click(int rowIndex)
     {
         InvoiceDto invoice = _invoices[rowIndex];
 
-        if (MessageBox.Show($"Are you sure you want to fully pay this invoice with a value of \"{invoice.RemainingAmount}\"", "Payment Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+        if (MessageBox.Show($"Are you sure you want to fully pay this invoice with a value of \"{invoice.RemainingAmount:0.00}\"?", "Payment Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
             return;
-
+        
+        await PerformPayment(invoice, invoice.RemainingAmount);
+    }
+    
+    private async void PerformPayment(InvoiceDto invoice, decimal amount)
+    {
         Payment payment = new()
         {
             InvoiceId = invoice.Id,
-            Amount = invoice.RemainingAmount
+            Amount = amount
         };
 
         ClinicDb.Instance.Payments.Add(payment);
         await ClinicDb.Instance.SaveChangesAsync();
+        
+        await RefreshList();
     }
 
     protected void ButtonPaint(PaintEventArgs pevent)
