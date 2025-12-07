@@ -31,11 +31,11 @@
             label1 = new Label();
             nameTxt = new TextBox();
             groupBox1 = new GroupBox();
-            searchPhoneBtn = new Button();
-            searchNameBtn = new Button();
             phoneTxt = new TextBox();
             label4 = new Label();
             groupBox2 = new GroupBox();
+            timePkr = new DateTimePicker();
+            label5 = new Label();
             datePkr = new DateTimePicker();
             label8 = new Label();
             saveBtn = new Button();
@@ -57,53 +57,31 @@
             // 
             nameTxt.Location = new Point(120, 26);
             nameTxt.Name = "nameTxt";
+            nameTxt.ReadOnly = true;
             nameTxt.Size = new Size(342, 27);
             nameTxt.TabIndex = 1;
-            nameTxt.KeyPress += nameTxt_KeyPress;
             // 
             // groupBox1
             // 
             groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            groupBox1.Controls.Add(searchPhoneBtn);
-            groupBox1.Controls.Add(searchNameBtn);
             groupBox1.Controls.Add(phoneTxt);
             groupBox1.Controls.Add(label4);
             groupBox1.Controls.Add(nameTxt);
             groupBox1.Controls.Add(label1);
-            groupBox1.Location = new Point(12, 12);
+            groupBox1.Location = new Point(6, 67);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(622, 100);
+            groupBox1.Size = new Size(496, 100);
             groupBox1.TabIndex = 2;
             groupBox1.TabStop = false;
             groupBox1.Text = "Patient Data";
-            // 
-            // searchPhoneBtn
-            // 
-            searchPhoneBtn.Location = new Point(468, 58);
-            searchPhoneBtn.Name = "searchPhoneBtn";
-            searchPhoneBtn.Size = new Size(142, 29);
-            searchPhoneBtn.TabIndex = 8;
-            searchPhoneBtn.Text = "Search By Phone";
-            searchPhoneBtn.UseVisualStyleBackColor = true;
-            searchPhoneBtn.Click += searchPhoneBtn_Click;
-            // 
-            // searchNameBtn
-            // 
-            searchNameBtn.Location = new Point(468, 24);
-            searchNameBtn.Name = "searchNameBtn";
-            searchNameBtn.Size = new Size(142, 29);
-            searchNameBtn.TabIndex = 6;
-            searchNameBtn.Text = "Search By Name";
-            searchNameBtn.UseVisualStyleBackColor = true;
-            searchNameBtn.Click += searchNameBtn_Click;
             // 
             // phoneTxt
             // 
             phoneTxt.Location = new Point(120, 59);
             phoneTxt.Name = "phoneTxt";
+            phoneTxt.ReadOnly = true;
             phoneTxt.Size = new Size(342, 27);
             phoneTxt.TabIndex = 7;
-            phoneTxt.KeyPress += phoneTxt_KeyPress;
             // 
             // label4
             // 
@@ -117,17 +95,39 @@
             // groupBox2
             // 
             groupBox2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            groupBox2.Controls.Add(timePkr);
+            groupBox2.Controls.Add(label5);
             groupBox2.Controls.Add(datePkr);
             groupBox2.Controls.Add(label8);
-            groupBox2.Location = new Point(12, 118);
+            groupBox2.Location = new Point(6, 173);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(622, 77);
+            groupBox2.Size = new Size(496, 102);
             groupBox2.TabIndex = 3;
             groupBox2.TabStop = false;
             groupBox2.Text = "Appointment Data";
             // 
+            // timePkr
+            // 
+            timePkr.CustomFormat = "  hh:mm tt";
+            timePkr.Format = DateTimePickerFormat.Custom;
+            timePkr.Location = new Point(53, 59);
+            timePkr.Name = "timePkr";
+            timePkr.Size = new Size(290, 27);
+            timePkr.TabIndex = 3;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(6, 64);
+            label5.Name = "label5";
+            label5.Size = new Size(42, 20);
+            label5.TabIndex = 2;
+            label5.Text = "Time";
+            // 
             // datePkr
             // 
+            datePkr.CustomFormat = "  dd/MM/yyyy";
+            datePkr.Format = DateTimePickerFormat.Custom;
             datePkr.Location = new Point(53, 26);
             datePkr.Name = "datePkr";
             datePkr.Size = new Size(290, 27);
@@ -146,7 +146,7 @@
             // 
             saveBtn.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             saveBtn.Enabled = false;
-            saveBtn.Location = new Point(540, 209);
+            saveBtn.Location = new Point(414, 290);
             saveBtn.Name = "saveBtn";
             saveBtn.Size = new Size(94, 29);
             saveBtn.TabIndex = 4;
@@ -157,7 +157,7 @@
             // cancelBtn
             // 
             cancelBtn.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            cancelBtn.Location = new Point(440, 209);
+            cancelBtn.Location = new Point(314, 290);
             cancelBtn.Name = "cancelBtn";
             cancelBtn.Size = new Size(94, 29);
             cancelBtn.TabIndex = 5;
@@ -169,12 +169,13 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(647, 251);
+            ClientSize = new Size(521, 332);
             Controls.Add(cancelBtn);
             Controls.Add(saveBtn);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            KeyPreview = true;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "NewAppointmentForm";
@@ -182,6 +183,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "New Appointment";
             Load += NewAppointmentForm_Load;
+            KeyPress += NewAppointmentForm_KeyPress;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             groupBox2.ResumeLayout(false);
@@ -205,7 +207,7 @@
         private DateTimePicker datePkr;
         private Button saveBtn;
         private Button cancelBtn;
-        private Button searchNameBtn;
-        private Button searchPhoneBtn;
+        private DateTimePicker timePkr;
+        private Label label5;
     }
 }

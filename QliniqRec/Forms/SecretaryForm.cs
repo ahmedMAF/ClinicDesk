@@ -2,11 +2,12 @@
 using QliniqRec.Database;
 using QliniqRec.Database.Dto;
 using QliniqRec.Database.Models;
+using ReaLTaiizor.Forms;
 using System.Windows.Forms;
 
 namespace QliniqRec.Forms;
 
-public partial class SecretaryForm : Form
+public partial class SecretaryForm : MaterialForm
 {
     private readonly Dictionary<string, Action<int>> _columnActions;
     private List<AppointmentDto> _appointments = null!;
@@ -39,7 +40,7 @@ public partial class SecretaryForm : Form
         _appointments = await Utils.PopulateAppointmentGrid(appointmentsGrd, monthCalendar1.SelectionStart.Date);
     }
 
-    private void newAppBtn_Click(object sender, EventArgs e)
+    private async void newAppointmentBtn_Click(object sender, EventArgs e)
     {
         Patient patient = null!;
         

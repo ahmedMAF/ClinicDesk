@@ -1,10 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using QliniqRec.Database;
 using QliniqRec.Database.Models;
+using ReaLTaiizor.Forms;
 
 namespace QliniqRec.Forms;
 
-public partial class NewAppointmentForm : Form
+public partial class NewAppointmentForm : MaterialForm
 {
     private Patient _patient = null!;
     private AppointmentAction _action;
@@ -22,14 +23,14 @@ public partial class NewAppointmentForm : Form
         _appointment = appointment;
         SetData(appointment.Patient);
     }
-    
+
     internal void SetData(Patient patient)
     {
         _patient = patient;
 
         nameTxt.Text = patient.Name;
         phoneTxt.Text = patient.Phone;
-        
+
         saveBtn.Enabled = true;
     }
 
@@ -48,7 +49,7 @@ public partial class NewAppointmentForm : Form
         Appointment appointment = new()
         {
             PatientId = _patient.Id,
-            Date = datePkr.Value.Date + timePkr.Value.TimeOfDay, 
+            Date = datePkr.Value.Date + timePkr.Value.TimeOfDay,
         };
 
         if (_action == AppointmentAction.FollowUp)
@@ -59,5 +60,14 @@ public partial class NewAppointmentForm : Form
         ClinicDb.Instance.Appointments.Add(appointment);
         await ClinicDb.Instance.SaveChangesAsync();
         Close();
+    }
+
+    private void NewAppointmentForm_KeyPress(object sender, KeyPressEventArgs e)
+    {
+        if (e.KeyChar == (char)Keys.Escape)
+        {
+            Close();
+            e.Handled = true;
+        }
     }
 }

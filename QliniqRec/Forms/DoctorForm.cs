@@ -2,10 +2,11 @@
 using QliniqRec.Database;
 using QliniqRec.Database.Dto;
 using QliniqRec.Database.Models;
+using ReaLTaiizor.Forms;
 
 namespace QliniqRec.Forms;
 
-public partial class DoctorForm : Form
+public partial class DoctorForm : MaterialForm
 {
     private List<AppointmentDto> _appointments = null!;
 
@@ -18,6 +19,11 @@ public partial class DoctorForm : Form
     }
 
     private async void DoctorForm_Load(object sender, EventArgs e)
+    {
+        await RefreshList();
+    }
+
+    private async Task RefreshList()
     {
         _appointments = await Utils.PopulateAppointmentGrid(appointmentsGrd, DateTime.Now.Date);
     }
@@ -35,6 +41,6 @@ public partial class DoctorForm : Form
             .Include(p => p.Visits)
             .FirstOrDefaultAsync(p => p.Id == appointment!.PatientId);
 
-        AppContext.ShowForm<AppointmentForm>(form => form.SetData(appointment!, patient!));
+        AppContext.ShowForm<AppointmentForm>(form => form.SetData(appointment!, patient!), async _ => await RefreshList());
     }
 }

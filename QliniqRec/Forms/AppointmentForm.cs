@@ -85,14 +85,4 @@ public partial class AppointmentForm : Form
 
         Close();
     }
-
-    private void billTxt_KeyPress(object sender, KeyPressEventArgs e)
-    {
-        if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
-            e.Handled = true;
-
-        // Allow only ONE decimal point
-        if (e.KeyChar == '.' && ((TextBox)sender).Text.Contains('.'))
-            e.Handled = true;
-    }
 }

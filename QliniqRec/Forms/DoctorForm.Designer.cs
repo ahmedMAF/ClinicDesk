@@ -37,7 +37,7 @@
             // 
             label1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             label1.Font = new Font("Segoe UI", 16.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(12, 9);
+            label1.Location = new Point(12, 64);
             label1.Name = "label1";
             label1.Size = new Size(700, 61);
             label1.TabIndex = 3;
@@ -52,11 +52,11 @@
             appointmentsGrd.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             appointmentsGrd.BackgroundColor = Color.White;
             appointmentsGrd.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            appointmentsGrd.Location = new Point(12, 86);
+            appointmentsGrd.Location = new Point(12, 128);
             appointmentsGrd.Name = "appointmentsGrd";
             appointmentsGrd.ReadOnly = true;
             appointmentsGrd.RowHeadersWidth = 51;
-            appointmentsGrd.Size = new Size(702, 446);
+            appointmentsGrd.Size = new Size(702, 404);
             appointmentsGrd.TabIndex = 5;
             appointmentsGrd.CellMouseClick += appointmentsGrd_CellMouseClick;
             // 
@@ -69,7 +69,7 @@
             Controls.Add(label1);
             Name = "DoctorForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Doctor Form";
+            Text = "Doctor";
             WindowState = FormWindowState.Maximized;
             Load += DoctorForm_Load;
             ((System.ComponentModel.ISupportInitialize)appointmentsGrd).EndInit();

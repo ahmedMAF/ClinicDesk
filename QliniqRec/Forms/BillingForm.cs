@@ -1,16 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Data;
+using Microsoft.EntityFrameworkCore;
 using QliniqRec.Database;
 using QliniqRec.Database.Dto;
 using QliniqRec.Database.Models;
 using ReaLTaiizor.Forms;
-using System.Data;
 
 namespace QliniqRec.Forms;
 
 public partial class BillingForm : MaterialForm
 {
     private Patient? _patient;
-    
+
     private List<InvoiceDto> _invoices = null!;
     private readonly Dictionary<string, Action<int>> _columnActions;
 
@@ -26,7 +26,7 @@ public partial class BillingForm : MaterialForm
             ["payFullBtn"] = payFullBtn_Click
         };
     }
-    
+
     internal void SetData(Patient patient)
     {
         _patient = patient;
@@ -38,13 +38,13 @@ public partial class BillingForm : MaterialForm
     {
         await RefreshList();
     }
-    
+
     private async Task RefreshList()
     {
         _invoices = await ClinicDb.Instance.Invoices
             .AsNoTracking()
             .Include(i => i.Payments)
-            .Where(i => i.Visit.PatientId == _patient.Id)
+            .Where(i => i.Visit.PatientId == _patient!.Id)
             .Select(i => new InvoiceDto
             {
                 Id = i.Id,
@@ -55,22 +55,26 @@ public partial class BillingForm : MaterialForm
             .ToListAsync();
 
         for (int i = 0; i < _invoices.Count; i++)
-        {
-            InvoiceDto invoice = _invoices[i];
-            invoice.Serial = i + 1;
-            invoice.RemainingAmount = invoice.TotalAmount - invoice.PaidAmount;
-        }
+            _invoices[i].RemainingAmount = _invoices[i].TotalAmount - _invoices[i].PaidAmount;
+
+        _invoices = _invoices
+            .OrderBy(i => i.RemainingAmount == 0)
+            .ThenBy(i => i.IssuedAt)
+            .ToList();
+
+        for (int i = 0; i < _invoices.Count; i++)
+            _invoices[i].Serial = i + 1;
 
         invoicesGrd.DataSource = _invoices;
     }
-    
+
     private async void detailsBtn_Click(int rowIndex)
     {
         Invoice? invoice = await ClinicDb.Instance.Invoices
             .AsNoTracking()
             .Include(i => i.Payments)
-            .FirstOrDefaultAsync(i => i.Id == _invoices[rowIndex].Id)
-            
+            .FirstOrDefaultAsync(i => i.Id == _invoices[rowIndex].Id);
+
         AppContext.ShowDialog<InvoiceDetailsForm>(form => form.SetData(invoice!));
     }
 
@@ -78,10 +82,10 @@ public partial class BillingForm : MaterialForm
     {
         InvoiceDto invoice = _invoices[rowIndex];
         decimal paymentAmount = 0;
-        
+
         if (AppContext.ShowDialog<PaymentForm>(actionAfterShow: (form, _) => paymentAmount = form.PaymentAmount) == DialogResult.Cancel)
             return;
-        
+
         await PerformPayment(invoice, paymentAmount);
     }
 
@@ -91,11 +95,11 @@ public partial class BillingForm : MaterialForm
 
         if (MessageBox.Show($"Are you sure you want to fully pay this invoice with a value of \"{invoice.RemainingAmount:0.00}\"?", "Payment Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
             return;
-        
+
         await PerformPayment(invoice, invoice.RemainingAmount);
     }
-    
-    private async void PerformPayment(InvoiceDto invoice, decimal amount)
+
+    private async Task PerformPayment(InvoiceDto invoice, decimal amount)
     {
         Payment payment = new()
         {
@@ -105,8 +109,17 @@ public partial class BillingForm : MaterialForm
 
         ClinicDb.Instance.Payments.Add(payment);
         await ClinicDb.Instance.SaveChangesAsync();
-        
+
         await RefreshList();
+    }
+
+    private void invoicesGrd_CellClick(object sender, DataGridViewCellEventArgs e)
+    {
+        if (e.RowIndex == -1 || e.ColumnIndex == -1 || invoicesGrd.Columns[e.ColumnIndex] is not DataGridViewButtonColumn)
+            return;
+
+        string colName = invoicesGrd.Columns[e.ColumnIndex].Name;
+        _columnActions[colName](e.RowIndex);
     }
 
     protected void ButtonPaint(PaintEventArgs pevent)
@@ -233,12 +246,11 @@ public partial class BillingForm : MaterialForm
         }*/
     }
 
-    private void invoicesGrd_CellClick(object sender, DataGridViewCellEventArgs e)
+    private void invoicesGrd_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
     {
-        if (e.RowIndex == -1 || e.ColumnIndex == -1 || invoicesGrd.Columns[e.ColumnIndex] is not DataGridViewButtonColumn)
+        if (invoicesGrd.Rows[e.RowIndex].DataBoundItem is not InvoiceDto invoice)
             return;
 
-        string colName = invoicesGrd.Columns[e.ColumnIndex].Name;
-        _columnActions[colName](e.RowIndex);
+       invoicesGrd.Rows[e.RowIndex].DefaultCellStyle.BackColor = invoice.RemainingAmount == 0 ? Color.LightGray : Color.White;
     }
 }

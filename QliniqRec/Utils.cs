@@ -207,6 +207,51 @@ internal static class Utils
         });
     }
 
+    public static void SetupPaymentsDataGrid(DataGridView paymentsGrd)
+    {
+        paymentsGrd.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(240, 240, 240);
+        paymentsGrd.AutoGenerateColumns = false;
+
+        paymentsGrd.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Width = 50,
+            DataPropertyName = "Serial",
+            HeaderText = "No."
+        });
+
+        paymentsGrd.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Width = 180,
+            DataPropertyName = "Amount",
+            HeaderText = "Amount",
+            DefaultCellStyle = { Format = "0.00" }
+        });
+
+        paymentsGrd.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Width = 180,
+            DataPropertyName = "Method",
+            HeaderText = "Method"
+        });
+
+        paymentsGrd.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Width = 200,
+            DataPropertyName = "PaidAt",
+            HeaderText = "Paid At",
+            DefaultCellStyle = { Format = "dd-MM-yyyy hh:mm tt" }
+        });
+
+        paymentsGrd.Columns.Add(new DataGridViewButtonColumn
+        {
+            Name = "deleteBtn",
+            Width = 120,
+            HeaderText = "",
+            Text = "Delete",
+            UseColumnTextForButtonValue = true
+        });
+    }
+
     public static async Task<List<AppointmentDto>> PopulateAppointmentGrid(DataGridView appointmentsGrd, DateTime date)
     {
         List<AppointmentDto> appointments = await ClinicDb.Instance.Appointments
@@ -230,7 +275,17 @@ internal static class Utils
         
         return appointments;
     }
-    
+
+    public static void NumTxt_KeyPress(object sender, KeyPressEventArgs e)
+    {
+        if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
+            e.Handled = true;
+
+        // Allow only ONE decimal point
+        if (e.KeyChar == '.' && ((TextBox)sender).Text.Contains('.'))
+            e.Handled = true;
+    }
+
     public static int GetHardwareId()
     {
         string cpu = GetWMI("Win32_Processor", "ProcessorId");

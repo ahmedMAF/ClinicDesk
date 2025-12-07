@@ -11,6 +11,8 @@ namespace QliniqRec;
 // * Printing.
 // * Single laptop case.
 // * Security.
+// * 
+// * Secretary appointment status + sort
 
 internal static class Program
 {

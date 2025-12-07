@@ -361,7 +361,7 @@
             billTxt.Size = new Size(225, 27);
             billTxt.TabIndex = 31;
             billTxt.Text = "0";
-            billTxt.KeyPress += billTxt_KeyPress;
+            billTxt.KeyPress += Utils.NumTxt_KeyPress;
             // 
             // label10
             // 

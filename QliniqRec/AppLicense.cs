@@ -1,11 +1,12 @@
 using Portable.Licensing;
+using Portable.Licensing.Security.Cryptography;
 using Portable.Licensing.Validation;
 
 namespace QliniqRec;
 
 public static class AppLicense
 {
-    private const byte[] PublicKey = Convert.FromBase64String("MIIBCgKCAQEAtc426lD/UHZL6ea9Zo7TBiKM2YR9TEoeC+Xwl55uvLsX/Q8XInDKw1rP8rfTs6EJOAxfuvOeQdAr587P7LnYBRJJBgU774z9xCuiXzXcGHM1c79+HGErUeg1LPmgfiD7znZYLFNHy0fW0EixsmXVzhsqXrDa6jr9fqfyo6y97kkVB4IvvUxfpbEmRk2CxxkSl+MFWiIoSH/VoPWrzFEorpxRLABTS0eOZxvSIDXM1ynIYafLV0iKLlE7LuI2TlOEA4s2T1VfqXAgovgkutYcrd38Z56Fu4nq8zCZEhhToCN/jEVtAGUzlgsRRfR1gLXbMPOvi83Pea1En/x+t1qt9wIDAQAB");
+    private static readonly string PublicKey = "MIIBKjCB4wYHKoZIzj0CATCB1wIBATAsBgcqhkjOPQEBAiEA/////wAAAAEAAAAAAAAAAAAAAAD///////////////8wWwQg/////wAAAAEAAAAAAAAAAAAAAAD///////////////wEIFrGNdiqOpPns+u9VXaYhrxlHQawzFOw9jvOPD4n0mBLAxUAxJ02CIbnBJNqZnjhE50mt4GffpAEIQNrF9Hy4SxCR/i85uVjpEDydwN9gS3rM6D0oTlF2JjClgIhAP////8AAAAA//////////+85vqtpxeehPO5ysL8YyVRAgEBA0IABK/qbAC/fQ5C5inBbSqi3wK+nKLVLc+COVT8wnMwTaRDtDbrfMk5AzDDpqSFW3PXV793SJyY8F/lp+Df3KuU2Z4=";
     
     public static bool IsValid { get; private set; }
 
