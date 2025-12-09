@@ -8,6 +8,7 @@ namespace QliniqRec.Forms;
 
 public partial class DoctorForm : MaterialForm
 {
+    private readonly GridButtonHelper _grdHelper;
     private List<AppointmentDto> _appointments = null!;
 
     public DoctorForm()
@@ -16,6 +17,11 @@ public partial class DoctorForm : MaterialForm
 
         FormClosed += (s, e) => Application.Exit();
         Utils.SetupAppointmentsDataGrid(appointmentsGrd, false);
+        
+        _grdHelper = new GridButtonHelper(appointmentsGrd, new Dictionary<string, Action<int>>
+        {
+            ["profileBtn"] = profileBtn_Click
+        }
     }
 
     private async void DoctorForm_Load(object sender, EventArgs e)
@@ -23,24 +29,21 @@ public partial class DoctorForm : MaterialForm
         await RefreshList();
     }
 
-    private async Task RefreshList()
+    private async void profileBtn_Click(int rowIndex)
     {
-        _appointments = await Utils.PopulateAppointmentGrid(appointmentsGrd, DateTime.Now.Date);
-    }
-
-    private async void appointmentsGrd_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
-    {
-        if (e.RowIndex == -1 || e.ColumnIndex == -1 || appointmentsGrd.Columns[e.ColumnIndex] is not DataGridViewButtonColumn)
-            return;
-
         Appointment? appointment = await ClinicDb.Instance.Appointments
             .Include(a => a.OriginalAppointment)
-            .FirstOrDefaultAsync(a => a.Id == _appointments[e.RowIndex].Id);
+            .FirstOrDefaultAsync(a => a.Id == _appointments[rowIndex].Id);
         
         Patient? patient = await ClinicDb.Instance.Patients
             .Include(p => p.Visits)
             .FirstOrDefaultAsync(p => p.Id == appointment!.PatientId);
 
         AppContext.ShowForm<AppointmentForm>(form => form.SetData(appointment!, patient!), async _ => await RefreshList());
+    }
+    
+    private async Task RefreshList()
+    {
+        _appointments = await Utils.PopulateAppointmentGrid(appointmentsGrd, DateTime.Now.Date, true);
     }
 }

@@ -9,7 +9,7 @@ namespace QliniqRec.Forms;
 
 public partial class SecretaryForm : MaterialForm
 {
-    private readonly Dictionary<string, Action<int>> _columnActions;
+    private readonly GridButtonHelper _grdHelper;
     private List<AppointmentDto> _appointments = null!;
 
     public SecretaryForm()
@@ -19,25 +19,41 @@ public partial class SecretaryForm : MaterialForm
         FormClosed += (s, e) => Application.Exit();
         Utils.SetupAppointmentsDataGrid(appointmentsGrd, true);
         
-        _columnActions = new Dictionary<string, Action<int>>
+        _grdHelper = new GridButtonHelper(appointmentsGrd, new Dictionary<string, Action<int>>
         {
             ["profileBtn"] = profileBtn_Click,
             ["billingBtn"] = billingBtn_Click,
             ["followupBtn"] = followupBtn_Click,
             ["rescheduleBtn"] = rescheduleBtn_Click,
             ["cancelBtn"] = cancelBtn_Click
-        };
+        });
     }
 
     private async void SecretaryForm_Load(object sender, EventArgs e)
     {
         monthCalendar1.SelectionStart = DateTime.Now;
-        _appointments = await Utils.PopulateAppointmentGrid(appointmentsGrd, monthCalendar1.SelectionStart.Date);
+        await RefreshList();
     }
 
     private async void monthCalendar1_DateSelected(object sender, DateRangeEventArgs e)
     {
-        _appointments = await Utils.PopulateAppointmentGrid(appointmentsGrd, monthCalendar1.SelectionStart.Date);
+        await RefreshList();
+    }
+    
+    private void appointmentsGrd_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+    {
+        if (invoicesGrd.Rows[e.RowIndex].DataBoundItem is not AppointmentDto appointment)
+            return;
+
+        invoicesGrd.Rows[e.RowIndex].DefaultCellStyle.BackColor = appointment.Status switch
+        {
+            AppointmentStatus.Pending => Color.White,
+            AppointmentStatus.Attended => Color.LightGreen,
+            AppointmentStatus.Cancelled => Color.LightRed,
+            AppointmentStatus.Missed => Color.LightGray,
+            AppointmentStatus.Rescheduled => Color.LightYellow,
+            _ => Color.White
+        };
     }
 
     private async void newAppointmentBtn_Click(object sender, EventArgs e)
@@ -48,7 +64,7 @@ public partial class SecretaryForm : MaterialForm
             return;
         
         AppContext.ShowDialog<NewAppointmentForm>(form => form.SetData(patient));
-        _appointments = await Utils.PopulateAppointmentGrid(appointmentsGrd, monthCalendar1.SelectionStart.Date);
+        await RefreshList();
     }
 
     private void billingSearchBtn_Click(object sender, EventArgs e)
@@ -85,7 +101,7 @@ public partial class SecretaryForm : MaterialForm
 
         AppContext.ShowForm<NewAppointmentForm>(form => form.SetData(appointment!, AppointmentAction.FollowUp));
         
-        _appointments = await Utils.PopulateAppointmentGrid(appointmentsGrd, monthCalendar1.SelectionStart.Date);
+        await RefreshList();
     }
     
     private async void rescheduleBtn_Click(int rowIndex)
@@ -97,7 +113,7 @@ public partial class SecretaryForm : MaterialForm
         appointment!.Status = AppointmentStatus.Rescheduled;
         AppContext.ShowForm<NewAppointmentForm>(form => form.SetData(appointment!, AppointmentAction.Reschedule));
         
-        _appointments = await Utils.PopulateAppointmentGrid(appointmentsGrd, monthCalendar1.SelectionStart.Date);
+        await RefreshList();
     }
     
     private async void cancelBtn_Click(int rowIndex)
@@ -109,16 +125,12 @@ public partial class SecretaryForm : MaterialForm
         appointment!.Status = AppointmentStatus.Cancelled;
         await ClinicDb.Instance.SaveChangesAsync();
         
-        _appointments = await Utils.PopulateAppointmentGrid(appointmentsGrd, monthCalendar1.SelectionStart.Date);
+        await RefreshList();
     }
-
-    private async void appointmentsGrd_CellClick(object sender, DataGridViewCellEventArgs e)
+    
+    private async Task RefreshList()
     {
-        if (e.RowIndex == -1 || e.ColumnIndex == -1 || appointmentsGrd.Columns[e.ColumnIndex] is not DataGridViewButtonColumn)
-            return;
-            
-        string colName = appointmentsGrd.Columns[e.ColumnIndex].Name;
-        _columnActions[colName](e.RowIndex);
+        _appointments = await Utils.PopulateAppointmentGrid(appointmentsGrd, monthCalendar1.SelectionStart.Date, false);
     }
 }
 

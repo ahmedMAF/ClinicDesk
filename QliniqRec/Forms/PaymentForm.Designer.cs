@@ -65,6 +65,7 @@
             amountTxt.TrailingIcon = null;
             amountTxt.UseSystemPasswordChar = false;
             amountTxt.KeyPress += Utils.NumTxt_KeyPress;
+            amountTxt.TextChanged += amountTxt_TextChanged;
             // 
             // payBtn
             // 

@@ -8,9 +8,8 @@ namespace QliniqRec;
 
 internal static class Utils
 {
-    public static void SetupAppointmentsDataGrid(DataGridView appointmentsGrd, bool addButtonColumns)
+    public static void SetupAppointmentsDataGrid(DataGridView appointmentsGrd, bool secretary)
     {
-        appointmentsGrd.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(240, 240, 240);
         appointmentsGrd.AutoGenerateColumns = false;
 
         appointmentsGrd.Columns.Add(new DataGridViewTextBoxColumn
@@ -42,6 +41,27 @@ internal static class Utils
             HeaderText = "Phone"
         });
 
+        if (!secretary)
+        {
+            appointmentsGrd.Columns.Add(new DataGridViewButtonColumn
+            {
+                Name = "profileBtn",
+                Width = 180,
+                HeaderText = "",
+                Text = "Open Visit",
+                UseColumnTextForButtonValue = true
+            });
+        
+            return;
+        }
+            
+        appointmentsGrd.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Width = 90,
+            DataPropertyName = "Status",
+            HeaderText = "Status"
+        });
+            
         appointmentsGrd.Columns.Add(new DataGridViewButtonColumn
         {
             Name = "profileBtn",
@@ -50,9 +70,6 @@ internal static class Utils
             Text = "View Profile",
             UseColumnTextForButtonValue = true
         });
-
-        if (!addButtonColumns)
-            return;
 
         appointmentsGrd.Columns.Add(new DataGridViewButtonColumn
         {
@@ -93,7 +110,6 @@ internal static class Utils
 
     public static void SetupVisitsDataGrid(DataGridView visitsGrd)
     {
-        visitsGrd.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(240, 240, 240);
         visitsGrd.AutoGenerateColumns = false;
 
         visitsGrd.Columns.Add(new DataGridViewTextBoxColumn
@@ -137,7 +153,6 @@ internal static class Utils
 
     public static void SetupInvoicesDataGrid(DataGridView invoicesGrd)
     {
-        invoicesGrd.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(240, 240, 240);
         invoicesGrd.AutoGenerateColumns = false;
 
         invoicesGrd.Columns.Add(new DataGridViewTextBoxColumn
@@ -209,7 +224,6 @@ internal static class Utils
 
     public static void SetupPaymentsDataGrid(DataGridView paymentsGrd)
     {
-        paymentsGrd.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(240, 240, 240);
         paymentsGrd.AutoGenerateColumns = false;
 
         paymentsGrd.Columns.Add(new DataGridViewTextBoxColumn
@@ -252,21 +266,32 @@ internal static class Utils
         });
     }
 
-    public static async Task<List<AppointmentDto>> PopulateAppointmentGrid(DataGridView appointmentsGrd, DateTime date)
+    public static async Task<List<AppointmentDto>> PopulateAppointmentGrid(DataGridView appointmentsGrd, DateTime date, bool onlyPending)
     {
-        List<AppointmentDto> appointments = await ClinicDb.Instance.Appointments
+        varr query = ClinicDb.Instance.Appointments
             .AsNoTracking()
-            .Where(a => a.Date.Date == date && a.Status == AppointmentStatus.Pending)
-            .OrderBy(a => a.Date)
+            .Where(a => a.Date.Date == date);
+        
+        if (onlyPending)
+            query = query.Where(a => a.Status == AppointmentStatus.Pending);
+        
+        List<AppointmentDto> appointments = await query
             .Select(a => new AppointmentDto
             {
                 Id = a.Id,
                 Time = a.Date,
                 PatientName = a.Patient.Name,
                 PatientId = a.Patient.Id,
-                Phone = a.Patient.Phone!
+                Phone = a.Patient.Phone!,
+                Status = a.Status
             })
             .ToListAsync();
+            
+        if (!onlyPending)
+            appointments = appointments
+                .OrderBy(a => a.Status)
+                .ThenBy(a => a.Date)
+                .ToList();
 
         for (int i = 0; i < appointments.Count; i++)
             appointments[i].Serial = i + 1;

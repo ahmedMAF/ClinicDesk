@@ -58,7 +58,6 @@
             appointmentsGrd.RowHeadersWidth = 51;
             appointmentsGrd.Size = new Size(702, 404);
             appointmentsGrd.TabIndex = 5;
-            appointmentsGrd.CellMouseClick += appointmentsGrd_CellMouseClick;
             // 
             // DoctorForm
             // 

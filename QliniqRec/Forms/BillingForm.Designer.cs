@@ -50,7 +50,6 @@
             invoicesGrd.RowHeadersWidth = 51;
             invoicesGrd.Size = new Size(1131, 787);
             invoicesGrd.TabIndex = 5;
-            invoicesGrd.CellClick += invoicesGrd_CellClick;
             invoicesGrd.RowPrePaint += invoicesGrd_RowPrePaint;
             // 
             // materialLabel2

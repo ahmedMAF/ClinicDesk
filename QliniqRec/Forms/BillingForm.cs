@@ -12,19 +12,19 @@ public partial class BillingForm : MaterialForm
     private Patient? _patient;
 
     private List<InvoiceDto> _invoices = null!;
-    private readonly Dictionary<string, Action<int>> _columnActions;
+    private readonly GridButtonHelper _grdHelper;
 
     public BillingForm()
     {
         InitializeComponent();
         Utils.SetupInvoicesDataGrid(invoicesGrd);
 
-        _columnActions = new Dictionary<string, Action<int>>
+        _grdHelper = new GridButtonHelper(invoicesGrd, new Dictionary<string, Action<int>>
         {
             ["detailsBtn"] = detailsBtn_Click,
             ["payBtn"] = payBtn_Click,
             ["payFullBtn"] = payFullBtn_Click
-        };
+        });
     }
 
     internal void SetData(Patient patient)
@@ -83,7 +83,7 @@ public partial class BillingForm : MaterialForm
         InvoiceDto invoice = _invoices[rowIndex];
         decimal paymentAmount = 0;
 
-        if (AppContext.ShowDialog<PaymentForm>(actionAfterShow: (form, _) => paymentAmount = form.PaymentAmount) == DialogResult.Cancel)
+        if (AppContext.ShowDialog<PaymentForm>(form => form.SetData(invoice.RemainingAmount), (form, _) => paymentAmount = form.PaymentAmount) == DialogResult.Cancel)
             return;
 
         await PerformPayment(invoice, paymentAmount);
@@ -111,15 +111,6 @@ public partial class BillingForm : MaterialForm
         await ClinicDb.Instance.SaveChangesAsync();
 
         await RefreshList();
-    }
-
-    private void invoicesGrd_CellClick(object sender, DataGridViewCellEventArgs e)
-    {
-        if (e.RowIndex == -1 || e.ColumnIndex == -1 || invoicesGrd.Columns[e.ColumnIndex] is not DataGridViewButtonColumn)
-            return;
-
-        string colName = invoicesGrd.Columns[e.ColumnIndex].Name;
-        _columnActions[colName](e.RowIndex);
     }
 
     protected void ButtonPaint(PaintEventArgs pevent)

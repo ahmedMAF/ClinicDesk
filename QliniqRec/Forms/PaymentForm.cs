@@ -4,12 +4,18 @@ namespace QliniqRec.Forms;
 
 public partial class PaymentForm : MaterialForm
 {
+    private decimal _maxAmount;
     public decimal PaymentAmount { get; private set; }
 
     public PaymentForm()
     {
         InitializeComponent();
         DialogResult = DialogResult.Cancel;
+    }
+    
+    public void SetData(decimal maxAmount)
+    {
+        _maxAmount = maxAmount;
     }
 
     private void cancelBtn_Click(object sender, EventArgs e)
@@ -23,5 +29,11 @@ public partial class PaymentForm : MaterialForm
 
         DialogResult = DialogResult.OK;
         Close();
+    }
+    
+    private void amountTxt_TextChanged(object sender, EventArgs e)
+    {
+        if (decimal.Parse(amountTxt.Text) > _maxAmount)
+            amountTxt.Text = _maxAmount.ToString("0.00");
     }
 }
