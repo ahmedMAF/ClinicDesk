@@ -3,16 +3,22 @@ using QliniqRec.Database;
 namespace QliniqRec;
 
 // TODO:
-// * Perform action on enter in textbox, for search.
+// - Perform action on enter in textbox, for search.
 // * See AwesomeWinForms.
-// * Billing.
-// * UI Style (MaterialSkin or ReaLTaiizor)
+// - Billing.
+// - UI Style (MaterialSkin or ReaLTaiizor)
 // * Reports (Like: case report, referral, statistics, etc)
 // * Printing.
 // * Single laptop case.
 // * Security.
 // * 
-// * Secretary appointment status + sort
+// - Secretary appointment status + sort.
+// * Doctor color rows.
+// * Doctor edit previous visits.
+// * Secretary edit profile, past visits.
+// * Secretary edit buttons on cancelled or attended appointments. (attended can still follow up, with search filter) 
+// * Secretary missed appointment.
+// * 
 
 internal static class Program
 {

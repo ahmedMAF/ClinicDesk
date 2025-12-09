@@ -49,13 +49,13 @@ public partial class NewAppointmentForm : MaterialForm
         Appointment appointment = new()
         {
             PatientId = _patient.Id,
-            Date = datePkr.Value.Date + timePkr.Value.TimeOfDay,
+            Date = datePkr.Value.Date + timePkr.Value.TimeOfDay
         };
 
         if (_action == AppointmentAction.FollowUp)
-            appointment.OriginalAppointmentId = _appointment?.Id;
+            appointment.OriginalAppointmentId = _appointment!.OriginalAppointmentId == null ? _appointment!.Id : _appointment!.OriginalAppointmentId;
         else if (_action == AppointmentAction.Reschedule)
-            appointment.OriginalAppointmentId = _appointment?.OriginalAppointmentId;
+            appointment.OriginalAppointmentId = _appointment!.OriginalAppointmentId;
 
         ClinicDb.Instance.Appointments.Add(appointment);
         await ClinicDb.Instance.SaveChangesAsync();

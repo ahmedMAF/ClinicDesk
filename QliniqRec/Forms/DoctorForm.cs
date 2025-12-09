@@ -17,11 +17,11 @@ public partial class DoctorForm : MaterialForm
 
         FormClosed += (s, e) => Application.Exit();
         Utils.SetupAppointmentsDataGrid(appointmentsGrd, false);
-        
+
         _grdHelper = new GridButtonHelper(appointmentsGrd, new Dictionary<string, Action<int>>
         {
             ["profileBtn"] = profileBtn_Click
-        }
+        });
     }
 
     private async void DoctorForm_Load(object sender, EventArgs e)
@@ -39,7 +39,9 @@ public partial class DoctorForm : MaterialForm
             .Include(p => p.Visits)
             .FirstOrDefaultAsync(p => p.Id == appointment!.PatientId);
 
-        AppContext.ShowForm<AppointmentForm>(form => form.SetData(appointment!, patient!), async _ => await RefreshList());
+        AppContext.ShowDialog<AppointmentForm>(form => form.SetData(appointment!, patient!));
+
+        await RefreshList();
     }
     
     private async Task RefreshList()

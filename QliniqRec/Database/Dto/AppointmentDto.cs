@@ -1,4 +1,6 @@
-﻿namespace QliniqRec.Database.Dto;
+﻿using QliniqRec.Database.Models;
+
+namespace QliniqRec.Database.Dto;
 
 internal class AppointmentDto
 {

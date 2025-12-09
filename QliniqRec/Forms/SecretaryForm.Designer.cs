@@ -57,6 +57,7 @@
             appointmentsGrd.RowHeadersWidth = 51;
             appointmentsGrd.Size = new Size(702, 404);
             appointmentsGrd.TabIndex = 4;
+            appointmentsGrd.RowPrePaint += appointmentsGrd_RowPrePaint;
             // 
             // newAppointmentBtn
             // 

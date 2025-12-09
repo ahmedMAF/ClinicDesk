@@ -215,6 +215,8 @@
             visitsGrd.RowHeadersWidth = 51;
             visitsGrd.Size = new Size(1050, 249);
             visitsGrd.TabIndex = 6;
+            visitsGrd.CellMouseClick += visitsGrd_CellMouseClick;
+            visitsGrd.RowPrePaint += appointmentsGrd_RowPrePaint;
             // 
             // saveBtn
             // 
@@ -236,6 +238,7 @@
             cancelBtn.TabIndex = 28;
             cancelBtn.Text = "Cancel";
             cancelBtn.UseVisualStyleBackColor = true;
+            cancelBtn.Click += cancelBtn_Click;
             // 
             // groupBox1
             // 
@@ -361,7 +364,6 @@
             billTxt.Size = new Size(225, 27);
             billTxt.TabIndex = 31;
             billTxt.Text = "0";
-            billTxt.KeyPress += Utils.NumTxt_KeyPress;
             // 
             // label10
             // 

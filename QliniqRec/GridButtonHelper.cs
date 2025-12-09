@@ -1,10 +1,3 @@
-using Microsoft.EntityFrameworkCore;
-using QliniqRec.Database;
-using QliniqRec.Database.Dto;
-using QliniqRec.Database.Models;
-using ReaLTaiizor.Forms;
-using System.Windows.Forms;
-
 namespace QliniqRec;
 
 public class GridButtonHelper
@@ -20,12 +13,12 @@ public class GridButtonHelper
         grd.CellClick += Grd_CellClick;
     }
     
-    private void Grd_CellClick(object sender, DataGridViewCellEventArgs e)
+    private void Grd_CellClick(object? sender, DataGridViewCellEventArgs e)
     {
-        if (e.RowIndex == -1 || e.ColumnIndex == -1 || appointmentsGrd.Columns[e.ColumnIndex] is not DataGridViewButtonColumn)
+        if (e.RowIndex == -1 || e.ColumnIndex == -1 || _grd.Columns[e.ColumnIndex] is not DataGridViewButtonColumn)
             return;
             
-        string colName = appointmentsGrd.Columns[e.ColumnIndex].Name;
+        string colName = _grd.Columns[e.ColumnIndex].Name;
         _columnActions[colName](e.RowIndex);
     }
 }

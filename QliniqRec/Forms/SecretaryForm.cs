@@ -42,14 +42,14 @@ public partial class SecretaryForm : MaterialForm
     
     private void appointmentsGrd_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
     {
-        if (invoicesGrd.Rows[e.RowIndex].DataBoundItem is not AppointmentDto appointment)
+        if (appointmentsGrd.Rows[e.RowIndex].DataBoundItem is not AppointmentDto appointment)
             return;
 
-        invoicesGrd.Rows[e.RowIndex].DefaultCellStyle.BackColor = appointment.Status switch
+        appointmentsGrd.Rows[e.RowIndex].DefaultCellStyle.BackColor = appointment.Status switch
         {
             AppointmentStatus.Pending => Color.White,
             AppointmentStatus.Attended => Color.LightGreen,
-            AppointmentStatus.Cancelled => Color.LightRed,
+            AppointmentStatus.Cancelled => Color.LightPink,
             AppointmentStatus.Missed => Color.LightGray,
             AppointmentStatus.Rescheduled => Color.LightYellow,
             _ => Color.White
@@ -99,7 +99,7 @@ public partial class SecretaryForm : MaterialForm
             .Include(a => a.Patient)
             .FirstOrDefaultAsync(a => a.Id == _appointments[rowIndex].Id);
 
-        AppContext.ShowForm<NewAppointmentForm>(form => form.SetData(appointment!, AppointmentAction.FollowUp));
+        AppContext.ShowDialog<NewAppointmentForm>(form => form.SetData(appointment!, AppointmentAction.FollowUp));
         
         await RefreshList();
     }
@@ -111,7 +111,7 @@ public partial class SecretaryForm : MaterialForm
             .FirstOrDefaultAsync(a => a.Id == _appointments[rowIndex].Id);
 
         appointment!.Status = AppointmentStatus.Rescheduled;
-        AppContext.ShowForm<NewAppointmentForm>(form => form.SetData(appointment!, AppointmentAction.Reschedule));
+        AppContext.ShowDialog<NewAppointmentForm>(form => form.SetData(appointment!, AppointmentAction.Reschedule));
         
         await RefreshList();
     }

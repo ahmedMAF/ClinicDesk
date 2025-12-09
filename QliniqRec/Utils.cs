@@ -268,7 +268,7 @@ internal static class Utils
 
     public static async Task<List<AppointmentDto>> PopulateAppointmentGrid(DataGridView appointmentsGrd, DateTime date, bool onlyPending)
     {
-        varr query = ClinicDb.Instance.Appointments
+        IQueryable<Appointment> query = ClinicDb.Instance.Appointments
             .AsNoTracking()
             .Where(a => a.Date.Date == date);
         
@@ -290,7 +290,7 @@ internal static class Utils
         if (!onlyPending)
             appointments = appointments
                 .OrderBy(a => a.Status)
-                .ThenBy(a => a.Date)
+                .ThenBy(a => a.Time)
                 .ToList();
 
         for (int i = 0; i < appointments.Count; i++)

@@ -32,13 +32,14 @@ public class ClinicDb : DbContext
         string conn = $"Server={settings.Server};Port={settings.Port};Database={settings.Database};User={settings.User};Password={settings.Password};";
         DbContextOptionsBuilder<ClinicDb> optionsBuilder = new();
 
-        DialogResult result = default;
+        DialogResult result = DialogResult.None;
 
         do
         {
             try
             {
                 optionsBuilder.UseMySql(conn, ServerVersion.AutoDetect(conn));
+                result = DialogResult.OK;
             }
             catch (Exception ex)
             {
