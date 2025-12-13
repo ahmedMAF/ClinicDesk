@@ -4,21 +4,29 @@ namespace QliniqRec;
 
 // TODO:
 // - Perform action on enter in textbox, for search.
-// * See AwesomeWinForms.
 // - Billing.
 // - UI Style (MaterialSkin or ReaLTaiizor)
 // * Reports (Like: case report, referral, statistics, etc)
 // * Printing.
 // * Single laptop case.
 // * Security.
-// * 
+// * Tutorial.
+// -
+// - Screenshots
+// -
 // - Secretary appointment status + sort.
-// * Doctor color rows.
+// - Doctor color rows.
+// - Doctor visits fix buttons 2.
+// - Secretary edit buttons on cancelled or attended appointments. (attended can still follow up, with search filter)
+// - Secretary missed appointment.
+// * Patient search, multiple results form.
+// * Save LastSeenDate, IsInstalled and IsFirstRun in registry.
 // * Doctor edit previous visits.
-// * Secretary edit profile, past visits.
-// * Secretary edit buttons on cancelled or attended appointments. (attended can still follow up, with search filter) 
-// * Secretary missed appointment.
-// * 
+// * Secretary edit profile, show past visits.
+// * Filter height = 0 to hide row.
+// * Custom calendar, date picker and time picker controls with material theme.
+// * Better material theme implementation for WinForms.
+// * See AwesomeWinForms.
 
 internal static class Program
 {
@@ -30,8 +38,8 @@ internal static class Program
     [STAThread]
     private static void Main()
     {
-        //AppLicense.Validate();
         Settings.Initialize();
+        //AppLicense.Validate();
         
         if (!Settings.Instance.Initialized)
         {

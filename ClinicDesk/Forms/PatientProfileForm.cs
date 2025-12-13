@@ -4,11 +4,14 @@ namespace QliniqRec.Forms;
 
 public partial class PatientProfileForm : Form
 {
+    private readonly VisitsGrid _grdHelper;
+
     private Patient _patient = null!;
 
     public PatientProfileForm()
     {
         InitializeComponent();
+        _grdHelper = new VisitsGrid(visitsGrd);
     }
 
     internal void SetData(Patient patient)
@@ -30,5 +33,7 @@ public partial class PatientProfileForm : Form
             chronicDiseasesLst.Items.Add(disease);
 
         notesTxt.Text = _patient.Notes;
+        
+        await _grdHelper.RefreshList(null, _patient);
     }
 }

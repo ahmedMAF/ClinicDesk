@@ -3,7 +3,6 @@ using ReaLTaiizor.Colors;
 using ReaLTaiizor.Forms;
 using ReaLTaiizor.Manager;
 using ReaLTaiizor.Util;
-using static ReaLTaiizor.Controls.HopeTabPage;
 
 namespace QliniqRec;
 

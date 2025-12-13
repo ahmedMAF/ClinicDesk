@@ -1,0 +1,155 @@
+namespace QliniqRec.ControlHelpers;
+
+public class VisitsGrid : GridButtonHelper
+{
+    private Patient _patient = null!;
+    private int? _originalVisitId;
+    private bool _isShowingOneVisit;
+    
+    public VisitsGrid(DataGridView grd) : base(grd, null)
+    {
+        ColumnActions = new Dictionary<string, Action<int>>
+        {
+            ["showBtn"] = showBtn_Click
+        }
+        
+        SetupVisitsDataGrid();
+    }
+    
+    private static void SetupVisitsDataGrid()
+    {
+        Utils.SetupDataGrid(Grid);
+        
+        Grid.CellFormatting += Grid_CellFormatting;
+        Grid.CellPainting += Grid_CellPainting;
+
+        Grid.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Width = 50,
+            DataPropertyName = "Serial",
+            HeaderText = "No."
+        });
+
+        Grid.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Width = 200,
+            DataPropertyName = "CheckInAt",
+            HeaderText = "Date",
+            DefaultCellStyle = { Format = "dd-MM-yyyy hh:mm tt" }
+        });
+
+        Grid.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Width = 300,
+            DataPropertyName = "Diagnosis",
+            HeaderText = "Diagnosis"
+        });
+
+        Grid.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Width = 300,
+            DataPropertyName = "Treatment",
+            HeaderText = "Treatment"
+        });
+
+        Grid.Columns.Add(new DataGridViewButtonColumn
+        {
+            Name = "showBtn",
+            Width = 120,
+            HeaderText = "",
+            UseColumnTextForButtonValue = false
+        });
+    }
+    
+    private void showBtn_Click(int rowIndex)
+    {
+        VisitDto visit = (VisitDto)Grid.Rows[rowIndex].DataBoundItem;
+        PopulateVisitsGrd(rowIndex == 0 && _isShowingOneVisit ? null : visit.Id);
+    }
+    
+    private void Grid_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+    {
+        if (e.ColumnIndex == -1 || e.RowIndex == -1)
+           return;
+        
+        VisitDto data = (VisitDto)Grid.Rows[e.RowIndex].DataBoundItem;
+        
+        // Disable the buttons on visits with no followups and on followups themselves.
+        if (Grid.Columns[e.ColumnIndex].Name == "showBtn" && (data.FollowUpsCount == 0 ||
+            (_isShowingOneVisit && e.ColumnIndex != 0)))
+        {
+            row.Cells[e.ColumnIndex].ReadOnly = true;
+            e.PaintBackground(e.CellBounds, true);
+            e.Handled = true;
+        }
+    }
+    
+    private void Grid_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+    {
+        if (e.RowIndex == -1 || Grid.Columns[e.ColumnIndex].Name != "showBtn")
+            return;
+            
+        varr row = Grid.Rows[e.RowIndex];
+        VisitDto data = (VisitDto)row.DataBoundItem;
+        
+        row.Cells[e.ColumnIndex].Value = _isShowingOneVisit ? "Back" : "Show Followups";
+    }
+    
+    public void RefreshList(int? originalVisitId, Patient patient)
+    {
+        _patient = patient;
+        _originalVisitId = originalVisitId;
+        
+        PopulateGrid(false);
+    }
+    
+    private void PopulateGrid()
+    {
+        _isShowingOneVisit = _originalVisitId != null;
+        
+        List<VisitDto> visits = _patient.Visits
+            .Where(v => v.OriginalVisitId == _originalVisitId)
+            .Select(v => new VisitDto
+            {
+                Id = v.Id,
+                CheckInAt = v.CheckInAt,
+                Type = v.Type,
+                Diagnosis = v.Diagnosis,
+                Treatment = v.Treatment,
+                FollowUpsCount = v.FollowUps.Count
+            })
+            .ToList();
+
+        // For the backward row
+        if (_isShowingOneVisit)
+        {
+            // Show original visit.
+            VisitDto? orgVisit = _patient.Visits
+                .Select(v => new VisitDto
+                {
+                    Id = v.Id,
+                    CheckInAt = v.CheckInAt,
+                    Type = v.Type,
+                    Diagnosis = v.Diagnosis,
+                    Treatment = v.Treatment,
+                })
+                .FirstOrDefault(v => v.Id == _originalVisitId);
+
+            visits.Insert(0, orgVisit!);
+
+            for (int i = 1; i < visits.Count; i++)
+                visits[i].Serial = i;
+        }
+        else
+        {
+            for (int i = 0; i < visits.Count; i++)
+                visits[i].Serial = i + 1;
+        }
+
+        Grid.DataSource = visits;
+        
+        // Set a special color for the original visit.
+        if (_isShowingOneVisit)
+            Grid.Rows[0].DefaultCellStyle.BackColor = Color.LightBlue;
+    }
+}

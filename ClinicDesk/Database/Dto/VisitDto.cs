@@ -10,4 +10,5 @@ internal class VisitDto
     public VisitType Type { get; set; }
     public string Diagnosis { get; set; } = null!;
     public string Treatment { get; set; } = null!;
+    public int FollowUpsCount { get; set; }
 }
