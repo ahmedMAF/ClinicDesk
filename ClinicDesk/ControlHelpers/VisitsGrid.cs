@@ -1,4 +1,7 @@
-namespace QliniqRec.ControlHelpers;
+using ClinicDesk.Database.Dto;
+using ClinicDesk.Database.Models;
+
+namespace ClinicDesk.ControlHelpers;
 
 public class VisitsGrid : GridButtonHelper
 {
@@ -11,12 +14,12 @@ public class VisitsGrid : GridButtonHelper
         ColumnActions = new Dictionary<string, Action<int>>
         {
             ["showBtn"] = showBtn_Click
-        }
+        };
         
         SetupVisitsDataGrid();
     }
     
-    private static void SetupVisitsDataGrid()
+    private void SetupVisitsDataGrid()
     {
         Utils.SetupDataGrid(Grid);
         
@@ -63,16 +66,20 @@ public class VisitsGrid : GridButtonHelper
     
     private void showBtn_Click(int rowIndex)
     {
-        VisitDto visit = (VisitDto)Grid.Rows[rowIndex].DataBoundItem;
-        PopulateVisitsGrd(rowIndex == 0 && _isShowingOneVisit ? null : visit.Id);
+        VisitDto visit = (VisitDto)Grid.Rows[rowIndex].DataBoundItem!;
+
+        _originalVisitId = rowIndex == 0 && _isShowingOneVisit ? null : visit.Id;
+
+        PopulateGrid();
     }
     
-    private void Grid_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+    private void Grid_CellPainting(object? sender, DataGridViewCellPaintingEventArgs e)
     {
         if (e.ColumnIndex == -1 || e.RowIndex == -1)
            return;
-        
-        VisitDto data = (VisitDto)Grid.Rows[e.RowIndex].DataBoundItem;
+
+        DataGridViewRow row = Grid.Rows[e.RowIndex];
+        VisitDto data = (VisitDto)row.DataBoundItem!;
         
         // Disable the buttons on visits with no followups and on followups themselves.
         if (Grid.Columns[e.ColumnIndex].Name == "showBtn" && (data.FollowUpsCount == 0 ||
@@ -84,13 +91,13 @@ public class VisitsGrid : GridButtonHelper
         }
     }
     
-    private void Grid_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+    private void Grid_CellFormatting(object? sender, DataGridViewCellFormattingEventArgs e)
     {
         if (e.RowIndex == -1 || Grid.Columns[e.ColumnIndex].Name != "showBtn")
             return;
-            
-        varr row = Grid.Rows[e.RowIndex];
-        VisitDto data = (VisitDto)row.DataBoundItem;
+
+        DataGridViewRow row = Grid.Rows[e.RowIndex];
+        VisitDto data = (VisitDto)row.DataBoundItem!;
         
         row.Cells[e.ColumnIndex].Value = _isShowingOneVisit ? "Back" : "Show Followups";
     }
@@ -100,7 +107,7 @@ public class VisitsGrid : GridButtonHelper
         _patient = patient;
         _originalVisitId = originalVisitId;
         
-        PopulateGrid(false);
+        PopulateGrid();
     }
     
     private void PopulateGrid()

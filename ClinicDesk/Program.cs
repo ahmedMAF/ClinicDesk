@@ -1,6 +1,6 @@
-using QliniqRec.Database;
+using ClinicDesk.Database;
 
-namespace QliniqRec;
+namespace ClinicDesk;
 
 // TODO:
 // - Perform action on enter in textbox, for search.
@@ -30,7 +30,7 @@ namespace QliniqRec;
 
 internal static class Program
 {
-    public static bool IsReady => AppLicense.IsValid && Settings.Instance.Initialized && ClinicDb.IsRunning;
+    public static bool IsReady => AppLicense.IsValid && Settings.Instance.AccountType != AccountType.NotDefined && ClinicDb.IsRunning;
     
     /// <summary>
     /// The main entry point for the application.
@@ -40,14 +40,6 @@ internal static class Program
     {
         Settings.Initialize();
         //AppLicense.Validate();
-        
-        if (!Settings.Instance.Initialized)
-        {
-            // TODO: Call installer.
-            
-            Settings.Instance.Initialized = true;
-            Settings.SaveSettings();
-        }
         
         if (Settings.Instance.LastSeenDate > DateTime.UtcNow)
         {
@@ -61,11 +53,14 @@ internal static class Program
             Settings.SaveSettings();
         }
         
-        // TODO: Run MySQL if server.
-        ClinicDb.Initialize();
+        if (Settings.Instance.AccountType == AccountType.NotDefined)
+        {
+            // TODO: Run MySQL if server.
+            ClinicDb.Initialize();
 
-        if (!ClinicDb.IsRunning)
-            return;
+            if (!ClinicDb.IsRunning)
+                return;
+        }
 
         // To customize application configuration such as set high DPI settings or default font,
         // see https://aka.ms/applicationconfiguration.

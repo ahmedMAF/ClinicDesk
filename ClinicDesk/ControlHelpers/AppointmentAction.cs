@@ -1,4 +1,4 @@
-namespace QliniqRec.ControlHelpers;
+namespace ClinicDesk.ControlHelpers;
 
 public enum AppointmentAction : byte
 {

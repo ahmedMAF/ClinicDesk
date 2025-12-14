@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using QliniqRec.Database;
+using ClinicDesk.Database;
 
 #nullable disable
 
-namespace QliniqRec.Migrations
+namespace ClinicDesk.Migrations
 {
     [DbContext(typeof(ClinicDb))]
     [Migration("20251201101948_Initial")]

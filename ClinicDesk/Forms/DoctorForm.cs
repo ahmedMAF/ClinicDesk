@@ -1,10 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using QliniqRec.Database;
-using QliniqRec.Database.Dto;
-using QliniqRec.Database.Models;
-using ReaLTaiizor.Forms;
+﻿using ReaLTaiizor.Forms;
+using ClinicDesk.ControlHelpers;
 
-namespace QliniqRec.Forms;
+namespace ClinicDesk.Forms;
 
 public partial class DoctorForm : MaterialForm
 {

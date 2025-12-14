@@ -1,10 +1,10 @@
-using QliniqRec.Forms;
+using ClinicDesk.Forms;
 using ReaLTaiizor.Colors;
 using ReaLTaiizor.Forms;
 using ReaLTaiizor.Manager;
 using ReaLTaiizor.Util;
 
-namespace QliniqRec;
+namespace ClinicDesk;
 
 public class AppContext : ApplicationContext
 {
@@ -16,10 +16,10 @@ public class AppContext : ApplicationContext
 
         skin.Theme = MaterialSkinManager.Themes.LIGHT;
         skin.ColorScheme = new MaterialColorScheme(
-            MaterialPrimary.Red500,
-            MaterialPrimary.Red700,
-            MaterialPrimary.Red100,
-            MaterialAccent.Blue200,
+            MaterialPrimary.Indigo500,
+            MaterialPrimary.Indigo700,
+            MaterialPrimary.Indigo100,
+            MaterialAccent.Red200,
             MaterialTextShade.WHITE
         );
 
@@ -34,7 +34,9 @@ public class AppContext : ApplicationContext
                 break;
                 
             default:
+                // TODO: Call installer.
                 ShowForm<WelcomeForm>();
+                // ShowForm<InstallForm>();
                 break;
         }
     }

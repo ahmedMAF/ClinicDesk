@@ -1,6 +1,6 @@
-﻿using QliniqRec.Database.Models;
+﻿using ClinicDesk.Database.Models;
 
-namespace QliniqRec.Database.Dto;
+namespace ClinicDesk.Database.Dto;
 
 internal class AppointmentDto
 {

@@ -1,4 +1,4 @@
-﻿namespace QliniqRec.Forms
+﻿namespace ClinicDesk.Forms
 {
     partial class AppointmentForm
     {
@@ -215,8 +215,6 @@
             visitsGrd.RowHeadersWidth = 51;
             visitsGrd.Size = new Size(1050, 249);
             visitsGrd.TabIndex = 6;
-            visitsGrd.CellMouseClick += visitsGrd_CellMouseClick;
-            visitsGrd.RowPrePaint += appointmentsGrd_RowPrePaint;
             // 
             // saveBtn
             // 

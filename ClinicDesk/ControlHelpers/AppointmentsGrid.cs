@@ -1,4 +1,10 @@
-namespace QliniqRec.ControlHelpers;
+using ClinicDesk.Database;
+using ClinicDesk.Database.Dto;
+using ClinicDesk.Database.Models;
+using ClinicDesk.Forms;
+using Microsoft.EntityFrameworkCore;
+
+namespace ClinicDesk.ControlHelpers;
 
 public class AppointmentsGrid : GridButtonHelper
 {
@@ -7,10 +13,10 @@ public class AppointmentsGrid : GridButtonHelper
     private DateTime _date = DateTime.Now;
     private List<AppointmentDto> _appointments = null!;
     
-    public AppointmentsGrid(DataGridView grd, bool isSecretary) : base(grd, null)
+    public AppointmentsGrid(DataGridView grd, bool isSecretary) : base(grd, null!)
     {
         _isSecretary = isSecretary;
-        
+
         ColumnActions = new Dictionary<string, Action<int>>
         {
             ["profileBtn"] = isSecretary ? profileBtn_Click : visitBtn_Click,
@@ -18,7 +24,7 @@ public class AppointmentsGrid : GridButtonHelper
             ["followupBtn"] = followupBtn_Click,
             ["rescheduleBtn"] = rescheduleBtn_Click,
             ["cancelBtn"] = cancelBtn_Click
-        }
+        };
         
         SetupAppointmentsDataGrid();
     }
@@ -125,27 +131,6 @@ public class AppointmentsGrid : GridButtonHelper
             UseColumnTextForButtonValue = true
         });
     }
-    
-    private async void newAppointmentBtn_Click(object sender, EventArgs e)
-    {
-        Patient patient = null!;
-        
-        if (AppContext.ShowDialog<PatientSearchForm>(actionAfterShow: (form, _) => patient = form.Patient) == DialogResult.Cancel)
-            return;
-        
-        AppContext.ShowDialog<NewAppointmentForm>(form => form.SetData(patient));
-        await RefreshList();
-    }
-
-    private void billingSearchBtn_Click(object sender, EventArgs e)
-    {
-        Patient patient = null!;
-        
-        if (AppContext.ShowDialog<PatientSearchForm>(actionAfterShow: (form, _) => patient = form.Patient) == DialogResult.Cancel)
-            return;
-            
-        AppContext.ShowDialog<BillingForm>(form => form.SetData(patient));
-    }
 
     private async void profileBtn_Click(int rowIndex)
     {
@@ -213,7 +198,7 @@ public class AppointmentsGrid : GridButtonHelper
         await RefreshList();
     }
     
-    private void Grid_RowPrePaint(object sender, DataGridViewRowPrePaintEventArgs e)
+    private void Grid_RowPrePaint(object? sender, DataGridViewRowPrePaintEventArgs e)
     {
         if (Grid.Rows[e.RowIndex].DataBoundItem is not AppointmentDto appointment)
             return;
@@ -229,12 +214,13 @@ public class AppointmentsGrid : GridButtonHelper
         };
     }
     
-    private void Grid_CellPainting(object sender, DataGridViewCellPaintingEventArgs e)
+    private void Grid_CellPainting(object? sender, DataGridViewCellPaintingEventArgs e)
     {
         if (e.ColumnIndex == -1 || e.RowIndex == -1)
            return;
-        
-        AppointmentDto appointment = (AppointmentDto)Grid.Rows[e.RowIndex].DataBoundItem;
+
+        DataGridViewRow row = Grid.Rows[e.RowIndex];
+        AppointmentDto appointment = (AppointmentDto)row.DataBoundItem!;
         
         switch (Grid.Columns[e.ColumnIndex].Name)
         {
@@ -245,7 +231,7 @@ public class AppointmentsGrid : GridButtonHelper
                 break;
                 
             case "rescheduleBtn":
-                if (appointment.Status is AppointmentStatus.Canceled or AppointmentStatus.Rescheduled or AppointmentStatus.Attended)
+                if (appointment.Status is AppointmentStatus.Cancelled or AppointmentStatus.Rescheduled or AppointmentStatus.Attended)
                     DisableButton();
             
                 break;
@@ -257,7 +243,7 @@ public class AppointmentsGrid : GridButtonHelper
                 break;
         }
         
-        static void DisableButton()
+        void DisableButton()
         {
             row.Cells[e.ColumnIndex].ReadOnly = true;
             e.PaintBackground(e.CellBounds, true);
@@ -265,10 +251,10 @@ public class AppointmentsGrid : GridButtonHelper
         }
     }
     
-    private async Task RefreshList(DateTime? date = null)
+    public async Task RefreshList(DateTime? date = null)
     {
-        if (date != null)
-            _date = date;
+        if (date.HasValue)
+            _date = date.Value;
             
         await Utils.MarkMissedAppointments();
         await PopulateGrid();
@@ -289,10 +275,10 @@ public class AppointmentsGrid : GridButtonHelper
                 Status = a.Status
             })
             .OrderBy(a => a.Status)
-            .ThenBy(a => a.Date)
+            .ThenBy(a => a.Time)
             .ToListAsync();
             
-        for (int i = 0; i < appointments.Count; i++)
+        for (int i = 0; i < _appointments.Count; i++)
             _appointments[i].Serial = i + 1;
 
         Grid.DataSource = _appointments;

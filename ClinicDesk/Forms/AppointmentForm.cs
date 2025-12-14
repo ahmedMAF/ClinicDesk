@@ -1,8 +1,9 @@
-﻿using QliniqRec.Database;
-using QliniqRec.Database.Dto;
-using QliniqRec.Database.Models;
+﻿using ClinicDesk.ControlHelpers;
+using ClinicDesk.Database;
+using ClinicDesk.Database.Dto;
+using ClinicDesk.Database.Models;
 
-namespace QliniqRec.Forms;
+namespace ClinicDesk.Forms;
 
 public partial class AppointmentForm : Form
 {
@@ -27,7 +28,7 @@ public partial class AppointmentForm : Form
             _originalVisitId = appointment.OriginalAppointment.VisitId;
     }
 
-    private async void AppointmentForm_Load(object sender, EventArgs e)
+    private void AppointmentForm_Load(object sender, EventArgs e)
     {
         nameTxt.Text = _patient.Name;
         sexCbo.SelectedIndex = (int)_patient.Sex;
@@ -42,7 +43,7 @@ public partial class AppointmentForm : Form
 
         notesTxt.Text = _patient.Notes;
 
-        await _grdHelper.RefreshList(_originalVisitId, _patient);
+        _grdHelper.RefreshList(_originalVisitId, _patient);
     }
 
     private async void saveBtn_Click(object sender, EventArgs e)

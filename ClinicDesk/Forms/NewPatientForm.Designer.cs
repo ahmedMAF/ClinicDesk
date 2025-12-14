@@ -1,4 +1,4 @@
-﻿namespace QliniqRec.Forms
+﻿namespace ClinicDesk.Forms
 {
     partial class NewPatientForm
     {

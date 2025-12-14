@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace QliniqRec.Migrations
+namespace ClinicDesk.Migrations
 {
     /// <inheritdoc />
     public partial class Initial : Migration

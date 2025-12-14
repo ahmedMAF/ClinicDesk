@@ -2,7 +2,7 @@ using Portable.Licensing;
 using Portable.Licensing.Security.Cryptography;
 using Portable.Licensing.Validation;
 
-namespace QliniqRec;
+namespace ClinicDesk;
 
 public static class AppLicense
 {

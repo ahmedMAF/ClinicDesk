@@ -1,6 +1,7 @@
-﻿using QliniqRec.Database.Models;
+﻿using ClinicDesk.ControlHelpers;
+using ClinicDesk.Database.Models;
 
-namespace QliniqRec.Forms;
+namespace ClinicDesk.Forms;
 
 public partial class PatientProfileForm : Form
 {
@@ -34,6 +35,6 @@ public partial class PatientProfileForm : Form
 
         notesTxt.Text = _patient.Notes;
         
-        await _grdHelper.RefreshList(null, _patient);
+        _grdHelper.RefreshList(null, _patient);
     }
 }

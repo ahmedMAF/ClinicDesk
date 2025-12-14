@@ -1,6 +1,6 @@
 ﻿using ReaLTaiizor.Forms;
 
-namespace QliniqRec.Forms;
+namespace ClinicDesk.Forms;
 
 public partial class PaymentForm : MaterialForm
 {

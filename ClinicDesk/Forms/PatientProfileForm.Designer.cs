@@ -1,4 +1,4 @@
-﻿namespace QliniqRec.Forms
+﻿namespace ClinicDesk.Forms
 {
     partial class PatientProfileForm
     {
@@ -36,6 +36,9 @@
             label7 = new Label();
             label6 = new Label();
             groupBox1 = new GroupBox();
+            ageTxt = new TextBox();
+            label4 = new Label();
+            dobTxt = new TextBox();
             maritalCbo = new ComboBox();
             label5 = new Label();
             sexCbo = new ComboBox();
@@ -44,18 +47,14 @@
             nameTxt = new TextBox();
             label1 = new Label();
             groupBox6 = new GroupBox();
-            visitLst = new ListView();
-            columnHeader1 = new ColumnHeader();
-            columnHeader2 = new ColumnHeader();
             editBtn = new Button();
             cancelBtn = new Button();
-            dobTxt = new TextBox();
-            ageTxt = new TextBox();
-            label4 = new Label();
+            visitsGrd = new DataGridView();
             groupBox4.SuspendLayout();
             groupBox3.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)visitsGrd).BeginInit();
             SuspendLayout();
             // 
             // groupBox4
@@ -153,6 +152,33 @@
             groupBox1.TabStop = false;
             groupBox1.Text = "Personal Info";
             // 
+            // ageTxt
+            // 
+            ageTxt.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            ageTxt.Location = new Point(411, 93);
+            ageTxt.Name = "ageTxt";
+            ageTxt.ReadOnly = true;
+            ageTxt.Size = new Size(117, 27);
+            ageTxt.TabIndex = 16;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(369, 96);
+            label4.Name = "label4";
+            label4.Size = new Size(36, 20);
+            label4.TabIndex = 15;
+            label4.Text = "Age";
+            // 
+            // dobTxt
+            // 
+            dobTxt.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            dobTxt.Location = new Point(132, 93);
+            dobTxt.Name = "dobTxt";
+            dobTxt.ReadOnly = true;
+            dobTxt.Size = new Size(231, 27);
+            dobTxt.TabIndex = 14;
+            // 
             // maritalCbo
             // 
             maritalCbo.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
@@ -225,36 +251,13 @@
             // groupBox6
             // 
             groupBox6.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            groupBox6.Controls.Add(visitLst);
+            groupBox6.Controls.Add(visitsGrd);
             groupBox6.Location = new Point(12, 319);
             groupBox6.Name = "groupBox6";
             groupBox6.Size = new Size(1068, 315);
             groupBox6.TabIndex = 22;
             groupBox6.TabStop = false;
             groupBox6.Text = "Past Visits";
-            // 
-            // visitLst
-            // 
-            visitLst.Activation = ItemActivation.TwoClick;
-            visitLst.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            visitLst.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader2 });
-            visitLst.FullRowSelect = true;
-            visitLst.Location = new Point(6, 26);
-            visitLst.MultiSelect = false;
-            visitLst.Name = "visitLst";
-            visitLst.Size = new Size(1056, 283);
-            visitLst.TabIndex = 3;
-            visitLst.UseCompatibleStateImageBehavior = false;
-            visitLst.View = View.Details;
-            // 
-            // columnHeader1
-            // 
-            columnHeader1.Text = "ID";
-            // 
-            // columnHeader2
-            // 
-            columnHeader2.Text = "Time";
-            columnHeader2.Width = 120;
             // 
             // editBtn
             // 
@@ -274,32 +277,14 @@
             cancelBtn.Text = "Cancel";
             cancelBtn.UseVisualStyleBackColor = true;
             // 
-            // dobTxt
+            // visitsGrd
             // 
-            dobTxt.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            dobTxt.Location = new Point(132, 93);
-            dobTxt.Name = "dobTxt";
-            dobTxt.ReadOnly = true;
-            dobTxt.Size = new Size(231, 27);
-            dobTxt.TabIndex = 14;
-            // 
-            // ageTxt
-            // 
-            ageTxt.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ageTxt.Location = new Point(411, 93);
-            ageTxt.Name = "ageTxt";
-            ageTxt.ReadOnly = true;
-            ageTxt.Size = new Size(117, 27);
-            ageTxt.TabIndex = 16;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(369, 96);
-            label4.Name = "label4";
-            label4.Size = new Size(36, 20);
-            label4.TabIndex = 15;
-            label4.Text = "Age";
+            visitsGrd.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            visitsGrd.Location = new Point(6, 26);
+            visitsGrd.Name = "visitsGrd";
+            visitsGrd.RowHeadersWidth = 51;
+            visitsGrd.Size = new Size(1056, 283);
+            visitsGrd.TabIndex = 29;
             // 
             // PatientProfileForm
             // 
@@ -324,6 +309,7 @@
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             groupBox6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)visitsGrd).EndInit();
             ResumeLayout(false);
         }
 
@@ -343,14 +329,12 @@
         private TextBox nameTxt;
         private Label label1;
         private GroupBox groupBox6;
-        private ListView visitLst;
-        private ColumnHeader columnHeader1;
-        private ColumnHeader columnHeader2;
         private ListBox chronicDiseasesLst;
         private Button editBtn;
         private Button cancelBtn;
         private TextBox dobTxt;
         private TextBox ageTxt;
         private Label label4;
+        private DataGridView visitsGrd;
     }
 }

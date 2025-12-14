@@ -1,4 +1,4 @@
-﻿namespace QliniqRec.Database.Models;
+﻿namespace ClinicDesk.Database.Models;
 
 public class Visit
 {

@@ -1,4 +1,4 @@
-namespace QliniqRec.Forms;
+namespace ClinicDesk.Forms;
 
 public partial class WelcomeForm : Form
 {

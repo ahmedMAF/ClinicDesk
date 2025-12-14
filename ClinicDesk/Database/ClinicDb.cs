@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using QliniqRec.Database.Models;
+using ClinicDesk.Database.Models;
 
-namespace QliniqRec.Database;
+namespace ClinicDesk.Database;
 
 public class ClinicDb : DbContext
 {

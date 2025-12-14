@@ -1,4 +1,4 @@
-﻿namespace QliniqRec.Database.Dto;
+﻿namespace ClinicDesk.Database.Dto;
 
 internal class PaymentDto
 {

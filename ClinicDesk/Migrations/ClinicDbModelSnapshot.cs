@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using QliniqRec.Database;
+using ClinicDesk.Database;
 
 #nullable disable
 
-namespace QliniqRec.Migrations
+namespace ClinicDesk.Migrations
 {
     [DbContext(typeof(ClinicDb))]
     partial class ClinicDbModelSnapshot : ModelSnapshot

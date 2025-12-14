@@ -1,4 +1,4 @@
-﻿namespace QliniqRec.Forms
+﻿namespace ClinicDesk.Forms
 {
     partial class PatientSearchForm
     {
@@ -34,6 +34,8 @@
             materialLabel2 = new ReaLTaiizor.Controls.MaterialLabel();
             phoneTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             searchPhoneBtn = new ReaLTaiizor.Controls.MaterialButton();
+            patientsGrd = new DataGridView();
+            ((System.ComponentModel.ISupportInitialize)patientsGrd).BeginInit();
             SuspendLayout();
             // 
             // searchNameBtn
@@ -51,7 +53,7 @@
             searchNameBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             searchNameBtn.Name = "searchNameBtn";
             searchNameBtn.NoAccentTextColor = Color.Empty;
-            searchNameBtn.Size = new Size(158, 36);
+            searchNameBtn.Size = new Size(167, 36);
             searchNameBtn.TabIndex = 1;
             searchNameBtn.Text = "Search by Name";
             searchNameBtn.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -84,6 +86,7 @@
             nameTxt.ShortcutsEnabled = true;
             nameTxt.Size = new Size(312, 48);
             nameTxt.TabIndex = 0;
+            nameTxt.TabStop = false;
             nameTxt.TextAlign = HorizontalAlignment.Left;
             nameTxt.TrailingIcon = null;
             nameTxt.UseSystemPasswordChar = false;
@@ -138,6 +141,7 @@
             phoneTxt.ShortcutsEnabled = true;
             phoneTxt.Size = new Size(312, 48);
             phoneTxt.TabIndex = 2;
+            phoneTxt.TabStop = false;
             phoneTxt.TextAlign = HorizontalAlignment.Left;
             phoneTxt.TrailingIcon = null;
             phoneTxt.UseSystemPasswordChar = false;
@@ -158,7 +162,7 @@
             searchPhoneBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             searchPhoneBtn.Name = "searchPhoneBtn";
             searchPhoneBtn.NoAccentTextColor = Color.Empty;
-            searchPhoneBtn.Size = new Size(158, 36);
+            searchPhoneBtn.Size = new Size(167, 36);
             searchPhoneBtn.TabIndex = 4;
             searchPhoneBtn.Text = "Search by Phone";
             searchPhoneBtn.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -166,11 +170,21 @@
             searchPhoneBtn.UseVisualStyleBackColor = true;
             searchPhoneBtn.Click += searchPhoneBtn_Click;
             // 
+            // patientsGrd
+            // 
+            patientsGrd.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            patientsGrd.Location = new Point(6, 183);
+            patientsGrd.Name = "patientsGrd";
+            patientsGrd.RowHeadersWidth = 51;
+            patientsGrd.Size = new Size(565, 253);
+            patientsGrd.TabIndex = 6;
+            // 
             // PatientSearchForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(578, 191);
+            ClientSize = new Size(578, 442);
+            Controls.Add(patientsGrd);
             Controls.Add(materialLabel2);
             Controls.Add(phoneTxt);
             Controls.Add(searchPhoneBtn);
@@ -186,6 +200,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Patient Search";
             KeyPress += PatientSearchForm_KeyPress;
+            ((System.ComponentModel.ISupportInitialize)patientsGrd).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -198,5 +213,6 @@
         private ReaLTaiizor.Controls.MaterialLabel materialLabel2;
         private ReaLTaiizor.Controls.MaterialTextBoxEdit phoneTxt;
         private ReaLTaiizor.Controls.MaterialButton searchPhoneBtn;
+        private DataGridView patientsGrd;
     }
 }

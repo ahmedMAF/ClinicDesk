@@ -1,18 +1,29 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using QliniqRec.Database;
-using QliniqRec.Database.Models;
+using ClinicDesk.Database;
+using ClinicDesk.Database.Dto;
+using ClinicDesk.Database.Models;
 using ReaLTaiizor.Forms;
 using System.Data;
+using ClinicDesk.ControlHelpers;
 
-namespace QliniqRec.Forms;
+namespace ClinicDesk.Forms;
 
 public partial class PatientSearchForm : MaterialForm
 {
+    private List<Patient> _patients = null!;
+    private readonly GridButtonHelper _patientGrid;
+
     internal Patient Patient { get; private set; } = null!;
 
     public PatientSearchForm()
     {
         InitializeComponent();
+
+        Utils.SetupPatientsDataGrid(patientsGrd);
+        _patientGrid = new GridButtonHelper(patientsGrd, new Dictionary<string, Action<int>>
+        {
+            ["chooseBtn"] = chooseBtn_Click
+        });
     }
 
     private void PatientSearchForm_Load(object sender, EventArgs e)
@@ -28,10 +39,12 @@ public partial class PatientSearchForm : MaterialForm
             return;
         }
 
-        CheckSearchResult(await ClinicDb.Instance.Patients
+        _patients = await ClinicDb.Instance.Patients
             .AsNoTracking()
             .Where(p => p.Name.Contains(nameTxt.Text))
-            .ToListAsync());
+            .ToListAsync();
+
+        CheckSearchResult();
     }
 
     private async void searchPhoneBtn_Click(object sender, EventArgs e)
@@ -42,27 +55,39 @@ public partial class PatientSearchForm : MaterialForm
             return;
         }
 
-        CheckSearchResult(await ClinicDb.Instance.Patients
+        _patients = await ClinicDb.Instance.Patients
             .AsNoTracking()
             .Where(p => p.Phone != null && p.Phone.Contains(phoneTxt.Text))
-            .ToListAsync());
+            .ToListAsync();
+
+        CheckSearchResult();
     }
 
-    private void CheckSearchResult(List<Patient> patients)
+    private void CheckSearchResult()
     {
-        if (patients.Count == 1)
+        if (_patients.Count == 1)
         {
             // Patient found.
-            Patient = patients[0];
+            Patient = _patients[0];
             DialogResult = DialogResult.OK;
             Close();
 
             return;
         }
 
-        if (patients.Count > 1)
+        if (_patients.Count > 1)
         {
             // Search was ambiguous.
+            List<PatientDto> patientsResult = _patients
+                .Select(p => new PatientDto
+                {
+                    Id = p.Id,
+                    Name = p.Name,
+                    Phone = p.Phone!
+                })
+                .ToList();
+
+            patientsGrd.DataSource = patientsResult;
 
             return;
         }
@@ -108,5 +133,14 @@ public partial class PatientSearchForm : MaterialForm
             searchPhoneBtn.PerformClick();
             e.Handled = true;
         }
+    }
+
+    private void chooseBtn_Click(int rowIndex)
+    {
+        // Safe-guard to account for row sorting.
+        PatientDto patient = (PatientDto)patientsGrd.Rows[rowIndex].DataBoundItem!;
+        Patient = _patients.FirstOrDefault(p => p.Id == patient.Id)!;
+        DialogResult = DialogResult.OK;
+        Close();
     }
 }

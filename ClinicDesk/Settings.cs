@@ -1,6 +1,6 @@
 ﻿using MemoryPack;
 
-namespace QliniqRec;
+namespace ClinicDesk;
 
 [MemoryPackable]
 public partial class Settings
@@ -8,7 +8,7 @@ public partial class Settings
     [MemoryPackIgnore]
     private static readonly string SettingsPath = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-        "QliniqRec",
+        "ClinicDesk",
         "settings.bin"
     );
     
@@ -17,11 +17,10 @@ public partial class Settings
 
     public string Server { get; internal set; } = "127.0.0.1";
     public ushort Port { get; internal set; } = 3306;
-    public string Database { get; internal set; } = "qliniq_rec_db";
+    public string Database { get; internal set; } = "clinic_desk_db";
     public string User { get; internal set; } = "root";
     public string Password { get; internal set; } = "";
 
-    public bool Initialized { get; internal set; }
     public AccountType AccountType { get; internal set; }
     public DateTime LastSeenDate { get; internal set; } = DateTime.UtcNow;
 
@@ -51,11 +50,4 @@ public partial class Settings
         var bytes = MemoryPackSerializer.Serialize(Instance);
         File.WriteAllBytes(SettingsPath, bytes);
     }
-}
-
-public enum AccountType : byte
-{
-    NotDefined,
-    Doctor,
-    Secretary
 }

@@ -1,11 +1,12 @@
 ﻿using System.Data;
 using Microsoft.EntityFrameworkCore;
-using QliniqRec.Database;
-using QliniqRec.Database.Dto;
-using QliniqRec.Database.Models;
+using ClinicDesk.Database;
+using ClinicDesk.Database.Dto;
+using ClinicDesk.Database.Models;
 using ReaLTaiizor.Forms;
+using ClinicDesk.ControlHelpers;
 
-namespace QliniqRec.Forms;
+namespace ClinicDesk.Forms;
 
 public partial class BillingForm : MaterialForm
 {

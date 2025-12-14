@@ -1,7 +1,7 @@
-﻿using QliniqRec.Database;
-using QliniqRec.Database.Models;
+﻿using ClinicDesk.Database;
+using ClinicDesk.Database.Models;
 
-namespace QliniqRec.Forms;
+namespace ClinicDesk.Forms;
 
 public partial class NewPatientForm : Form
 {

@@ -1,28 +1,62 @@
 ﻿using System.Management;
 using Microsoft.EntityFrameworkCore;
-using QliniqRec.Database;
-using QliniqRec.Database.Dto;
-using QliniqRec.Database.Models;
+using ClinicDesk.Database;
+using ClinicDesk.Database.Models;
 
-namespace QliniqRec;
+namespace ClinicDesk;
 
 internal static class Utils
 {
     public static void SetupDataGrid(DataGridView grd)
     {
-        Grid.AutoGenerateColumns = false;
-        Grid.AllowUserToAddRows = false;
-        Grid.AllowUserToDeleteRows = false;
-        Grid.AllowUserToOrderColumns = true;
-        Grid.BackgroundColor = Color.White;
-        Grid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-        Grid.ReadOnly = true;
-        Grid.RowHeadersWidth = 50;
+        grd.AutoGenerateColumns = false;
+        grd.AllowUserToAddRows = false;
+        grd.AllowUserToDeleteRows = false;
+        grd.AllowUserToOrderColumns = true;
+        grd.BackgroundColor = Color.White;
+        grd.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+        grd.ReadOnly = true;
+        grd.RowHeadersWidth = 50;
     }
-    
+
+    public static void SetupPatientsDataGrid(DataGridView patientsGrd)
+    {
+        SetupDataGrid(patientsGrd);
+
+        patientsGrd.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Width = 50,
+            DataPropertyName = "Serial",
+            HeaderText = "No."
+        });
+
+        patientsGrd.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Width = 300,
+            DataPropertyName = "Name",
+            HeaderText = "Name"
+        });
+
+        patientsGrd.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Width = 120,
+            DataPropertyName = "Phone",
+            HeaderText = "Phone"
+        });
+
+        patientsGrd.Columns.Add(new DataGridViewButtonColumn
+        {
+            Name = "chooseBtn",
+            Width = 180,
+            HeaderText = "",
+            Text = "Choose",
+            UseColumnTextForButtonValue = true
+        });
+    }
+
     public static void SetupInvoicesDataGrid(DataGridView invoicesGrd)
     {
-        Utils.SetupDataGrid(invoicesGrd);
+        SetupDataGrid(invoicesGrd);
 
         invoicesGrd.Columns.Add(new DataGridViewTextBoxColumn
         {
@@ -93,7 +127,7 @@ internal static class Utils
 
     public static void SetupPaymentsDataGrid(DataGridView paymentsGrd)
     {
-        Utils.SetupDataGrid(paymentsGrd);
+        SetupDataGrid(paymentsGrd);
 
         paymentsGrd.Columns.Add(new DataGridViewTextBoxColumn
         {
