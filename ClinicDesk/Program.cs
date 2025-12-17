@@ -19,14 +19,21 @@ namespace ClinicDesk;
 // - Doctor visits fix buttons 2.
 // - Secretary edit buttons on cancelled or attended appointments. (attended can still follow up, with search filter)
 // - Secretary missed appointment.
-// * Patient search, multiple results form.
+// - Patient search, multiple results form.
 // * Save LastSeenDate, IsInstalled and IsFirstRun in registry.
-// * Doctor edit previous visits.
-// * Secretary edit profile, show past visits.
 // * Filter height = 0 to hide row.
+// * Doctor edit previous visits.
 // * Custom calendar, date picker and time picker controls with material theme.
 // * Better material theme implementation for WinForms.
 // * See AwesomeWinForms.
+// -
+// - Hide multi-result search table.
+// - Secretary edit profile + cancel + show past visits.
+// * Doctor only pending has button.
+// * Past visits show more button + show less button not showing.
+// * Follow up dont have show more button.
+// * When invoice is full, hide pay button.
+// * Refresh after details of invoice.
 
 internal static class Program
 {

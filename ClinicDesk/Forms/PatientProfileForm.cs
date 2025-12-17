@@ -1,4 +1,5 @@
 ﻿using ClinicDesk.ControlHelpers;
+using ClinicDesk.Database;
 using ClinicDesk.Database.Models;
 
 namespace ClinicDesk.Forms;
@@ -22,6 +23,11 @@ public partial class PatientProfileForm : Form
 
     private void PatientProfileForm_Load(object sender, EventArgs e)
     {
+        RefreshData();
+    }
+
+    private void RefreshData()
+    {
         nameTxt.Text = _patient.Name;
         sexCbo.SelectedIndex = (int)_patient.Sex;
         dobTxt.Text = _patient.DateOfBirth.ToString("dd-MM-yyyy");
@@ -34,7 +40,18 @@ public partial class PatientProfileForm : Form
             chronicDiseasesLst.Items.Add(disease);
 
         notesTxt.Text = _patient.Notes;
-        
+
         _grdHelper.RefreshList(null, _patient);
+    }
+
+    private void cancelBtn_Click(object sender, EventArgs e)
+    {
+        Close();
+    }
+
+    private async void editBtn_Click(object sender, EventArgs e)
+    {
+        AppContext.ShowDialog<PatientDataForm>(form => form.SetData(_patient));
+        RefreshData();
     }
 }

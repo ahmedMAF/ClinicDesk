@@ -28,7 +28,8 @@ public partial class PatientSearchForm : MaterialForm
 
     private void PatientSearchForm_Load(object sender, EventArgs e)
     {
-        DialogResult = DialogResult.Cancel;
+        Height = 190;
+        CenterToScreen();
     }
 
     private async void searchNameBtn_Click(object sender, EventArgs e)
@@ -78,6 +79,9 @@ public partial class PatientSearchForm : MaterialForm
         if (_patients.Count > 1)
         {
             // Search was ambiguous.
+            Height = 470;
+            CenterToScreen();
+
             List<PatientDto> patientsResult = _patients
                 .Select(p => new PatientDto
                 {
@@ -97,7 +101,7 @@ public partial class PatientSearchForm : MaterialForm
         {
             Hide();
 
-            if (AppContext.ShowDialog<NewPatientForm>(form => form.SetData(nameTxt.Text, phoneTxt.Text), (form, _) => Patient = form.Patient) == DialogResult.Cancel)
+            if (AppContext.ShowDialog<PatientDataForm>(form => form.SetData(nameTxt.Text, phoneTxt.Text), (form, _) => Patient = form.Patient) == DialogResult.Cancel)
             {
                 Show();
                 return;
@@ -112,6 +116,7 @@ public partial class PatientSearchForm : MaterialForm
     {
         if (e.KeyChar == (char)Keys.Escape)
         {
+            DialogResult = DialogResult.Cancel;
             Close();
             e.Handled = true;
         }

@@ -10,7 +10,7 @@ public class AppointmentsGrid : GridButtonHelper
 {
     private readonly bool _isSecretary;
     
-    private DateTime _date = DateTime.Now;
+    private DateTime _date = DateTime.Now.Date;
     private List<AppointmentDto> _appointments = null!;
     
     public AppointmentsGrid(DataGridView grd, bool isSecretary) : base(grd, null!)
@@ -135,9 +135,10 @@ public class AppointmentsGrid : GridButtonHelper
     private async void profileBtn_Click(int rowIndex)
     {
         Patient? patient = await ClinicDb.Instance.Patients
+            .Include(p => p.Visits)
             .FirstOrDefaultAsync(p => p.Id == _appointments[rowIndex].PatientId);
 
-        AppContext.ShowForm<PatientProfileForm>(form => form.SetData(patient!));
+        AppContext.ShowDialog<PatientProfileForm>(form => form.SetData(patient!));
     }
     
     private async void visitBtn_Click(int rowIndex)
@@ -264,7 +265,7 @@ public class AppointmentsGrid : GridButtonHelper
     {
         _appointments = await ClinicDb.Instance.Appointments
             .AsNoTracking()
-            .Where(a => a.Status == AppointmentStatus.Pending && a.Date.Date == _date)
+            .Where(a => a.Date.Date == _date)
             .Select(a => new AppointmentDto
             {
                 Id = a.Id,

@@ -47,14 +47,16 @@
             nameTxt = new TextBox();
             label1 = new Label();
             groupBox6 = new GroupBox();
+            visitsGrd = new DataGridView();
             editBtn = new Button();
             cancelBtn = new Button();
-            visitsGrd = new DataGridView();
+            tableLayoutPanel1 = new TableLayoutPanel();
             groupBox4.SuspendLayout();
             groupBox3.SuspendLayout();
             groupBox1.SuspendLayout();
             groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)visitsGrd).BeginInit();
+            tableLayoutPanel1.SuspendLayout();
             SuspendLayout();
             // 
             // groupBox4
@@ -86,19 +88,19 @@
             bloodTypeCbo.Items.AddRange(new object[] { "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" });
             bloodTypeCbo.Location = new Point(132, 26);
             bloodTypeCbo.Name = "bloodTypeCbo";
-            bloodTypeCbo.Size = new Size(390, 28);
+            bloodTypeCbo.Size = new Size(402, 28);
             bloodTypeCbo.TabIndex = 14;
             // 
             // groupBox3
             // 
-            groupBox3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             groupBox3.Controls.Add(chronicDiseasesLst);
             groupBox3.Controls.Add(bloodTypeCbo);
             groupBox3.Controls.Add(label7);
             groupBox3.Controls.Add(label6);
-            groupBox3.Location = new Point(552, 12);
+            groupBox3.Dock = DockStyle.Fill;
+            groupBox3.Location = new Point(549, 3);
             groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(528, 170);
+            groupBox3.Size = new Size(540, 176);
             groupBox3.TabIndex = 24;
             groupBox3.TabStop = false;
             groupBox3.Text = "Medical Info";
@@ -111,7 +113,7 @@
             chronicDiseasesLst.Items.AddRange(new object[] { "Diabetes", "Hypertension", "Liver" });
             chronicDiseasesLst.Location = new Point(132, 60);
             chronicDiseasesLst.Name = "chronicDiseasesLst";
-            chronicDiseasesLst.Size = new Size(390, 93);
+            chronicDiseasesLst.Size = new Size(402, 93);
             chronicDiseasesLst.TabIndex = 27;
             // 
             // label7
@@ -134,7 +136,6 @@
             // 
             // groupBox1
             // 
-            groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             groupBox1.Controls.Add(ageTxt);
             groupBox1.Controls.Add(label4);
             groupBox1.Controls.Add(dobTxt);
@@ -145,9 +146,10 @@
             groupBox1.Controls.Add(label2);
             groupBox1.Controls.Add(nameTxt);
             groupBox1.Controls.Add(label1);
-            groupBox1.Location = new Point(12, 12);
+            groupBox1.Dock = DockStyle.Fill;
+            groupBox1.Location = new Point(3, 3);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(534, 170);
+            groupBox1.Size = new Size(540, 176);
             groupBox1.TabIndex = 22;
             groupBox1.TabStop = false;
             groupBox1.Text = "Personal Info";
@@ -158,7 +160,7 @@
             ageTxt.Location = new Point(411, 93);
             ageTxt.Name = "ageTxt";
             ageTxt.ReadOnly = true;
-            ageTxt.Size = new Size(117, 27);
+            ageTxt.Size = new Size(123, 27);
             ageTxt.TabIndex = 16;
             // 
             // label4
@@ -176,7 +178,7 @@
             dobTxt.Location = new Point(132, 93);
             dobTxt.Name = "dobTxt";
             dobTxt.ReadOnly = true;
-            dobTxt.Size = new Size(231, 27);
+            dobTxt.Size = new Size(237, 27);
             dobTxt.TabIndex = 14;
             // 
             // maritalCbo
@@ -188,7 +190,7 @@
             maritalCbo.Items.AddRange(new object[] { "Single", "Maried", "Divorced", "Widowed" });
             maritalCbo.Location = new Point(132, 126);
             maritalCbo.Name = "maritalCbo";
-            maritalCbo.Size = new Size(396, 28);
+            maritalCbo.Size = new Size(402, 28);
             maritalCbo.TabIndex = 13;
             // 
             // label5
@@ -209,7 +211,7 @@
             sexCbo.Items.AddRange(new object[] { "Male", "Female" });
             sexCbo.Location = new Point(132, 59);
             sexCbo.Name = "sexCbo";
-            sexCbo.Size = new Size(396, 28);
+            sexCbo.Size = new Size(402, 28);
             sexCbo.TabIndex = 11;
             // 
             // label3
@@ -236,7 +238,7 @@
             nameTxt.Location = new Point(132, 26);
             nameTxt.Name = "nameTxt";
             nameTxt.ReadOnly = true;
-            nameTxt.Size = new Size(396, 27);
+            nameTxt.Size = new Size(402, 27);
             nameTxt.TabIndex = 1;
             // 
             // label1
@@ -259,24 +261,6 @@
             groupBox6.TabStop = false;
             groupBox6.Text = "Past Visits";
             // 
-            // editBtn
-            // 
-            editBtn.Location = new Point(986, 640);
-            editBtn.Name = "editBtn";
-            editBtn.Size = new Size(94, 29);
-            editBtn.TabIndex = 27;
-            editBtn.Text = "Edit";
-            editBtn.UseVisualStyleBackColor = true;
-            // 
-            // cancelBtn
-            // 
-            cancelBtn.Location = new Point(886, 640);
-            cancelBtn.Name = "cancelBtn";
-            cancelBtn.Size = new Size(94, 29);
-            cancelBtn.TabIndex = 28;
-            cancelBtn.Text = "Cancel";
-            cancelBtn.UseVisualStyleBackColor = true;
-            // 
             // visitsGrd
             // 
             visitsGrd.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -286,17 +270,51 @@
             visitsGrd.Size = new Size(1056, 283);
             visitsGrd.TabIndex = 29;
             // 
+            // editBtn
+            // 
+            editBtn.Location = new Point(986, 640);
+            editBtn.Name = "editBtn";
+            editBtn.Size = new Size(94, 29);
+            editBtn.TabIndex = 27;
+            editBtn.Text = "Edit";
+            editBtn.UseVisualStyleBackColor = true;
+            editBtn.Click += editBtn_Click;
+            // 
+            // cancelBtn
+            // 
+            cancelBtn.Location = new Point(886, 640);
+            cancelBtn.Name = "cancelBtn";
+            cancelBtn.Size = new Size(94, 29);
+            cancelBtn.TabIndex = 28;
+            cancelBtn.Text = "Cancel";
+            cancelBtn.UseVisualStyleBackColor = true;
+            cancelBtn.Click += cancelBtn_Click;
+            // 
+            // tableLayoutPanel1
+            // 
+            tableLayoutPanel1.ColumnCount = 2;
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.Controls.Add(groupBox1, 0, 0);
+            tableLayoutPanel1.Controls.Add(groupBox3, 1, 0);
+            tableLayoutPanel1.Dock = DockStyle.Top;
+            tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Name = "tableLayoutPanel1";
+            tableLayoutPanel1.RowCount = 1;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+            tableLayoutPanel1.Size = new Size(1092, 182);
+            tableLayoutPanel1.TabIndex = 29;
+            // 
             // PatientProfileForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1092, 682);
+            Controls.Add(tableLayoutPanel1);
             Controls.Add(cancelBtn);
             Controls.Add(editBtn);
             Controls.Add(groupBox6);
             Controls.Add(groupBox4);
-            Controls.Add(groupBox3);
-            Controls.Add(groupBox1);
             Name = "PatientProfileForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Patient Profile";
@@ -310,6 +328,7 @@
             groupBox1.PerformLayout();
             groupBox6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)visitsGrd).EndInit();
+            tableLayoutPanel1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
@@ -336,5 +355,6 @@
         private TextBox ageTxt;
         private Label label4;
         private DataGridView visitsGrd;
+        private TableLayoutPanel tableLayoutPanel1;
     }
 }

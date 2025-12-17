@@ -40,6 +40,7 @@
             // 
             // searchNameBtn
             // 
+            searchNameBtn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             searchNameBtn.AutoSize = false;
             searchNameBtn.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             searchNameBtn.CharacterCasing = ReaLTaiizor.Controls.MaterialButton.CharacterCasingEnum.Normal;
@@ -48,7 +49,7 @@
             searchNameBtn.HighEmphasis = true;
             searchNameBtn.Icon = null;
             searchNameBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            searchNameBtn.Location = new Point(404, 81);
+            searchNameBtn.Location = new Point(526, 81);
             searchNameBtn.Margin = new Padding(4, 6, 4, 6);
             searchNameBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             searchNameBtn.Name = "searchNameBtn";
@@ -63,6 +64,7 @@
             // 
             // nameTxt
             // 
+            nameTxt.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             nameTxt.AnimateReadOnly = false;
             nameTxt.AutoCompleteMode = AutoCompleteMode.None;
             nameTxt.AutoCompleteSource = AutoCompleteSource.None;
@@ -84,7 +86,7 @@
             nameTxt.SelectionLength = 0;
             nameTxt.SelectionStart = 0;
             nameTxt.ShortcutsEnabled = true;
-            nameTxt.Size = new Size(312, 48);
+            nameTxt.Size = new Size(434, 48);
             nameTxt.TabIndex = 0;
             nameTxt.TabStop = false;
             nameTxt.TextAlign = HorizontalAlignment.Left;
@@ -118,6 +120,7 @@
             // 
             // phoneTxt
             // 
+            phoneTxt.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             phoneTxt.AnimateReadOnly = false;
             phoneTxt.AutoCompleteMode = AutoCompleteMode.None;
             phoneTxt.AutoCompleteSource = AutoCompleteSource.None;
@@ -139,7 +142,7 @@
             phoneTxt.SelectionLength = 0;
             phoneTxt.SelectionStart = 0;
             phoneTxt.ShortcutsEnabled = true;
-            phoneTxt.Size = new Size(312, 48);
+            phoneTxt.Size = new Size(434, 48);
             phoneTxt.TabIndex = 2;
             phoneTxt.TabStop = false;
             phoneTxt.TextAlign = HorizontalAlignment.Left;
@@ -149,6 +152,7 @@
             // 
             // searchPhoneBtn
             // 
+            searchPhoneBtn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             searchPhoneBtn.AutoSize = false;
             searchPhoneBtn.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             searchPhoneBtn.CharacterCasing = ReaLTaiizor.Controls.MaterialButton.CharacterCasingEnum.Normal;
@@ -157,7 +161,7 @@
             searchPhoneBtn.HighEmphasis = true;
             searchPhoneBtn.Icon = null;
             searchPhoneBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            searchPhoneBtn.Location = new Point(404, 135);
+            searchPhoneBtn.Location = new Point(526, 135);
             searchPhoneBtn.Margin = new Padding(4, 6, 4, 6);
             searchPhoneBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             searchPhoneBtn.Name = "searchPhoneBtn";
@@ -172,18 +176,19 @@
             // 
             // patientsGrd
             // 
+            patientsGrd.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             patientsGrd.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            patientsGrd.Location = new Point(6, 183);
+            patientsGrd.Location = new Point(6, 211);
             patientsGrd.Name = "patientsGrd";
             patientsGrd.RowHeadersWidth = 51;
-            patientsGrd.Size = new Size(565, 253);
+            patientsGrd.Size = new Size(687, 253);
             patientsGrd.TabIndex = 6;
             // 
             // PatientSearchForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(578, 442);
+            ClientSize = new Size(700, 470);
             Controls.Add(patientsGrd);
             Controls.Add(materialLabel2);
             Controls.Add(phoneTxt);
@@ -199,6 +204,7 @@
             Sizable = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Patient Search";
+            Load += PatientSearchForm_Load;
             KeyPress += PatientSearchForm_KeyPress;
             ((System.ComponentModel.ISupportInitialize)patientsGrd).EndInit();
             ResumeLayout(false);

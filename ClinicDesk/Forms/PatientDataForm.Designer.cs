@@ -1,6 +1,6 @@
 ﻿namespace ClinicDesk.Forms
 {
-    partial class NewPatientForm
+    partial class PatientDataForm
     {
         /// <summary>
         /// Required designer variable.
@@ -40,7 +40,7 @@
             phoneTxt = new TextBox();
             label4 = new Label();
             groupBox2 = new GroupBox();
-            groupBox3 = new GroupBox();
+            chronicDiseasesGrp = new GroupBox();
             bloodTypeCbo = new ComboBox();
             disOtherTxt = new TextBox();
             disOtherChk = new CheckBox();
@@ -59,7 +59,7 @@
             cancelBtn = new Button();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
-            groupBox3.SuspendLayout();
+            chronicDiseasesGrp.SuspendLayout();
             groupBox4.SuspendLayout();
             SuspendLayout();
             // 
@@ -180,27 +180,27 @@
             groupBox2.TabStop = false;
             groupBox2.Text = "Contact Info";
             // 
-            // groupBox3
+            // chronicDiseasesGrp
             // 
-            groupBox3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            groupBox3.Controls.Add(bloodTypeCbo);
-            groupBox3.Controls.Add(disOtherTxt);
-            groupBox3.Controls.Add(disOtherChk);
-            groupBox3.Controls.Add(checkBox7);
-            groupBox3.Controls.Add(checkBox6);
-            groupBox3.Controls.Add(checkBox5);
-            groupBox3.Controls.Add(checkBox4);
-            groupBox3.Controls.Add(checkBox3);
-            groupBox3.Controls.Add(checkBox2);
-            groupBox3.Controls.Add(checkBox1);
-            groupBox3.Controls.Add(label7);
-            groupBox3.Controls.Add(label6);
-            groupBox3.Location = new Point(12, 270);
-            groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(677, 248);
-            groupBox3.TabIndex = 9;
-            groupBox3.TabStop = false;
-            groupBox3.Text = "Medical Info";
+            chronicDiseasesGrp.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            chronicDiseasesGrp.Controls.Add(bloodTypeCbo);
+            chronicDiseasesGrp.Controls.Add(disOtherTxt);
+            chronicDiseasesGrp.Controls.Add(disOtherChk);
+            chronicDiseasesGrp.Controls.Add(checkBox7);
+            chronicDiseasesGrp.Controls.Add(checkBox6);
+            chronicDiseasesGrp.Controls.Add(checkBox5);
+            chronicDiseasesGrp.Controls.Add(checkBox4);
+            chronicDiseasesGrp.Controls.Add(checkBox3);
+            chronicDiseasesGrp.Controls.Add(checkBox2);
+            chronicDiseasesGrp.Controls.Add(checkBox1);
+            chronicDiseasesGrp.Controls.Add(label7);
+            chronicDiseasesGrp.Controls.Add(label6);
+            chronicDiseasesGrp.Location = new Point(12, 270);
+            chronicDiseasesGrp.Name = "chronicDiseasesGrp";
+            chronicDiseasesGrp.Size = new Size(677, 248);
+            chronicDiseasesGrp.TabIndex = 9;
+            chronicDiseasesGrp.TabStop = false;
+            chronicDiseasesGrp.Text = "Medical Info";
             // 
             // bloodTypeCbo
             // 
@@ -242,7 +242,6 @@
             checkBox7.TabIndex = 15;
             checkBox7.Text = "Liver Disease";
             checkBox7.UseVisualStyleBackColor = true;
-            checkBox7.CheckedChanged += chronicDiseasesChk_CheckedChanged;
             // 
             // checkBox6
             // 
@@ -253,7 +252,6 @@
             checkBox6.TabIndex = 14;
             checkBox6.Text = "Anemia";
             checkBox6.UseVisualStyleBackColor = true;
-            checkBox6.CheckedChanged += chronicDiseasesChk_CheckedChanged;
             // 
             // checkBox5
             // 
@@ -264,7 +262,6 @@
             checkBox5.TabIndex = 13;
             checkBox5.Text = "Asthma";
             checkBox5.UseVisualStyleBackColor = true;
-            checkBox5.CheckedChanged += chronicDiseasesChk_CheckedChanged;
             // 
             // checkBox4
             // 
@@ -275,7 +272,6 @@
             checkBox4.TabIndex = 12;
             checkBox4.Text = "Heart Disease";
             checkBox4.UseVisualStyleBackColor = true;
-            checkBox4.CheckedChanged += chronicDiseasesChk_CheckedChanged;
             // 
             // checkBox3
             // 
@@ -286,7 +282,6 @@
             checkBox3.TabIndex = 11;
             checkBox3.Text = "Hypertension";
             checkBox3.UseVisualStyleBackColor = true;
-            checkBox3.CheckedChanged += chronicDiseasesChk_CheckedChanged;
             // 
             // checkBox2
             // 
@@ -297,7 +292,6 @@
             checkBox2.TabIndex = 10;
             checkBox2.Text = "Hypotension";
             checkBox2.UseVisualStyleBackColor = true;
-            checkBox2.CheckedChanged += chronicDiseasesChk_CheckedChanged;
             // 
             // checkBox1
             // 
@@ -308,7 +302,6 @@
             checkBox1.TabIndex = 9;
             checkBox1.Text = "Diabetes";
             checkBox1.UseVisualStyleBackColor = true;
-            checkBox1.CheckedChanged += chronicDiseasesChk_CheckedChanged;
             // 
             // label7
             // 
@@ -368,7 +361,7 @@
             cancelBtn.UseVisualStyleBackColor = true;
             cancelBtn.Click += cancelBtn_Click;
             // 
-            // NewPatientForm
+            // PatientDataForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -376,18 +369,19 @@
             Controls.Add(cancelBtn);
             Controls.Add(saveBtn);
             Controls.Add(groupBox4);
-            Controls.Add(groupBox3);
+            Controls.Add(chronicDiseasesGrp);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
-            Name = "NewPatientForm";
+            Name = "PatientDataForm";
+            ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Add New Patient";
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
-            groupBox3.ResumeLayout(false);
-            groupBox3.PerformLayout();
+            chronicDiseasesGrp.ResumeLayout(false);
+            chronicDiseasesGrp.PerformLayout();
             groupBox4.ResumeLayout(false);
             groupBox4.PerformLayout();
             ResumeLayout(false);
@@ -407,7 +401,7 @@
         private Label label5;
         private ComboBox sexCbo;
         private GroupBox groupBox2;
-        private GroupBox groupBox3;
+        private GroupBox chronicDiseasesGrp;
         private Label label6;
         private CheckBox checkBox6;
         private CheckBox checkBox5;

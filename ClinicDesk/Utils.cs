@@ -175,10 +175,8 @@ internal static class Utils
             .Where(a => a.Status == AppointmentStatus.Pending)
             .ToListAsync();
             
-        DateTime date = DateTime.Now.AddMinutes(30);
-            
         foreach (Appointment appointment in appointments)
-            if (appointment.Date > date)
+            if (appointment.Date.AddMinutes(30) < DateTime.Now)
                 appointment.Status = AppointmentStatus.Missed;
                 
         await ClinicDb.Instance.SaveChangesAsync();

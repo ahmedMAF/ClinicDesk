@@ -49,7 +49,7 @@ public partial class InvoiceDetailsForm : MaterialForm
         if (MessageBox.Show("Are you sure you want to delete this payment from the invoice? This action is permenant and can't be undone.", "Delete Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
             return;
 
-        ClinicDb.Instance.Payments.Remove(new Payment { Id = _payments[e.RowIndex].Id  });
+        ClinicDb.Instance.Payments.Remove(_invoice.Payments[e.RowIndex]);
         await ClinicDb.Instance.SaveChangesAsync();
 
         RefreshList();

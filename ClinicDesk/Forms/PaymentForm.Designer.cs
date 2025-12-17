@@ -64,7 +64,6 @@
             amountTxt.TextAlign = HorizontalAlignment.Left;
             amountTxt.TrailingIcon = null;
             amountTxt.UseSystemPasswordChar = false;
-            amountTxt.KeyPress += Utils.NumTxt_KeyPress;
             amountTxt.TextChanged += amountTxt_TextChanged;
             // 
             // payBtn
@@ -137,6 +136,7 @@
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "PaymentForm";
+            ShowInTaskbar = false;
             Sizable = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Payment";
