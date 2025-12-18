@@ -77,6 +77,7 @@ public partial class BillingForm : MaterialForm
             .FirstOrDefaultAsync(i => i.Id == _invoices[rowIndex].Id);
 
         AppContext.ShowDialog<InvoiceDetailsForm>(form => form.SetData(invoice!));
+        await RefreshList();
     }
 
     private async void payBtn_Click(int rowIndex)
@@ -244,5 +245,21 @@ public partial class BillingForm : MaterialForm
             return;
 
        invoicesGrd.Rows[e.RowIndex].DefaultCellStyle.BackColor = invoice.RemainingAmount == 0 ? Color.LightGray : Color.White;
+    }
+    
+    private void invoicesGrd_CellPainting(object? sender, DataGridViewCellPaintingEventArgs e)
+    {
+        if (e.ColumnIndex == -1 || e.RowIndex == -1)
+           return;
+
+        DataGridViewRow row = Grid.Rows[e.RowIndex];
+        InvoiceDto invoice = (InvoiceDto)row.DataBoundItem!;
+        
+        if (Grid.Columns[e.ColumnIndex].Name is "payBtn" or "payFullBtn" && invoice.RemainingAmount == 0)
+        {
+            row.Cells[e.ColumnIndex].ReadOnly = true;
+            e.PaintBackground(e.CellBounds, true);
+            e.Handled = true;
+        }
     }
 }

@@ -69,7 +69,6 @@ public class VisitsGrid : GridButtonHelper
         VisitDto visit = (VisitDto)Grid.Rows[rowIndex].DataBoundItem!;
 
         _originalVisitId = rowIndex == 0 && _isShowingOneVisit ? null : visit.Id;
-
         PopulateGrid();
     }
     
@@ -79,11 +78,12 @@ public class VisitsGrid : GridButtonHelper
            return;
 
         DataGridViewRow row = Grid.Rows[e.RowIndex];
-        VisitDto data = (VisitDto)row.DataBoundItem!;
+        VisitDto visit = (VisitDto)row.DataBoundItem!;
         
         // Disable the buttons on visits with no followups and on followups themselves.
-        if (Grid.Columns[e.ColumnIndex].Name == "showBtn" && (data.FollowUpsCount == 0 ||
-            (_isShowingOneVisit && e.ColumnIndex != 0)))
+        if (Grid.Columns[e.ColumnIndex].Name == "showBtn" &&
+            ((!_isShowingOneVisit && visit.FollowUpsCount == 0) ||
+            (_isShowingOneVisit && e.RowIndex != 0))
         {
             row.Cells[e.ColumnIndex].ReadOnly = true;
             e.PaintBackground(e.CellBounds, true);
@@ -96,10 +96,7 @@ public class VisitsGrid : GridButtonHelper
         if (e.RowIndex == -1 || Grid.Columns[e.ColumnIndex].Name != "showBtn")
             return;
 
-        DataGridViewRow row = Grid.Rows[e.RowIndex];
-        VisitDto data = (VisitDto)row.DataBoundItem!;
-        
-        row.Cells[e.ColumnIndex].Value = _isShowingOneVisit ? "Back" : "Show Followups";
+        Grid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = _isShowingOneVisit ? "Back" : "Show Followups";
     }
     
     public void RefreshList(int? originalVisitId, Patient patient)

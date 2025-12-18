@@ -10,10 +10,9 @@ public static class AppLicense
     
     public static bool IsValid { get; private set; }
 
-    internal static void Validate()
+    internal static bool Validate()
     {
         string licenseText = File.ReadAllText("license.lic");
-
         License license = License.Load(licenseText);
         
         var validationResult = license.Validate()
@@ -30,15 +29,16 @@ public static class AppLicense
             if (storedId != actualId)
             {
                 MessageBox.Show("License is not valid for this machine.");
-                Application.Exit();
+                return false;
             }
             
             IsValid = true;
+            return true;
         }
         else
         {
             MessageBox.Show("Invalid license: " + string.Join("\n", validationResult));
-            Application.Exit();
+            return false;
         }
     }
 }

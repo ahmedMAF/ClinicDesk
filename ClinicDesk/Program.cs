@@ -24,16 +24,16 @@ namespace ClinicDesk;
 // * Filter height = 0 to hide row.
 // * Doctor edit previous visits.
 // * Custom calendar, date picker and time picker controls with material theme.
-// * Better material theme implementation for WinForms.
-// * See AwesomeWinForms.
+// - Better material theme implementation for WinForms.
+// - See AwesomeWinForms.
 // -
 // - Hide multi-result search table.
 // - Secretary edit profile + cancel + show past visits.
-// * Doctor only pending has button.
-// * Past visits show more button + show less button not showing.
-// * Follow up dont have show more button.
-// * When invoice is full, hide pay button.
-// * Refresh after details of invoice.
+// + Doctor only pending has button.
+// + Past visits show more button + show less button not showing.
+// + Follow up dont have show more button.
+// + When invoice is full, hide pay button.
+// + Refresh after details of invoice.
 
 internal static class Program
 {
@@ -46,12 +46,14 @@ internal static class Program
     private static void Main()
     {
         Settings.Initialize();
-        //AppLicense.Validate();
+        
+        // if (!AppLicense.Validate())
+        //     return;
         
         if (Settings.Instance.LastSeenDate > DateTime.UtcNow)
         {
             // TODO: Trying to cheat license.
-            Application.Exit();
+            return;
         }
         else
         {
@@ -60,7 +62,11 @@ internal static class Program
             Settings.SaveSettings();
         }
         
+#if DEBUG
         if (Settings.Instance.AccountType == AccountType.NotDefined)
+#else
+        if (Settings.Instance.AccountType != AccountType.NotDefined)
+#endif
         {
             // TODO: Run MySQL if server.
             ClinicDb.Initialize();

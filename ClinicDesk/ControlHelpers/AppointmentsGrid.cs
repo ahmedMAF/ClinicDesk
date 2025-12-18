@@ -225,6 +225,12 @@ public class AppointmentsGrid : GridButtonHelper
         
         switch (Grid.Columns[e.ColumnIndex].Name)
         {
+            case "profileBtn":
+                if (!_isSecretary && appointment.Status is not AppointmentStatus.Pending)
+                    DisableButton();
+            
+                break;
+
             case "followupBtn":
                 if (appointment.Status is AppointmentStatus.Missed or AppointmentStatus.Cancelled or AppointmentStatus.Rescheduled)
                     DisableButton();
