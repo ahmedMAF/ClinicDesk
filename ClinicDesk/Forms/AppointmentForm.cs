@@ -1,11 +1,11 @@
 ﻿using ClinicDesk.ControlHelpers;
 using ClinicDesk.Database;
-using ClinicDesk.Database.Dto;
 using ClinicDesk.Database.Models;
+using ReaLTaiizor.Forms;
 
 namespace ClinicDesk.Forms;
 
-public partial class AppointmentForm : Form
+public partial class AppointmentForm : MaterialForm
 {
     private readonly VisitsGrid _grdHelper;
 

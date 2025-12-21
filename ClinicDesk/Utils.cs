@@ -1,7 +1,9 @@
-﻿using System.Management;
-using Microsoft.EntityFrameworkCore;
-using ClinicDesk.Database;
+﻿using ClinicDesk.Database;
 using ClinicDesk.Database.Models;
+using Microsoft.EntityFrameworkCore;
+using ReaLTaiizor.Manager;
+using System.Management;
+using System.Windows.Forms;
 
 namespace ClinicDesk;
 
@@ -13,10 +15,48 @@ internal static class Utils
         grd.AllowUserToAddRows = false;
         grd.AllowUserToDeleteRows = false;
         grd.AllowUserToOrderColumns = true;
-        grd.BackgroundColor = Color.White;
+        grd.RowHeadersVisible = false;
+        grd.EnableHeadersVisualStyles = false;
         grd.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+        grd.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+        grd.MultiSelect = false;
         grd.ReadOnly = true;
         grd.RowHeadersWidth = 50;
+
+        grd.BackgroundColor = Theme.BackdropColor;
+        grd.DefaultCellStyle.BackColor = Theme.BackdropColor;
+        grd.GridColor = Theme.DataGridLinesColor;
+
+        grd.CellPainting += Grid_CellPainting;
+    }
+
+    private static void Grid_CellPainting(object? sender, DataGridViewCellPaintingEventArgs e)
+    {
+        if (e.RowIndex != -1)
+            return;
+
+        // Background
+        using (Brush backBrush = new SolidBrush(Theme.DataGridHeaderColor))
+            e.Graphics.FillRectangle(backBrush, e.CellBounds);
+
+        // Border
+        using (Pen borderPen = new(Theme.DataGridLinesColor))
+            e.Graphics.DrawRectangle(borderPen,
+                e.CellBounds.X,
+                e.CellBounds.Y,
+                e.CellBounds.Width - 1,
+                e.CellBounds.Height - 1);
+
+        // Text
+        TextRenderer.DrawText(
+            e.Graphics,
+            e.FormattedValue.ToString(),
+            e.CellStyle.Font,
+            e.CellBounds,
+            ((DataGridView)sender).ForeColor,
+            TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
+
+        e.Handled = true;
     }
 
     public static void SetupPatientsDataGrid(DataGridView patientsGrd)

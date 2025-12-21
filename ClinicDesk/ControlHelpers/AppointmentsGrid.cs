@@ -265,12 +265,12 @@ public class AppointmentsGrid : GridButtonHelper
 
         Grid.Rows[e.RowIndex].DefaultCellStyle.BackColor = appointment.Status switch
         {
-            AppointmentStatus.Pending => Color.White,
-            AppointmentStatus.Attended => Color.LightGreen,
-            AppointmentStatus.Cancelled => Color.LightPink,
-            AppointmentStatus.Missed => Color.LightGray,
-            AppointmentStatus.Rescheduled => Color.LightYellow,
-            _ => Color.White
+            AppointmentStatus.Pending => Theme.DataGridRowBackColor,
+            AppointmentStatus.Attended => Theme.DataGridAttendedRowBackColor,
+            AppointmentStatus.Cancelled => Theme.DataGridCancelledRowBackColor,
+            AppointmentStatus.Missed => Theme.DataGridMissedRowBackColor,
+            AppointmentStatus.Rescheduled => Theme.DataGridRescheduledRowBackColor,
+            _ => Theme.DataGridRowBackColor
         };
     }
     

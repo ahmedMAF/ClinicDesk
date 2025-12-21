@@ -28,152 +28,220 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
-            nameTxt = new TextBox();
-            groupBox1 = new GroupBox();
-            phoneTxt = new TextBox();
-            label4 = new Label();
-            groupBox2 = new GroupBox();
             timePkr = new DateTimePicker();
-            label5 = new Label();
             datePkr = new DateTimePicker();
-            label8 = new Label();
-            saveBtn = new Button();
-            cancelBtn = new Button();
-            groupBox1.SuspendLayout();
-            groupBox2.SuspendLayout();
+            materialCard1 = new ReaLTaiizor.Controls.MaterialCard();
+            materialLabel2 = new ReaLTaiizor.Controls.MaterialLabel();
+            phoneTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
+            nameTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
+            materialLabel1 = new ReaLTaiizor.Controls.MaterialLabel();
+            materialCard2 = new ReaLTaiizor.Controls.MaterialCard();
+            materialLabel3 = new ReaLTaiizor.Controls.MaterialLabel();
+            materialLabel4 = new ReaLTaiizor.Controls.MaterialLabel();
+            saveBtn = new ReaLTaiizor.Controls.MaterialButton();
+            materialCard1.SuspendLayout();
+            materialCard2.SuspendLayout();
             SuspendLayout();
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(6, 29);
-            label1.Name = "label1";
-            label1.Size = new Size(76, 20);
-            label1.TabIndex = 0;
-            label1.Text = "Full Name";
-            // 
-            // nameTxt
-            // 
-            nameTxt.Location = new Point(120, 26);
-            nameTxt.Name = "nameTxt";
-            nameTxt.ReadOnly = true;
-            nameTxt.Size = new Size(342, 27);
-            nameTxt.TabIndex = 1;
-            // 
-            // groupBox1
-            // 
-            groupBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            groupBox1.Controls.Add(phoneTxt);
-            groupBox1.Controls.Add(label4);
-            groupBox1.Controls.Add(nameTxt);
-            groupBox1.Controls.Add(label1);
-            groupBox1.Location = new Point(6, 67);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(496, 100);
-            groupBox1.TabIndex = 2;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Patient Data";
-            // 
-            // phoneTxt
-            // 
-            phoneTxt.Location = new Point(120, 59);
-            phoneTxt.Name = "phoneTxt";
-            phoneTxt.ReadOnly = true;
-            phoneTxt.Size = new Size(342, 27);
-            phoneTxt.TabIndex = 7;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(6, 62);
-            label4.Name = "label4";
-            label4.Size = new Size(108, 20);
-            label4.TabIndex = 6;
-            label4.Text = "Phone Number";
-            // 
-            // groupBox2
-            // 
-            groupBox2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            groupBox2.Controls.Add(timePkr);
-            groupBox2.Controls.Add(label5);
-            groupBox2.Controls.Add(datePkr);
-            groupBox2.Controls.Add(label8);
-            groupBox2.Location = new Point(6, 173);
-            groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(496, 102);
-            groupBox2.TabIndex = 3;
-            groupBox2.TabStop = false;
-            groupBox2.Text = "Appointment Data";
             // 
             // timePkr
             // 
+            timePkr.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             timePkr.CustomFormat = "  hh:mm tt";
             timePkr.Format = DateTimePickerFormat.Custom;
-            timePkr.Location = new Point(53, 59);
+            timePkr.Location = new Point(127, 79);
             timePkr.Name = "timePkr";
-            timePkr.Size = new Size(290, 27);
+            timePkr.Size = new Size(379, 27);
             timePkr.TabIndex = 3;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(6, 64);
-            label5.Name = "label5";
-            label5.Size = new Size(42, 20);
-            label5.TabIndex = 2;
-            label5.Text = "Time";
             // 
             // datePkr
             // 
+            datePkr.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             datePkr.CustomFormat = "  dd/MM/yyyy";
             datePkr.Format = DateTimePickerFormat.Custom;
-            datePkr.Location = new Point(53, 26);
+            datePkr.Location = new Point(127, 25);
             datePkr.Name = "datePkr";
-            datePkr.Size = new Size(290, 27);
+            datePkr.Size = new Size(379, 27);
             datePkr.TabIndex = 1;
             // 
-            // label8
+            // materialCard1
             // 
-            label8.AutoSize = true;
-            label8.Location = new Point(6, 31);
-            label8.Name = "label8";
-            label8.Size = new Size(41, 20);
-            label8.TabIndex = 0;
-            label8.Text = "Date";
+            materialCard1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            materialCard1.BackColor = Color.FromArgb(255, 255, 255);
+            materialCard1.Controls.Add(materialLabel2);
+            materialCard1.Controls.Add(phoneTxt);
+            materialCard1.Controls.Add(nameTxt);
+            materialCard1.Controls.Add(materialLabel1);
+            materialCard1.Depth = 0;
+            materialCard1.ForeColor = Color.FromArgb(222, 0, 0, 0);
+            materialCard1.Location = new Point(17, 78);
+            materialCard1.Margin = new Padding(14);
+            materialCard1.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialCard1.Name = "materialCard1";
+            materialCard1.Padding = new Padding(14);
+            materialCard1.Size = new Size(523, 135);
+            materialCard1.TabIndex = 33;
+            // 
+            // materialLabel2
+            // 
+            materialLabel2.Depth = 0;
+            materialLabel2.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel2.Location = new Point(17, 71);
+            materialLabel2.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialLabel2.Name = "materialLabel2";
+            materialLabel2.Size = new Size(104, 48);
+            materialLabel2.TabIndex = 6;
+            materialLabel2.Text = "Phone";
+            materialLabel2.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // phoneTxt
+            // 
+            phoneTxt.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            phoneTxt.AnimateReadOnly = false;
+            phoneTxt.AutoCompleteMode = AutoCompleteMode.None;
+            phoneTxt.AutoCompleteSource = AutoCompleteSource.None;
+            phoneTxt.BackgroundImageLayout = ImageLayout.None;
+            phoneTxt.CharacterCasing = CharacterCasing.Normal;
+            phoneTxt.Depth = 0;
+            phoneTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
+            phoneTxt.HideSelection = true;
+            phoneTxt.LeadingIcon = null;
+            phoneTxt.Location = new Point(127, 71);
+            phoneTxt.MaxLength = 32767;
+            phoneTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
+            phoneTxt.Name = "phoneTxt";
+            phoneTxt.PasswordChar = '\0';
+            phoneTxt.PrefixSuffixText = null;
+            phoneTxt.ReadOnly = true;
+            phoneTxt.RightToLeft = RightToLeft.No;
+            phoneTxt.SelectedText = "";
+            phoneTxt.SelectionLength = 0;
+            phoneTxt.SelectionStart = 0;
+            phoneTxt.ShortcutsEnabled = true;
+            phoneTxt.Size = new Size(379, 48);
+            phoneTxt.TabIndex = 3;
+            phoneTxt.TabStop = false;
+            phoneTxt.Text = "materialTextBoxEdit2";
+            phoneTxt.TextAlign = HorizontalAlignment.Left;
+            phoneTxt.TrailingIcon = null;
+            phoneTxt.UseSystemPasswordChar = false;
+            // 
+            // nameTxt
+            // 
+            nameTxt.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            nameTxt.AnimateReadOnly = false;
+            nameTxt.AutoCompleteMode = AutoCompleteMode.None;
+            nameTxt.AutoCompleteSource = AutoCompleteSource.None;
+            nameTxt.BackgroundImageLayout = ImageLayout.None;
+            nameTxt.CharacterCasing = CharacterCasing.Normal;
+            nameTxt.Depth = 0;
+            nameTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
+            nameTxt.HideSelection = true;
+            nameTxt.LeadingIcon = null;
+            nameTxt.Location = new Point(127, 17);
+            nameTxt.MaxLength = 32767;
+            nameTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
+            nameTxt.Name = "nameTxt";
+            nameTxt.PasswordChar = '\0';
+            nameTxt.PrefixSuffixText = null;
+            nameTxt.ReadOnly = true;
+            nameTxt.RightToLeft = RightToLeft.No;
+            nameTxt.SelectedText = "";
+            nameTxt.SelectionLength = 0;
+            nameTxt.SelectionStart = 0;
+            nameTxt.ShortcutsEnabled = true;
+            nameTxt.Size = new Size(379, 48);
+            nameTxt.TabIndex = 1;
+            nameTxt.TabStop = false;
+            nameTxt.Text = "materialTextBoxEdit1";
+            nameTxt.TextAlign = HorizontalAlignment.Left;
+            nameTxt.TrailingIcon = null;
+            nameTxt.UseSystemPasswordChar = false;
+            // 
+            // materialLabel1
+            // 
+            materialLabel1.Depth = 0;
+            materialLabel1.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel1.Location = new Point(17, 17);
+            materialLabel1.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialLabel1.Name = "materialLabel1";
+            materialLabel1.Size = new Size(104, 48);
+            materialLabel1.TabIndex = 0;
+            materialLabel1.Text = "Full Name";
+            materialLabel1.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // materialCard2
+            // 
+            materialCard2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            materialCard2.BackColor = Color.FromArgb(255, 255, 255);
+            materialCard2.Controls.Add(timePkr);
+            materialCard2.Controls.Add(materialLabel3);
+            materialCard2.Controls.Add(datePkr);
+            materialCard2.Controls.Add(materialLabel4);
+            materialCard2.Depth = 0;
+            materialCard2.ForeColor = Color.FromArgb(222, 0, 0, 0);
+            materialCard2.Location = new Point(17, 233);
+            materialCard2.Margin = new Padding(14);
+            materialCard2.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialCard2.Name = "materialCard2";
+            materialCard2.Padding = new Padding(14);
+            materialCard2.Size = new Size(523, 135);
+            materialCard2.TabIndex = 34;
+            // 
+            // materialLabel3
+            // 
+            materialLabel3.Depth = 0;
+            materialLabel3.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel3.Location = new Point(17, 71);
+            materialLabel3.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialLabel3.Name = "materialLabel3";
+            materialLabel3.Size = new Size(104, 48);
+            materialLabel3.TabIndex = 6;
+            materialLabel3.Text = "Time";
+            materialLabel3.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // materialLabel4
+            // 
+            materialLabel4.Depth = 0;
+            materialLabel4.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel4.Location = new Point(17, 17);
+            materialLabel4.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialLabel4.Name = "materialLabel4";
+            materialLabel4.Size = new Size(104, 48);
+            materialLabel4.TabIndex = 0;
+            materialLabel4.Text = "Date";
+            materialLabel4.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // saveBtn
             // 
-            saveBtn.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            saveBtn.Enabled = false;
-            saveBtn.Location = new Point(414, 290);
+            saveBtn.AutoSize = false;
+            saveBtn.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            saveBtn.CharacterCasing = ReaLTaiizor.Controls.MaterialButton.CharacterCasingEnum.Normal;
+            saveBtn.Density = ReaLTaiizor.Controls.MaterialButton.MaterialButtonDensity.Default;
+            saveBtn.Depth = 0;
+            saveBtn.HighEmphasis = true;
+            saveBtn.Icon = null;
+            saveBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
+            saveBtn.Location = new Point(382, 388);
+            saveBtn.Margin = new Padding(4, 6, 4, 6);
+            saveBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             saveBtn.Name = "saveBtn";
-            saveBtn.Size = new Size(94, 29);
-            saveBtn.TabIndex = 4;
+            saveBtn.NoAccentTextColor = Color.Empty;
+            saveBtn.Size = new Size(158, 36);
+            saveBtn.TabIndex = 35;
             saveBtn.Text = "Save";
+            saveBtn.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
+            saveBtn.UseAccentColor = false;
             saveBtn.UseVisualStyleBackColor = true;
-            saveBtn.Click += saveBtn_Click;
-            // 
-            // cancelBtn
-            // 
-            cancelBtn.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            cancelBtn.Location = new Point(314, 290);
-            cancelBtn.Name = "cancelBtn";
-            cancelBtn.Size = new Size(94, 29);
-            cancelBtn.TabIndex = 5;
-            cancelBtn.Text = "Cancel";
-            cancelBtn.UseVisualStyleBackColor = true;
-            cancelBtn.Click += cancelBtn_Click;
+            saveBtn.Click += this.saveBtn_Click;
             // 
             // NewAppointmentForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(521, 332);
-            Controls.Add(cancelBtn);
+            ClientSize = new Size(557, 435);
             Controls.Add(saveBtn);
-            Controls.Add(groupBox2);
-            Controls.Add(groupBox1);
+            Controls.Add(materialCard2);
+            Controls.Add(materialCard1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             KeyPreview = true;
             MaximizeBox = false;
@@ -184,30 +252,33 @@
             Text = "New Appointment";
             Load += NewAppointmentForm_Load;
             KeyPress += NewAppointmentForm_KeyPress;
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
-            groupBox2.ResumeLayout(false);
-            groupBox2.PerformLayout();
+            materialCard1.ResumeLayout(false);
+            materialCard2.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
         private Label label1;
-        private TextBox nameTxt;
         private GroupBox groupBox1;
-        private TextBox phoneTxt;
+        private ReaLTaiizor.Controls.MaterialTextBoxEdit phoneTxt;
         private Label label4;
         private TextBox textBox3;
         private Label label3;
         private TextBox textBox2;
         private Label label2;
-        private GroupBox groupBox2;
-        private Label label8;
         private DateTimePicker datePkr;
         private Button saveBtn;
         private Button cancelBtn;
         private DateTimePicker timePkr;
-        private Label label5;
+        private ReaLTaiizor.Controls.MaterialCard materialCard1;
+        private ReaLTaiizor.Controls.MaterialLabel materialLabel2;
+        private ReaLTaiizor.Controls.MaterialTextBoxEdit sexTxt;
+        private ReaLTaiizor.Controls.MaterialTextBoxEdit nameTxt;
+        private ReaLTaiizor.Controls.MaterialLabel materialLabel1;
+        private ReaLTaiizor.Controls.MaterialCard materialCard2;
+        private ReaLTaiizor.Controls.MaterialLabel materialLabel3;
+        private ReaLTaiizor.Controls.MaterialLabel materialLabel4;
+        private ReaLTaiizor.Controls.MaterialButton saveBtn;
     }
 }
