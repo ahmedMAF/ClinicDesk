@@ -62,9 +62,7 @@ internal static class Program
             Settings.SaveSettings();
         }
         
-#if DEBUG
-        if (Settings.Instance.AccountType == AccountType.NotDefined)
-#else
+#if !DEBUG
         if (Settings.Instance.AccountType != AccountType.NotDefined)
 #endif
         {
