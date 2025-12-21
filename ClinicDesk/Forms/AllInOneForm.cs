@@ -4,17 +4,17 @@ using ReaLTaiizor.Forms;
 
 namespace ClinicDesk.Forms;
 
-public partial class SecretaryForm : MaterialForm
+public partial class AllInOneForm : MaterialForm
 {
     private readonly AppointmentsGrid _grdHelper;
 
-    public SecretaryForm()
+    public AllInOneForm()
     {
         InitializeComponent();
 
         FormClosed += (s, e) => Application.Exit();
         
-        _grdHelper = new AppointmentsGrid(appointmentsGrd, AccountType.Secretary);
+        _grdHelper = new AppointmentsGrid(appointmentsGrd, AccountType.AllInOne);
     }
 
     private async void SecretaryForm_Load(object sender, EventArgs e)

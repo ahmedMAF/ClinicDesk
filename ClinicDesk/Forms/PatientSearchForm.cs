@@ -91,6 +91,9 @@ public partial class PatientSearchForm : MaterialForm
                 })
                 .ToList();
 
+            for (int i = 0; i < patientsResult.Count; i++)
+                patientsResult[i].Serial = i + 1;
+
             patientsGrd.DataSource = patientsResult;
 
             return;

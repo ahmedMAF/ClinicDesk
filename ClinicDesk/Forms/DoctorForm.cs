@@ -13,7 +13,7 @@ public partial class DoctorForm : MaterialForm
 
         FormClosed += (s, e) => Application.Exit();
         
-        _grdHelper = new AppointmentsGrid(appointmentsGrd, false);
+        _grdHelper = new AppointmentsGrid(appointmentsGrd, AccountType.Doctor);
     }
 
     private async void DoctorForm_Load(object sender, EventArgs e)

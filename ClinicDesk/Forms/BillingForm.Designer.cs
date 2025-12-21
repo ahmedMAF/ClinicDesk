@@ -48,8 +48,9 @@
             invoicesGrd.Name = "invoicesGrd";
             invoicesGrd.ReadOnly = true;
             invoicesGrd.RowHeadersWidth = 51;
-            invoicesGrd.Size = new Size(1131, 787);
+            invoicesGrd.Size = new Size(1182, 881);
             invoicesGrd.TabIndex = 5;
+            invoicesGrd.CellPainting += invoicesGrd_CellPainting;
             invoicesGrd.RowPrePaint += invoicesGrd_RowPrePaint;
             // 
             // materialLabel2
@@ -140,7 +141,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1149, 976);
+            ClientSize = new Size(1200, 1070);
             Controls.Add(materialLabel2);
             Controls.Add(phoneTxt);
             Controls.Add(materialLabel1);

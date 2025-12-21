@@ -32,11 +32,17 @@ public class AppContext : ApplicationContext
             case AccountType.Secretary:
                 ShowForm<SecretaryForm>();
                 break;
-                
+
+            case AccountType.AllInOne:
+                ShowForm<AllInOneForm>();
+                break;
+
             default:
-                // TODO: Call installer.
+#if DEBUG
                 ShowForm<WelcomeForm>();
-                // ShowForm<InstallForm>();
+#else
+                ShowForm<InstallForm>();
+#endif
                 break;
         }
     }

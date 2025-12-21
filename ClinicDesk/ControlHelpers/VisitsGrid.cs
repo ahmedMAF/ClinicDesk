@@ -8,8 +8,9 @@ public class VisitsGrid : GridButtonHelper
     private Patient _patient = null!;
     private int? _originalVisitId;
     private bool _isShowingOneVisit;
-    
-    public VisitsGrid(DataGridView grd) : base(grd, null)
+    private List<VisitDto> _visits;
+
+    public VisitsGrid(DataGridView grd) : base(grd, null!)
     {
         ColumnActions = new Dictionary<string, Action<int>>
         {
@@ -66,26 +67,23 @@ public class VisitsGrid : GridButtonHelper
     
     private void showBtn_Click(int rowIndex)
     {
-        VisitDto visit = (VisitDto)Grid.Rows[rowIndex].DataBoundItem!;
+        VisitDto visit = _visits[rowIndex];
+
+        if (IsButtonDisabled(rowIndex, visit))
+            return;
 
         _originalVisitId = rowIndex == 0 && _isShowingOneVisit ? null : visit.Id;
         PopulateGrid();
     }
-    
+
     private void Grid_CellPainting(object? sender, DataGridViewCellPaintingEventArgs e)
     {
         if (e.ColumnIndex == -1 || e.RowIndex == -1)
            return;
 
-        DataGridViewRow row = Grid.Rows[e.RowIndex];
-        VisitDto visit = (VisitDto)row.DataBoundItem!;
-        
         // Disable the buttons on visits with no followups and on followups themselves.
-        if (Grid.Columns[e.ColumnIndex].Name == "showBtn" &&
-            ((!_isShowingOneVisit && visit.FollowUpsCount == 0) ||
-            (_isShowingOneVisit && e.RowIndex != 0))
+        if (Grid.Columns[e.ColumnIndex].Name == "showBtn" && IsButtonDisabled(e.RowIndex, _visits[e.RowIndex]))
         {
-            row.Cells[e.ColumnIndex].ReadOnly = true;
             e.PaintBackground(e.CellBounds, true);
             e.Handled = true;
         }
@@ -98,7 +96,13 @@ public class VisitsGrid : GridButtonHelper
 
         Grid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = _isShowingOneVisit ? "Back" : "Show Followups";
     }
-    
+
+    private bool IsButtonDisabled(int rowIndex, VisitDto visit)
+    {
+        return (!_isShowingOneVisit && visit.FollowUpsCount == 0) ||
+            (_isShowingOneVisit && rowIndex != 0);
+    }
+
     public void RefreshList(int? originalVisitId, Patient patient)
     {
         _patient = patient;
@@ -111,7 +115,7 @@ public class VisitsGrid : GridButtonHelper
     {
         _isShowingOneVisit = _originalVisitId != null;
         
-        List<VisitDto> visits = _patient.Visits
+        _visits = _patient.Visits
             .Where(v => v.OriginalVisitId == _originalVisitId)
             .Select(v => new VisitDto
             {
@@ -139,18 +143,18 @@ public class VisitsGrid : GridButtonHelper
                 })
                 .FirstOrDefault(v => v.Id == _originalVisitId);
 
-            visits.Insert(0, orgVisit!);
+            _visits.Insert(0, orgVisit!);
 
-            for (int i = 1; i < visits.Count; i++)
-                visits[i].Serial = i;
+            for (int i = 1; i < _visits.Count; i++)
+                _visits[i].Serial = i;
         }
         else
         {
-            for (int i = 0; i < visits.Count; i++)
-                visits[i].Serial = i + 1;
+            for (int i = 0; i < _visits.Count; i++)
+                _visits[i].Serial = i + 1;
         }
 
-        Grid.DataSource = visits;
+        Grid.DataSource = _visits;
         
         // Set a special color for the original visit.
         if (_isShowingOneVisit)

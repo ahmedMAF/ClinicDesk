@@ -37,7 +37,7 @@ public static class AppLicense
         }
         else
         {
-            MessageBox.Show("Invalid license: " + string.Join("\n", validationResult));
+            MessageBox.Show("Invalid license: " + string.Join(Environment.NewLine, validationResult));
             return false;
         }
     }

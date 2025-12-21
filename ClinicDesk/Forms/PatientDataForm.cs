@@ -43,7 +43,7 @@ public partial class PatientDataForm : Form
         }
 
         disOtherChk.Checked = _chronicDiseases.Count > 0;
-        disOtherTxt.Text = string.Join("\r\n", _chronicDiseases);
+        disOtherTxt.Text = string.Join(Environment.NewLine, _chronicDiseases);
         _chronicDiseases.Clear();
 
         notesTxt.Text = patient.Notes;
@@ -65,7 +65,7 @@ public partial class PatientDataForm : Form
 
         if (disOtherChk.Checked)
         {
-            string[] otherChronicDiseases = disOtherTxt.Text.Split("\r\n");
+            string[] otherChronicDiseases = disOtherTxt.Text.Split(Environment.NewLine);
 
             foreach (string diseases in otherChronicDiseases)
                 _chronicDiseases.Add(diseases);

@@ -83,6 +83,10 @@ public partial class BillingForm : MaterialForm
     private async void payBtn_Click(int rowIndex)
     {
         InvoiceDto invoice = _invoices[rowIndex];
+
+        if (IsPayButtonDisabled(invoice))
+            return;
+
         decimal paymentAmount = 0;
 
         if (AppContext.ShowDialog<PaymentForm>(form => form.SetData(invoice.RemainingAmount), (form, _) => paymentAmount = form.PaymentAmount) == DialogResult.Cancel)
@@ -95,7 +99,8 @@ public partial class BillingForm : MaterialForm
     {
         InvoiceDto invoice = _invoices[rowIndex];
 
-        if (MessageBox.Show($"Are you sure you want to fully pay this invoice with a value of \"{invoice.RemainingAmount:0.00}\"?", "Payment Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+        if (IsPayButtonDisabled(invoice) ||
+            MessageBox.Show($"Are you sure you want to fully pay this invoice with a value of \"{invoice.RemainingAmount:0.00}\"?", "Payment Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
             return;
 
         await PerformPayment(invoice, invoice.RemainingAmount);
@@ -250,16 +255,21 @@ public partial class BillingForm : MaterialForm
     private void invoicesGrd_CellPainting(object? sender, DataGridViewCellPaintingEventArgs e)
     {
         if (e.ColumnIndex == -1 || e.RowIndex == -1)
-           return;
+            return;
 
-        DataGridViewRow row = Grid.Rows[e.RowIndex];
+        DataGridViewRow row = invoicesGrd.Rows[e.RowIndex];
         InvoiceDto invoice = (InvoiceDto)row.DataBoundItem!;
-        
-        if (Grid.Columns[e.ColumnIndex].Name is "payBtn" or "payFullBtn" && invoice.RemainingAmount == 0)
+
+        if (invoicesGrd.Columns[e.ColumnIndex].Name is "payBtn" or "payFullBtn" && IsPayButtonDisabled(invoice))
         {
             row.Cells[e.ColumnIndex].ReadOnly = true;
             e.PaintBackground(e.CellBounds, true);
             e.Handled = true;
         }
+    }
+
+    private static bool IsPayButtonDisabled(InvoiceDto invoice)
+    {
+        return invoice.RemainingAmount == 0;
     }
 }
