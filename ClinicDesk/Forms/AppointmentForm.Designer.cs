@@ -30,6 +30,7 @@ namespace ClinicDesk.Forms
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AppointmentForm));
             visitsGrd = new DataGridView();
             materialCard1 = new MaterialCard();
             materialLabel4 = new MaterialLabel();
@@ -42,7 +43,7 @@ namespace ClinicDesk.Forms
             materialLabel1 = new MaterialLabel();
             tableLayoutPanel1 = new TableLayoutPanel();
             materialCard2 = new MaterialCard();
-            materialListBox1 = new MaterialListBox();
+            chronicDiseasesLst = new MaterialListBox();
             materialLabel7 = new MaterialLabel();
             bloodTypeTxt = new MaterialTextBoxEdit();
             materialLabel8 = new MaterialLabel();
@@ -295,7 +296,7 @@ namespace ClinicDesk.Forms
             // materialCard2
             // 
             materialCard2.BackColor = Color.FromArgb(255, 255, 255);
-            materialCard2.Controls.Add(materialListBox1);
+            materialCard2.Controls.Add(chronicDiseasesLst);
             materialCard2.Controls.Add(materialLabel7);
             materialCard2.Controls.Add(bloodTypeTxt);
             materialCard2.Controls.Add(materialLabel8);
@@ -310,20 +311,20 @@ namespace ClinicDesk.Forms
             materialCard2.Size = new Size(515, 247);
             materialCard2.TabIndex = 33;
             // 
-            // materialListBox1
+            // chronicDiseasesLst
             // 
-            materialListBox1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            materialListBox1.BackColor = Color.White;
-            materialListBox1.BorderColor = Color.LightGray;
-            materialListBox1.Depth = 0;
-            materialListBox1.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialListBox1.Location = new Point(127, 71);
-            materialListBox1.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
-            materialListBox1.Name = "materialListBox1";
-            materialListBox1.SelectedIndex = -1;
-            materialListBox1.SelectedItem = null;
-            materialListBox1.Size = new Size(371, 159);
-            materialListBox1.TabIndex = 8;
+            chronicDiseasesLst.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            chronicDiseasesLst.BackColor = Color.White;
+            chronicDiseasesLst.BorderColor = Color.LightGray;
+            chronicDiseasesLst.Depth = 0;
+            chronicDiseasesLst.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
+            chronicDiseasesLst.Location = new Point(127, 71);
+            chronicDiseasesLst.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            chronicDiseasesLst.Name = "chronicDiseasesLst";
+            chronicDiseasesLst.SelectedIndex = -1;
+            chronicDiseasesLst.SelectedItem = null;
+            chronicDiseasesLst.Size = new Size(371, 159);
+            chronicDiseasesLst.TabIndex = 8;
             // 
             // materialLabel7
             // 
@@ -522,7 +523,7 @@ namespace ClinicDesk.Forms
             billTxt.Name = "billTxt";
             billTxt.PasswordChar = '\0';
             billTxt.PrefixSuffixText = null;
-            billTxt.ReadOnly = true;
+            billTxt.ReadOnly = false;
             billTxt.RightToLeft = RightToLeft.No;
             billTxt.SelectedText = "";
             billTxt.SelectionLength = 0;
@@ -604,6 +605,7 @@ namespace ClinicDesk.Forms
             Controls.Add(materialLabel5);
             Controls.Add(notesTxt);
             Controls.Add(tableLayoutPanel1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "AppointmentForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Appointment";
@@ -622,7 +624,6 @@ namespace ClinicDesk.Forms
         private System.Windows.Forms.GroupBox groupBox3;
         private Label label7;
         private Label label6;
-        private ListBox chronicDiseasesLst;
         private System.Windows.Forms.GroupBox groupBox1;
         private MaterialTextBoxEdit ageTxt;
         private Label label4;
@@ -651,7 +652,7 @@ namespace ClinicDesk.Forms
         private ReaLTaiizor.Controls.MaterialLabel materialLabel7;
         private ReaLTaiizor.Controls.MaterialTextBoxEdit bloodTypeTxt;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel8;
-        private ReaLTaiizor.Controls.MaterialListBox materialListBox1;
+        private ReaLTaiizor.Controls.MaterialListBox chronicDiseasesLst;
         private MaterialMultiLineTextBoxEdit notesTxt;
         private MaterialLabel materialLabel5;
         private MaterialLabel materialLabel6;

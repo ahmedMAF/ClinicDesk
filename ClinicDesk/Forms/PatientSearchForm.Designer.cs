@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PatientSearchForm));
             searchNameBtn = new ReaLTaiizor.Controls.MaterialButton();
             nameTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             materialLabel1 = new ReaLTaiizor.Controls.MaterialLabel();
@@ -196,6 +197,7 @@
             Controls.Add(materialLabel1);
             Controls.Add(nameTxt);
             Controls.Add(searchNameBtn);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
             MaximizeBox = false;
             MinimizeBox = false;

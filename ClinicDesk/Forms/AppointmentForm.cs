@@ -1,6 +1,7 @@
 ﻿using ClinicDesk.ControlHelpers;
 using ClinicDesk.Database;
 using ClinicDesk.Database.Models;
+using ReaLTaiizor.Child.Material;
 using ReaLTaiizor.Forms;
 
 namespace ClinicDesk.Forms;
@@ -31,15 +32,14 @@ public partial class AppointmentForm : MaterialForm
     private void AppointmentForm_Load(object sender, EventArgs e)
     {
         nameTxt.Text = _patient.Name;
-        sexCbo.SelectedIndex = (int)_patient.Sex;
-        dobTxt.Text = _patient.DateOfBirth.ToString("dd-MM-yyyy");
+        sexTxt.Text = _patient.Sex.ToString();
         ageTxt.Text = (_patient.Age.Days / 365).ToString();
-        maritalCbo.SelectedIndex = (int)_patient.MaritalStatus;
+        maritalTxt.Text = _patient.MaritalStatus.ToString();
 
-        bloodTypeCbo.SelectedIndex = (int)_patient.BloodType;
+        bloodTypeTxt.Text = Utils.GetBloodTypeString(_patient.BloodType);
 
         foreach (string disease in _patient.ChronicDiseases)
-            chronicDiseasesLst.Items.Add(disease);
+            chronicDiseasesLst.Items.Add(new MaterialListBoxItem(disease));
 
         notesTxt.Text = _patient.Notes;
 

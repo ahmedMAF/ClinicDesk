@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SecretaryForm));
             monthCalendar1 = new MonthCalendar();
             appointmentsGrd = new DataGridView();
             newAppointmentBtn = new ReaLTaiizor.Controls.MaterialButton();
@@ -128,6 +129,7 @@
             Controls.Add(newAppointmentBtn);
             Controls.Add(appointmentsGrd);
             Controls.Add(monthCalendar1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "SecretaryForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Secretary";

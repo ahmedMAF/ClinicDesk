@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InstallForm));
             installBtn = new ReaLTaiizor.Controls.MaterialButton();
             materialLabel1 = new ReaLTaiizor.Controls.MaterialLabel();
             dbServerTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
@@ -340,6 +341,7 @@
             licenseServerUrlTxt.Size = new Size(312, 48);
             licenseServerUrlTxt.TabIndex = 15;
             licenseServerUrlTxt.TabStop = false;
+            licenseServerUrlTxt.Text = "http://localhost/api/getlicense";
             licenseServerUrlTxt.TextAlign = HorizontalAlignment.Left;
             licenseServerUrlTxt.TrailingIcon = null;
             licenseServerUrlTxt.UseSystemPasswordChar = false;
@@ -376,6 +378,7 @@
             Controls.Add(dbServerTxt);
             Controls.Add(materialLabel1);
             Controls.Add(installBtn);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "InstallForm";

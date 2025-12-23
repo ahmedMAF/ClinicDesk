@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(BillingForm));
             invoicesGrd = new DataGridView();
             materialLabel2 = new ReaLTaiizor.Controls.MaterialLabel();
             phoneTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
@@ -48,7 +49,7 @@
             invoicesGrd.Name = "invoicesGrd";
             invoicesGrd.ReadOnly = true;
             invoicesGrd.RowHeadersWidth = 51;
-            invoicesGrd.Size = new Size(1182, 881);
+            invoicesGrd.Size = new Size(1200, 913);
             invoicesGrd.TabIndex = 5;
             invoicesGrd.CellPainting += invoicesGrd_CellPainting;
             invoicesGrd.RowPrePaint += invoicesGrd_RowPrePaint;
@@ -141,13 +142,14 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1200, 1070);
+            ClientSize = new Size(1218, 1102);
             Controls.Add(materialLabel2);
             Controls.Add(phoneTxt);
             Controls.Add(materialLabel1);
             Controls.Add(nameTxt);
             Controls.Add(invoicesGrd);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "BillingForm";
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterScreen;

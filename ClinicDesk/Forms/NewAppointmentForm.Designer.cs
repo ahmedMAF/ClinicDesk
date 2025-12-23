@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewAppointmentForm));
             timePkr = new DateTimePicker();
             datePkr = new DateTimePicker();
             materialCard1 = new ReaLTaiizor.Controls.MaterialCard();
@@ -50,7 +51,7 @@
             timePkr.Format = DateTimePickerFormat.Custom;
             timePkr.Location = new Point(127, 79);
             timePkr.Name = "timePkr";
-            timePkr.Size = new Size(379, 27);
+            timePkr.Size = new Size(432, 27);
             timePkr.TabIndex = 3;
             // 
             // datePkr
@@ -60,7 +61,7 @@
             datePkr.Format = DateTimePickerFormat.Custom;
             datePkr.Location = new Point(127, 25);
             datePkr.Name = "datePkr";
-            datePkr.Size = new Size(379, 27);
+            datePkr.Size = new Size(432, 27);
             datePkr.TabIndex = 1;
             // 
             // materialCard1
@@ -78,7 +79,7 @@
             materialCard1.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialCard1.Name = "materialCard1";
             materialCard1.Padding = new Padding(14);
-            materialCard1.Size = new Size(523, 135);
+            materialCard1.Size = new Size(576, 135);
             materialCard1.TabIndex = 33;
             // 
             // materialLabel2
@@ -117,7 +118,7 @@
             phoneTxt.SelectionLength = 0;
             phoneTxt.SelectionStart = 0;
             phoneTxt.ShortcutsEnabled = true;
-            phoneTxt.Size = new Size(379, 48);
+            phoneTxt.Size = new Size(432, 48);
             phoneTxt.TabIndex = 3;
             phoneTxt.TabStop = false;
             phoneTxt.Text = "materialTextBoxEdit2";
@@ -149,7 +150,7 @@
             nameTxt.SelectionLength = 0;
             nameTxt.SelectionStart = 0;
             nameTxt.ShortcutsEnabled = true;
-            nameTxt.Size = new Size(379, 48);
+            nameTxt.Size = new Size(432, 48);
             nameTxt.TabIndex = 1;
             nameTxt.TabStop = false;
             nameTxt.Text = "materialTextBoxEdit1";
@@ -184,7 +185,7 @@
             materialCard2.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialCard2.Name = "materialCard2";
             materialCard2.Padding = new Padding(14);
-            materialCard2.Size = new Size(523, 135);
+            materialCard2.Size = new Size(576, 135);
             materialCard2.TabIndex = 34;
             // 
             // materialLabel3
@@ -221,7 +222,7 @@
             saveBtn.HighEmphasis = true;
             saveBtn.Icon = null;
             saveBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            saveBtn.Location = new Point(382, 388);
+            saveBtn.Location = new Point(435, 388);
             saveBtn.Margin = new Padding(4, 6, 4, 6);
             saveBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             saveBtn.Name = "saveBtn";
@@ -232,17 +233,17 @@
             saveBtn.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
             saveBtn.UseAccentColor = false;
             saveBtn.UseVisualStyleBackColor = true;
-            saveBtn.Click += this.saveBtn_Click;
+            saveBtn.Click += saveBtn_Click;
             // 
             // NewAppointmentForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(557, 435);
+            ClientSize = new Size(610, 440);
             Controls.Add(saveBtn);
             Controls.Add(materialCard2);
             Controls.Add(materialCard1);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             KeyPreview = true;
             MaximizeBox = false;
             MinimizeBox = false;
@@ -268,7 +269,6 @@
         private TextBox textBox2;
         private Label label2;
         private DateTimePicker datePkr;
-        private Button saveBtn;
         private Button cancelBtn;
         private DateTimePicker timePkr;
         private ReaLTaiizor.Controls.MaterialCard materialCard1;

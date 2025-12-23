@@ -28,8 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WelcomeForm));
             docBtn = new Button();
             secretBtn = new Button();
+            toothChart1 = new ClinicDesk.Controls.ToothChart();
             SuspendLayout();
             // 
             // docBtn
@@ -52,13 +54,23 @@
             secretBtn.UseVisualStyleBackColor = true;
             secretBtn.Click += secretBtn_Click;
             // 
+            // toothChart1
+            // 
+            toothChart1.Location = new Point(12, 103);
+            toothChart1.Name = "toothChart1";
+            toothChart1.Size = new Size(600, 200);
+            toothChart1.TabIndex = 2;
+            toothChart1.Text = "toothChart1";
+            // 
             // WelcomeForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(876, 528);
+            Controls.Add(toothChart1);
             Controls.Add(secretBtn);
             Controls.Add(docBtn);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "WelcomeForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
@@ -70,5 +82,6 @@
 
         private Button docBtn;
         private Button secretBtn;
+        private Controls.ToothChart toothChart1;
     }
 }

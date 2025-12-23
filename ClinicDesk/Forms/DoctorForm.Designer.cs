@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DoctorForm));
             label1 = new Label();
             appointmentsGrd = new DataGridView();
             ((System.ComponentModel.ISupportInitialize)appointmentsGrd).BeginInit();
@@ -66,6 +67,7 @@
             ClientSize = new Size(724, 544);
             Controls.Add(appointmentsGrd);
             Controls.Add(label1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "DoctorForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Doctor";

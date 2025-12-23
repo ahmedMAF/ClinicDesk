@@ -40,39 +40,11 @@ internal static class Program
     public static bool IsReady => AppLicense.IsValid && Settings.Instance.AccountType != AccountType.NotDefined && ClinicDb.IsRunning;
     
     /// <summary>
-    /// The main entry point for the application.
+    ///  The main entry point for the application.
     /// </summary>
     [STAThread]
     private static void Main()
     {
-        Settings.Initialize();
-        
-        // if (!AppLicense.Validate())
-        //     return;
-        
-        if (Settings.Instance.LastSeenDate > DateTime.UtcNow)
-        {
-            // TODO: Trying to cheat license.
-            return;
-        }
-        else
-        {
-            // We are good.
-            Settings.Instance.LastSeenDate = DateTime.UtcNow;
-            Settings.SaveSettings();
-        }
-        
-#if !DEBUG
-        if (Settings.Instance.AccountType != AccountType.NotDefined)
-#endif
-        {
-            // TODO: Run MySQL if server.
-            ClinicDb.Initialize();
-
-            if (!ClinicDb.IsRunning)
-                return;
-        }
-
         // To customize application configuration such as set high DPI settings or default font,
         // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();

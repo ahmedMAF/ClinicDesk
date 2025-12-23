@@ -28,333 +28,468 @@
         /// </summary>
         private void InitializeComponent()
         {
-            groupBox4 = new GroupBox();
-            notesTxt = new TextBox();
-            bloodTypeCbo = new ComboBox();
-            groupBox3 = new GroupBox();
-            chronicDiseasesLst = new ListBox();
-            label7 = new Label();
-            label6 = new Label();
-            groupBox1 = new GroupBox();
-            ageTxt = new TextBox();
-            label4 = new Label();
-            dobTxt = new TextBox();
-            maritalCbo = new ComboBox();
-            label5 = new Label();
-            sexCbo = new ComboBox();
-            label3 = new Label();
-            label2 = new Label();
-            nameTxt = new TextBox();
-            label1 = new Label();
-            groupBox6 = new GroupBox();
-            visitsGrd = new DataGridView();
-            editBtn = new Button();
-            cancelBtn = new Button();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PatientProfileForm));
             tableLayoutPanel1 = new TableLayoutPanel();
-            groupBox4.SuspendLayout();
-            groupBox3.SuspendLayout();
-            groupBox1.SuspendLayout();
-            groupBox6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)visitsGrd).BeginInit();
+            materialCard2 = new ReaLTaiizor.Controls.MaterialCard();
+            chronicDiseasesLst = new ReaLTaiizor.Controls.MaterialListBox();
+            materialLabel7 = new ReaLTaiizor.Controls.MaterialLabel();
+            bloodTypeTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
+            materialLabel8 = new ReaLTaiizor.Controls.MaterialLabel();
+            materialCard1 = new ReaLTaiizor.Controls.MaterialCard();
+            materialLabel4 = new ReaLTaiizor.Controls.MaterialLabel();
+            maritalTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
+            materialLabel3 = new ReaLTaiizor.Controls.MaterialLabel();
+            materialLabel2 = new ReaLTaiizor.Controls.MaterialLabel();
+            ageTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
+            sexTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
+            nameTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
+            materialLabel1 = new ReaLTaiizor.Controls.MaterialLabel();
+            materialLabel6 = new ReaLTaiizor.Controls.MaterialLabel();
+            visitsGrd = new DataGridView();
+            materialLabel5 = new ReaLTaiizor.Controls.MaterialLabel();
+            notesTxt = new ReaLTaiizor.Controls.MaterialMultiLineTextBoxEdit();
+            editBtn = new ReaLTaiizor.Controls.MaterialButton();
             tableLayoutPanel1.SuspendLayout();
+            materialCard2.SuspendLayout();
+            materialCard1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)visitsGrd).BeginInit();
             SuspendLayout();
-            // 
-            // groupBox4
-            // 
-            groupBox4.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            groupBox4.Controls.Add(notesTxt);
-            groupBox4.Location = new Point(12, 188);
-            groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(1068, 125);
-            groupBox4.TabIndex = 25;
-            groupBox4.TabStop = false;
-            groupBox4.Text = "Notes";
-            // 
-            // notesTxt
-            // 
-            notesTxt.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            notesTxt.Location = new Point(6, 26);
-            notesTxt.Multiline = true;
-            notesTxt.Name = "notesTxt";
-            notesTxt.Size = new Size(1056, 93);
-            notesTxt.TabIndex = 18;
-            // 
-            // bloodTypeCbo
-            // 
-            bloodTypeCbo.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            bloodTypeCbo.DropDownStyle = ComboBoxStyle.DropDownList;
-            bloodTypeCbo.Enabled = false;
-            bloodTypeCbo.FormattingEnabled = true;
-            bloodTypeCbo.Items.AddRange(new object[] { "A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-" });
-            bloodTypeCbo.Location = new Point(132, 26);
-            bloodTypeCbo.Name = "bloodTypeCbo";
-            bloodTypeCbo.Size = new Size(402, 28);
-            bloodTypeCbo.TabIndex = 14;
-            // 
-            // groupBox3
-            // 
-            groupBox3.Controls.Add(chronicDiseasesLst);
-            groupBox3.Controls.Add(bloodTypeCbo);
-            groupBox3.Controls.Add(label7);
-            groupBox3.Controls.Add(label6);
-            groupBox3.Dock = DockStyle.Fill;
-            groupBox3.Location = new Point(549, 3);
-            groupBox3.Name = "groupBox3";
-            groupBox3.Size = new Size(540, 176);
-            groupBox3.TabIndex = 24;
-            groupBox3.TabStop = false;
-            groupBox3.Text = "Medical Info";
-            // 
-            // chronicDiseasesLst
-            // 
-            chronicDiseasesLst.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            chronicDiseasesLst.FormattingEnabled = true;
-            chronicDiseasesLst.IntegralHeight = false;
-            chronicDiseasesLst.Items.AddRange(new object[] { "Diabetes", "Hypertension", "Liver" });
-            chronicDiseasesLst.Location = new Point(132, 60);
-            chronicDiseasesLst.Name = "chronicDiseasesLst";
-            chronicDiseasesLst.Size = new Size(402, 93);
-            chronicDiseasesLst.TabIndex = 27;
-            // 
-            // label7
-            // 
-            label7.AutoSize = true;
-            label7.Location = new Point(6, 62);
-            label7.Name = "label7";
-            label7.Size = new Size(120, 20);
-            label7.TabIndex = 8;
-            label7.Text = "Chronic Diseases";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(6, 29);
-            label6.Name = "label6";
-            label6.Size = new Size(84, 20);
-            label6.TabIndex = 6;
-            label6.Text = "Blood Type";
-            // 
-            // groupBox1
-            // 
-            groupBox1.Controls.Add(ageTxt);
-            groupBox1.Controls.Add(label4);
-            groupBox1.Controls.Add(dobTxt);
-            groupBox1.Controls.Add(maritalCbo);
-            groupBox1.Controls.Add(label5);
-            groupBox1.Controls.Add(sexCbo);
-            groupBox1.Controls.Add(label3);
-            groupBox1.Controls.Add(label2);
-            groupBox1.Controls.Add(nameTxt);
-            groupBox1.Controls.Add(label1);
-            groupBox1.Dock = DockStyle.Fill;
-            groupBox1.Location = new Point(3, 3);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(540, 176);
-            groupBox1.TabIndex = 22;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Personal Info";
-            // 
-            // ageTxt
-            // 
-            ageTxt.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ageTxt.Location = new Point(411, 93);
-            ageTxt.Name = "ageTxt";
-            ageTxt.ReadOnly = true;
-            ageTxt.Size = new Size(123, 27);
-            ageTxt.TabIndex = 16;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(369, 96);
-            label4.Name = "label4";
-            label4.Size = new Size(36, 20);
-            label4.TabIndex = 15;
-            label4.Text = "Age";
-            // 
-            // dobTxt
-            // 
-            dobTxt.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            dobTxt.Location = new Point(132, 93);
-            dobTxt.Name = "dobTxt";
-            dobTxt.ReadOnly = true;
-            dobTxt.Size = new Size(237, 27);
-            dobTxt.TabIndex = 14;
-            // 
-            // maritalCbo
-            // 
-            maritalCbo.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            maritalCbo.DropDownStyle = ComboBoxStyle.DropDownList;
-            maritalCbo.Enabled = false;
-            maritalCbo.FormattingEnabled = true;
-            maritalCbo.Items.AddRange(new object[] { "Single", "Maried", "Divorced", "Widowed" });
-            maritalCbo.Location = new Point(132, 126);
-            maritalCbo.Name = "maritalCbo";
-            maritalCbo.Size = new Size(402, 28);
-            maritalCbo.TabIndex = 13;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(6, 128);
-            label5.Name = "label5";
-            label5.Size = new Size(100, 20);
-            label5.TabIndex = 12;
-            label5.Text = "Marital Status";
-            // 
-            // sexCbo
-            // 
-            sexCbo.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            sexCbo.DropDownStyle = ComboBoxStyle.DropDownList;
-            sexCbo.Enabled = false;
-            sexCbo.FormattingEnabled = true;
-            sexCbo.Items.AddRange(new object[] { "Male", "Female" });
-            sexCbo.Location = new Point(132, 59);
-            sexCbo.Name = "sexCbo";
-            sexCbo.Size = new Size(402, 28);
-            sexCbo.TabIndex = 11;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(6, 62);
-            label3.Name = "label3";
-            label3.Size = new Size(32, 20);
-            label3.TabIndex = 10;
-            label3.Text = "Sex";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(6, 96);
-            label2.Name = "label2";
-            label2.Size = new Size(94, 20);
-            label2.TabIndex = 8;
-            label2.Text = "Date of Birth";
-            // 
-            // nameTxt
-            // 
-            nameTxt.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            nameTxt.Location = new Point(132, 26);
-            nameTxt.Name = "nameTxt";
-            nameTxt.ReadOnly = true;
-            nameTxt.Size = new Size(402, 27);
-            nameTxt.TabIndex = 1;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(6, 29);
-            label1.Name = "label1";
-            label1.Size = new Size(76, 20);
-            label1.TabIndex = 0;
-            label1.Text = "Full Name";
-            // 
-            // groupBox6
-            // 
-            groupBox6.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            groupBox6.Controls.Add(visitsGrd);
-            groupBox6.Location = new Point(12, 319);
-            groupBox6.Name = "groupBox6";
-            groupBox6.Size = new Size(1068, 315);
-            groupBox6.TabIndex = 22;
-            groupBox6.TabStop = false;
-            groupBox6.Text = "Past Visits";
-            // 
-            // visitsGrd
-            // 
-            visitsGrd.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            visitsGrd.Location = new Point(6, 26);
-            visitsGrd.Name = "visitsGrd";
-            visitsGrd.RowHeadersWidth = 51;
-            visitsGrd.Size = new Size(1056, 283);
-            visitsGrd.TabIndex = 29;
-            // 
-            // editBtn
-            // 
-            editBtn.Location = new Point(986, 640);
-            editBtn.Name = "editBtn";
-            editBtn.Size = new Size(94, 29);
-            editBtn.TabIndex = 27;
-            editBtn.Text = "Edit";
-            editBtn.UseVisualStyleBackColor = true;
-            editBtn.Click += editBtn_Click;
-            // 
-            // cancelBtn
-            // 
-            cancelBtn.Location = new Point(886, 640);
-            cancelBtn.Name = "cancelBtn";
-            cancelBtn.Size = new Size(94, 29);
-            cancelBtn.TabIndex = 28;
-            cancelBtn.Text = "Cancel";
-            cancelBtn.UseVisualStyleBackColor = true;
-            cancelBtn.Click += cancelBtn_Click;
             // 
             // tableLayoutPanel1
             // 
             tableLayoutPanel1.ColumnCount = 2;
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Controls.Add(groupBox1, 0, 0);
-            tableLayoutPanel1.Controls.Add(groupBox3, 1, 0);
+            tableLayoutPanel1.Controls.Add(materialCard2, 1, 0);
+            tableLayoutPanel1.Controls.Add(materialCard1, 0, 0);
             tableLayoutPanel1.Dock = DockStyle.Top;
-            tableLayoutPanel1.Location = new Point(0, 0);
+            tableLayoutPanel1.Location = new Point(3, 64);
             tableLayoutPanel1.Name = "tableLayoutPanel1";
             tableLayoutPanel1.RowCount = 1;
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel1.Size = new Size(1092, 182);
-            tableLayoutPanel1.TabIndex = 29;
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutPanel1.Size = new Size(1086, 275);
+            tableLayoutPanel1.TabIndex = 34;
+            // 
+            // materialCard2
+            // 
+            materialCard2.BackColor = Color.FromArgb(255, 255, 255);
+            materialCard2.Controls.Add(chronicDiseasesLst);
+            materialCard2.Controls.Add(materialLabel7);
+            materialCard2.Controls.Add(bloodTypeTxt);
+            materialCard2.Controls.Add(materialLabel8);
+            materialCard2.Depth = 0;
+            materialCard2.Dock = DockStyle.Fill;
+            materialCard2.ForeColor = Color.FromArgb(222, 0, 0, 0);
+            materialCard2.Location = new Point(557, 14);
+            materialCard2.Margin = new Padding(14);
+            materialCard2.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialCard2.Name = "materialCard2";
+            materialCard2.Padding = new Padding(14);
+            materialCard2.Size = new Size(515, 247);
+            materialCard2.TabIndex = 33;
+            // 
+            // chronicDiseasesLst
+            // 
+            chronicDiseasesLst.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            chronicDiseasesLst.BackColor = Color.White;
+            chronicDiseasesLst.BorderColor = Color.LightGray;
+            chronicDiseasesLst.Depth = 0;
+            chronicDiseasesLst.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
+            chronicDiseasesLst.Location = new Point(127, 71);
+            chronicDiseasesLst.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            chronicDiseasesLst.Name = "chronicDiseasesLst";
+            chronicDiseasesLst.SelectedIndex = -1;
+            chronicDiseasesLst.SelectedItem = null;
+            chronicDiseasesLst.Size = new Size(371, 159);
+            chronicDiseasesLst.TabIndex = 8;
+            // 
+            // materialLabel7
+            // 
+            materialLabel7.Depth = 0;
+            materialLabel7.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel7.Location = new Point(17, 71);
+            materialLabel7.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialLabel7.Name = "materialLabel7";
+            materialLabel7.Size = new Size(104, 48);
+            materialLabel7.TabIndex = 6;
+            materialLabel7.Text = "Chronic Diseases";
+            materialLabel7.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // bloodTypeTxt
+            // 
+            bloodTypeTxt.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            bloodTypeTxt.AnimateReadOnly = false;
+            bloodTypeTxt.AutoCompleteMode = AutoCompleteMode.None;
+            bloodTypeTxt.AutoCompleteSource = AutoCompleteSource.None;
+            bloodTypeTxt.BackgroundImageLayout = ImageLayout.None;
+            bloodTypeTxt.CharacterCasing = CharacterCasing.Normal;
+            bloodTypeTxt.Depth = 0;
+            bloodTypeTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
+            bloodTypeTxt.HideSelection = true;
+            bloodTypeTxt.LeadingIcon = null;
+            bloodTypeTxt.Location = new Point(127, 17);
+            bloodTypeTxt.MaxLength = 32767;
+            bloodTypeTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
+            bloodTypeTxt.Name = "bloodTypeTxt";
+            bloodTypeTxt.PasswordChar = '\0';
+            bloodTypeTxt.PrefixSuffixText = null;
+            bloodTypeTxt.ReadOnly = true;
+            bloodTypeTxt.RightToLeft = RightToLeft.No;
+            bloodTypeTxt.SelectedText = "";
+            bloodTypeTxt.SelectionLength = 0;
+            bloodTypeTxt.SelectionStart = 0;
+            bloodTypeTxt.ShortcutsEnabled = true;
+            bloodTypeTxt.Size = new Size(371, 48);
+            bloodTypeTxt.TabIndex = 1;
+            bloodTypeTxt.TabStop = false;
+            bloodTypeTxt.Text = "materialTextBoxEdit8";
+            bloodTypeTxt.TextAlign = HorizontalAlignment.Left;
+            bloodTypeTxt.TrailingIcon = null;
+            bloodTypeTxt.UseSystemPasswordChar = false;
+            // 
+            // materialLabel8
+            // 
+            materialLabel8.Depth = 0;
+            materialLabel8.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel8.Location = new Point(17, 17);
+            materialLabel8.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialLabel8.Name = "materialLabel8";
+            materialLabel8.Size = new Size(104, 48);
+            materialLabel8.TabIndex = 0;
+            materialLabel8.Text = "Blood Type";
+            materialLabel8.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // materialCard1
+            // 
+            materialCard1.BackColor = Color.FromArgb(255, 255, 255);
+            materialCard1.Controls.Add(materialLabel4);
+            materialCard1.Controls.Add(maritalTxt);
+            materialCard1.Controls.Add(materialLabel3);
+            materialCard1.Controls.Add(materialLabel2);
+            materialCard1.Controls.Add(ageTxt);
+            materialCard1.Controls.Add(sexTxt);
+            materialCard1.Controls.Add(nameTxt);
+            materialCard1.Controls.Add(materialLabel1);
+            materialCard1.Depth = 0;
+            materialCard1.Dock = DockStyle.Fill;
+            materialCard1.ForeColor = Color.FromArgb(222, 0, 0, 0);
+            materialCard1.Location = new Point(14, 14);
+            materialCard1.Margin = new Padding(14);
+            materialCard1.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialCard1.Name = "materialCard1";
+            materialCard1.Padding = new Padding(14);
+            materialCard1.Size = new Size(515, 247);
+            materialCard1.TabIndex = 32;
+            // 
+            // materialLabel4
+            // 
+            materialLabel4.Depth = 0;
+            materialLabel4.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel4.Location = new Point(17, 179);
+            materialLabel4.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialLabel4.Name = "materialLabel4";
+            materialLabel4.Size = new Size(104, 48);
+            materialLabel4.TabIndex = 9;
+            materialLabel4.Text = "Marital Status";
+            materialLabel4.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // maritalTxt
+            // 
+            maritalTxt.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            maritalTxt.AnimateReadOnly = false;
+            maritalTxt.AutoCompleteMode = AutoCompleteMode.None;
+            maritalTxt.AutoCompleteSource = AutoCompleteSource.None;
+            maritalTxt.BackgroundImageLayout = ImageLayout.None;
+            maritalTxt.CharacterCasing = CharacterCasing.Normal;
+            maritalTxt.Depth = 0;
+            maritalTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
+            maritalTxt.HideSelection = true;
+            maritalTxt.LeadingIcon = null;
+            maritalTxt.Location = new Point(127, 179);
+            maritalTxt.MaxLength = 32767;
+            maritalTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
+            maritalTxt.Name = "maritalTxt";
+            maritalTxt.PasswordChar = '\0';
+            maritalTxt.PrefixSuffixText = null;
+            maritalTxt.ReadOnly = true;
+            maritalTxt.RightToLeft = RightToLeft.No;
+            maritalTxt.SelectedText = "";
+            maritalTxt.SelectionLength = 0;
+            maritalTxt.SelectionStart = 0;
+            maritalTxt.ShortcutsEnabled = true;
+            maritalTxt.Size = new Size(371, 48);
+            maritalTxt.TabIndex = 8;
+            maritalTxt.TabStop = false;
+            maritalTxt.Text = "materialTextBoxEdit4";
+            maritalTxt.TextAlign = HorizontalAlignment.Left;
+            maritalTxt.TrailingIcon = null;
+            maritalTxt.UseSystemPasswordChar = false;
+            // 
+            // materialLabel3
+            // 
+            materialLabel3.Depth = 0;
+            materialLabel3.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel3.Location = new Point(17, 125);
+            materialLabel3.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialLabel3.Name = "materialLabel3";
+            materialLabel3.Size = new Size(104, 48);
+            materialLabel3.TabIndex = 7;
+            materialLabel3.Text = "Age";
+            materialLabel3.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // materialLabel2
+            // 
+            materialLabel2.Depth = 0;
+            materialLabel2.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel2.Location = new Point(17, 71);
+            materialLabel2.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialLabel2.Name = "materialLabel2";
+            materialLabel2.Size = new Size(104, 48);
+            materialLabel2.TabIndex = 6;
+            materialLabel2.Text = "Sex";
+            materialLabel2.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // ageTxt
+            // 
+            ageTxt.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            ageTxt.AnimateReadOnly = false;
+            ageTxt.AutoCompleteMode = AutoCompleteMode.None;
+            ageTxt.AutoCompleteSource = AutoCompleteSource.None;
+            ageTxt.BackgroundImageLayout = ImageLayout.None;
+            ageTxt.CharacterCasing = CharacterCasing.Normal;
+            ageTxt.Depth = 0;
+            ageTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
+            ageTxt.HideSelection = true;
+            ageTxt.LeadingIcon = null;
+            ageTxt.Location = new Point(127, 125);
+            ageTxt.MaxLength = 32767;
+            ageTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
+            ageTxt.Name = "ageTxt";
+            ageTxt.PasswordChar = '\0';
+            ageTxt.PrefixSuffixText = null;
+            ageTxt.ReadOnly = true;
+            ageTxt.RightToLeft = RightToLeft.No;
+            ageTxt.SelectedText = "";
+            ageTxt.SelectionLength = 0;
+            ageTxt.SelectionStart = 0;
+            ageTxt.ShortcutsEnabled = true;
+            ageTxt.Size = new Size(371, 48);
+            ageTxt.TabIndex = 5;
+            ageTxt.TabStop = false;
+            ageTxt.Text = "materialTextBoxEdit3";
+            ageTxt.TextAlign = HorizontalAlignment.Left;
+            ageTxt.TrailingIcon = null;
+            ageTxt.UseSystemPasswordChar = false;
+            // 
+            // sexTxt
+            // 
+            sexTxt.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            sexTxt.AnimateReadOnly = false;
+            sexTxt.AutoCompleteMode = AutoCompleteMode.None;
+            sexTxt.AutoCompleteSource = AutoCompleteSource.None;
+            sexTxt.BackgroundImageLayout = ImageLayout.None;
+            sexTxt.CharacterCasing = CharacterCasing.Normal;
+            sexTxt.Depth = 0;
+            sexTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
+            sexTxt.HideSelection = true;
+            sexTxt.LeadingIcon = null;
+            sexTxt.Location = new Point(127, 71);
+            sexTxt.MaxLength = 32767;
+            sexTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
+            sexTxt.Name = "sexTxt";
+            sexTxt.PasswordChar = '\0';
+            sexTxt.PrefixSuffixText = null;
+            sexTxt.ReadOnly = true;
+            sexTxt.RightToLeft = RightToLeft.No;
+            sexTxt.SelectedText = "";
+            sexTxt.SelectionLength = 0;
+            sexTxt.SelectionStart = 0;
+            sexTxt.ShortcutsEnabled = true;
+            sexTxt.Size = new Size(371, 48);
+            sexTxt.TabIndex = 3;
+            sexTxt.TabStop = false;
+            sexTxt.Text = "materialTextBoxEdit2";
+            sexTxt.TextAlign = HorizontalAlignment.Left;
+            sexTxt.TrailingIcon = null;
+            sexTxt.UseSystemPasswordChar = false;
+            // 
+            // nameTxt
+            // 
+            nameTxt.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            nameTxt.AnimateReadOnly = false;
+            nameTxt.AutoCompleteMode = AutoCompleteMode.None;
+            nameTxt.AutoCompleteSource = AutoCompleteSource.None;
+            nameTxt.BackgroundImageLayout = ImageLayout.None;
+            nameTxt.CharacterCasing = CharacterCasing.Normal;
+            nameTxt.Depth = 0;
+            nameTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
+            nameTxt.HideSelection = true;
+            nameTxt.LeadingIcon = null;
+            nameTxt.Location = new Point(127, 17);
+            nameTxt.MaxLength = 32767;
+            nameTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
+            nameTxt.Name = "nameTxt";
+            nameTxt.PasswordChar = '\0';
+            nameTxt.PrefixSuffixText = null;
+            nameTxt.ReadOnly = true;
+            nameTxt.RightToLeft = RightToLeft.No;
+            nameTxt.SelectedText = "";
+            nameTxt.SelectionLength = 0;
+            nameTxt.SelectionStart = 0;
+            nameTxt.ShortcutsEnabled = true;
+            nameTxt.Size = new Size(371, 48);
+            nameTxt.TabIndex = 1;
+            nameTxt.TabStop = false;
+            nameTxt.Text = "materialTextBoxEdit1";
+            nameTxt.TextAlign = HorizontalAlignment.Left;
+            nameTxt.TrailingIcon = null;
+            nameTxt.UseSystemPasswordChar = false;
+            // 
+            // materialLabel1
+            // 
+            materialLabel1.Depth = 0;
+            materialLabel1.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel1.Location = new Point(17, 17);
+            materialLabel1.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialLabel1.Name = "materialLabel1";
+            materialLabel1.Size = new Size(104, 48);
+            materialLabel1.TabIndex = 0;
+            materialLabel1.Text = "Full Name";
+            materialLabel1.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // materialLabel6
+            // 
+            materialLabel6.Depth = 0;
+            materialLabel6.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel6.Location = new Point(17, 471);
+            materialLabel6.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialLabel6.Name = "materialLabel6";
+            materialLabel6.Size = new Size(121, 25);
+            materialLabel6.TabIndex = 39;
+            materialLabel6.Text = "Past Visits";
+            materialLabel6.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // visitsGrd
+            // 
+            visitsGrd.AllowUserToAddRows = false;
+            visitsGrd.AllowUserToDeleteRows = false;
+            visitsGrd.AllowUserToOrderColumns = true;
+            visitsGrd.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            visitsGrd.BackgroundColor = Color.White;
+            visitsGrd.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            visitsGrd.Location = new Point(17, 499);
+            visitsGrd.Name = "visitsGrd";
+            visitsGrd.ReadOnly = true;
+            visitsGrd.RowHeadersWidth = 51;
+            visitsGrd.Size = new Size(1058, 129);
+            visitsGrd.TabIndex = 36;
+            // 
+            // materialLabel5
+            // 
+            materialLabel5.Depth = 0;
+            materialLabel5.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel5.Location = new Point(17, 345);
+            materialLabel5.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialLabel5.Name = "materialLabel5";
+            materialLabel5.Size = new Size(121, 48);
+            materialLabel5.TabIndex = 37;
+            materialLabel5.Text = "Notes";
+            materialLabel5.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // notesTxt
+            // 
+            notesTxt.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            notesTxt.AnimateReadOnly = false;
+            notesTxt.BackgroundImageLayout = ImageLayout.None;
+            notesTxt.CharacterCasing = CharacterCasing.Normal;
+            notesTxt.Depth = 0;
+            notesTxt.HideSelection = true;
+            notesTxt.Location = new Point(144, 345);
+            notesTxt.MaxLength = 32767;
+            notesTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
+            notesTxt.Name = "notesTxt";
+            notesTxt.PasswordChar = '\0';
+            notesTxt.ReadOnly = true;
+            notesTxt.ScrollBars = ScrollBars.None;
+            notesTxt.SelectedText = "";
+            notesTxt.SelectionLength = 0;
+            notesTxt.SelectionStart = 0;
+            notesTxt.ShortcutsEnabled = true;
+            notesTxt.Size = new Size(931, 125);
+            notesTxt.TabIndex = 38;
+            notesTxt.TabStop = false;
+            notesTxt.TextAlign = HorizontalAlignment.Left;
+            notesTxt.UseSystemPasswordChar = false;
+            // 
+            // editBtn
+            // 
+            editBtn.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            editBtn.AutoSize = false;
+            editBtn.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            editBtn.Density = ReaLTaiizor.Controls.MaterialButton.MaterialButtonDensity.Default;
+            editBtn.Depth = 0;
+            editBtn.HighEmphasis = true;
+            editBtn.Icon = null;
+            editBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
+            editBtn.Location = new Point(917, 637);
+            editBtn.Margin = new Padding(4, 6, 4, 6);
+            editBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            editBtn.Name = "editBtn";
+            editBtn.NoAccentTextColor = Color.Empty;
+            editBtn.Size = new Size(158, 36);
+            editBtn.TabIndex = 40;
+            editBtn.Text = "Edit";
+            editBtn.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
+            editBtn.UseAccentColor = false;
+            editBtn.UseVisualStyleBackColor = true;
+            editBtn.Click += editBtn_Click;
             // 
             // PatientProfileForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1092, 682);
-            Controls.Add(tableLayoutPanel1);
-            Controls.Add(cancelBtn);
             Controls.Add(editBtn);
-            Controls.Add(groupBox6);
-            Controls.Add(groupBox4);
+            Controls.Add(materialLabel6);
+            Controls.Add(visitsGrd);
+            Controls.Add(materialLabel5);
+            Controls.Add(notesTxt);
+            Controls.Add(tableLayoutPanel1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "PatientProfileForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Patient Profile";
             WindowState = FormWindowState.Maximized;
             Load += PatientProfileForm_Load;
-            groupBox4.ResumeLayout(false);
-            groupBox4.PerformLayout();
-            groupBox3.ResumeLayout(false);
-            groupBox3.PerformLayout();
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
-            groupBox6.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)visitsGrd).EndInit();
             tableLayoutPanel1.ResumeLayout(false);
+            materialCard2.ResumeLayout(false);
+            materialCard1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)visitsGrd).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
-        private GroupBox groupBox4;
-        private TextBox notesTxt;
-        private ComboBox bloodTypeCbo;
-        private GroupBox groupBox3;
-        private Label label7;
-        private Label label6;
-        private GroupBox groupBox1;
-        private ComboBox maritalCbo;
-        private Label label5;
-        private ComboBox sexCbo;
-        private Label label3;
-        private Label label2;
-        private TextBox nameTxt;
-        private Label label1;
-        private GroupBox groupBox6;
-        private ListBox chronicDiseasesLst;
-        private Button editBtn;
-        private Button cancelBtn;
-        private TextBox dobTxt;
-        private TextBox ageTxt;
-        private Label label4;
-        private DataGridView visitsGrd;
         private TableLayoutPanel tableLayoutPanel1;
+        private ReaLTaiizor.Controls.MaterialCard materialCard2;
+        private ReaLTaiizor.Controls.MaterialListBox chronicDiseasesLst;
+        private ReaLTaiizor.Controls.MaterialLabel materialLabel7;
+        private ReaLTaiizor.Controls.MaterialTextBoxEdit bloodTypeTxt;
+        private ReaLTaiizor.Controls.MaterialLabel materialLabel8;
+        private ReaLTaiizor.Controls.MaterialCard materialCard1;
+        private ReaLTaiizor.Controls.MaterialLabel materialLabel4;
+        private ReaLTaiizor.Controls.MaterialTextBoxEdit maritalTxt;
+        private ReaLTaiizor.Controls.MaterialLabel materialLabel3;
+        private ReaLTaiizor.Controls.MaterialLabel materialLabel2;
+        private ReaLTaiizor.Controls.MaterialTextBoxEdit ageTxt;
+        private ReaLTaiizor.Controls.MaterialTextBoxEdit sexTxt;
+        private ReaLTaiizor.Controls.MaterialTextBoxEdit nameTxt;
+        private ReaLTaiizor.Controls.MaterialLabel materialLabel1;
+        private ReaLTaiizor.Controls.MaterialLabel materialLabel6;
+        private DataGridView visitsGrd;
+        private ReaLTaiizor.Controls.MaterialLabel materialLabel5;
+        private ReaLTaiizor.Controls.MaterialMultiLineTextBoxEdit notesTxt;
+        private ReaLTaiizor.Controls.MaterialButton editBtn;
     }
 }

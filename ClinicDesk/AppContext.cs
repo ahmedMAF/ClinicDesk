@@ -12,39 +12,7 @@ public class AppContext : ApplicationContext
     
     public AppContext()
     {
-        MaterialSkinManager skin = MaterialSkinManager.Instance;
-
-        skin.Theme = MaterialSkinManager.Themes.LIGHT;
-        skin.ColorScheme = new MaterialColorScheme(
-            MaterialPrimary.Indigo500,
-            MaterialPrimary.Indigo700,
-            MaterialPrimary.Indigo100,
-            MaterialAccent.Red200,
-            MaterialTextShade.WHITE
-        );
-
-        switch (Settings.Instance.AccountType)
-        {
-            case AccountType.Doctor:
-                ShowForm<DoctorForm>();
-                break;
-                
-            case AccountType.Secretary:
-                ShowForm<SecretaryForm>();
-                break;
-
-            case AccountType.AllInOne:
-                ShowForm<AllInOneForm>();
-                break;
-
-            default:
-#if DEBUG
-                ShowForm<WelcomeForm>();
-#else
-                ShowForm<InstallForm>();
-#endif
-                break;
-        }
+        ShowForm<SplashForm>();
     }
     
     public static T ShowForm<T>(Action<T>? actionBeforeShow = null, Action<T>? actionAfterShow = null) where T : Form, new()

@@ -1,14 +1,27 @@
-﻿using ClinicDesk.Database;
+﻿using ClinicDesk.Controls;
+using ClinicDesk.Database;
 using ClinicDesk.Database.Models;
 using Microsoft.EntityFrameworkCore;
-using ReaLTaiizor.Manager;
 using System.Management;
-using System.Windows.Forms;
 
 namespace ClinicDesk;
 
 internal static class Utils
 {
+    public static string GetBloodTypeString(BloodType type) => type switch
+    {
+        BloodType.NotSpecified => "Normal",
+        BloodType.APos => "A+",
+        BloodType.ANeg => "A-",
+        BloodType.BPos => "B+",
+        BloodType.BNeg => "B-",
+        BloodType.ABPos => "AB+",
+        BloodType.ABNeg => "AB-",
+        BloodType.OPos => "O+",
+        BloodType.ONeg => "O-",
+        _ => throw new NotImplementedException(type.ToString()),
+    };
+
     public static void SetupDataGrid(DataGridView grd)
     {
         grd.AutoGenerateColumns = false;

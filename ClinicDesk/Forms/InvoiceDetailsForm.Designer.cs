@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InvoiceDetailsForm));
             paymentsGrd = new DataGridView();
             ((System.ComponentModel.ISupportInitialize)paymentsGrd).BeginInit();
             SuspendLayout();
@@ -54,6 +55,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1042, 450);
             Controls.Add(paymentsGrd);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "InvoiceDetailsForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Invoice Details";

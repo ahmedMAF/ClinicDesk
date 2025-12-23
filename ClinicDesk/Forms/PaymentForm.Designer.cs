@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PaymentForm));
             amountTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             payBtn = new ReaLTaiizor.Controls.MaterialButton();
             materialLabel1 = new ReaLTaiizor.Controls.MaterialLabel();
@@ -133,6 +134,7 @@
             Controls.Add(materialLabel1);
             Controls.Add(payBtn);
             Controls.Add(amountTxt);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "PaymentForm";

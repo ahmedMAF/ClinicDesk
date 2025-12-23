@@ -1,9 +1,10 @@
 ﻿using ClinicDesk.Database;
 using ClinicDesk.Database.Models;
+using ReaLTaiizor.Forms;
 
 namespace ClinicDesk.Forms;
 
-public partial class PatientDataForm : Form
+public partial class PatientDataForm : MaterialForm
 {
     private HashSet<string> _chronicDiseases = [];
 
@@ -42,19 +43,10 @@ public partial class PatientDataForm : Form
             _chronicDiseases.Remove(chk.Text);
         }
 
-        disOtherChk.Checked = _chronicDiseases.Count > 0;
         disOtherTxt.Text = string.Join(Environment.NewLine, _chronicDiseases);
         _chronicDiseases.Clear();
 
         notesTxt.Text = patient.Notes;
-    }
-
-    private void disOtherChk_CheckedChanged(object sender, EventArgs e)
-    {
-        disOtherTxt.Enabled = disOtherChk.Checked;
-
-        if (disOtherChk.Checked)
-            disOtherTxt.Text = "";
     }
 
     private void saveBtn_Click(object sender, EventArgs e)
@@ -63,7 +55,7 @@ public partial class PatientDataForm : Form
             if (chk.Checked && chk.Name != "disOtherChk")
                 _chronicDiseases.Add(chk.Text);
 
-        if (disOtherChk.Checked)
+        if (!string.IsNullOrWhiteSpace(disOtherTxt.Text))
         {
             string[] otherChronicDiseases = disOtherTxt.Text.Split(Environment.NewLine);
 
@@ -103,12 +95,6 @@ public partial class PatientDataForm : Form
         ClinicDb.Instance.SaveChanges();
 
         DialogResult = DialogResult.OK;
-        Close();
-    }
-
-    private void cancelBtn_Click(object sender, EventArgs e)
-    {
-        DialogResult = DialogResult.Cancel;
         Close();
     }
 }

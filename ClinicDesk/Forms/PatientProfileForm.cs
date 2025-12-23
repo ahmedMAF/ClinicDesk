@@ -1,10 +1,11 @@
 ﻿using ClinicDesk.ControlHelpers;
-using ClinicDesk.Database;
 using ClinicDesk.Database.Models;
+using ReaLTaiizor.Child.Material;
+using ReaLTaiizor.Forms;
 
 namespace ClinicDesk.Forms;
 
-public partial class PatientProfileForm : Form
+public partial class PatientProfileForm : MaterialForm
 {
     private readonly VisitsGrid _grdHelper;
 
@@ -29,29 +30,25 @@ public partial class PatientProfileForm : Form
     private void RefreshData()
     {
         nameTxt.Text = _patient.Name;
-        sexCbo.SelectedIndex = (int)_patient.Sex;
-        dobTxt.Text = _patient.DateOfBirth.ToString("dd-MM-yyyy");
+        sexTxt.Text = _patient.Sex.ToString();
         ageTxt.Text = (_patient.Age.Days / 365).ToString();
-        maritalCbo.SelectedIndex = (int)_patient.MaritalStatus;
+        maritalTxt.Text = _patient.MaritalStatus.ToString();
 
-        bloodTypeCbo.SelectedIndex = (int)_patient.BloodType;
+        bloodTypeTxt.Text = Utils.GetBloodTypeString(_patient.BloodType);
 
         foreach (string disease in _patient.ChronicDiseases)
-            chronicDiseasesLst.Items.Add(disease);
+            chronicDiseasesLst.Items.Add(new MaterialListBoxItem(disease));
 
         notesTxt.Text = _patient.Notes;
 
         _grdHelper.RefreshList(null, _patient);
     }
 
-    private void cancelBtn_Click(object sender, EventArgs e)
-    {
-        Close();
-    }
-
     private async void editBtn_Click(object sender, EventArgs e)
     {
+        Hide();
         AppContext.ShowDialog<PatientDataForm>(form => form.SetData(_patient));
         RefreshData();
+        Show();
     }
 }
