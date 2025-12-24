@@ -23,7 +23,7 @@ public static class AppLicense
         string licenseText = File.ReadAllText(GetDefaultLicensePath());
         License license = License.Load(licenseText);
 
-        varr validationResult = license.Validate()
+        IEnumerable<IValidationFailure> validationResult = license.Validate()
             .Signature(PublicKey)
             .And()
             .ExpirationDate()
@@ -31,8 +31,8 @@ public static class AppLicense
 
         if (!validationResult.Any())
         {
-            int storedId = int.Parse(license.AdditionalAttributes.Get("HardwareId"));
-            int actualId = Utils.GetHardwareId();
+            string storedId = license.AdditionalAttributes.Get("HardwareId");
+            string actualId = Utils.GetHardwareId();
 
             if (storedId != actualId)
             {
@@ -56,7 +56,7 @@ public static class AppLicense
 
         try
         {
-            varr response = await httpClient.PostAsJsonAsync(serverUrl, new LicenseRequest
+            HttpResponseMessage response = await httpClient.PostAsJsonAsync(serverUrl, new LicenseRequest
             {
                 Name = name,
                 Email = email,
@@ -92,5 +92,5 @@ public class LicenseRequest
 {
     public string Name { get; set; } = null!;
     public string Email { get; set; } = null!;
-    public int HardwareId { get; set; }
+    public string HardwareId { get; set; } = null!;
 }

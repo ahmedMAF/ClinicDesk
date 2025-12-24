@@ -1,3 +1,6 @@
+using ReaLTaiizor.Controls;
+using Panel = System.Windows.Forms.Panel;
+
 namespace ClinicDesk;
 
 public class Tutorial

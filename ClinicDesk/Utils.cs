@@ -3,6 +3,8 @@ using ClinicDesk.Database;
 using ClinicDesk.Database.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Management;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace ClinicDesk;
 
@@ -237,6 +239,12 @@ internal static class Utils
 
     public static void NumTxt_KeyPress(object sender, KeyPressEventArgs e)
     {
+        if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            e.Handled = true;
+    }
+
+    public static void NumDotTxt_KeyPress(object sender, KeyPressEventArgs e)
+    {
         if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) && (e.KeyChar != '.'))
             e.Handled = true;
 
@@ -245,15 +253,15 @@ internal static class Utils
             e.Handled = true;
     }
 
-    public static int GetHardwareId()
+    public static string GetHardwareId()
     {
         string cpu = GetWMI("Win32_Processor", "ProcessorId");
         string disk = GetWMI("Win32_DiskDrive", "SerialNumber");
         string board = GetWMI("Win32_BaseBoard", "SerialNumber");
 
-        return $"{cpu}-{disk}-{board}".GetHashCode();
+        return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes($"{cpu}-{disk}-{board}")));
     }
-    
+
     private static string GetWMI(string wmiClass, string wmiProperty)
     {
         using ManagementObjectSearcher searcher = new($"SELECT {wmiProperty} FROM {wmiClass}");

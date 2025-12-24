@@ -23,7 +23,7 @@ public partial class InstallForm : MaterialForm
         accountCbo.SelectedIndex = (int)settings.AccountType;
     }
 
-    private void installBtn_Click(object sender, EventArgs e)
+    private async void installBtn_Click(object sender, EventArgs e)
     {
         string licenseUrl = licenseServerUrlTxt.Text;
 
@@ -38,7 +38,7 @@ public partial class InstallForm : MaterialForm
         
         AccountType type = (AccountType)accountCbo.SelectedIndex;
 
-        if (!AppLicense.IsAvailable && !AppLicense.RequestLicenseAsync(licenseUrl, name, email))
+        if (!AppLicense.IsAvailable && !await AppLicense.RequestLicenseAsync(licenseUrl, name, email))
         {
             MessageBox.Show("Failed to request license, try again later.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
@@ -80,5 +80,9 @@ public partial class InstallForm : MaterialForm
         settings.AccountType = type;
 
         Settings.SaveSettings();
+
+        Close();
+
+        AppContext.ShowForm<SplashForm>();
     }
 }

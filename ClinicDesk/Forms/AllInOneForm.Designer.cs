@@ -56,7 +56,7 @@
             appointmentsGrd.Name = "appointmentsGrd";
             appointmentsGrd.ReadOnly = true;
             appointmentsGrd.RowHeadersWidth = 51;
-            appointmentsGrd.Size = new Size(702, 404);
+            appointmentsGrd.Size = new Size(762, 404);
             appointmentsGrd.TabIndex = 4;
             // 
             // newAppointmentBtn
@@ -70,7 +70,7 @@
             newAppointmentBtn.HighEmphasis = true;
             newAppointmentBtn.Icon = null;
             newAppointmentBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            newAppointmentBtn.Location = new Point(516, 73);
+            newAppointmentBtn.Location = new Point(576, 73);
             newAppointmentBtn.Margin = new Padding(4, 6, 4, 6);
             newAppointmentBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             newAppointmentBtn.Name = "newAppointmentBtn";
@@ -94,7 +94,7 @@
             billingBtn.HighEmphasis = true;
             billingBtn.Icon = null;
             billingBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            billingBtn.Location = new Point(516, 130);
+            billingBtn.Location = new Point(576, 130);
             billingBtn.Margin = new Padding(4, 6, 4, 6);
             billingBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             billingBtn.Name = "billingBtn";
@@ -123,7 +123,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(726, 708);
+            ClientSize = new Size(786, 708);
             Controls.Add(materialLabel1);
             Controls.Add(billingBtn);
             Controls.Add(newAppointmentBtn);

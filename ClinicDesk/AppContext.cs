@@ -12,6 +12,14 @@ public class AppContext : ApplicationContext
     
     public AppContext()
     {
+        Settings.Initialize();
+
+        if (Settings.Instance.AccountType == AccountType.NotDefined)
+        {
+            ShowForm<InstallForm>();
+            return;
+        }
+
         ShowForm<SplashForm>();
     }
     

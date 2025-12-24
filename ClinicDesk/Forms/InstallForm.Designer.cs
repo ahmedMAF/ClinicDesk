@@ -44,6 +44,10 @@
             materialLabel6 = new ReaLTaiizor.Controls.MaterialLabel();
             licenseServerUrlTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             materialLabel8 = new ReaLTaiizor.Controls.MaterialLabel();
+            nameTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
+            materialLabel7 = new ReaLTaiizor.Controls.MaterialLabel();
+            emailTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
+            materialLabel9 = new ReaLTaiizor.Controls.MaterialLabel();
             SuspendLayout();
             // 
             // installBtn
@@ -57,7 +61,7 @@
             installBtn.HighEmphasis = true;
             installBtn.Icon = null;
             installBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            installBtn.Location = new Point(525, 595);
+            installBtn.Location = new Point(525, 696);
             installBtn.Margin = new Padding(4, 6, 4, 6);
             installBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             installBtn.Name = "installBtn";
@@ -358,11 +362,99 @@
             materialLabel8.TabIndex = 14;
             materialLabel8.Text = "License Server URL";
             // 
+            // nameTxt
+            // 
+            nameTxt.AnimateReadOnly = false;
+            nameTxt.AutoCompleteMode = AutoCompleteMode.None;
+            nameTxt.AutoCompleteSource = AutoCompleteSource.None;
+            nameTxt.BackgroundImageLayout = ImageLayout.None;
+            nameTxt.CharacterCasing = CharacterCasing.Normal;
+            nameTxt.Depth = 0;
+            nameTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
+            nameTxt.HideSelection = true;
+            nameTxt.LeadingIcon = null;
+            nameTxt.Location = new Point(144, 541);
+            nameTxt.MaxLength = 32767;
+            nameTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
+            nameTxt.Name = "nameTxt";
+            nameTxt.PasswordChar = '\0';
+            nameTxt.PrefixSuffixText = null;
+            nameTxt.ReadOnly = false;
+            nameTxt.RightToLeft = RightToLeft.No;
+            nameTxt.SelectedText = "";
+            nameTxt.SelectionLength = 0;
+            nameTxt.SelectionStart = 0;
+            nameTxt.ShortcutsEnabled = true;
+            nameTxt.Size = new Size(312, 48);
+            nameTxt.TabIndex = 17;
+            nameTxt.TabStop = false;
+            nameTxt.TextAlign = HorizontalAlignment.Left;
+            nameTxt.TrailingIcon = null;
+            nameTxt.UseSystemPasswordChar = false;
+            // 
+            // materialLabel7
+            // 
+            materialLabel7.AutoSize = true;
+            materialLabel7.Depth = 0;
+            materialLabel7.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel7.Location = new Point(6, 554);
+            materialLabel7.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialLabel7.Name = "materialLabel7";
+            materialLabel7.Size = new Size(43, 19);
+            materialLabel7.TabIndex = 16;
+            materialLabel7.Text = "Name";
+            // 
+            // emailTxt
+            // 
+            emailTxt.AnimateReadOnly = false;
+            emailTxt.AutoCompleteMode = AutoCompleteMode.None;
+            emailTxt.AutoCompleteSource = AutoCompleteSource.None;
+            emailTxt.BackgroundImageLayout = ImageLayout.None;
+            emailTxt.CharacterCasing = CharacterCasing.Normal;
+            emailTxt.Depth = 0;
+            emailTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
+            emailTxt.HideSelection = true;
+            emailTxt.LeadingIcon = null;
+            emailTxt.Location = new Point(144, 595);
+            emailTxt.MaxLength = 32767;
+            emailTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
+            emailTxt.Name = "emailTxt";
+            emailTxt.PasswordChar = '\0';
+            emailTxt.PrefixSuffixText = null;
+            emailTxt.ReadOnly = false;
+            emailTxt.RightToLeft = RightToLeft.No;
+            emailTxt.SelectedText = "";
+            emailTxt.SelectionLength = 0;
+            emailTxt.SelectionStart = 0;
+            emailTxt.ShortcutsEnabled = true;
+            emailTxt.Size = new Size(312, 48);
+            emailTxt.TabIndex = 19;
+            emailTxt.TabStop = false;
+            emailTxt.TextAlign = HorizontalAlignment.Left;
+            emailTxt.TrailingIcon = null;
+            emailTxt.UseSystemPasswordChar = false;
+            // 
+            // materialLabel9
+            // 
+            materialLabel9.AutoSize = true;
+            materialLabel9.Depth = 0;
+            materialLabel9.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel9.Location = new Point(6, 608);
+            materialLabel9.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialLabel9.Name = "materialLabel9";
+            materialLabel9.Size = new Size(41, 19);
+            materialLabel9.TabIndex = 18;
+            materialLabel9.Text = "Email";
+            // 
             // InstallForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(690, 640);
+            ClientSize = new Size(690, 741);
+            Controls.Add(emailTxt);
+            Controls.Add(materialLabel9);
+            Controls.Add(nameTxt);
+            Controls.Add(materialLabel7);
             Controls.Add(licenseServerUrlTxt);
             Controls.Add(materialLabel8);
             Controls.Add(materialLabel6);
@@ -407,5 +499,9 @@
         private ReaLTaiizor.Controls.MaterialLabel materialLabel6;
         private ReaLTaiizor.Controls.MaterialTextBoxEdit licenseServerUrlTxt;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel8;
+        private ReaLTaiizor.Controls.MaterialTextBoxEdit nameTxt;
+        private ReaLTaiizor.Controls.MaterialLabel materialLabel7;
+        private ReaLTaiizor.Controls.MaterialTextBoxEdit emailTxt;
+        private ReaLTaiizor.Controls.MaterialLabel materialLabel9;
     }
 }

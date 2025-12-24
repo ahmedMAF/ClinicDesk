@@ -17,8 +17,7 @@ public partial class SplashForm : Form
     private async void SplashForm_Shown(object sender, EventArgs e)
     {
         Task delay = Task.Delay(3000);
-
-        Settings.Initialize();
+        await Task.Delay(500);
 
         MaterialSkinManager skin = MaterialSkinManager.Instance;
 
@@ -32,11 +31,11 @@ public partial class SplashForm : Form
             MaterialTextShade.WHITE
         );
 
-        // if (!AppLicense.Validate())
-        // {
-        //     Application.Exit();
-        //     return;
-        // }
+        if (!AppLicense.Validate())
+        {
+            Application.Exit();
+            return;
+        }
 
         if (Settings.Instance.LastSeenDate > DateTime.UtcNow)
         {
@@ -77,11 +76,7 @@ public partial class SplashForm : Form
                 break;
 
             default:
-#if DEBUG
                 AppContext.ShowForm<WelcomeForm>();
-#else
-                AppContext.ShowForm<InstallForm>();
-#endif
                 break;
         }
 

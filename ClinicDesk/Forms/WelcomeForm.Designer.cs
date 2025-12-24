@@ -31,12 +31,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(WelcomeForm));
             docBtn = new Button();
             secretBtn = new Button();
-            toothChart1 = new ClinicDesk.Controls.ToothChart();
+            allBtn = new Button();
             SuspendLayout();
             // 
             // docBtn
             // 
-            docBtn.Location = new Point(12, 33);
+            docBtn.Location = new Point(6, 67);
             docBtn.Name = "docBtn";
             docBtn.Size = new Size(159, 29);
             docBtn.TabIndex = 0;
@@ -46,7 +46,7 @@
             // 
             // secretBtn
             // 
-            secretBtn.Location = new Point(12, 68);
+            secretBtn.Location = new Point(6, 102);
             secretBtn.Name = "secretBtn";
             secretBtn.Size = new Size(159, 29);
             secretBtn.TabIndex = 1;
@@ -54,26 +54,28 @@
             secretBtn.UseVisualStyleBackColor = true;
             secretBtn.Click += secretBtn_Click;
             // 
-            // toothChart1
+            // allBtn
             // 
-            toothChart1.Location = new Point(12, 103);
-            toothChart1.Name = "toothChart1";
-            toothChart1.Size = new Size(600, 200);
-            toothChart1.TabIndex = 2;
-            toothChart1.Text = "toothChart1";
+            allBtn.Location = new Point(6, 137);
+            allBtn.Name = "allBtn";
+            allBtn.Size = new Size(159, 29);
+            allBtn.TabIndex = 3;
+            allBtn.Text = "All In One";
+            allBtn.UseVisualStyleBackColor = true;
+            allBtn.Click += allBtn_Click;
             // 
             // WelcomeForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(876, 528);
-            Controls.Add(toothChart1);
+            Controls.Add(allBtn);
             Controls.Add(secretBtn);
             Controls.Add(docBtn);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "WelcomeForm";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Form1";
+            Text = "Welcome";
             WindowState = FormWindowState.Maximized;
             ResumeLayout(false);
         }
@@ -82,6 +84,6 @@
 
         private Button docBtn;
         private Button secretBtn;
-        private Controls.ToothChart toothChart1;
+        private Button allBtn;
     }
 }

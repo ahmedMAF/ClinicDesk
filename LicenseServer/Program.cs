@@ -1,4 +1,5 @@
 using Portable.Licensing;
+using System.Text;
 
 namespace LicenseServer;
 
@@ -10,6 +11,7 @@ public partial class Program
     {
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
+        builder.WebHost.UseUrls("http://0.0.0.0:80");
         builder.Services.AddOpenApi();
 
         WebApplication app = builder.Build();
@@ -27,12 +29,14 @@ public partial class Program
     {
         LicenseRequest? licenseRequest = await request.ReadFromJsonAsync<LicenseRequest>();
 
-        if (licenseRequest == null || string.IsNullOrWhiteSpace(licenseRequest.HardwareId))
+        if (licenseRequest == null)
         {
             response.StatusCode = 400;
             await response.WriteAsync("Invalid request");
             return;
         }
+
+        Console.WriteLine($"Requesting license for {licenseRequest.Name}, {licenseRequest.Email}");
 
         if (!ValidateHardwareId(licenseRequest.HardwareId))
         {
@@ -47,13 +51,17 @@ public partial class Program
             .ExpiresAt(DateTime.UtcNow.AddYears(1))
             .WithMaximumUtilization(1)
             .WithAdditionalAttributes(new Dictionary<string, string>
-            {{ "HardwareId", licenseRequest.HardwareId }})
+            {{ "HardwareId", licenseRequest.HardwareId.ToString() }})
             .LicensedTo(licenseRequest.Name, licenseRequest.Email)
-            .CreateAndSignWithPrivateKey(PrivateKey, passPhrase: null)
+            .CreateAndSignWithPrivateKey(PrivateKey, "")
             .ToString();
+
+        Console.WriteLine("License file generated.");
 
         response.ContentType = "text/plain";
         await response.WriteAsync(license);
+
+        Console.WriteLine($"Response sent. {Encoding.UTF8.GetByteCount(license)} bytes.");
     }
 
     private static bool ValidateHardwareId(string id)
