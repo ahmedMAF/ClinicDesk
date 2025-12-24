@@ -1,12 +1,11 @@
 ﻿using ReaLTaiizor.Forms;
 
-namespace ClinicDesk.Forms
+namespace ClinicDesk.Forms;
+
+public partial class SettingsForm : MaterialForm
 {
-    public partial class SettingsForm : MaterialForm
+    public SettingsForm()
     {
-        public SettingsForm()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

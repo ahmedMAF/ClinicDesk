@@ -27,12 +27,11 @@ public partial class ToothChart : Control
 
         for (int i = 1; i <= 32; i++)
         {
-            var path = new GraphicsPath();
+            GraphicsPath path = new();
             int x = startX + ((i - 1) % 16) * (toothWidth + gap);
             int y = i <= 16 ? 20 : 120;
 
-            path.AddRoundedRectangle(
-                new Rectangle(x, y, toothWidth, toothHeight), new Size(6, 6));
+            path.AddRoundedRectangle(new Rectangle(x, y, toothWidth, toothHeight), new Size(6, 6));
 
             _teeth.Add(new Tooth
             {
@@ -45,30 +44,37 @@ public partial class ToothChart : Control
 
     protected override void OnMouseDown(MouseEventArgs e)
     {
-        foreach (var tooth in _teeth)
+        foreach (Tooth tooth in _teeth)
         {
             if (tooth.Path.IsVisible(e.Location))
             {
                 _selectedTooth = tooth;
                 ShowToothMenu(e.Location);
                 Invalidate();
-                break;
+                return;
             }
         }
     }
 
     protected override void OnMouseMove(MouseEventArgs e)
     {
-        Cursor = _teeth.Any(t => t.Path.IsVisible(e.Location))
-            ? Cursors.Hand
-            : Cursors.Default;
+        foreach (Tooth tooth in _teeth)
+        {
+            if (tooth.Path.IsVisible(e.Location))
+            {
+                Cursor = Cursors.Hand
+                return;
+            }
+        }
+        
+        Cursor = Cursors.Default;
     }
 
     protected override void OnPaint(PaintEventArgs e)
     {
         e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-        foreach (var tooth in _teeth)
+        foreach (Tooth tooth in _teeth)
         {
             using SolidBrush brush = new(GetStatusColor(tooth.Status));
             using Pen pen = new(Color.Gray, 1);

@@ -126,7 +126,7 @@
             accountCbo.FormattingEnabled = true;
             accountCbo.IntegralHeight = false;
             accountCbo.ItemHeight = 43;
-            accountCbo.Items.AddRange(new object[] { "Choose Type...", "Doctor", "Secretary", "All In One" });
+            accountCbo.Items.AddRange(new object[] { "Choose Type...", "Doctor", "Secretary", "All-In-One" });
             accountCbo.Location = new Point(144, 397);
             accountCbo.MaxDropDownItems = 4;
             accountCbo.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;

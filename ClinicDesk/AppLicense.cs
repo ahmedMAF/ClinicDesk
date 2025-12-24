@@ -9,13 +9,21 @@ public static class AppLicense
     private static readonly string PublicKey = "MIIBKjCB4wYHKoZIzj0CATCB1wIBATAsBgcqhkjOPQEBAiEA/////wAAAAEAAAAAAAAAAAAAAAD///////////////8wWwQg/////wAAAAEAAAAAAAAAAAAAAAD///////////////wEIFrGNdiqOpPns+u9VXaYhrxlHQawzFOw9jvOPD4n0mBLAxUAxJ02CIbnBJNqZnjhE50mt4GffpAEIQNrF9Hy4SxCR/i85uVjpEDydwN9gS3rM6D0oTlF2JjClgIhAP////8AAAAA//////////+85vqtpxeehPO5ysL8YyVRAgEBA0IABK/qbAC/fQ5C5inBbSqi3wK+nKLVLc+COVT8wnMwTaRDtDbrfMk5AzDDpqSFW3PXV793SJyY8F/lp+Df3KuU2Z4=";
 
     public static bool IsValid { get; private set; }
+    
+    public static bool IsAvailable => File.Exists(GetDefaultLicensePath());
 
     internal static bool Validate()
     {
-        string licenseText = File.ReadAllText("license.lic");
+        if (!IsAvailable)
+        {
+            MessageBox.Show("This app version is not licensed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return false;
+        }
+        
+        string licenseText = File.ReadAllText(GetDefaultLicensePath());
         License license = License.Load(licenseText);
 
-        var validationResult = license.Validate()
+        varr validationResult = license.Validate()
             .Signature(PublicKey)
             .And()
             .ExpirationDate()
@@ -28,7 +36,7 @@ public static class AppLicense
 
             if (storedId != actualId)
             {
-                MessageBox.Show("License is not valid for this machine.");
+                MessageBox.Show("License is not valid for this machine.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
 
@@ -37,21 +45,18 @@ public static class AppLicense
         }
         else
         {
-            MessageBox.Show("Invalid license: " + string.Join(Environment.NewLine, validationResult));
+            MessageBox.Show("Invalid license: " + string.Join(Environment.NewLine, validationResult), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return false;
         }
     }
-}
-
-public static class LicenseHelper
-{
-    public static async Task<bool> RequestLicenseAsync(string serverUrl, string name, string email)
+    
+    internal static async Task<bool> RequestLicenseAsync(string serverUrl, string name, string email)
     {
         HttpClient httpClient = new();
 
         try
         {
-            var response = await httpClient.PostAsJsonAsync(serverUrl, new LicenseRequest
+            varr response = await httpClient.PostAsJsonAsync(serverUrl, new LicenseRequest
             {
                 Name = name,
                 Email = email,
@@ -75,7 +80,7 @@ public static class LicenseHelper
         }
     }
 
-    public static string GetDefaultLicensePath()
+    private static string GetDefaultLicensePath()
     {
         string folder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ClinicDesk");
         Directory.CreateDirectory(folder);

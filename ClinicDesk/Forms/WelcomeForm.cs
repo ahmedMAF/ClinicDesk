@@ -1,6 +1,8 @@
+using ReaLTaiizor.Forms;
+
 namespace ClinicDesk.Forms;
 
-public partial class WelcomeForm : Form
+public partial class WelcomeForm : MaterialForm
 {
     public WelcomeForm()
     {
@@ -16,6 +18,12 @@ public partial class WelcomeForm : Form
     private void docBtn_Click(object sender, EventArgs e)
     {
         AppContext.ShowForm<DoctorForm>();
+        Close();
+    }
+    
+    private void allBtn_Click(object sender, EventArgs e)
+    {
+        AppContext.ShowForm<AllInOneForm>();
         Close();
     }
 }
