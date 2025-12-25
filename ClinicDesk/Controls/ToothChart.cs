@@ -1,4 +1,5 @@
-﻿using ReaLTaiizor.Controls;
+﻿using ClinicDesk.Database.Models;
+using ReaLTaiizor.Controls;
 using System.Drawing.Drawing2D;
 using System.ComponentModel;
 
@@ -8,60 +9,82 @@ public partial class ToothChart : Control
 {
     private readonly ToothStatus[] _toothStatuses = Enum.GetValues<ToothStatus>();
 
+    private readonly List<Point[][]> _upperAdultTeethCurvesLeftHalf =
+    [
+        [
+            [new Point(0, 0), new Point(0, 0), new Point(0, 0), new Point(0, 0)],
+            [new Point(0, 0), new Point(0, 0), new Point(0, 0), new Point(0, 0)],
+            [new Point(0, 0), new Point(0, 0), new Point(0, 0), new Point(0, 0)]
+        ]
+    ];
+
     private readonly List<Tooth> _teeth = [];
+    private readonly List<GraphicsPath> _teethGp = [];
+    
     private Tooth? _selectedTooth;
     private Tooth? _hoveredTooth;
 
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-    [Category("Appearance")]
-    public Color HoverColor { get; set; } = Color.LightBlue;
-
-    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-    [Category("Appearance")]
-    public Color OutlineColor { get; set; } = Color.Gray;
-
-    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-    [Category("Appearance")]
-    public int OutlineThickness { get; set; } = 5;
-
-    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-    [Category("Appearance")]
-    public int Spacing { get; set; } = 10;
-
-    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-    [Category("Appearance")]
-    public Size ToothSize { get; set; } = new Size(30, 60);
-
-    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-    [Category("Appearance")]
-    public Size CornerRounding { get; set; } = new Size(6, 6);
-
+    [SRCategory("Appearance")]
+    public Color HoverColor
+    {
+        get;
+        set
+        {
+            field = value;
+            Invalidate();
+        }
+    }
+    
     public ToothChart()
     {
         DoubleBuffered = true;
+        HoverColor = Color.LightBlue;
         Size = new Size(600, 200);
+        
         CreateTeeth();
     }
 
     private void CreateTeeth()
     {
         int startX = 20;
+        int toothWidth = 30;
+        int toothHieght = 60;
+        int spacing = 10;
         
-        for (int i = 1; i <= 32; i++)
+        for (int i = 0; i < 8; i++)
         {
             GraphicsPath path = new();
-            int x = startX + (i - 1) % 16 * (ToothSize.Width + Spacing);
+            Point[][] toothCurves = _upperAdultTeethCurvesLeftHalf[i];
+            
+            // path.StartFigure();
+            
+            // foreach (Point[] curve in toothCurves)
+            //     path.AddBezier(curve[0], curve[1], curve[2], curve[3]);
+            
+            // path.CloseFigure();
+            
+            int x = startX + i * (toothWidth + spacing);
             int y = i <= 16 ? 20 : 120;
 
-            path.AddRoundedRectangle(new Rectangle(x, y, ToothSize.Width, ToothSize.Height), CornerRounding);
+            path.AddRoundedRectangle(new Rectangle(x, y, toothWidth, toothHeight), new Size(6, 6));
 
-            _teeth.Add(new Tooth
-            {
-                Number = i,
-                Path = path,
-                Status = ToothStatus.Normal
-            });
+            _teethGp.Add(path);
         }
+        
+        // Flip at middle.
+        for (int i = 7; i >= 0; i--)
+        {
+            GraphicsPath path = (GraphicsPath)_teethGp[i].Clone();
+            
+            RectangleF bounds = path.GetBounds();
+            Matrix flipX = new Matrix(-1, 0, 0, 1, bounds.Left + bounds.Width, 0);
+            path.Transform(flipX);
+            
+            _teethGp.Add(path);
+        }
+        
+        
     }
 
     protected override void OnMouseClick(MouseEventArgs e)
@@ -106,13 +129,13 @@ public partial class ToothChart : Control
 
         foreach (Tooth tooth in _teeth)
         {
-            Color outlineColor = OutlineColor;
+            Color color = GetStatusColor(tooth.Status);
 
             if (tooth == _hoveredTooth)
-                outlineColor = HoverColor;
+                color = Utils.DarkenColor(color, 0.2f);
 
-            using SolidBrush brush = new(GetStatusColor(tooth.Status));
-            using Pen pen = new(outlineColor, 5);
+            using SolidBrush brush = new(color);
+            using Pen pen = new(Color.Gray, 5);
 
             e.Graphics.FillPath(brush, tooth.Path);
             e.Graphics.DrawPath(pen, tooth.Path);
@@ -121,22 +144,33 @@ public partial class ToothChart : Control
 
     private void ShowToothMenu(Point location)
     {
-        MaterialContextMenuStrip menu = new();
-
-        foreach (ToothStatus status in _toothStatuses)
+        /**
+         * We need:
+         * TxetBox for notes
+         * Button for save 
+         * ComboBox for status
+         * 
+         */
+        ToothDropDoown popupContent = new();
+        popupContent.SetData(_selectedTooth!);
+        
+        ToolStripControlHost host = new(popupContent)
         {
-            ToolStripMenuItem item = new(GetStatusString(status));
-
-            item.Click += (_, _) =>
-            {
-                _selectedTooth!.Status = status;
-                Invalidate();
-            };
-
-            menu.Items.Add(item);
-        }
-
-        menu.Show(this, location);
+            Margin = Padding.Empty,
+            Padding = Padding.Empty,
+            AutoSize = false
+        };
+    
+        ToolStripDropDown dropdown = new()
+        {
+            Padding = Padding.Empty
+        };
+        
+        dropdown.Items.Add(host);
+        popupContent.Leave += (_, _) => dropdown.Close();
+        popupContent.OnClosed += (_, _) => Invalidate();
+    
+        dropdown.Show(this, location);
     }
 
     private Color GetStatusColor(ToothStatus status) => status switch
@@ -160,24 +194,4 @@ public partial class ToothChart : Control
         ToothStatus.RootCanal => "Root Canal",
         _ => throw new NotImplementedException(status.ToString())
     };
-}
-
-public enum ToothStatus
-{
-    Normal,
-    Missing,
-    Filled,
-    Crown,
-    Implant,
-    RootCanal
-}
-
-public class Tooth
-{
-    public int Number { get; set; }
-    public GraphicsPath Path { get; set; } = null!;
-    public ToothStatus Status { get; set; }
-    public PointF Position { get; set; }
-    public float Rotation { get; set; }
-    public bool IsUpper { get; set; }
 }

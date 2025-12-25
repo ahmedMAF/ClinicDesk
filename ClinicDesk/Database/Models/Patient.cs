@@ -17,6 +17,7 @@ public class Patient
 
     public BloodType BloodType { get; set; }
     public List<string> ChronicDiseases { get; set; } = [];
+    public List<Tooth> Teeth { get; set; } = [];
     public string? Notes { get; set; }
 
     public List<Appointment> Appointments { get; set; } = [];

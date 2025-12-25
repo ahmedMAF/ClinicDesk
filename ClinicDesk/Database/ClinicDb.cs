@@ -61,5 +61,9 @@ public class ClinicDb : DbContext
         modelBuilder.Entity<Patient>()
             .Property(p => p.ChronicDiseases)
             .HasColumnType("json");
+            
+        modelBuilder.Entity<Patient>()
+            .Property(p => p.Teeth)
+            .HasColumnType("json");
     }
 }

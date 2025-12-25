@@ -44,6 +44,17 @@ internal static class Utils
 
         grd.CellPainting += Grid_CellPainting;
     }
+    
+    public static Color DarkenColor(Color color, float factor)
+    {
+        factor = 1f - Math.Clamp(factor, 0f, 1f);
+        
+        return Color.FromArgb(
+            color.A,
+            (int)(color.R * factor),
+            (int)(color.G * factor),
+            (int)(color.B * factor));
+    }
 
     private static void Grid_CellPainting(object? sender, DataGridViewCellPaintingEventArgs e)
     {
