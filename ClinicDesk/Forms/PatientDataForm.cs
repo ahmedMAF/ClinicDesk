@@ -65,17 +65,16 @@ public partial class PatientDataForm : MaterialForm
 
         if (Patient == null)
         {
-            Patient = new Patient
-            {
-                Name = nameTxt.Text,
-                Phone = phoneTxt.Text,
-                Sex = (Sex)sexCbo.SelectedIndex,
-                MaritalStatus = (MaritalStatus)maritalCbo.SelectedIndex,
-                DateOfBirth = dobPkr.Value.Date,
-                BloodType = (BloodType)bloodTypeCbo.SelectedIndex,
-                ChronicDiseases = [.. _chronicDiseases],
-                Notes = notesTxt.Text
-            };
+            Patient = Patient.New();
+            
+            Patient.Name = nameTxt.Text;
+            Patient.Phone = phoneTxt.Text;
+            Patient.Sex = (Sex)sexCbo.SelectedIndex;
+            Patient.MaritalStatus = (MaritalStatus)maritalCbo.SelectedIndex;
+            Patient.DateOfBirth = dobPkr.Value.Date;
+            Patient.BloodType = (BloodType)bloodTypeCbo.SelectedIndex;
+            Patient.ChronicDiseases = [.. _chronicDiseases];
+            Patient.Notes = notesTxt.Text;
 
             ClinicDb.Instance.Patients.Add(Patient);
         }

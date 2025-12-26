@@ -46,8 +46,6 @@ public partial class SplashForm : Form
       
         // We are good.
         LicenseDateHelper.SaveLastSeen();
-
-        // TODO: Run MySQL if server.
         ClinicDb.Initialize();
 
         if (!ClinicDb.IsRunning)
@@ -57,6 +55,9 @@ public partial class SplashForm : Form
         }
         
         SignalR.Initialize();
+        
+        if (Settings.Instance.IsDental)
+            TeethHelper.Initialize();
 
         await delay;
 

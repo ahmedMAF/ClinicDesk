@@ -16,13 +16,25 @@ public class Patient
     public string? Phone { get; set; }
 
     public BloodType BloodType { get; set; }
-    public List<string> ChronicDiseases { get; set; } = [];
-    public List<Tooth> Teeth { get; set; } = [];
+    public List<string> ChronicDiseases { get; set; } = null!;
+    public List<Tooth[]> Teeth { get; set; } = null!;
     public string? Notes { get; set; }
 
-    public List<Appointment> Appointments { get; set; } = [];
-    public List<Visit> Visits { get; set; } = [];
+    public List<Appointment> Appointments { get; set; } = null!;
+    public List<Visit> Visits { get; set; } = null!;
 
     [NotMapped]
     public TimeSpan Age => DateTime.Now - DateOfBirth;
+    
+    public static Patient New()
+    {
+        Patient patient = new();
+        
+        patient.Teeth = [];
+        
+        for (int i = 0; i < 52; i++)
+            patient.Teeth.Add(new Tooth());
+            
+        return patient;
+    }
 }

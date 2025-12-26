@@ -1,10 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ClinicDesk.Database.Models;
+using System.ServiceProcess;
+using System.Diagnostics;
+using System.IO;
 
 namespace ClinicDesk.Database;
 
 public class ClinicDb : DbContext
 {
+    private const string ServiceName = "MySQL80";
+    
     public static ClinicDb Instance { get; private set; } = null!;
     public static bool IsRunning { get; private set; }
 
@@ -33,6 +38,9 @@ public class ClinicDb : DbContext
         DbContextOptionsBuilder<ClinicDb> optionsBuilder = new();
 
         DialogResult result = DialogResult.None;
+
+        if (settings.IsServer)
+            RunDatabaseService();
 
         do
         {
@@ -65,5 +73,30 @@ public class ClinicDb : DbContext
        modelBuilder.Entity<Patient>()
             .Property(p => p.Teeth)
             .HasColumnType("json");
+    }
+    
+    private static void RunDatabaseService()
+    {
+#if DEBUG
+        bool isMySqlRunning = Process.GetProcessesByName("mysqld").Count != 0;
+
+        if (!isMySqlRunning)
+        {
+            string path = @"C:\xampp\mysql\bin\mysqld.exe";
+            
+            if (!File.Exists(path))
+                path = @"C:\Program Files\xampp\mysql\bin\mysqld.exe";
+                
+            Process.Start(path);
+        }
+#else
+        ServiceController service = new(serviceName);
+        
+        if (service.Status != ServiceControllerStatus.Running)
+        {
+            service.Start();
+            service.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(10));
+        }
+#endif
     }
 }

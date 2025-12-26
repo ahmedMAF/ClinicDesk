@@ -190,6 +190,78 @@ internal static class Utils
             UseColumnTextForButtonValue = true
         });
     }
+    
+    public static void InitializeToothData(List<ToothGraphic> teeth)
+    {
+        int fdiQuadrant;
+        int fdiTooth;
+            
+        for (int i = 0; i < 32; i++)
+        {
+            if (i < 8)
+            {
+                // Upper right (1–8)
+                fdiQuadrant = 1;
+                fdiTooth = 8 - i;
+            }
+            else if (i < 16)
+            {
+                // Upper left (9–16)
+                fdiQuadrant = 2;
+                fdiTooth = i - 7;
+            }
+            else if (i < 24)
+            {
+                // Lower left (17–24)
+                fdiQuadrant = 3;
+                fdiTooth = 24 - i;
+            }
+            else
+            {
+                // Lower right (25–32)
+                fdiQuadrant = 4;
+                fdiTooth = i - 23;
+            }
+        
+            Teeth.Add(new ToothGraphic
+            {
+                Number = fdiQuadrant * 10 + fdiTooth
+            });
+        }
+        
+        for (int i = 0; i < 20; i++)
+        {
+            if (i < 5)
+            {
+                // Upper right (1–5)
+                fdiQuadrant = 5;
+                fdiTooth = 5 - i;
+            }
+            else if (i < 10)
+            {
+                // Upper left (6–10)
+                fdiQuadrant = 6;
+                fdiTooth = i - 4;
+            }
+            else if (i < 15)
+            {
+                // Lower left (11–15)
+                fdiQuadrant = 7;
+                fdiTooth = 15 - i;
+            }
+            else
+            {
+                // Lower right (16–20)
+                fdiQuadrant = 8;
+                fdiTooth = i - 14;
+            }
+        
+            Teeth.Add(new ToothGraphic
+            {
+                Number = fdiQuadrant * 10 + fdiTooth
+            });
+        }
+    }
 
     public static void SetupPaymentsDataGrid(DataGridView paymentsGrd)
     {

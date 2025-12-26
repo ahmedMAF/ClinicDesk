@@ -16,7 +16,7 @@ public static class SignalR
 
     public static async Task Initialize()
     {
-        if (Setting.Instance.Server is "127.0.0.1" or "localhost")
+        if (Settings.Instance.IsServer)
             await StartServerAsync();
         
         // Both ends must act as client.

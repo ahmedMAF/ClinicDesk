@@ -5,9 +5,12 @@ namespace ClinicDesk.Forms;
 
 public partial class InstallForm : MaterialForm
 {
+    private bool _doneInit;
+    
     public InstallForm()
     {
         InitializeComponent();
+        FormClosed += (s, e) => if (!_doneInit) Application.Exit();
     }
 
     private void InstallForm_Load(object sender, EventArgs e)
@@ -81,8 +84,8 @@ public partial class InstallForm : MaterialForm
             return;
         }
 
+        _doneInit = true;
         Close();
-
         AppContext.ShowForm<SplashForm>();
     }
 }

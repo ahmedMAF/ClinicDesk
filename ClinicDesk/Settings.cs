@@ -23,6 +23,9 @@ public partial class Settings
 
     public AccountType AccountType { get; internal set; }
     public bool IsDental { get; internal set; }
+    
+    [MemoryPackIgnore]
+    public bool IsServer => Server is "127.0.0.1" or "localhost";
 
     internal static void Initialize()
     {
