@@ -56,14 +56,6 @@ public partial class InstallForm : MaterialForm
             return;
         }
 
-        ClinicDb.Initialize();
-
-        if (!ClinicDb.IsRunning)
-        {
-            MessageBox.Show("Failed to create and connect to the database. Check the connection data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
-        }
-
         if (type == AccountType.NotDefined)
         {
             MessageBox.Show("Must choose an account type.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -80,6 +72,14 @@ public partial class InstallForm : MaterialForm
         settings.AccountType = type;
 
         Settings.SaveSettings();
+
+        ClinicDb.Initialize();
+
+        if (!ClinicDb.IsRunning)
+        {
+            MessageBox.Show("Failed to create and connect to the database. Check the connection data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
 
         Close();
 

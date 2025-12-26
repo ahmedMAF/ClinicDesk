@@ -33,6 +33,7 @@ namespace ClinicDesk;
 // * Save LastSeenDate, IsInstalled and IsFirstRun in registry.
 // * Filter height = 0 to hide row.
 // * Doctor edit previous visits.
+// * DPI.
 // * Custom calendar, date picker and time picker controls with material theme.
 
 internal static class Program
@@ -49,5 +50,7 @@ internal static class Program
         // see https://aka.ms/applicationconfiguration.
         ApplicationConfiguration.Initialize();
         Application.Run(new AppContext());
+        
+        SignalR.StopServerAsync();
     }
 }

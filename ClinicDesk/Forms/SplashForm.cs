@@ -37,18 +37,15 @@ public partial class SplashForm : Form
             return;
         }
 
-        if (Settings.Instance.LastSeenDate > DateTime.UtcNow)
+        if (!LicenseDateHelper.IsSystemDateValid())
         {
             // TODO: Trying to cheat license.
             Application.Exit();
             return;
         }
-        else
-        {
-            // We are good.
-            Settings.Instance.LastSeenDate = DateTime.UtcNow;
-            Settings.SaveSettings();
-        }
+      
+        // We are good.
+        LicenseDateHelper.SaveLastSeen();
 
         // TODO: Run MySQL if server.
         ClinicDb.Initialize();
@@ -58,6 +55,8 @@ public partial class SplashForm : Form
             Application.Exit();
             return;
         }
+        
+        SignalR.Initialize();
 
         await delay;
 

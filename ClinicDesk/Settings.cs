@@ -22,7 +22,7 @@ public partial class Settings
     public string Password { get; internal set; } = "";
 
     public AccountType AccountType { get; internal set; }
-    public DateTime LastSeenDate { get; internal set; } = DateTime.UtcNow;
+    public bool IsDental { get; internal set; }
 
     internal static void Initialize()
     {
@@ -41,13 +41,13 @@ public partial class Settings
     
     private static void LoadSettings()
     {
-        var bytes = File.ReadAllBytes(SettingsPath);
+        byte[] bytes = File.ReadAllBytes(SettingsPath);
         Instance = MemoryPackSerializer.Deserialize<Settings>(bytes) ?? new Settings();
     }
 
     public static void SaveSettings()
     {
-        var bytes = MemoryPackSerializer.Serialize(Instance);
+        byte[] bytes = MemoryPackSerializer.Serialize(Instance);
         File.WriteAllBytes(SettingsPath, bytes);
     }
 }

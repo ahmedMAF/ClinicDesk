@@ -266,11 +266,16 @@ internal static class Utils
 
     public static string GetHardwareId()
     {
+        return Convert.ToHexString(GetHardwareIdBytes());
+    }
+    
+    public static byte[] GetHardwareIdBytes()
+    {
         string cpu = GetWMI("Win32_Processor", "ProcessorId");
         string disk = GetWMI("Win32_DiskDrive", "SerialNumber");
         string board = GetWMI("Win32_BaseBoard", "SerialNumber");
 
-        return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes($"{cpu}-{disk}-{board}")));
+        return SHA256.HashData(Encoding.UTF8.GetBytes($"{cpu}-{disk}-{board}"));
     }
 
     private static string GetWMI(string wmiClass, string wmiProperty)

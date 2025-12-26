@@ -13,15 +13,18 @@ public partial class SecretaryForm : MaterialForm
         InitializeComponent();
 
         FormClosed += (s, e) => Application.Exit();
+        FormClosing += (s, e) => SignalR.DatabaseChanged -= Refresh;
         
         _grdHelper = new AppointmentsGrid(appointmentsGrd, AccountType.Secretary);
     }
 
     private async void SecretaryForm_Load(object sender, EventArgs e)
     {
-        await _grdHelper.RefreshList();
+        SignalR.DatabaseChanged += Refresh;
+        
+        await Refresh();
     }
-
+    
     private async void monthCalendar1_DateSelected(object sender, DateRangeEventArgs e)
     {
         await _grdHelper.RefreshList(monthCalendar1.SelectionStart.Date);
@@ -35,7 +38,7 @@ public partial class SecretaryForm : MaterialForm
             return;
 
         AppContext.ShowDialog<NewAppointmentForm>(form => form.SetData(patient));
-        await _grdHelper.RefreshList();
+        await Refresh();
     }
 
     private void billingSearchBtn_Click(object sender, EventArgs e)
@@ -46,5 +49,10 @@ public partial class SecretaryForm : MaterialForm
             return;
 
         AppContext.ShowDialog<BillingForm>(form => form.SetData(patient));
+    }
+    
+    private async void Refresh()
+    {
+        await _grdHelper.RefreshList();
     }
 }

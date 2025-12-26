@@ -47,16 +47,9 @@
             // 
             // appointmentsGrd
             // 
-            appointmentsGrd.AllowUserToAddRows = false;
-            appointmentsGrd.AllowUserToDeleteRows = false;
-            appointmentsGrd.AllowUserToOrderColumns = true;
             appointmentsGrd.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            appointmentsGrd.BackgroundColor = Color.White;
-            appointmentsGrd.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             appointmentsGrd.Location = new Point(12, 128);
             appointmentsGrd.Name = "appointmentsGrd";
-            appointmentsGrd.ReadOnly = true;
-            appointmentsGrd.RowHeadersWidth = 51;
             appointmentsGrd.Size = new Size(702, 404);
             appointmentsGrd.TabIndex = 5;
             // 

@@ -29,7 +29,7 @@ public class ClinicDb : DbContext
     {
         Settings settings = Settings.Instance;
 
-        string conn = $"Server={settings.Server};Port={settings.Port};Database={settings.Database};User={settings.User};Password={settings.Password};";
+        string conn = $"Server={settings.Server};Port={settings.Port};Database={settings.Database};User={settings.User};Password={settings.Password};SslMode=None;";
         DbContextOptionsBuilder<ClinicDb> optionsBuilder = new();
 
         DialogResult result = DialogResult.None;
@@ -62,7 +62,7 @@ public class ClinicDb : DbContext
             .Property(p => p.ChronicDiseases)
             .HasColumnType("json");
             
-        modelBuilder.Entity<Patient>()
+       modelBuilder.Entity<Patient>()
             .Property(p => p.Teeth)
             .HasColumnType("json");
     }
