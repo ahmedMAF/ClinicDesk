@@ -1,8 +1,7 @@
+using ClinicDesk.Database;
 using ClinicDesk.Forms;
-using ReaLTaiizor.Colors;
 using ReaLTaiizor.Forms;
 using ReaLTaiizor.Manager;
-using ReaLTaiizor.Util;
 
 namespace ClinicDesk;
 
@@ -12,6 +11,8 @@ public class AppContext : ApplicationContext
     
     public AppContext()
     {
+        Application.ApplicationExit += ApplicationExit;
+
         Settings.Initialize();
 
         if (Settings.Instance.AccountType == AccountType.NotDefined)
@@ -22,7 +23,7 @@ public class AppContext : ApplicationContext
 
         ShowForm<SplashForm>();
     }
-    
+
     public static T ShowForm<T>(Action<T>? actionBeforeShow = null, Action<T>? actionAfterShow = null) where T : Form, new()
     {
         Type formType = typeof(T);
@@ -69,5 +70,10 @@ public class AppContext : ApplicationContext
         actionAfterShow?.Invoke(form, result);
         
         return result;
+    }
+
+    private void ApplicationExit(object? sender, EventArgs e)
+    {
+        ClinicDb.StopDatabaseService();
     }
 }

@@ -1,16 +1,12 @@
 ﻿using ClinicDesk.Database.Models;
-using ReaLTaiizor.Controls;
-using System.Drawing.Drawing2D;
-using System.ComponentModel;
 using ClinicDesk.Utilities;
+using System.ComponentModel;
+using System.Drawing.Drawing2D;
 
 namespace ClinicDesk.Controls;
 
 public partial class ToothChart : Control
 {
-    private static readonly ToothStatus[] _toothStatuses = Enum.GetValues<ToothStatus>();
-
-    private List<Tooth> _teeth = null!;
     private readonly List<ToothGraphic> _teethGp;
     
     private int? _selectedTooth;
@@ -26,17 +22,29 @@ public partial class ToothChart : Control
             Invalidate();
         }
     }
-    
+
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+    public List<Tooth> Teeth
+    {
+        get;
+        set
+        {
+            field = value;
+            Invalidate();
+        }
+    }
+
     public ToothChart()
     {
         DoubleBuffered = true;
         Size = new Size(600, 200);
-        NumbersFont = new Font("Roboto", 12);
-        
+        NumbersFont = new Font("Segoe UI", 10);
+
+        Teeth = new(52);
         _teethGp = TeethHelper.Teeth;
         
         for (int i = 0; i < 52; i++)
-            _teeth.Add(new Tooth());
+            Teeth.Add(new Tooth());
     }
 
     protected override void OnMouseClick(MouseEventArgs e)
@@ -84,7 +92,7 @@ public partial class ToothChart : Control
 
         for (int i = 0; i < _teethGp.Count; i++)
         {
-            Tooth tooth = _teeth[i];
+            Tooth tooth = Teeth[i];
             ToothGraphic toothGp = _teethGp[i];
 
             Color color = GetStatusColor(tooth.Status);
@@ -94,7 +102,7 @@ public partial class ToothChart : Control
                 color = Utils.DarkenColor(color, 0.2f);
                 
             if (i == _hoveredTooth || i == _selectedTooth)
-                outlineTickness = 3;
+                outlineTickness = 2;
                 
             RectangleF pathBounds = toothGp.Path.GetBounds();
             string text = toothGp.Number.ToString();
@@ -114,15 +122,7 @@ public partial class ToothChart : Control
 
     private void ShowToothMenu(Point location)
     {
-        /**
-         * We need:
-         * TxetBox for notes
-         * Button for save 
-         * ComboBox for status
-         * 
-         */
         ToothDropDown popupContent = new();
-        popupContent.SetData(_teeth[_selectedTooth!.Value]!);
         
         ToolStripControlHost host = new(popupContent)
         {
@@ -140,6 +140,7 @@ public partial class ToothChart : Control
         dropdown.Closed += DropDown_Closed;
         popupContent.Leave += (_, _) => dropdown.Close();
     
+        popupContent.SetData(Teeth[_selectedTooth!.Value]!, dropdown);
         dropdown.Show(this, location);
     }
 
@@ -153,21 +154,8 @@ public partial class ToothChart : Control
     {
         ToothStatus.Normal => Color.White,
         ToothStatus.Missing => Color.FromArgb(230, 230, 230),
-        ToothStatus.Filled => Color.FromArgb(33, 150, 243),
-        ToothStatus.Crown => Color.FromArgb(255, 193, 7),
         ToothStatus.Implant => Color.FromArgb(76, 175, 80),
         ToothStatus.RootCanal => Color.FromArgb(244, 67, 54),
-        _ => throw new NotImplementedException(status.ToString())
-    };
-
-    private string GetStatusString(ToothStatus status) => status switch
-    {
-        ToothStatus.Normal => "Normal",
-        ToothStatus.Missing => "Missing",
-        ToothStatus.Filled => "Filled",
-        ToothStatus.Crown => "Crown",
-        ToothStatus.Implant => "Implant",
-        ToothStatus.RootCanal => "Root Canal",
         _ => throw new NotImplementedException(status.ToString())
     };
 }

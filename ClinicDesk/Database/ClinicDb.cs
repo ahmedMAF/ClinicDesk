@@ -2,16 +2,21 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Diagnostics;
-using System.IO;
-using System.ServiceProcess;
 using System.Text.Json;
+#if !DEBUG
+using System.ServiceProcess;
+#endif
 
 namespace ClinicDesk.Database;
 
 public class ClinicDb : DbContext
 {
+#if !DEBUG
     private const string ServiceName = "MySQL80";
-    
+#else
+    private static Process? _mySqlProcess;
+#endif
+
     public static ClinicDb Instance { get; private set; } = null!;
     public static bool IsRunning { get; private set; }
 
@@ -89,11 +94,41 @@ public class ClinicDb : DbContext
         if (!isMySqlRunning)
         {
             string path = @"C:\xampp\mysql\bin\mysqld.exe";
-            
+            string iniPath = @"C:\xampp\mysql\bin\my.ini";
+
             if (!File.Exists(path))
+            {
                 path = @"C:\Program Files\xampp\mysql\bin\mysqld.exe";
-                
-            Process.Start(path);
+                iniPath = @"C:\Program Files\xampp\mysql\bin\my.ini";
+            }
+
+            ProcessStartInfo psi = new()
+            {
+                FileName = path,
+                Arguments = $"--defaults-file=\"{iniPath}\" --standalone",
+                CreateNoWindow = true
+            };
+
+            _mySqlProcess = Process.Start(psi);
+        }
+#else
+        ServiceController service = new(serviceName);
+        
+        if (service.Status != ServiceControllerStatus.Running)
+        {
+            service.Start();
+            service.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(10));
+        }
+#endif
+    }
+
+    public static void StopDatabaseService()
+    {
+#if DEBUG
+        if (_mySqlProcess != null && !_mySqlProcess.HasExited)
+        {
+            _mySqlProcess.Kill();
+            _mySqlProcess.Dispose();
         }
 #else
         ServiceController service = new(serviceName);

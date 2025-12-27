@@ -55,8 +55,6 @@ public partial class SplashForm : Form
             return;
         }
         
-        await SignalR.Initialize();
-        
         if (Settings.Instance.IsDental)
             TeethHelper.Initialize();
 

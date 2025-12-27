@@ -85,6 +85,6 @@ public partial class AppointmentForm : MaterialForm
 
     private void chartBtn_Click(object sender, EventArgs e)
     {
-        AppContext.ShowDialog<DentalChartForm>();
+        AppContext.ShowDialog<DentalChartForm>(form => form.SetData(_patient.Teeth));
     }
 }

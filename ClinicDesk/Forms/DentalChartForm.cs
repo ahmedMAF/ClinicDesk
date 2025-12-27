@@ -1,19 +1,17 @@
-﻿using ReaLTaiizor.Forms;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
+﻿using ClinicDesk.Database.Models;
+using ReaLTaiizor.Forms;
 
-namespace ClinicDesk.Forms
+namespace ClinicDesk.Forms;
+
+public partial class DentalChartForm : MaterialForm
 {
-    public partial class DentalChartForm : MaterialForm
+    public DentalChartForm()
     {
-        public DentalChartForm()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
+
+    internal void SetData(List<Tooth> teeth)
+    {
+        
     }
 }

@@ -1,5 +1,4 @@
 ﻿using ClinicDesk.ControlHelpers;
-using ClinicDesk.Database;
 using ClinicDesk.Database.Models;
 using ReaLTaiizor.Forms;
 
@@ -14,15 +13,12 @@ public partial class SecretaryForm : MaterialForm
         InitializeComponent();
 
         FormClosed += (s, e) => Application.Exit();
-        FormClosing += (s, e) => SignalR.DatabaseChanged -= RefreshUI;
         
         _grdHelper = new AppointmentsGrid(appointmentsGrd, AccountType.Secretary);
     }
 
     private async void SecretaryForm_Load(object sender, EventArgs e)
     {
-        SignalR.DatabaseChanged += RefreshUI;
-        
         await RefreshUI();
     }
     
