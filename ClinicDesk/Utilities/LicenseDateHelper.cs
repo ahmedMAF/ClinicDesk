@@ -1,10 +1,7 @@
-using System;
-using System.IO;
 using System.Security.Cryptography;
-using System.Text;
 using Microsoft.Win32;
 
-namespace ClinicDesk;
+namespace ClinicDesk.Utilities;
 
 public static class LicenseDateHelper
 {

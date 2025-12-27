@@ -1,4 +1,5 @@
 ﻿using ClinicDesk.Database;
+using ClinicDesk.Utilities;
 using ReaLTaiizor.Colors;
 using ReaLTaiizor.Manager;
 using ReaLTaiizor.Util;
@@ -54,7 +55,7 @@ public partial class SplashForm : Form
             return;
         }
         
-        SignalR.Initialize();
+        await SignalR.Initialize();
         
         if (Settings.Instance.IsDental)
             TeethHelper.Initialize();

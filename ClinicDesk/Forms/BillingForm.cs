@@ -5,6 +5,7 @@ using ClinicDesk.Database.Dto;
 using ClinicDesk.Database.Models;
 using ReaLTaiizor.Forms;
 using ClinicDesk.ControlHelpers;
+using ClinicDesk.Utilities;
 
 namespace ClinicDesk.Forms;
 

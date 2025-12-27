@@ -1,5 +1,6 @@
 using ClinicDesk.Database.Dto;
 using ClinicDesk.Database.Models;
+using ClinicDesk.Utilities;
 
 namespace ClinicDesk.ControlHelpers;
 

@@ -1,6 +1,7 @@
 ﻿using ClinicDesk.ControlHelpers;
 using ClinicDesk.Database;
 using ClinicDesk.Database.Models;
+using ClinicDesk.Utilities;
 using ReaLTaiizor.Child.Material;
 using ReaLTaiizor.Forms;
 
@@ -80,5 +81,10 @@ public partial class AppointmentForm : MaterialForm
     private void cancelBtn_Click(object sender, EventArgs e)
     {
         Close();
+    }
+
+    private void chartBtn_Click(object sender, EventArgs e)
+    {
+        AppContext.ShowDialog<DentalChartForm>();
     }
 }

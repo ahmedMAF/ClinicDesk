@@ -1,3 +1,4 @@
+using ClinicDesk.Utilities;
 using Portable.Licensing;
 using Portable.Licensing.Validation;
 using System.Net.Http.Json;

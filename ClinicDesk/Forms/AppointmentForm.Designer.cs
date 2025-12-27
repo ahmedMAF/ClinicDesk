@@ -58,6 +58,7 @@ namespace ClinicDesk.Forms
             materialLabel11 = new MaterialLabel();
             materialButton1 = new MaterialButton();
             materialCard3 = new MaterialCard();
+            chartBtn = new MaterialButton();
             ((System.ComponentModel.ISupportInitialize)visitsGrd).BeginInit();
             materialCard1.SuspendLayout();
             tableLayoutPanel1.SuspendLayout();
@@ -507,7 +508,6 @@ namespace ClinicDesk.Forms
             // 
             // billTxt
             // 
-            billTxt.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             billTxt.AnimateReadOnly = false;
             billTxt.AutoCompleteMode = AutoCompleteMode.None;
             billTxt.AutoCompleteSource = AutoCompleteSource.None;
@@ -529,7 +529,7 @@ namespace ClinicDesk.Forms
             billTxt.SelectionLength = 0;
             billTxt.SelectionStart = 0;
             billTxt.ShortcutsEnabled = true;
-            billTxt.Size = new Size(371, 48);
+            billTxt.Size = new Size(250, 48);
             billTxt.TabIndex = 41;
             billTxt.TabStop = false;
             billTxt.Text = "0";
@@ -577,6 +577,7 @@ namespace ClinicDesk.Forms
             // 
             materialCard3.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             materialCard3.BackColor = Color.FromArgb(255, 255, 255);
+            materialCard3.Controls.Add(chartBtn);
             materialCard3.Controls.Add(materialLabel9);
             materialCard3.Controls.Add(diagnosisTxt);
             materialCard3.Controls.Add(billTxt);
@@ -592,6 +593,30 @@ namespace ClinicDesk.Forms
             materialCard3.Padding = new Padding(14);
             materialCard3.Size = new Size(1058, 335);
             materialCard3.TabIndex = 43;
+            // 
+            // chartBtn
+            // 
+            chartBtn.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            chartBtn.AutoSize = false;
+            chartBtn.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            chartBtn.CharacterCasing = MaterialButton.CharacterCasingEnum.Normal;
+            chartBtn.Density = MaterialButton.MaterialButtonDensity.Default;
+            chartBtn.Depth = 0;
+            chartBtn.HighEmphasis = true;
+            chartBtn.Icon = null;
+            chartBtn.IconType = MaterialButton.MaterialIconType.Rebase;
+            chartBtn.Location = new Point(882, 279);
+            chartBtn.Margin = new Padding(4, 6, 4, 6);
+            chartBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            chartBtn.Name = "chartBtn";
+            chartBtn.NoAccentTextColor = Color.Empty;
+            chartBtn.Size = new Size(158, 36);
+            chartBtn.TabIndex = 43;
+            chartBtn.Text = "Dental Chart";
+            chartBtn.Type = MaterialButton.MaterialButtonType.Contained;
+            chartBtn.UseAccentColor = false;
+            chartBtn.UseVisualStyleBackColor = true;
+            chartBtn.Click += chartBtn_Click;
             // 
             // AppointmentForm
             // 
@@ -663,5 +688,6 @@ namespace ClinicDesk.Forms
         private MaterialLabel materialLabel11;
         private MaterialButton materialButton1;
         private MaterialCard materialCard3;
+        private MaterialButton chartBtn;
     }
 }

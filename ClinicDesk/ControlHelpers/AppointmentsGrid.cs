@@ -2,6 +2,7 @@ using ClinicDesk.Database;
 using ClinicDesk.Database.Dto;
 using ClinicDesk.Database.Models;
 using ClinicDesk.Forms;
+using ClinicDesk.Utilities;
 using Microsoft.EntityFrameworkCore;
 
 namespace ClinicDesk.ControlHelpers;

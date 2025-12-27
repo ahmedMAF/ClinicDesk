@@ -10,7 +10,11 @@ public partial class InstallForm : MaterialForm
     public InstallForm()
     {
         InitializeComponent();
-        FormClosed += (s, e) => if (!_doneInit) Application.Exit();
+        FormClosed += (s, e) =>
+        {
+            if (!_doneInit)
+                Application.Exit();
+        };
     }
 
     private void InstallForm_Load(object sender, EventArgs e)

@@ -1,10 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Globalization;
 
-namespace ClinicDesk;
+namespace ClinicDesk.Utilities;
 
 public static class SvgPathParser
 {

@@ -69,5 +69,14 @@ namespace ClinicDesk.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to test.
+        /// </summary>
+        internal static string TeethSvg {
+            get {
+                return ResourceManager.GetString("TeethSvg", resourceCulture);
+            }
+        }
     }
 }

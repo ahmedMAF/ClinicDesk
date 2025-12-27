@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.SignalR.Client;
+using Microsoft.AspNetCore.Builder;
 
 namespace ClinicDesk.Database;
 
@@ -12,7 +13,7 @@ public static class SignalR
 
     public static ushort Port { get; private set; } = 8484;
 
-    public static event Action DatabaseChanged;
+    public static event Func<Task> DatabaseChanged;
 
     public static async Task Initialize()
     {
@@ -20,20 +21,21 @@ public static class SignalR
             await StartServerAsync();
         
         // Both ends must act as client.
-        await StartClientAsync();
+        // await StartClientAsync();
     }
 
     private static async Task StartClientAsync()
     {
         _connection = new HubConnectionBuilder()
-            .WithUrl($"http://{Setting.Instance.Server}:{Port}/databaseHub")
+            .WithUrl($"http://{Settings.Instance.Server}:{Port}/databaseHub")
             .WithAutomaticReconnect()
             .Build();
 
         _connection.On("DatabaseChanged", () =>
         {
             // This runs on background thread -> marshal to UI thread
-            Invoke((Action)(() => DatabaseChanged?.Invoke() ));
+            // Invoke((Action)(() => DatabaseChanged?.Invoke() ));
+            DatabaseChanged?.Invoke();
         });
 
         await _connection.StartAsync();
@@ -41,10 +43,16 @@ public static class SignalR
 
     private static async Task StartServerAsync()
     {
-        _host = Host.CreateDefaultBuilder()
+        /*_host = Host.CreateDefaultBuilder()
             .ConfigureWebHostDefaults(webBuilder =>
             {
                 webBuilder.UseUrls($"http://+:{Port}");
+
+                webBuilder.ConfigureServices(services =>
+                {
+                    services.AddSignalR();
+                });
+
                 webBuilder.Configure(app =>
                 {
                     app.UseRouting();
@@ -53,15 +61,16 @@ public static class SignalR
             })
             .Build();
 
-        await _host.StartAsync();
+        await _host.StartAsync();*/
     }
 
     public static async Task StopServerAsync()
     {
         if (_host != null)
             await _host.StopAsync();
-            
-        await _connection.StopAsync();
+
+        if (_connection != null)
+            await _connection.StopAsync();
     }
 }
 

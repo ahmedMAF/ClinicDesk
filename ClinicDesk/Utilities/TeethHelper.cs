@@ -1,17 +1,15 @@
-using ClinicDesk.Database.Models;
-using ReaLTaiizor.Controls;
 using System.Drawing.Drawing2D;
-using System.ComponentModel;
+using ClinicDesk.Controls;
 
-namespace ClinicDesk;
+namespace ClinicDesk.Utilities;
 
 public static class TeethHelper
 {
-    public static List<ToothGraphic> Teeth { get; private set; }
+    public static List<ToothGraphic> Teeth { get; private set; } = null!;
     
     public static void Initialize()
     {
-        List<ToothGraphic> teeth = SvgPathParser.ParseMultiplePaths(Properties.Resources.TeethSvg.AsSpan());
+        List<GraphicsPath> teeth = SvgPathParser.ParseMultiplePaths(Properties.Resources.TeethSvg.AsSpan());
         
         Teeth =
         [

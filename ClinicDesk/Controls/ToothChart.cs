@@ -2,6 +2,7 @@
 using ReaLTaiizor.Controls;
 using System.Drawing.Drawing2D;
 using System.ComponentModel;
+using ClinicDesk.Utilities;
 
 namespace ClinicDesk.Controls;
 
@@ -12,11 +13,10 @@ public partial class ToothChart : Control
     private List<Tooth> _teeth = null!;
     private readonly List<ToothGraphic> _teethGp;
     
-    private Tooth? _selectedTooth;
-    private Tooth? _hoveredTooth;
+    private int? _selectedTooth;
+    private int? _hoveredTooth;
     
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-    [SRCategory("Appearance")]
     public Font NumbersFont
     {
         get;
@@ -41,11 +41,11 @@ public partial class ToothChart : Control
 
     protected override void OnMouseClick(MouseEventArgs e)
     {
-        foreach (Tooth tooth in _teeth)
+        for (int i = 0; i < _teethGp.Count; i++)
         {
-            if (tooth.Path.IsVisible(e.Location))
+            if (_teethGp[i].Path.IsVisible(e.Location))
             {
-                _selectedTooth = tooth;
+                _selectedTooth = i;
                 ShowToothMenu(e.Location);
                 Invalidate();
                 return;
@@ -55,13 +55,13 @@ public partial class ToothChart : Control
 
     protected override void OnMouseMove(MouseEventArgs e)
     {
-        foreach (Tooth tooth in _teeth)
+        for (int i = 0; i < _teethGp.Count; i++)
         {
-            if (tooth.Path.IsVisible(e.Location))
+            if (_teethGp[i].Path.IsVisible(e.Location))
             {
-                if (_hoveredTooth != tooth)
+                if (_hoveredTooth != i)
                 {
-                    _hoveredTooth = tooth;
+                    _hoveredTooth = i;
                     Cursor = Cursors.Hand;
                     Invalidate();
                 }
@@ -82,20 +82,23 @@ public partial class ToothChart : Control
     {
         e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
-        foreach (Tooth tooth in _teeth)
+        for (int i = 0; i < _teethGp.Count; i++)
         {
+            Tooth tooth = _teeth[i];
+            ToothGraphic toothGp = _teethGp[i];
+
             Color color = GetStatusColor(tooth.Status);
             int outlineTickness = 1;
 
-            if (tooth == _hoveredTooth)
+            if (i == _hoveredTooth)
                 color = Utils.DarkenColor(color, 0.2f);
                 
-            if (tooth == _hoveredTooth || tooth == _selectedTooth)
+            if (i == _hoveredTooth || i == _selectedTooth)
                 outlineTickness = 3;
                 
-            RectangleF pathBounds = path.GetBounds();
-            string text = tooth.Number.ToString();
-            SizeF textSize = g.MeasureString(text, NumbersFont);
+            RectangleF pathBounds = toothGp.Path.GetBounds();
+            string text = toothGp.Number.ToString();
+            SizeF textSize = e.Graphics.MeasureString(text, NumbersFont);
         
             float x = pathBounds.X + (pathBounds.Width - textSize.Width) / 2;
             float y = pathBounds.Y + (pathBounds.Height - textSize.Height) / 2;
@@ -103,9 +106,9 @@ public partial class ToothChart : Control
             using SolidBrush brush = new(color);
             using Pen pen = new(Color.Black, outlineTickness);
 
-            e.Graphics.FillPath(brush, tooth.Path);
-            e.Graphics.DrawPath(pen, tooth.Path);
-            g.DrawString(text, NumbersFont, Brushes.Black, x, y);
+            e.Graphics.FillPath(brush, toothGp.Path);
+            e.Graphics.DrawPath(pen, toothGp.Path);
+            e.Graphics.DrawString(text, NumbersFont, Brushes.Black, x, y);
         }
     }
 
@@ -118,8 +121,8 @@ public partial class ToothChart : Control
          * ComboBox for status
          * 
          */
-        ToothDropDoown popupContent = new();
-        popupContent.SetData(_selectedTooth!);
+        ToothDropDown popupContent = new();
+        popupContent.SetData(_teeth[_selectedTooth!.Value]!);
         
         ToolStripControlHost host = new(popupContent)
         {
@@ -134,13 +137,13 @@ public partial class ToothChart : Control
         };
         
         dropdown.Items.Add(host);
+        dropdown.Closed += DropDown_Closed;
         popupContent.Leave += (_, _) => dropdown.Close();
-        popupContent.OnClosed += DropDown_OnClosed;
     
         dropdown.Show(this, location);
     }
-    
-    private void DropDown_OnClosed()
+
+    private void DropDown_Closed(object? sender, ToolStripDropDownClosedEventArgs e)
     {
         _selectedTooth = null;
         Invalidate();

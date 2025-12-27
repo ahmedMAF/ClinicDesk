@@ -1,8 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
-using ClinicDesk.Database.Models;
-using System.ServiceProcess;
+﻿using ClinicDesk.Database.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Diagnostics;
 using System.IO;
+using System.ServiceProcess;
+using System.Text.Json;
 
 namespace ClinicDesk.Database;
 
@@ -66,19 +68,23 @@ public class ClinicDb : DbContext
     {
         base.OnModelCreating(modelBuilder);
 
+        ValueConverter<List<Tooth>, string> converter = new(
+            v => JsonSerializer.Serialize(v),
+            v => JsonSerializer.Deserialize<List<Tooth>>(v)!);
+
+        modelBuilder.Entity<Patient>()
+            .Property(p => p.Teeth)
+            .HasConversion(converter);
+
         modelBuilder.Entity<Patient>()
             .Property(p => p.ChronicDiseases)
-            .HasColumnType("json");
-            
-       modelBuilder.Entity<Patient>()
-            .Property(p => p.Teeth)
             .HasColumnType("json");
     }
     
     private static void RunDatabaseService()
     {
 #if DEBUG
-        bool isMySqlRunning = Process.GetProcessesByName("mysqld").Count != 0;
+        bool isMySqlRunning = Process.GetProcessesByName("mysqld").Length != 0;
 
         if (!isMySqlRunning)
         {
