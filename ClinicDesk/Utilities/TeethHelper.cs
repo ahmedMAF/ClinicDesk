@@ -5,10 +5,22 @@ namespace ClinicDesk.Utilities;
 
 public static class TeethHelper
 {
-    public static List<ToothGraphic> Teeth { get; private set; } = null!;
+    public static List<ToothGraphic> Teeth
+    {
+        get
+        {
+            if (field == null)
+                Initialize();
+
+            return field!;
+        }
+
+        private set;
+    }
     
     public static void Initialize()
     {
+        SvgPathParser.Scale = 50f;
         List<GraphicsPath> teeth = SvgPathParser.ParseMultiplePaths(Properties.Resources.TeethSvg.AsSpan());
         
         Teeth =

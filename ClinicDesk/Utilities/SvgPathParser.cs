@@ -5,6 +5,8 @@ namespace ClinicDesk.Utilities;
 
 public static class SvgPathParser
 {
+    public static float Scale { get; set; } = 1f;
+
     public static List<GraphicsPath> ParseMultiplePaths(ReadOnlySpan<char> data)
     {
         List<GraphicsPath> paths = [];
@@ -14,7 +16,6 @@ public static class SvgPathParser
         {
             if (data[i] == '\n' || data[i] == '\r')
             {
-                // `.Trim()` here is the span extension method (`MemoryExtensions.Trim`), which also avoids allocations.
                 ReadOnlySpan<char> line = data.Slice(start, i - start).Trim();
                 
                 if (!line.IsEmpty)
@@ -55,8 +56,8 @@ public static class SvgPathParser
             switch (command)
             {
                 case 'M':
-                    float x = tokenizer.ReadFloat();
-                    float y = tokenizer.ReadFloat();
+                    float x = tokenizer.ReadFloat() * Scale;
+                    float y = tokenizer.ReadFloat() * Scale;
                     lastPoint = new PointF(x, y);
                     startPoint = lastPoint;
                     break;
@@ -64,9 +65,9 @@ public static class SvgPathParser
                 case 'C':
                     while (tokenizer.HasMore && tokenizer.PeekIsNumber())
                     {
-                        PointF p1 = new(tokenizer.ReadFloat(), tokenizer.ReadFloat());
-                        PointF p2 = new(tokenizer.ReadFloat(), tokenizer.ReadFloat());
-                        PointF p3 = new(tokenizer.ReadFloat(), tokenizer.ReadFloat());
+                        PointF p1 = new(tokenizer.ReadFloat() * Scale, tokenizer.ReadFloat() * Scale);
+                        PointF p2 = new(tokenizer.ReadFloat() * Scale, tokenizer.ReadFloat() * Scale);
+                        PointF p3 = new(tokenizer.ReadFloat() * Scale, tokenizer.ReadFloat() * Scale);
 
                         path.AddBezier(lastPoint, p1, p2, p3);
                         lastPoint = p3;

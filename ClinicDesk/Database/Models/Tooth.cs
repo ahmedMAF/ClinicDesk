@@ -6,5 +6,5 @@ public class Tooth
     public ToothCrown Crown { get; set; }
     public ToothFilling Filling { get; set; }
     public List<ToothCavity> Cavities { get; set; } = [];
-    public string Notes { get; set; } = null!;
+    public string Notes { get; set; } = "";
 }

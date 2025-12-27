@@ -28,13 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
+            toothChart1 = new ClinicDesk.Controls.ToothChart();
             SuspendLayout();
+            // 
+            // toothChart1
+            // 
+            toothChart1.Location = new Point(6, 67);
+            toothChart1.Name = "toothChart1";
+            toothChart1.NumbersFont = new Font("Segoe UI", 10F);
+            toothChart1.Size = new Size(750, 250);
+            toothChart1.TabIndex = 0;
+            toothChart1.Text = "toothChart1";
             // 
             // DentalChartForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(650, 450);
+            ClientSize = new Size(956, 743);
+            Controls.Add(toothChart1);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "DentalChartForm";
@@ -46,5 +57,7 @@
         }
 
         #endregion
+
+        private Controls.ToothChart toothChart1;
     }
 }
