@@ -34,6 +34,9 @@ public partial class ToothChart : Control
         NumbersFont = new Font("Roboto", 12);
         
         _teethGp = TeethHelper.Teeth;
+        
+        for (int i = 0; i < 52; i++)
+            _teeth.Add(new Tooth());
     }
 
     protected override void OnMouseClick(MouseEventArgs e)
@@ -56,11 +59,10 @@ public partial class ToothChart : Control
         {
             if (tooth.Path.IsVisible(e.Location))
             {
-                Cursor = Cursors.Hand;
-
-                if (tooth != _hoveredTooth)
+                if (_hoveredTooth != tooth)
                 {
                     _hoveredTooth = tooth;
+                    Cursor = Cursors.Hand;
                     Invalidate();
                 }
 
@@ -68,8 +70,12 @@ public partial class ToothChart : Control
             }
         }
 
-        _hoveredTooth = null;
-        Cursor = Cursors.Default;
+        if (_hoveredTooth != null)
+        {
+            _hoveredTooth = null;
+            Cursor = Cursors.Default;
+            Invalidate();
+        }
     }
 
     protected override void OnPaint(PaintEventArgs e)
