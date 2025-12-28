@@ -14,7 +14,8 @@ public class ClinicDb : DbContext
 #if !DEBUG
     private const string ServiceName = "MySQL80";
 #else
-    private static Process? _mySqlProcess;
+    private static Process _mySqlProcess = null!;
+    private static bool _wasMySqlRunning;
 #endif
 
     public static ClinicDb Instance { get; private set; } = null!;
@@ -89,9 +90,9 @@ public class ClinicDb : DbContext
     private static void RunDatabaseService()
     {
 #if DEBUG
-        bool isMySqlRunning = Process.GetProcessesByName("mysqld").Length != 0;
+        _wasMySqlRunning = Process.GetProcessesByName("mysqld").Length != 0;
 
-        if (!isMySqlRunning)
+        if (!_wasMySqlRunning)
         {
             string path = @"C:\xampp\mysql\bin\mysqld.exe";
             string iniPath = @"C:\xampp\mysql\bin\my.ini";
@@ -125,7 +126,8 @@ public class ClinicDb : DbContext
     public static void StopDatabaseService()
     {
 #if DEBUG
-        if (_mySqlProcess != null && !_mySqlProcess.HasExited)
+        // We should not kill the process if it was running before we started.
+        if (!_wasMySqlRunning && !_mySqlProcess.HasExited)
         {
             _mySqlProcess.Kill();
             _mySqlProcess.Dispose();
@@ -139,5 +141,37 @@ public class ClinicDb : DbContext
             service.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(10));
         }
 #endif
+    }
+    
+    public static void Backup()
+    {
+        Settings settings = Settings.Instance;
+    
+        string dumpFile = Path.Combine(settings.BackupPath, $"database_{DateTime.UtcNow:yyyyMMdd_HHmmss}.sql");
+        
+#if DEBUG
+        string mySqlDumpPath = @"C:\xampp\mysql\bin\mysqldump.exe";
+        
+        if (!File.Exists(path))
+            mySqlDumpPath = @"C:\Program Files\xampp\mysql\bin\mysqldump.exe";
+#else
+        string mySqlDumpPath = @"C:\Program Files\MySQL\MySQL Server 8.0\bin\mysqldump.exe";
+#endif
+    
+        ProcessStartInfo psi = new()
+        {
+            FileName = mySqlDumpPath,
+            Arguments = $"-u {settings.User} -p{settings.Password} {settings.Database}",
+            RedirectStandardOutput = true,
+            UseShellExecute = false,
+            CreateNoWindow = true
+        };
+    
+        using Process process = Process.Start(psi);
+        using var reader = process.StandardOutput;
+        string result = reader.ReadToEnd();
+        process.WaitForExit();
+    
+        File.WriteAllText(dumpFile, result);
     }
 }

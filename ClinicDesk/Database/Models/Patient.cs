@@ -7,7 +7,6 @@ public class Patient
 {
     public int Id { get; set; }
 
-    [Required, MaxLength(256)]
     public string Name { get; set; } = null!;
     public Sex Sex { get; set; }
     public MaritalStatus MaritalStatus { get; set; }
@@ -17,7 +16,7 @@ public class Patient
 
     public BloodType BloodType { get; set; }
     public List<string> ChronicDiseases { get; set; } = null!;
-    public List<Tooth> Teeth { get; set; } = null!;
+    public List<Tooth>? Teeth { get; set; }
     public string? Notes { get; set; }
 
     public List<Appointment> Appointments { get; set; } = null!;
@@ -30,11 +29,14 @@ public class Patient
     {
         Patient patient = new();
         
-        patient.Teeth = [];
-        
-        for (int i = 0; i < 52; i++)
-            patient.Teeth.Add(new Tooth());
+        if (Settings.Instance.IsDental)
+        {
+            patient.Teeth = [];
             
+            for (int i = 0; i < 52; i++)
+                patient.Teeth.Add(new Tooth());
+        }
+        
         return patient;
     }
 }

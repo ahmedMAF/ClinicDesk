@@ -5,9 +5,9 @@ namespace ClinicDesk.Utilities;
 
 public static class SvgPathParser
 {
-    public static float Scale { get; set; } = 1f;
+    private static float _scale;
 
-    public static List<GraphicsPath> ParseMultiplePaths(ReadOnlySpan<char> data)
+    public static List<GraphicsPath> ParseMultiplePaths(ReadOnlySpan<char> data, float scale = 1f)
     {
         List<GraphicsPath> paths = [];
         int start = 0;
@@ -19,12 +19,13 @@ public static class SvgPathParser
                 ReadOnlySpan<char> line = data.Slice(start, i - start).Trim();
                 
                 if (!line.IsEmpty)
-                    paths.Add(ParsePath(line));
+                    paths.Add(ParsePath(line, scale));
     
-                // Skip \r\n or lone \r
+                // Skip \r in Windows-Style new line.
                 if (data[i] == '\r' && i + 1 < data.Length && data[i + 1] == '\n')
                     i++;
                 
+                // Skip \n in Unix-Style and Windows-Style new line or \r in Mac-Style new line.
                 start = i + 1;
             }
         }
@@ -41,8 +42,10 @@ public static class SvgPathParser
         return paths;
     }
 
-    public static GraphicsPath ParsePath(ReadOnlySpan<char> svgPath)
+    public static GraphicsPath ParsePath(ReadOnlySpan<char> svgPath, float scale = 1f)
     {
+        _scale = scale;
+        
         GraphicsPath path = new();
         SvgTokenizer tokenizer = new(svgPath);
 
@@ -56,8 +59,8 @@ public static class SvgPathParser
             switch (command)
             {
                 case 'M':
-                    float x = tokenizer.ReadFloat() * Scale;
-                    float y = tokenizer.ReadFloat() * Scale;
+                    float x = tokenizer.ReadFloat();
+                    float y = tokenizer.ReadFloat();
                     lastPoint = new PointF(x, y);
                     startPoint = lastPoint;
                     break;
@@ -65,9 +68,9 @@ public static class SvgPathParser
                 case 'C':
                     while (tokenizer.HasMore && tokenizer.PeekIsNumber())
                     {
-                        PointF p1 = new(tokenizer.ReadFloat() * Scale, tokenizer.ReadFloat() * Scale);
-                        PointF p2 = new(tokenizer.ReadFloat() * Scale, tokenizer.ReadFloat() * Scale);
-                        PointF p3 = new(tokenizer.ReadFloat() * Scale, tokenizer.ReadFloat() * Scale);
+                        PointF p1 = new(tokenizer.ReadFloat(), tokenizer.ReadFloat());
+                        PointF p2 = new(tokenizer.ReadFloat(), tokenizer.ReadFloat());
+                        PointF p3 = new(tokenizer.ReadFloat(), tokenizer.ReadFloat());
 
                         path.AddBezier(lastPoint, p1, p2, p3);
                         lastPoint = p3;
@@ -107,6 +110,8 @@ public static class SvgPathParser
                 return false;
 
             CurrentCommand = _span[_pos++];
+            SkipWhitespace();
+            
             return true;
         }
 
@@ -122,11 +127,16 @@ public static class SvgPathParser
             ReadOnlySpan<char> numberSpan = _span.Slice(start, _pos - start);
             SkipCommaWhitespace();
             
-            return float.Parse(numberSpan, CultureInfo.InvariantCulture);
+            return float.Parse(numberSpan, CultureInfo.InvariantCulture) * SvgPathParser._scale;
         }
 
         public bool PeekIsNumber()
         {
+            int pos = _pos;
+            
+            while (pos < _span.Length && char.IsWhiteSpace(_span[pos]))
+                pos++;
+            
             if (_pos >= _span.Length)
                 return false;
 

@@ -20,8 +20,7 @@ public static class TeethHelper
     
     public static void Initialize()
     {
-        SvgPathParser.Scale = 50f;
-        List<GraphicsPath> teeth = SvgPathParser.ParseMultiplePaths(Properties.Resources.TeethSvg.AsSpan());
+        List<GraphicsPath> teeth = SvgPathParser.ParseMultiplePaths(Properties.Resources.TeethSvg.AsSpan(), 8f);
         
         Teeth =
         [

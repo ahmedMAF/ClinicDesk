@@ -5,14 +5,15 @@ namespace ClinicDesk.Forms;
 
 public partial class InstallForm : MaterialForm
 {
-    private bool _doneInit;
+    private bool _doneInstall;
     
     public InstallForm()
     {
         InitializeComponent();
+        
         FormClosed += (s, e) =>
         {
-            if (!_doneInit)
+            if (!_doneInstall)
                 Application.Exit();
         };
     }
@@ -77,6 +78,8 @@ public partial class InstallForm : MaterialForm
         settings.User = dbUser;
         settings.Password = dbPassword;
         settings.AccountType = type;
+        // TODO: Add toggle
+        // settings.IsDental = ;
 
         Settings.SaveSettings();
 
@@ -88,7 +91,7 @@ public partial class InstallForm : MaterialForm
             return;
         }
 
-        _doneInit = true;
+        _doneInstall = true;
         Close();
         AppContext.ShowForm<SplashForm>();
     }
