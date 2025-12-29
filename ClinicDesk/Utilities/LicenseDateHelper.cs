@@ -10,8 +10,14 @@ public static class LicenseDateHelper
 
     public static void SaveLastSeen()
     {
+        DateTime now = DateTime.UtcNow;
+        
+        Settings settings = Settings.Instance;
+        settings.LastSeen = now;
+        settings.SaveSettings();
+        
         // ISO Format
-        string dateStr = DateTime.UtcNow.ToString("O");
+        string dateStr = now.ToString("O");
         string encrypted = Encrypt(dateStr);
         
         using var key = Registry.CurrentUser.CreateSubKey(RegistryPath);
@@ -24,14 +30,15 @@ public static class LicenseDateHelper
         string encrypted = (string)key?.GetValue(ValueName);
 
         if (string.IsNullOrWhiteSpace(encrypted))
-            // First run or key missing
-            return true;
+        {
+            // If settings doesn't have LastSeen then it's most probably a first run.
+            return Settings.Instance.LastSeen != 0;
+        }
 
         DateTime storedDate = DateTime.Parse(Decrypt(encrypted));
-        DateTime now = DateTime.UtcNow;
 
-        // Return false if current time is before stored time, likely tampering.
-        return now >= storedDate;
+        // Return false if current time is before stored time or registry date is different from settings date, likely tampering.
+        return DateTime.UtcNow >= storedDate || storedDate != Settings.Instance.LastSeen;
     }
 
     private static string Encrypt(string plainText)

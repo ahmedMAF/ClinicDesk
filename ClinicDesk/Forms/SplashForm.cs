@@ -55,6 +55,8 @@ public partial class SplashForm : Form
             return;
         }
         
+        ClinicDb.AutoBackup();
+        
         if (Settings.Instance.IsDental)
             TeethHelper.Initialize();
 

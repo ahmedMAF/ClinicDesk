@@ -143,10 +143,18 @@ public class ClinicDb : DbContext
 #endif
     }
     
+    public static void AutoBackup()
+    {
+        if (Settings.Instance.LastBackup == DateTime.Now.Date)
+            return;
+            
+        Backup();
+    }
+    
     public static void Backup()
     {
         Settings settings = Settings.Instance;
-    
+        
         string dumpFile = Path.Combine(settings.BackupPath, $"database_{DateTime.UtcNow:yyyyMMdd_HHmmss}.sql");
         
 #if DEBUG
