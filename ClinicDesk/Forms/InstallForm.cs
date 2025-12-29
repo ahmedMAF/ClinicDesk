@@ -6,11 +6,11 @@ namespace ClinicDesk.Forms;
 public partial class InstallForm : MaterialForm
 {
     private bool _doneInstall;
-    
+
     public InstallForm()
     {
         InitializeComponent();
-        
+
         FormClosed += (s, e) =>
         {
             if (!_doneInstall)
@@ -27,6 +27,9 @@ public partial class InstallForm : MaterialForm
         dbNameTxt.Text = settings.Database;
         dbUserTxt.Text = settings.User;
         dbPasswordTxt.Text = settings.Password;
+        backupTxt.Text = settings.BackupPath;
+        daysSld.Value = settings.BackupDays;
+        isDentalSwt.Checked = settings.IsDental;
 
         accountCbo.SelectedIndex = (int)settings.AccountType;
     }
@@ -36,14 +39,14 @@ public partial class InstallForm : MaterialForm
         string licenseUrl = licenseServerUrlTxt.Text;
 
         string dbServer = dbServerTxt.Text;
-        ushort dbPort = 0;
         string database = dbNameTxt.Text;
         string dbUser = dbUserTxt.Text;
         string dbPassword = dbPasswordTxt.Text;
-        
+        string backupPath = backupTxt.Text;
+
         string name = nameTxt.Text;
         string email = emailTxt.Text;
-        
+
         AccountType type = (AccountType)accountCbo.SelectedIndex;
 
         if (!AppLicense.IsAvailable && !await AppLicense.RequestLicenseAsync(licenseUrl, name, email))
@@ -51,22 +54,38 @@ public partial class InstallForm : MaterialForm
             MessageBox.Show("Failed to request license, try again later.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
-        
+
         if (!AppLicense.Validate())
         {
             MessageBox.Show("Failed to validate license, try requesting new one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
 
-        if (!ushort.TryParse(dbPortTxt.Text, out dbPort))
+        if (!ushort.TryParse(dbPortTxt.Text, out ushort dbPort))
         {
             MessageBox.Show("The port must be a number between 0 and 65535.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        try
+        {
+            Directory.CreateDirectory(backupPath);
+        }
+        catch (Exception)
+        {
+            MessageBox.Show($"Couldn't create the backup folder. Check the path again.{Environment.NewLine}{backupPath}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
 
         if (type == AccountType.NotDefined)
         {
             MessageBox.Show("Must choose an account type.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        if (ClinicDb.TestConnection(dbServer, dbPort, database, dbUser, dbPassword))
+        {
+            MessageBox.Show("Failed to create and connect to the database. Check the connection data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
 
@@ -78,21 +97,21 @@ public partial class InstallForm : MaterialForm
         settings.User = dbUser;
         settings.Password = dbPassword;
         settings.AccountType = type;
-        // TODO: Add toggle
-        // settings.IsDental = ;
+        settings.BackupDays = daysSld.Value;
+        settings.BackupPath = backupTxt.Text;
+        settings.IsDental = isDentalSwt.Checked;
+        settings.LastBackup = DateTime.Now.Date;
 
         Settings.SaveSettings();
-
-        ClinicDb.Initialize();
-
-        if (!ClinicDb.IsRunning)
-        {
-            MessageBox.Show("Failed to create and connect to the database. Check the connection data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
-        }
 
         _doneInstall = true;
         Close();
         AppContext.ShowForm<SplashForm>();
+    }
+
+    private void browseBtn_Click(object sender, EventArgs e)
+    {
+        if (folderBrowser.ShowDialog() == DialogResult.OK)
+            backupTxt.Text = folderBrowser.SelectedPath;
     }
 }

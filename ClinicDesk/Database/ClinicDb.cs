@@ -14,7 +14,7 @@ public class ClinicDb : DbContext
 #if !DEBUG
     private const string ServiceName = "MySQL80";
 #else
-    private static Process _mySqlProcess = null!;
+    private static Process? _mySqlProcess;
     private static bool _wasMySqlRunning;
 #endif
 
@@ -35,48 +35,60 @@ public class ClinicDb : DbContext
 
     internal static void Initialize()
     {
-        Instance = Create();
-    }
-
-    internal static ClinicDb Create()
-    {
-        Settings settings = Settings.Instance;
-
-        string conn = $"Server={settings.Server};Port={settings.Port};Database={settings.Database};User={settings.User};Password={settings.Password};SslMode=None;";
-        DbContextOptionsBuilder<ClinicDb> optionsBuilder = new();
-
-        DialogResult result = DialogResult.None;
-
-        if (settings.IsServer)
-            RunDatabaseService();
+        DialogResult result;
 
         do
         {
-            try
-            {
-                optionsBuilder.UseMySql(conn, ServerVersion.AutoDetect(conn));
+            bool success = Create(out ClinicDb? db);
+                
+            if (success)
                 result = DialogResult.OK;
-            }
-            catch (Exception ex)
-            {
-                result = MessageBox.Show($"Can't connect to MySQL. Is it running?{Environment.NewLine}Error: {ex.Message}", "Database Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
-
-                if (result == DialogResult.Cancel)
-                    return null!;
-            }
+            else
+                result = MessageBox.Show("Can't connect to MySQL.", "Database Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
         }
         while (result == DialogResult.Retry);
+    }
 
-        return new ClinicDb(optionsBuilder.Options);
+    internal static bool TestConnection(string server, ushort port, string db, string user, string pass)
+    {
+        return Create($"Server={server};Port={port};Database={db};User={user};Password={pass};SslMode=None;", out _);
+    }
+
+    internal static bool Create(out ClinicDb? db)
+    {
+        Settings settings = Settings.Instance;
+
+        return Create($"Server={settings.Server};Port={settings.Port};Database={settings.Database};User={settings.User};Password={settings.Password};SslMode=None;", out db);
+    }
+
+    internal static bool Create(string conn, out ClinicDb? db)
+    {
+        DbContextOptionsBuilder<ClinicDb> optionsBuilder = new();
+
+        if (Settings.Instance.IsServer)
+            RunDatabaseService();
+
+        try
+        {
+            optionsBuilder.UseMySql(conn, ServerVersion.AutoDetect(conn));
+        }
+        catch (Exception)
+        {
+            db = null;
+            return false;
+        }
+
+        db = new ClinicDb(optionsBuilder.Options);
+        return true;
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
 
-        ValueConverter<List<Tooth>, string> converter = new(
+        ValueConverter<List<Tooth>?, string> converter = new(
             v => JsonSerializer.Serialize(v),
-            v => JsonSerializer.Deserialize<List<Tooth>>(v)!);
+            v => JsonSerializer.Deserialize<List<Tooth>>(v));
 
         modelBuilder.Entity<Patient>()
             .Property(p => p.Teeth)
@@ -127,7 +139,7 @@ public class ClinicDb : DbContext
     {
 #if DEBUG
         // We should not kill the process if it was running before we started.
-        if (!_wasMySqlRunning && !_mySqlProcess.HasExited)
+        if (!_wasMySqlRunning && _mySqlProcess != null && !_mySqlProcess.HasExited)
         {
             _mySqlProcess.Kill();
             _mySqlProcess.Dispose();
@@ -145,22 +157,26 @@ public class ClinicDb : DbContext
     
     public static void AutoBackup()
     {
-        if (Settings.Instance.LastBackup == DateTime.Now.Date)
+        Settings settings = Settings.Instance;
+
+        if (settings.NextBackup == DateTime.Now.Date)
             return;
-            
-        Backup();
+
+        settings.LastBackup = DateTime.Now.Date;
+        Settings.SaveSettings();
+        Backup(settings.BackupPath);
     }
     
-    public static void Backup()
+    public static void Backup(string path)
     {
         Settings settings = Settings.Instance;
         
-        string dumpFile = Path.Combine(settings.BackupPath, $"database_{DateTime.UtcNow:yyyyMMdd_HHmmss}.sql");
+        string dumpFile = Path.Combine(path, $"database_{DateTime.UtcNow:yyyyMMdd_HHmmss}.sql");
         
 #if DEBUG
         string mySqlDumpPath = @"C:\xampp\mysql\bin\mysqldump.exe";
         
-        if (!File.Exists(path))
+        if (!File.Exists(mySqlDumpPath))
             mySqlDumpPath = @"C:\Program Files\xampp\mysql\bin\mysqldump.exe";
 #else
         string mySqlDumpPath = @"C:\Program Files\MySQL\MySQL Server 8.0\bin\mysqldump.exe";
@@ -175,11 +191,12 @@ public class ClinicDb : DbContext
             CreateNoWindow = true
         };
     
-        using Process process = Process.Start(psi);
-        using var reader = process.StandardOutput;
-        string result = reader.ReadToEnd();
-        process.WaitForExit();
-    
+        using Process? process = Process.Start(psi);
+        using StreamReader? reader = process?.StandardOutput;
+        string? result = reader?.ReadToEnd();
+        process?.WaitForExit();
+
+        Directory.CreateDirectory(path);
         File.WriteAllText(dumpFile, result);
     }
 }

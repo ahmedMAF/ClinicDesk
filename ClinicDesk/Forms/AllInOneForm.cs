@@ -13,7 +13,7 @@ public partial class AllInOneForm : MaterialForm
         InitializeComponent();
 
         FormClosed += (s, e) => Application.Exit();
-        
+
         _grdHelper = new AppointmentsGrid(appointmentsGrd, AccountType.AllInOne);
     }
 
@@ -46,5 +46,10 @@ public partial class AllInOneForm : MaterialForm
             return;
 
         AppContext.ShowDialog<BillingForm>(form => form.SetData(patient));
+    }
+
+    private void settingsBtn_Click(object sender, EventArgs e)
+    {
+        AppContext.ShowDialog<SettingsForm>();
     }
 }

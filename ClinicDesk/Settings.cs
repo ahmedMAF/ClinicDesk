@@ -23,9 +23,17 @@ public partial class Settings
 
     public AccountType AccountType { get; internal set; }
     public bool IsDental { get; internal set; }
-    
+    public bool IsDarkTheme { get; internal set; }
+    public string BackupPath { get; internal set; } = @"D:\ClinicDesk Backup";
+    public int BackupDays { get; internal set; } = 2;
+    public DateTime LastBackup { get; internal set; }
+    public DateTime LastSeen { get; internal set; }
+
     [MemoryPackIgnore]
     public bool IsServer => Server is "127.0.0.1" or "localhost";
+
+    [MemoryPackIgnore]
+    public DateTime NextBackup => LastBackup.AddDays(BackupDays);
 
     internal static void Initialize()
     {

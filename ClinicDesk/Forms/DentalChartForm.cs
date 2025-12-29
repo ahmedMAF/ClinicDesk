@@ -12,6 +12,11 @@ public partial class DentalChartForm : MaterialForm
 
     internal void SetData(List<Tooth> teeth)
     {
-        
+        toothChart1.Teeth = teeth;
+    }
+
+    private void saveBtn_Click(object sender, EventArgs e)
+    {
+        Close();
     }
 }

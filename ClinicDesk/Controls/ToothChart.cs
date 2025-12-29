@@ -37,8 +37,8 @@ public partial class ToothChart : Control
     public ToothChart()
     {
         DoubleBuffered = true;
-        Size = new Size(600, 200);
-        NumbersFont = new Font("Segoe UI", 10);
+        Size = new Size(880, 520);
+        NumbersFont = new Font("Segoe UI", 8);
 
         Teeth = new(52);
         _teethGp = TeethHelper.Teeth;
@@ -118,6 +118,18 @@ public partial class ToothChart : Control
             e.Graphics.DrawPath(pen, toothGp.Path);
             e.Graphics.DrawString(text, NumbersFont, Brushes.Black, x, y);
         }
+
+        e.Graphics.DrawLine(Pens.Black, new Point(505, 0), new Point(505, Height));
+
+        int? index = null;
+
+        if (_selectedTooth.HasValue)
+            index = _selectedTooth;
+        else if (_hoveredTooth.HasValue)
+            index = _hoveredTooth;
+
+        if (index.HasValue)
+            e.Graphics.DrawString(_teethGp[index.Value].Name, DefaultFont, Brushes.Black, new Point(510, 10));
     }
 
     private void ShowToothMenu(Point location)

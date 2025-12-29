@@ -13,7 +13,7 @@ public partial class SecretaryForm : MaterialForm
         InitializeComponent();
 
         FormClosed += (s, e) => Application.Exit();
-        
+
         _grdHelper = new AppointmentsGrid(appointmentsGrd, AccountType.Secretary);
     }
 
@@ -21,7 +21,7 @@ public partial class SecretaryForm : MaterialForm
     {
         await RefreshUI();
     }
-    
+
     private async void monthCalendar1_DateSelected(object sender, DateRangeEventArgs e)
     {
         await _grdHelper.RefreshList(monthCalendar1.SelectionStart.Date);
@@ -47,9 +47,14 @@ public partial class SecretaryForm : MaterialForm
 
         AppContext.ShowDialog<BillingForm>(form => form.SetData(patient));
     }
-    
+
     private async Task RefreshUI()
     {
         await _grdHelper.RefreshList();
+    }
+
+    private void settingsBtn_Click(object sender, EventArgs e)
+    {
+        AppContext.ShowDialog<SettingsForm>();
     }
 }

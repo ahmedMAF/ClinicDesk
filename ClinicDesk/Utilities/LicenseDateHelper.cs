@@ -14,25 +14,25 @@ public static class LicenseDateHelper
         
         Settings settings = Settings.Instance;
         settings.LastSeen = now;
-        settings.SaveSettings();
+        Settings.SaveSettings();
         
         // ISO Format
         string dateStr = now.ToString("O");
         string encrypted = Encrypt(dateStr);
         
-        using var key = Registry.CurrentUser.CreateSubKey(RegistryPath);
+        using RegistryKey key = Registry.CurrentUser.CreateSubKey(RegistryPath);
         key?.SetValue(ValueName, encrypted, RegistryValueKind.String);
     }
 
     public static bool IsSystemDateValid()
     {
-        using var key = Registry.CurrentUser.OpenSubKey(RegistryPath);
-        string encrypted = (string)key?.GetValue(ValueName);
+        using RegistryKey? key = Registry.CurrentUser.OpenSubKey(RegistryPath);
+        string? encrypted = (string?)key?.GetValue(ValueName);
 
         if (string.IsNullOrWhiteSpace(encrypted))
         {
             // If settings doesn't have LastSeen then it's most probably a first run.
-            return Settings.Instance.LastSeen != 0;
+            return Settings.Instance.LastSeen == DateTime.MinValue;
         }
 
         DateTime storedDate = DateTime.Parse(Decrypt(encrypted));
@@ -49,13 +49,14 @@ public static class LicenseDateHelper
         aes.Key = key;
         aes.IV = iv;
         
-        using var encryptor = aes.CreateEncryptor();
+        using ICryptoTransform encryptor = aes.CreateEncryptor();
         using MemoryStream ms = new();
         using CryptoStream cs = new(ms, encryptor, CryptoStreamMode.Write);
         using StreamWriter sw = new(cs);
         
         sw.Write(plainText);
-        
+        sw.Flush();
+
         return Convert.ToBase64String(ms.ToArray());
     }
 
@@ -69,7 +70,7 @@ public static class LicenseDateHelper
         aes.Key = key;
         aes.IV = iv;
         
-        using var decryptor = aes.CreateDecryptor();
+        using ICryptoTransform decryptor = aes.CreateDecryptor();
         using MemoryStream ms = new(bytes);
         using CryptoStream cs = new(ms, decryptor, CryptoStreamMode.Read);
         using StreamReader sr = new(cs);

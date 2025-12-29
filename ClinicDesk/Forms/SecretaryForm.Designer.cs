@@ -34,6 +34,7 @@
             newAppointmentBtn = new ReaLTaiizor.Controls.MaterialButton();
             billingBtn = new ReaLTaiizor.Controls.MaterialButton();
             materialLabel1 = new ReaLTaiizor.Controls.MaterialLabel();
+            settingsBtn = new ReaLTaiizor.Controls.MaterialButton();
             ((System.ComponentModel.ISupportInitialize)appointmentsGrd).BeginInit();
             SuspendLayout();
             // 
@@ -119,11 +120,36 @@
             materialLabel1.TabIndex = 7;
             materialLabel1.Text = "Show Appointments From";
             // 
+            // settingsBtn
+            // 
+            settingsBtn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            settingsBtn.AutoSize = false;
+            settingsBtn.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            settingsBtn.CharacterCasing = ReaLTaiizor.Controls.MaterialButton.CharacterCasingEnum.Normal;
+            settingsBtn.Density = ReaLTaiizor.Controls.MaterialButton.MaterialButtonDensity.Default;
+            settingsBtn.Depth = 0;
+            settingsBtn.HighEmphasis = true;
+            settingsBtn.Icon = null;
+            settingsBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
+            settingsBtn.Location = new Point(516, 187);
+            settingsBtn.Margin = new Padding(4, 6, 4, 6);
+            settingsBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            settingsBtn.Name = "settingsBtn";
+            settingsBtn.NoAccentTextColor = Color.Empty;
+            settingsBtn.Size = new Size(198, 45);
+            settingsBtn.TabIndex = 8;
+            settingsBtn.Text = "Settings";
+            settingsBtn.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
+            settingsBtn.UseAccentColor = false;
+            settingsBtn.UseVisualStyleBackColor = true;
+            settingsBtn.Click += settingsBtn_Click;
+            // 
             // SecretaryForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(726, 708);
+            Controls.Add(settingsBtn);
             Controls.Add(materialLabel1);
             Controls.Add(billingBtn);
             Controls.Add(newAppointmentBtn);
@@ -146,5 +172,6 @@
         private ReaLTaiizor.Controls.MaterialButton newAppointmentBtn;
         private ReaLTaiizor.Controls.MaterialButton billingBtn;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel1;
+        private ReaLTaiizor.Controls.MaterialButton settingsBtn;
     }
 }
