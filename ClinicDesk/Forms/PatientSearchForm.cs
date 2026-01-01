@@ -116,16 +116,6 @@ public partial class PatientSearchForm : MaterialForm
         }
     }
 
-    private void PatientSearchForm_KeyPress(object sender, KeyPressEventArgs e)
-    {
-        if (e.KeyChar == (char)Keys.Escape)
-        {
-            DialogResult = DialogResult.Cancel;
-            Close();
-            e.Handled = true;
-        }
-    }
-
     private void nameTxt_KeyPress(object sender, KeyPressEventArgs e)
     {
         if (e.KeyChar == (char)Keys.Enter)

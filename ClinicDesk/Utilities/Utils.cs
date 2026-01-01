@@ -262,6 +262,17 @@ internal static class Utils
         if (e.KeyChar == '.' && ((TextBox)sender).Text.Contains('.'))
             e.Handled = true;
     }
+    
+    public static void CloseForm_KeyPress(object sender, KeyPressEventArgs e)
+    {
+        if (e.KeyChar == (char)Keys.Escape)
+        {
+            Form form = (Form)sender;
+            form.DialogResult = DialogResult.Cancel;
+            form.Close();
+            e.Handled = true;
+        }
+    }
 
     public static string GetHardwareId()
     {

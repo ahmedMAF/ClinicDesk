@@ -61,13 +61,4 @@ public partial class NewAppointmentForm : MaterialForm
         await ClinicDb.Instance.SaveChangesAsync();
         Close();
     }
-
-    private void NewAppointmentForm_KeyPress(object sender, KeyPressEventArgs e)
-    {
-        if (e.KeyChar == (char)Keys.Escape)
-        {
-            Close();
-            e.Handled = true;
-        }
-    }
 }

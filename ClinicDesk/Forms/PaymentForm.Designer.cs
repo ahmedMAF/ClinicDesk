@@ -66,6 +66,8 @@
             amountTxt.TrailingIcon = null;
             amountTxt.UseSystemPasswordChar = false;
             amountTxt.TextChanged += amountTxt_TextChanged;
+            amountTxt.KeyPress += amountTxt_KeyPress;
+            amountTxt.KeyPress += Utils.NumDotTxt_KeyPress;
             // 
             // payBtn
             // 
@@ -120,7 +122,7 @@
             cancelBtn.Size = new Size(150, 36);
             cancelBtn.TabIndex = 3;
             cancelBtn.Text = "Cancel";
-            cancelBtn.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
+            cancelBtn.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Outlined;
             cancelBtn.UseAccentColor = false;
             cancelBtn.UseVisualStyleBackColor = true;
             cancelBtn.Click += cancelBtn_Click;
@@ -135,6 +137,7 @@
             Controls.Add(payBtn);
             Controls.Add(amountTxt);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            KeyPreview = true;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "PaymentForm";
@@ -142,6 +145,7 @@
             Sizable = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Payment";
+            KeyPress += Utils.CloseForm_KeyPress;
             ResumeLayout(false);
             PerformLayout();
         }

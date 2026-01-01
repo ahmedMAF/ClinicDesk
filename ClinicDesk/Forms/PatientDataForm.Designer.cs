@@ -118,6 +118,7 @@
             phoneTxt.TextAlign = HorizontalAlignment.Left;
             phoneTxt.TrailingIcon = null;
             phoneTxt.UseSystemPasswordChar = false;
+            phoneTxt.KeyPress += Utils.NumTxt_KeyPress;
             // 
             // materialLabel8
             // 
@@ -589,6 +590,7 @@
             Controls.Add(materialCard3);
             Controls.Add(materialCard1);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            KeyPreview = true;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "PatientDataForm";
@@ -596,6 +598,7 @@
             Sizable = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Add New Patient";
+            KeyPress += Utils.CloseForm_KeyPress;
             materialCard2.ResumeLayout(false);
             materialCard1.ResumeLayout(false);
             materialCard3.ResumeLayout(false);

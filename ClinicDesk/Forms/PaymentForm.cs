@@ -26,6 +26,9 @@ public partial class PaymentForm : MaterialForm
     private void payBtn_Click(object sender, EventArgs e)
     {
         PaymentAmount = decimal.Parse(amountTxt.Text);
+        
+        if (PaymentAmount <= 0)
+            return;
 
         DialogResult = DialogResult.OK;
         Close();
@@ -35,5 +38,14 @@ public partial class PaymentForm : MaterialForm
     {
         if (decimal.Parse(amountTxt.Text) > _maxAmount)
             amountTxt.Text = _maxAmount.ToString("0.00");
+    }
+    
+    private void amountTxt_KeyPress(object sender, KeyPressEventArgs e)
+    {
+        if (e.KeyChar == (char)Keys.Enter)
+        {
+            payBtn.PerformClick();
+            e.Handled = true;
+        }
     }
 }

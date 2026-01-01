@@ -39,7 +39,7 @@
             toothChart1.NumbersFont = new Font("Segoe UI", 10F);
             toothChart1.Size = new Size(880, 520);
             toothChart1.TabIndex = 0;
-            toothChart1.Text = "toothChart1";
+            toothChart1.HoveredToothChanged += toothChart1_HoveredToothChanged;
             // 
             // saveBtn
             // 

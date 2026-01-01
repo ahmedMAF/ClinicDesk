@@ -12,6 +12,9 @@ public partial class ToothChart : Control
     private int? _selectedTooth;
     private int? _hoveredTooth;
     
+    public event EventHandler<ToothEventArgs>? SelectedToothChanged;
+    public event EventHandler<ToothEventArgs>? HoveredToothChanged;
+    
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
     public Font NumbersFont
     {
@@ -54,6 +57,7 @@ public partial class ToothChart : Control
             if (_teethGp[i].Path.IsVisible(e.Location))
             {
                 _selectedTooth = i;
+                SelectedToothChanged?.Invoke(this, new ToothEventArgs(Teeth[i], _teethGp[i]));
                 ShowToothMenu(e.Location);
                 Invalidate();
                 return;
@@ -70,6 +74,7 @@ public partial class ToothChart : Control
                 if (_hoveredTooth != i)
                 {
                     _hoveredTooth = i;
+                    HoveredToothChanged?.Invoke(this, new ToothEventArgs(Teeth[i], _teethGp[i]));
                     Cursor = Cursors.Hand;
                     Invalidate();
                 }
@@ -81,6 +86,7 @@ public partial class ToothChart : Control
         if (_hoveredTooth != null)
         {
             _hoveredTooth = null;
+            HoveredToothChanged?.Invoke(this, new ToothEventArgs());
             Cursor = Cursors.Default;
             Invalidate();
         }
@@ -118,18 +124,6 @@ public partial class ToothChart : Control
             e.Graphics.DrawPath(pen, toothGp.Path);
             e.Graphics.DrawString(text, NumbersFont, Brushes.Black, x, y);
         }
-
-        e.Graphics.DrawLine(Pens.Black, new Point(505, 0), new Point(505, Height));
-
-        int? index = null;
-
-        if (_selectedTooth.HasValue)
-            index = _selectedTooth;
-        else if (_hoveredTooth.HasValue)
-            index = _hoveredTooth;
-
-        if (index.HasValue)
-            e.Graphics.DrawString(_teethGp[index.Value].Name, DefaultFont, Brushes.Black, new Point(510, 10));
     }
 
     private void ShowToothMenu(Point location)
@@ -159,6 +153,7 @@ public partial class ToothChart : Control
     private void DropDown_Closed(object? sender, ToolStripDropDownClosedEventArgs e)
     {
         _selectedTooth = null;
+        SelectedToothChanged?.Invoke(this, new ToothEventArgs());
         Invalidate();
     }
 
@@ -177,4 +172,18 @@ public class ToothGraphic
     public int Number { get; set; }
     public string Name { get; set; } = null!;
     public GraphicsPath Path { get; set; } = null!;
+}
+
+public class ToothEventArgs : EventArgs
+{
+    public Tooth? Tooth { get; set; }
+    public ToothGraphic? ToothGraphic { get; set; }
+
+    public ToothEventArgs() { }
+
+    public ToothEventArgs(Tooth tooth, ToothGraphic toothGraphic)
+    {
+        Tooth = tooth;
+        ToothGraphic = toothGraphic;
+    }
 }

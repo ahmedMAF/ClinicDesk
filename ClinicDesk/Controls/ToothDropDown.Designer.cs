@@ -50,7 +50,7 @@
             statusCbo.FormattingEnabled = true;
             statusCbo.IntegralHeight = false;
             statusCbo.ItemHeight = 43;
-            statusCbo.Items.AddRange(new object[] { "Normal", "Missing", "Filled", "Crown", "Implant", "Root Canal" });
+            statusCbo.Items.AddRange(new object[] { "Normal", "Missing", "Implant", "Root Canal" });
             statusCbo.Location = new Point(4, 3);
             statusCbo.MaxDropDownItems = 4;
             statusCbo.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
