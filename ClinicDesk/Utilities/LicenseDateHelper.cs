@@ -48,14 +48,16 @@ public static class LicenseDateHelper
         using Aes aes = Aes.Create();
         aes.Key = key;
         aes.IV = iv;
-        
+        aes.Mode = CipherMode.CBC;
+        aes.Padding = PaddingMode.PKCS7;
+
         using ICryptoTransform encryptor = aes.CreateEncryptor();
         using MemoryStream ms = new();
         using CryptoStream cs = new(ms, encryptor, CryptoStreamMode.Write);
         using StreamWriter sw = new(cs);
         
         sw.Write(plainText);
-        sw.Flush();
+        sw.Close();
 
         return Convert.ToBase64String(ms.ToArray());
     }
@@ -63,13 +65,15 @@ public static class LicenseDateHelper
     private static string Decrypt(string encryptedText)
     {
         DeriveKeyAndIV(out byte[] key, out byte[] iv);
-        
+
         byte[] bytes = Convert.FromBase64String(encryptedText);
         
         using Aes aes = Aes.Create();
         aes.Key = key;
         aes.IV = iv;
-        
+        aes.Mode = CipherMode.CBC;
+        aes.Padding = PaddingMode.PKCS7;
+
         using ICryptoTransform decryptor = aes.CreateDecryptor();
         using MemoryStream ms = new(bytes);
         using CryptoStream cs = new(ms, decryptor, CryptoStreamMode.Read);
@@ -82,11 +86,11 @@ public static class LicenseDateHelper
     {
         byte[] hash = Utils.GetHardwareIdBytes();
 
-        // Use first 16 bytes (128 bits) as AES key
+        // Use first 16 bytes (128 bits) as AES key, for AES-128
         key = new byte[16];
         Array.Copy(hash, 0, key, 0, 16);
 
-        // Use next 16 bytes (128 bits) as IV
+        // Use next 16 bytes (128 bits) as IV, must be 16 byte, AES block size
         iv = new byte[16];
         Array.Copy(hash, 16, iv, 0, 16);
     }

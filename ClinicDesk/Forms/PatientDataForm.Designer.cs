@@ -118,7 +118,7 @@
             phoneTxt.TextAlign = HorizontalAlignment.Left;
             phoneTxt.TrailingIcon = null;
             phoneTxt.UseSystemPasswordChar = false;
-            phoneTxt.KeyPress += Utils.NumTxt_KeyPress;
+            phoneTxt.KeyPress += Utilities.Utils.NumTxt_KeyPress;
             // 
             // materialLabel8
             // 
@@ -598,7 +598,7 @@
             Sizable = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Add New Patient";
-            KeyPress += Utils.CloseForm_KeyPress;
+            KeyPress += Utilities.Utils.CloseForm_KeyPress;
             materialCard2.ResumeLayout(false);
             materialCard1.ResumeLayout(false);
             materialCard3.ResumeLayout(false);

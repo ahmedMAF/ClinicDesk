@@ -40,9 +40,12 @@ public class ClinicDb : DbContext
         do
         {
             bool success = Create(out ClinicDb? db);
-                
+
             if (success)
+            {
                 result = DialogResult.OK;
+                Instance = db!;
+            }
             else
                 result = MessageBox.Show("Can't connect to MySQL.", "Database Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
         }
@@ -57,8 +60,8 @@ public class ClinicDb : DbContext
     internal static bool Create(out ClinicDb? db)
     {
         Settings settings = Settings.Instance;
-
-        return Create($"Server={settings.Server};Port={settings.Port};Database={settings.Database};User={settings.User};Password={settings.Password};SslMode=None;", out db);
+        
+        return Create($"Server={settings.Server}\\SQLEXPRESS;Database={settings.Database};User Id={settings.User};Password={settings.Password};", out db);
     }
 
     internal static bool Create(string conn, out ClinicDb? db)
@@ -70,7 +73,7 @@ public class ClinicDb : DbContext
 
         try
         {
-            optionsBuilder.UseMySql(conn, ServerVersion.AutoDetect(conn));
+            optionsBuilder.UseSqlServer(conn);
         }
         catch (Exception)
         {
@@ -159,7 +162,7 @@ public class ClinicDb : DbContext
     {
         Settings settings = Settings.Instance;
 
-        if (settings.NextBackup == DateTime.Now.Date)
+        if (settings.NextBackup != DateTime.Now.Date)
             return;
 
         settings.LastBackup = DateTime.Now.Date;

@@ -26,6 +26,9 @@ public partial class ToothChart : Control
         }
     }
 
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+    public bool IsReadonly { get; set; }
+
     [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public List<Tooth> Teeth
     {
@@ -40,7 +43,7 @@ public partial class ToothChart : Control
     public ToothChart()
     {
         DoubleBuffered = true;
-        Size = new Size(880, 520);
+        Size = new Size(500, 500);
         NumbersFont = new Font("Segoe UI", 8);
 
         Teeth = new(52);
@@ -52,6 +55,9 @@ public partial class ToothChart : Control
 
     protected override void OnMouseClick(MouseEventArgs e)
     {
+        if (IsReadonly)
+            return;
+
         for (int i = 0; i < _teethGp.Count; i++)
         {
             if (_teethGp[i].Path.IsVisible(e.Location))

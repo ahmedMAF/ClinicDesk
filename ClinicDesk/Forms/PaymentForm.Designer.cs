@@ -67,7 +67,7 @@
             amountTxt.UseSystemPasswordChar = false;
             amountTxt.TextChanged += amountTxt_TextChanged;
             amountTxt.KeyPress += amountTxt_KeyPress;
-            amountTxt.KeyPress += Utils.NumDotTxt_KeyPress;
+            amountTxt.KeyPress += Utilities.Utils.NumDotTxt_KeyPress;
             // 
             // payBtn
             // 
@@ -145,7 +145,7 @@
             Sizable = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Payment";
-            KeyPress += Utils.CloseForm_KeyPress;
+            KeyPress += Utilities.Utils.CloseForm_KeyPress;
             ResumeLayout(false);
             PerformLayout();
         }

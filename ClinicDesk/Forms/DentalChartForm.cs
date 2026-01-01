@@ -1,11 +1,13 @@
-﻿using ClinicDesk.Database.Models;
+﻿using ClinicDesk.Controls;
+using ClinicDesk.Database.Models;
 using ReaLTaiizor.Forms;
+using System.Text;
 
 namespace ClinicDesk.Forms;
 
 public partial class DentalChartForm : MaterialForm
 {
-    private StringBuilder _sb = new();
+    private readonly StringBuilder _sb = new();
     
     public DentalChartForm()
     {
@@ -27,19 +29,19 @@ public partial class DentalChartForm : MaterialForm
             return;
         }
         
-        nameLbl.Text = $"{e.ToothGraphic.Number} {e.ToothGraphic.Name}";
+        nameLbl.Text = $"{e.ToothGraphic!.Number} {e.ToothGraphic.Name}";
         
         _sb.Clear();
-        _sb.Append("Status: ").Append(tooth.Status).Append(Environment.NewLine);
+        _sb.Append("Status: ").Append(e.Tooth.Status).Append(Environment.NewLine);
         
-        if (tooth.Crown != ToothCrown.None)
-            _sb.Append("Crown: ").Append(tooth.Crown).Append(Environment.NewLine);
+        if (e.Tooth.Crown != ToothCrown.None)
+            _sb.Append("Crown: ").Append(e.Tooth.Crown).Append(Environment.NewLine);
         
-        if (tooth.Filling != ToothFilling.None)
-            _sb.Append("Filling: ").Append(tooth.Filling).Append(Environment.NewLine);
+        if (e.Tooth.Filling != ToothFilling.None)
+            _sb.Append("Filling: ").Append(e.Tooth.Filling).Append(Environment.NewLine);
        
-        if (!string.IsNullOrWhiteSpaces(tooth.Notes))
-            _sb.Append("Notes: ").Append(Environment.NewLine).Append(tooth.Notes);
+        if (!string.IsNullOrWhiteSpace(e.Tooth.Notes))
+            _sb.Append("Notes: ").Append(Environment.NewLine).Append(e.Tooth.Notes);
         
         contentLbl.Text = _sb.ToString();
     }

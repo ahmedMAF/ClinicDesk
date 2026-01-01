@@ -83,7 +83,7 @@ public partial class InstallForm : MaterialForm
             return;
         }
 
-        if (ClinicDb.TestConnection(dbServer, dbPort, database, dbUser, dbPassword))
+        if (!ClinicDb.TestConnection(dbServer, dbPort, database, dbUser, dbPassword))
         {
             MessageBox.Show("Failed to create and connect to the database. Check the connection data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;

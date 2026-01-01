@@ -252,7 +252,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "New Appointment";
             Load += NewAppointmentForm_Load;
-            KeyPress += Utils.CloseForm_KeyPress;
+            KeyPress += Utilities.Utils.CloseForm_KeyPress;
             materialCard1.ResumeLayout(false);
             materialCard2.ResumeLayout(false);
             ResumeLayout(false);

@@ -150,7 +150,7 @@
             phoneTxt.TrailingIcon = null;
             phoneTxt.UseSystemPasswordChar = false;
             phoneTxt.KeyPress += phoneTxt_KeyPress;
-            phoneTxt.KeyPress += Utils.NumTxt_KeyPress;
+            phoneTxt.KeyPress += Utilities.Utils.NumTxt_KeyPress;
             // 
             // searchPhoneBtn
             // 
@@ -208,7 +208,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Patient Search";
             Load += PatientSearchForm_Load;
-            KeyPress += Utils.CloseForm_KeyPress;
+            KeyPress += Utilities.Utils.CloseForm_KeyPress;
             ((System.ComponentModel.ISupportInitialize)patientsGrd).EndInit();
             ResumeLayout(false);
             PerformLayout();

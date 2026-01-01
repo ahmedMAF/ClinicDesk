@@ -1,7 +1,6 @@
-using ReaLTaiizor.Controls;
-using Panel = System.Windows.Forms.Panel;
+using System.ComponentModel;
 
-namespace ClinicDesk;
+namespace ClinicDesk.Controls;
 
 public partial class Tutorial : UserControl
 {
@@ -9,8 +8,9 @@ public partial class Tutorial : UserControl
     
     private Form _form;
     private int _currentStep = -1;
-    
-    public Color BackColor { get; set; }
+
+
+    [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
     public List<TutorialStep> Steps { get; set; }
     
     private Tutorial(Type type, Form form)
@@ -19,7 +19,8 @@ public partial class Tutorial : UserControl
         
         _form = form;
         Steps = Tutorials[type];
-        
+        BackColor = Color.FromArgb(128, 0, 0, 0);
+
         NextStep();
         
         form.Controls.Add(this);
