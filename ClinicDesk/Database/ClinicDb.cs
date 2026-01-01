@@ -54,14 +54,14 @@ public class ClinicDb : DbContext
 
     internal static bool TestConnection(string server, ushort port, string db, string user, string pass)
     {
-        return Create($"Server={server};Port={port};Database={db};User={user};Password={pass};SslMode=None;", out _);
+        return Create($"Server={server};Port={port};Database={db};User={user};Password={pass};", out _);
     }
 
     internal static bool Create(out ClinicDb? db)
     {
         Settings settings = Settings.Instance;
         
-        return Create($"Server={settings.Server}\\SQLEXPRESS;Database={settings.Database};User Id={settings.User};Password={settings.Password};", out db);
+        return Create($"Server={settings.Server};Port={settings.Port};Database={settings.Database};User={settings.User};Password={settings.Password};", out db);
     }
 
     internal static bool Create(string conn, out ClinicDb? db)
@@ -73,7 +73,7 @@ public class ClinicDb : DbContext
 
         try
         {
-            optionsBuilder.UseSqlServer(conn);
+            optionsBuilder.UseMySql(conn, ServerVersion.AutoDetect(conn));
         }
         catch (Exception)
         {
