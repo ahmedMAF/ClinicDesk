@@ -8,6 +8,14 @@ public partial class SettingsForm : MaterialForm
     public SettingsForm()
     {
         InitializeComponent();
+        
+        bool isServer = Settings.Instance.IsServer;
+        
+        backupCustomBtn.Enabled = isServer;
+        backupBtn.Enabled = isServer;
+        backupTxt.Enabled = isServer;
+        daysSld.Enabled = isServer;
+        browseBtn.Enabled = isServer;
     }
 
     private void SettingsForm_Load(object sender, EventArgs e)
@@ -72,7 +80,7 @@ public partial class SettingsForm : MaterialForm
         Close();
     }
 
-    private void materialButton1_Click(object sender, EventArgs e)
+    private void browseBtn_Click(object sender, EventArgs e)
     {
         if (folderBrowser.ShowDialog() == DialogResult.OK)
             backupTxt.Text = folderBrowser.SelectedPath;

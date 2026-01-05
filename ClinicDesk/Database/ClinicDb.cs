@@ -15,8 +15,9 @@ public class ClinicDb : DbContext
     private const string ServiceName = "MySQL80";
 #else
     private static Process? _mySqlProcess;
-    private static bool _wasMySqlRunning;
 #endif
+
+    private static bool _wasMySqlRunning;
 
     public static ClinicDb Instance { get; private set; } = null!;
     public static bool IsRunning { get; private set; }
@@ -128,9 +129,11 @@ public class ClinicDb : DbContext
             _mySqlProcess = Process.Start(psi);
         }
 #else
-        ServiceController service = new(serviceName);
+        ServiceController service = new(ServiceName);
         
-        if (service.Status != ServiceControllerStatus.Running)
+        _wasMySqlRunning = service.Status == ServiceControllerStatus.Running;
+        
+        if (!_wasMySqlRunning)
         {
             service.Start();
             service.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(10));
@@ -140,21 +143,21 @@ public class ClinicDb : DbContext
 
     public static void StopDatabaseService()
     {
-#if DEBUG
         // We should not kill the process if it was running before we started.
-        if (!_wasMySqlRunning && _mySqlProcess != null && !_mySqlProcess.HasExited)
+        if (_wasMySqlRunning)
+            return;
+            
+#if DEBUG
+        if (_mySqlProcess != null && !_mySqlProcess.HasExited)
         {
             _mySqlProcess.Kill();
             _mySqlProcess.Dispose();
         }
 #else
-        ServiceController service = new(serviceName);
+        ServiceController service = new(ServiceName);
         
-        if (service.Status != ServiceControllerStatus.Running)
-        {
-            service.Start();
-            service.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(10));
-        }
+        if (service.Status != ServiceControllerStatus.Stopped)
+            service.Stop();
 #endif
     }
     
@@ -162,7 +165,7 @@ public class ClinicDb : DbContext
     {
         Settings settings = Settings.Instance;
 
-        if (settings.NextBackup != DateTime.Now.Date)
+        if (!settings.IsServer || settings.NextBackup != DateTime.Now.Date)
             return;
 
         settings.LastBackup = DateTime.Now.Date;
@@ -174,32 +177,39 @@ public class ClinicDb : DbContext
     {
         Settings settings = Settings.Instance;
         
-        string dumpFile = Path.Combine(path, $"database_{DateTime.UtcNow:yyyyMMdd_HHmmss}.sql");
+        if (!settings.IsServer)
+            return;
+        
+        string dumpFile = Path.Combine(path, $"{settings.Database}_{DateTime.UtcNow:yyyyMMdd_HHmmss}.sql");
         
 #if DEBUG
-        string mySqlDumpPath = @"C:\xampp\mysql\bin\mysqldump.exe";
+        string mySqlDumpPath = @"C:\\xampp\mysql\bin\mysqldump.exe";
         
         if (!File.Exists(mySqlDumpPath))
-            mySqlDumpPath = @"C:\Program Files\xampp\mysql\bin\mysqldump.exe";
+            mySqlDumpPath = @"C:\\Program Files\xampp\mysql\bin\mysqldump.exe";
 #else
-        string mySqlDumpPath = @"C:\Program Files\MySQL\MySQL Server 8.0\bin\mysqldump.exe";
+        string mySqlDumpPath = @"C:\\Program Files\MySQL\MySQL Server 8.0\bin\mysqldump.exe";
 #endif
+    
+        // Create the command to execute
+        string command = $"\"{mySqlDumpPath}\" -u {settings.User} -p{settings.Password} {settings.Database} > \"{dumpFile}\"";
     
         ProcessStartInfo psi = new()
         {
-            FileName = mySqlDumpPath,
-            Arguments = $"-u {settings.User} -p{settings.Password} {settings.Database}",
-            RedirectStandardOutput = true,
+            FileName = "cmd.exe",
+            Arguments = $"/C {command}",
+            RedirectStandardError = true,
             UseShellExecute = false,
             CreateNoWindow = true
         };
     
-        using Process? process = Process.Start(psi);
-        using StreamReader? reader = process?.StandardOutput;
-        string? result = reader?.ReadToEnd();
-        process?.WaitForExit();
-
-        Directory.CreateDirectory(path);
-        File.WriteAllText(dumpFile, result);
+        using Process process = new(psi);
+        process.Start();
+    
+        string errorOutput = process.StandardError.ReadToEnd();
+        process.WaitForExit();
+    
+        if (process.ExitCode != 0)
+            MessageBox.Show($"mysqldump failed with exit code {process.ExitCode}.{Environment.NewLine}Error: {errorOutput}.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
     }
 }

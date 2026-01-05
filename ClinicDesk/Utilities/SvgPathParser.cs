@@ -3,11 +3,13 @@ using System.Globalization;
 
 namespace ClinicDesk.Utilities;
 
+/// <summary>
+///  An allocation-free SVG to GDI path parser that supports the commands: <c>M, C, Q, L, V, H, Z</c> in relative and absolute coordinates
+///  and with or without path command repeating.
+/// </summary>
 public static class SvgPathParser
 {
-    private static float _scale;
-
-    public static List<GraphicsPath> ParseMultiplePaths(ReadOnlySpan<char> data, float scale = 1f)
+    public static List<GraphicsPath> ParseMultiplePaths(ReadOnlySpan<char> data, PointF? scale = null, PointF? offset = null)
     {
         List<GraphicsPath> paths = [];
         int start = 0;
@@ -19,7 +21,7 @@ public static class SvgPathParser
                 ReadOnlySpan<char> line = data.Slice(start, i - start).Trim();
                 
                 if (!line.IsEmpty)
-                    paths.Add(ParsePath(line, scale));
+                    paths.Add(ParsePath(line, scale, offset));
     
                 // Skip \r in Windows-Style new line.
                 if (data[i] == '\r' && i + 1 < data.Length && data[i + 1] == '\n')
@@ -30,50 +32,107 @@ public static class SvgPathParser
             }
         }
     
-        // Handle last line (if no newline at end)
+        // Handle last line (if no newline at end).
         if (start < data.Length)
         {
             ReadOnlySpan<char> line = data.Slice(start).Trim();
             
             if (!line.IsEmpty)
-                paths.Add(ParsePath(line));
+                paths.Add(ParsePath(line, scale, offset));
         }
     
         return paths;
     }
 
-    public static GraphicsPath ParsePath(ReadOnlySpan<char> svgPath, float scale = 1f)
+    public static GraphicsPath ParsePath(ReadOnlySpan<char> svgPath, PointF? scale = null, PointF? offset = null)
     {
-        _scale = scale;
-        
         GraphicsPath path = new();
         SvgTokenizer tokenizer = new(svgPath);
 
         PointF startPoint = default;
         PointF lastPoint = default;
+        
+        PointF s = scale ?? PointF.One;
+        PointF o = offset ?? default;
 
         while (tokenizer.MoveNext())
         {
             char command = tokenizer.CurrentCommand;
+            bool isRelative = char.IsLower(command);
             
-            switch (command)
+            // Determine the base point for relative commands.
+            PointF basePoint = isRelative ? lastPoint : default;
+
+            // Convert command to uppercase for processing.
+            switch (char.ToUpper(command))
             {
                 case 'M':
-                    float x = tokenizer.ReadFloat();
-                    float y = tokenizer.ReadFloat();
-                    lastPoint = new PointF(x, y);
+                    lastPoint = new PointF(basePoint.X + tokenizer.ReadFloat() * s.X + o.X,
+                        basePoint.Y + tokenizer.ReadFloat() * s.Y + o.Y);
                     startPoint = lastPoint;
+                    break;
+                    
+                case 'L':
+                    while (tokenizer.IsCommandRepeated)
+                    {
+                        PointF p1 = new(basePoint.X + tokenizer.ReadFloat() * s.X + o.X,
+                            basePoint.Y + tokenizer.ReadFloat() * s.Y + o.Y);
+                            
+                        path.AddLine(lastPoint, p1);
+                        lastPoint = p1;
+                    }
                     break;
 
                 case 'C':
-                    while (tokenizer.HasMore && tokenizer.PeekIsNumber())
+                    while (tokenizer.IsCommandRepeated)
                     {
-                        PointF p1 = new(tokenizer.ReadFloat(), tokenizer.ReadFloat());
-                        PointF p2 = new(tokenizer.ReadFloat(), tokenizer.ReadFloat());
-                        PointF p3 = new(tokenizer.ReadFloat(), tokenizer.ReadFloat());
+                        PointF p1 = new(basePoint.X + tokenizer.ReadFloat() * s.X + o.X,
+                            basePoint.Y + tokenizer.ReadFloat() * s.Y + o.Y);
+                        PointF p2 = new(basePoint.X + tokenizer.ReadFloat() * s.X + o.X,
+                            basePoint.Y + tokenizer.ReadFloat() * s.Y + o.Y);
+                        PointF p3 = new(basePoint.X + tokenizer.ReadFloat() * s.X + o.X,
+                            basePoint.Y + tokenizer.ReadFloat() * s.Y + o.Y);
 
                         path.AddBezier(lastPoint, p1, p2, p3);
                         lastPoint = p3;
+                    }
+                    break;
+                    
+                case 'Q':
+                    while (tokenizer.IsCommandRepeated)
+                    {
+                        PointF p1 = new(basePoint.X + tokenizer.ReadFloat() * s.X + o.X,
+                            basePoint.Y + tokenizer.ReadFloat() * s.Y + o.Y);
+                        PointF p2 = new(basePoint.X + tokenizer.ReadFloat() * s.X + o.X,
+                            basePoint.Y + tokenizer.ReadFloat() * s.Y + o.Y);
+
+                        // Quadratic Bezier curve approximation using two lines.
+                        path.AddBezier(p2, p1, p1);
+                        lastPoint = p2;
+                    }
+                    break;
+
+                case 'H':
+                    while (tokenizer.IsCommandRepeated)
+                    {
+                        float x = basePoint.X + tokenizer.ReadFloat() * s.X + o.X;
+                        // Maintain the current Y coordinate.
+                        PointF p1 = new(x, lastPoint.Y);
+                        
+                        path.AddLine(lastPoint, p1);
+                        lastPoint = p1;
+                    }
+                    break;
+
+                case 'V':
+                    while (tokenizer.IsCommandRepeated)
+                    {
+                        float y = basePoint.X + tokenizer.ReadFloat() * s.Y + o.Y;
+                        // Maintain the current X coordinate.
+                        PointF p1 = new(lastPoint.X, y);
+                        
+                        path.AddLine(lastPoint, p1);
+                        lastPoint = p1;
                     }
                     break;
 
@@ -95,7 +154,8 @@ public static class SvgPathParser
         public char CurrentCommand { get; private set; }
         
         public bool HasMore => _pos < _span.Length;
-
+        public bool IsCommandRepeated => HasMore && PeekIsNumber();
+        
         public SvgTokenizer(ReadOnlySpan<char> span)
         {
             _span = span;
@@ -127,7 +187,7 @@ public static class SvgPathParser
             ReadOnlySpan<char> numberSpan = _span.Slice(start, _pos - start);
             SkipCommaWhitespace();
             
-            return float.Parse(numberSpan, CultureInfo.InvariantCulture) * SvgPathParser._scale;
+            return float.Parse(numberSpan, CultureInfo.InvariantCulture);
         }
 
         public bool PeekIsNumber()
