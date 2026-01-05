@@ -35,7 +35,6 @@
             materialCard1 = new ReaLTaiizor.Controls.MaterialCard();
             backupCustomBtn = new ReaLTaiizor.Controls.MaterialButton();
             backupBtn = new ReaLTaiizor.Controls.MaterialButton();
-            materialButton1 = new ReaLTaiizor.Controls.MaterialButton();
             browseBtn = new ReaLTaiizor.Controls.MaterialButton();
             daysSld = new ReaLTaiizor.Controls.MaterialSlider();
             materialLabel10 = new ReaLTaiizor.Controls.MaterialLabel();
@@ -106,7 +105,6 @@
             materialCard1.BackColor = Color.FromArgb(255, 255, 255);
             materialCard1.Controls.Add(backupCustomBtn);
             materialCard1.Controls.Add(backupBtn);
-            materialCard1.Controls.Add(materialButton1);
             materialCard1.Controls.Add(browseBtn);
             materialCard1.Controls.Add(daysSld);
             materialCard1.Controls.Add(materialLabel10);
@@ -180,33 +178,9 @@
             backupBtn.UseVisualStyleBackColor = true;
             backupBtn.Click += backupBtn_Click;
             // 
-            // materialButton1
-            // 
-            materialButton1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            materialButton1.AutoSize = false;
-            materialButton1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            materialButton1.CharacterCasing = ReaLTaiizor.Controls.MaterialButton.CharacterCasingEnum.Normal;
-            materialButton1.Density = ReaLTaiizor.Controls.MaterialButton.MaterialButtonDensity.Default;
-            materialButton1.Depth = 0;
-            materialButton1.HighEmphasis = true;
-            materialButton1.Icon = null;
-            materialButton1.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            materialButton1.Location = new Point(422, 311);
-            materialButton1.Margin = new Padding(4, 6, 4, 6);
-            materialButton1.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
-            materialButton1.Name = "materialButton1";
-            materialButton1.NoAccentTextColor = Color.Empty;
-            materialButton1.Size = new Size(48, 48);
-            materialButton1.TabIndex = 24;
-            materialButton1.Text = "...";
-            materialButton1.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Outlined;
-            materialButton1.UseAccentColor = false;
-            materialButton1.UseVisualStyleBackColor = true;
-            materialButton1.Click += materialButton1_Click;
-            // 
             // browseBtn
             // 
-            browseBtn.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            browseBtn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             browseBtn.AutoSize = false;
             browseBtn.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             browseBtn.CharacterCasing = ReaLTaiizor.Controls.MaterialButton.CharacterCasingEnum.Normal;
@@ -215,17 +189,18 @@
             browseBtn.HighEmphasis = true;
             browseBtn.Icon = null;
             browseBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            browseBtn.Location = new Point(709, 739);
+            browseBtn.Location = new Point(422, 311);
             browseBtn.Margin = new Padding(4, 6, 4, 6);
             browseBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             browseBtn.Name = "browseBtn";
             browseBtn.NoAccentTextColor = Color.Empty;
             browseBtn.Size = new Size(48, 48);
-            browseBtn.TabIndex = 23;
+            browseBtn.TabIndex = 24;
             browseBtn.Text = "...";
             browseBtn.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Outlined;
             browseBtn.UseAccentColor = false;
             browseBtn.UseVisualStyleBackColor = true;
+            browseBtn.Click += browseBtn_Click;
             // 
             // daysSld
             // 
@@ -562,7 +537,6 @@
         private ReaLTaiizor.Controls.MaterialSwitch isDarkSwt;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel11;
         private ReaLTaiizor.Controls.MaterialCard materialCard1;
-        private ReaLTaiizor.Controls.MaterialButton browseBtn;
         private ReaLTaiizor.Controls.MaterialSlider daysSld;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel10;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel13;
@@ -578,7 +552,7 @@
         private ReaLTaiizor.Controls.MaterialTextBoxEdit dbPasswordTxt;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel5;
         private ReaLTaiizor.Controls.MaterialButton saveBtn;
-        private ReaLTaiizor.Controls.MaterialButton materialButton1;
+        private ReaLTaiizor.Controls.MaterialButton browseBtn;
         private ReaLTaiizor.Controls.MaterialButton backupBtn;
         private ReaLTaiizor.Controls.MaterialButton backupCustomBtn;
         private FolderBrowserDialog folderBrowser;

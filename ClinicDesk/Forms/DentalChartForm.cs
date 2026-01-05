@@ -14,9 +14,10 @@ public partial class DentalChartForm : MaterialForm
         InitializeComponent();
     }
 
-    internal void SetData(List<Tooth> teeth)
+    internal void SetData(List<Tooth> teeth, bool isReadonly = false)
     {
         toothChart1.Teeth = teeth;
+        toothChart1.IsReadonly = isReadonly;
     }
     
     private void toothChart1_HoveredToothChanged(object sender, ToothEventArgs e)

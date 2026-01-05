@@ -160,7 +160,7 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Clinic";
             WindowState = FormWindowState.Maximized;
-            Load += SecretaryForm_Load;
+            Load += AllInOneForm_Load;
             ((System.ComponentModel.ISupportInitialize)appointmentsGrd).EndInit();
             ResumeLayout(false);
             PerformLayout();

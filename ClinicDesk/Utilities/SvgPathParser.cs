@@ -52,7 +52,7 @@ public static class SvgPathParser
         PointF startPoint = default;
         PointF lastPoint = default;
         
-        PointF s = scale ?? PointF.One;
+        PointF s = scale ?? new PointF(1f, 1f);
         PointF o = offset ?? default;
 
         while (tokenizer.MoveNext())
@@ -106,8 +106,19 @@ public static class SvgPathParser
                         PointF p2 = new(basePoint.X + tokenizer.ReadFloat() * s.X + o.X,
                             basePoint.Y + tokenizer.ReadFloat() * s.Y + o.Y);
 
-                        // Quadratic Bezier curve approximation using two lines.
-                        path.AddBezier(p2, p1, p1);
+                        // Quadratic Bezier curve approximation using cubic Bezier.
+                        PointF c1 = new(
+                            lastPoint.X + (2f / 3f) * (p1.X - lastPoint.X),
+                            lastPoint.Y + (2f / 3f) * (p1.Y - lastPoint.Y)
+                        );
+
+                        PointF c2 = new(
+                            p2.X + (2f / 3f) * (p1.X - p2.X),
+                            p2.Y + (2f / 3f) * (p1.Y - p2.Y)
+                        );
+
+                        path.AddBezier(lastPoint, c1, c2, p2);
+
                         lastPoint = p2;
                     }
                     break;

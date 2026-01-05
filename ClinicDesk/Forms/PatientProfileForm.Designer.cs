@@ -49,6 +49,7 @@
             materialLabel5 = new ReaLTaiizor.Controls.MaterialLabel();
             notesTxt = new ReaLTaiizor.Controls.MaterialMultiLineTextBoxEdit();
             editBtn = new ReaLTaiizor.Controls.MaterialButton();
+            chartBtn = new ReaLTaiizor.Controls.MaterialButton();
             tableLayoutPanel1.SuspendLayout();
             materialCard2.SuspendLayout();
             materialCard1.SuspendLayout();
@@ -446,11 +447,36 @@
             editBtn.UseVisualStyleBackColor = true;
             editBtn.Click += editBtn_Click;
             // 
+            // chartBtn
+            // 
+            chartBtn.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            chartBtn.AutoSize = false;
+            chartBtn.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            chartBtn.CharacterCasing = ReaLTaiizor.Controls.MaterialButton.CharacterCasingEnum.Normal;
+            chartBtn.Density = ReaLTaiizor.Controls.MaterialButton.MaterialButtonDensity.Default;
+            chartBtn.Depth = 0;
+            chartBtn.HighEmphasis = true;
+            chartBtn.Icon = null;
+            chartBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
+            chartBtn.Location = new Point(17, 637);
+            chartBtn.Margin = new Padding(4, 6, 4, 6);
+            chartBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            chartBtn.Name = "chartBtn";
+            chartBtn.NoAccentTextColor = Color.Empty;
+            chartBtn.Size = new Size(158, 36);
+            chartBtn.TabIndex = 44;
+            chartBtn.Text = "Dental Chart";
+            chartBtn.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
+            chartBtn.UseAccentColor = false;
+            chartBtn.UseVisualStyleBackColor = true;
+            chartBtn.Click += chartBtn_Click;
+            // 
             // PatientProfileForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1092, 682);
+            Controls.Add(chartBtn);
             Controls.Add(editBtn);
             Controls.Add(materialLabel6);
             Controls.Add(visitsGrd);
@@ -491,5 +517,6 @@
         private ReaLTaiizor.Controls.MaterialLabel materialLabel5;
         private ReaLTaiizor.Controls.MaterialMultiLineTextBoxEdit notesTxt;
         private ReaLTaiizor.Controls.MaterialButton editBtn;
+        private ReaLTaiizor.Controls.MaterialButton chartBtn;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ClinicDesk.Database.Models;
+using ClinicDesk.Net;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Diagnostics;
@@ -19,6 +20,9 @@ public class ClinicDb : DbContext
 
     private static bool _wasMySqlRunning;
 
+    private readonly Server? _server;
+    public Client Client { get; private set; }
+
     public static ClinicDb Instance { get; private set; } = null!;
     public static bool IsRunning { get; private set; }
 
@@ -32,6 +36,15 @@ public class ClinicDb : DbContext
     {
         Database.Migrate();
         IsRunning = true;
+
+        if (Settings.Instance.IsServer)
+        {
+            _server = new Server();
+            _server.StartAsync();
+        }
+
+        Client = new Client();
+        Client.StartAsync();
     }
 
     internal static void Initialize()
@@ -85,23 +98,6 @@ public class ClinicDb : DbContext
         db = new ClinicDb(optionsBuilder.Options);
         return true;
     }
-
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        base.OnModelCreating(modelBuilder);
-
-        ValueConverter<List<Tooth>?, string> converter = new(
-            v => JsonSerializer.Serialize(v),
-            v => JsonSerializer.Deserialize<List<Tooth>>(v));
-
-        modelBuilder.Entity<Patient>()
-            .Property(p => p.Teeth)
-            .HasConversion(converter);
-
-        modelBuilder.Entity<Patient>()
-            .Property(p => p.ChronicDiseases)
-            .HasColumnType("json");
-    }
     
     private static void RunDatabaseService()
     {
@@ -127,6 +123,7 @@ public class ClinicDb : DbContext
             };
 
             _mySqlProcess = Process.Start(psi);
+            
         }
 #else
         ServiceController service = new(ServiceName);
@@ -203,13 +200,44 @@ public class ClinicDb : DbContext
             CreateNoWindow = true
         };
     
-        using Process process = new(psi);
-        process.Start();
-    
+        using Process? process = Process.Start(psi);
+
+        if (process == null)
+            return;
+
         string errorOutput = process.StandardError.ReadToEnd();
         process.WaitForExit();
     
         if (process.ExitCode != 0)
             MessageBox.Show($"mysqldump failed with exit code {process.ExitCode}.{Environment.NewLine}Error: {errorOutput}.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+    }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        ValueConverter<List<Tooth>?, string> converter = new(
+            v => JsonSerializer.Serialize(v),
+            v => JsonSerializer.Deserialize<List<Tooth>>(v));
+
+        modelBuilder.Entity<Patient>()
+            .Property(p => p.Teeth)
+            .HasConversion(converter);
+
+        modelBuilder.Entity<Patient>()
+            .Property(p => p.ChronicDiseases)
+            .HasColumnType("json");
+    }
+
+    public override int SaveChanges()
+    {
+        _ = Client.SendAsync();
+        return base.SaveChanges();
+    }
+
+    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+    {
+        await Client.SendAsync();
+        return await base.SaveChangesAsync(cancellationToken);
     }
 }

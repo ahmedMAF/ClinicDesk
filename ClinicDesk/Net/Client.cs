@@ -1,36 +1,43 @@
-using System;
-using System.Collections.Generic;
-using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace ClinicDesk.Net;
 
 public class Client
 {
-    private TcpClient _client;
-    
-    public event Action RefreshUI;
+    private TcpClient _client = null!;
+    private readonly byte[] _dbChangedMessage;
+
+    private bool _isRunning;
+
+    public event Action? RefreshUI;
+
+    public Client()
+    {
+        _dbChangedMessage = Encoding.UTF8.GetBytes(Server.DBChangedMessage);
+    }
 
     public async Task StartAsync()
     {
         _client = new TcpClient();
-        await _client.ConnectAsync(Settings.Instance.Server, 8484);
-        
+        await _client.ConnectAsync(Settings.Instance.Server, Server.Port);
+        _isRunning = true;
+
         // Start listening for messages from the server.
-        ListenForMessagesAsync();
+        _ = ListenForMessagesAsync();
+    }
+
+    public void Stop()
+    {
+        _client?.Dispose();
+        _isRunning = false;
     }
 
     public async Task SendAsync()
     {
         try
         {
-            using NetworkStream stream = _client.GetStream();
-            Span<byte> messageBytes = stackalloc byte[BufferSize];
-            int bytesCount = Encoding.UTF8.GetBytes("DB_CHANGED".AsSpan(), messageBytes));
-            await stream.WriteAsync(messageBytes, 0, bytesCount);
+            await _client.GetStream().WriteAsync(_dbChangedMessage);
         }
         catch (Exception ex)
         {
@@ -40,29 +47,28 @@ public class Client
 
     private async Task ListenForMessagesAsync()
     {
-        using NetworkStream stream = _client.GetStream();
-        byte[] buffer = new byte[BufferSize];
+        NetworkStream stream = _client.GetStream();
+        byte[] buffer = new byte[Server.BufferSize];
 
-        while (true)
+        try
         {
-            try
+            while (_isRunning)
             {
-                int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
-                
+                int bytesRead = await stream.ReadAsync(buffer);
+
                 // Server disconnected.
                 if (bytesRead == 0)
                     break;
 
                 string message = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-                
-                if (message == "REFRESH_UI")
+
+                if (message == Server.RefreshMessage)
                     RefreshUI?.Invoke();
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error receiving message: {ex.Message}", "Network Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                break;
-            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Error receiving message: {ex.Message}", "Network Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 }

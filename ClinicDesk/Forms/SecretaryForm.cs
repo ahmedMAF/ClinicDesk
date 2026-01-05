@@ -1,4 +1,5 @@
 ﻿using ClinicDesk.ControlHelpers;
+using ClinicDesk.Database;
 using ClinicDesk.Database.Models;
 using ReaLTaiizor.Forms;
 
@@ -12,14 +13,20 @@ public partial class SecretaryForm : MaterialForm
     {
         InitializeComponent();
 
-        FormClosed += (s, e) => Application.Exit();
-
         _grdHelper = new AppointmentsGrid(appointmentsGrd, AccountType.Secretary);
+
+        FormClosed += (s, e) =>
+        {
+            ClinicDb.Instance.Client.RefreshUI -= RefreshUI;
+            Application.Exit();
+        };
+
+        ClinicDb.Instance.Client.RefreshUI += RefreshUI;
     }
 
     private async void SecretaryForm_Load(object sender, EventArgs e)
     {
-        await RefreshUI();
+        await _grdHelper.RefreshList();
     }
 
     private async void monthCalendar1_DateSelected(object sender, DateRangeEventArgs e)
@@ -35,7 +42,7 @@ public partial class SecretaryForm : MaterialForm
             return;
 
         AppContext.ShowDialog<NewAppointmentForm>(form => form.SetData(patient));
-        await RefreshUI();
+        await _grdHelper.RefreshList();
     }
 
     private void billingSearchBtn_Click(object sender, EventArgs e)
@@ -48,7 +55,7 @@ public partial class SecretaryForm : MaterialForm
         AppContext.ShowDialog<BillingForm>(form => form.SetData(patient));
     }
 
-    private async Task RefreshUI()
+    private async void RefreshUI()
     {
         await _grdHelper.RefreshList();
     }

@@ -1,110 +1,115 @@
-using System;
-using System.Collections.Generic;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace ClinicDesk.Net;
 
 public class Server
 {
-    private const int BufferSize = 32;
+    public const int BufferSize = 32;
+    public const int Port = 8484;
 
-    private TcpListener _listener;
+    public const string RefreshMessage = "REFRESH_UI";
+    public const string DBChangedMessage = "DB_CHANGED";
+
+    private readonly List<TcpClient> _clients = [];
+    private readonly byte[] _refreshMessage;
+    private TcpListener _listener = null!;
     private bool _isRunning;
-    private List<TcpClient> _clients = new();
+
+    public Server()
+    {
+        _refreshMessage = Encoding.UTF8.GetBytes(RefreshMessage);
+    }
 
     public async Task StartAsync()
     {
-        _listener = new TcpListener(IPAddress.Any, 8484);
+        _listener = new TcpListener(IPAddress.Any, Port);
         _listener.Start();
         _isRunning = true;
 
-        while (_isRunning)
+        try
         {
-            try
+            while (_isRunning)
             {
                 TcpClient client = await _listener.AcceptTcpClientAsync();
                 _clients.Add(client);
-                HandleClientAsync(client);
+                _ = HandleClientAsync(client);
             }
-            catch (SocketException ex)
-            {
-                MessageBox.Show($"Socket exception: {ex.Message}", "Network Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+        }
+        catch (SocketException ex)
+        {
+            MessageBox.Show($"Socket exception: {ex.Message}", "Network Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         _listener.Stop();
     }
 
+    public void Stop()
+    {
+        _isRunning = false;
+
+        foreach (TcpClient client in _clients)
+            client.Close();
+
+        _listener?.Stop();
+    }
+
     private async Task HandleClientAsync(TcpClient client)
     {
-        using NetworkStream stream = client.GetStream();
-        byte[] buffer = stackalloc byte[BufferSize];
+        NetworkStream stream = client.GetStream();
+        byte[] buffer = new byte[BufferSize];
 
-        while (_isRunning)
+        try
         {
-            try
+            while (_isRunning)
             {
-                int bytesRead = await stream.ReadAsync(buffer, 0, BufferSize);
-                
-                // Client disconnected
+                int bytesRead = await stream.ReadAsync(buffer);
+
+                // Client disconnected.
                 if (bytesRead == 0)
                     break;
 
                 string request = Encoding.UTF8.GetString(buffer, 0, bytesRead);
-                
-                if (request == "DB_CHANGED")
-                    BroadcastRefreshUI();
+
+                if (request == DBChangedMessage)
+                    await BroadcastRefreshUI();
             }
-            catch (Exception ex)
-            {
-                if (_isRunning)
-                    MessageBox.Show(ex.Message, "Network Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    
-                break;
-            }
+        }
+        catch (IOException)
+        {
+            // Client disconnected normally.
+        }
+        catch (Exception ex)
+        {
+            if (_isRunning)
+                MessageBox.Show(ex.Message, "Network Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        finally
+        {
+            client.Close();
+            _clients.Remove(client);
         }
 
         _clients.Remove(client);
     }
 
-    private async void BroadcastRefreshUI()
+    private async Task BroadcastRefreshUI()
     {
-        Span<byte> messageBytes = stackalloc byte[BufferSize];
-        int bytesCount = Encoding.UTF8.GetBytes("REFRESH_UI".AsSpan(), messageBytes));
-
-        List<Task> tasks = [];
-
         foreach (TcpClient client in _clients)
         {
-            tasks.Add(Task.Run(async () =>
+            try
             {
-                try
-                {
-                    NetworkStream stream = client.GetStream();
-                    await stream.WriteAsync(messageBytes, 0, bytesCount);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error sending to client: {ex.Message}", "Network Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }));
+                NetworkStream stream = client.GetStream();
+                await stream.WriteAsync(_refreshMessage);
+            }
+            catch (Exception ex)
+            {
+                client.Close();
+                _clients.Remove(client);
+
+                MessageBox.Show($"Error sending to client: {ex.Message}", "Network Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
-
-        // Wait for all messages to be sent.
-        await Task.WhenAll(tasks);
-    }
-
-    public void Stop()
-    {
-        _isRunning = false;
-        
-        foreach (TcpClient client in _clients)
-            client.Close();
-        
-        _listener?.Stop();
     }
 }

@@ -75,6 +75,7 @@ public partial class AppointmentForm : MaterialForm
 
         _appointment.Visit = visit;
         _appointment.Status = AppointmentStatus.Attended;
+        ClinicDb.Instance.Entry(_patient).Property(p => p.Teeth).IsModified = true;
         await ClinicDb.Instance.SaveChangesAsync();
 
         Close();
@@ -87,6 +88,6 @@ public partial class AppointmentForm : MaterialForm
 
     private void chartBtn_Click(object sender, EventArgs e)
     {
-        AppContext.ShowDialog<DentalChartForm>(form => form.SetData(_patient.Teeth));
+        AppContext.ShowDialog<DentalChartForm>(form => form.SetData(_patient.Teeth!));
     }
 }

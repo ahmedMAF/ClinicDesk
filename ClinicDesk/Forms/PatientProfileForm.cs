@@ -52,4 +52,9 @@ public partial class PatientProfileForm : MaterialForm
         RefreshData();
         Show();
     }
+
+    private void chartBtn_Click(object sender, EventArgs e)
+    {
+        AppContext.ShowDialog<DentalChartForm>(form => form.SetData(_patient.Teeth!, true));
+    }
 }

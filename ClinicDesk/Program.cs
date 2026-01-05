@@ -10,7 +10,6 @@ namespace ClinicDesk;
 // * Doctor edit previous visits.
 // * DPI.
 // * Custom calendar, date picker and time picker controls with material theme.
-// * Teeth in profile.
 // * Teeth save in database.
 // * Age mark teeth missing.
 
@@ -26,13 +25,13 @@ internal static class Program
     {
         ApplicationConfiguration.Initialize();
         
-        using Mutex mutex = new(true, "ClinicDeskMutex", out bool createdNew);
+        /*using Mutex mutex = new(true, "ClinicDeskMutex", out bool createdNew);
         
         if (!createdNew)
         {
             MessageBox.Show("App is already running.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
-        }
+        }*/
         
         Application.Run(new AppContext());
     }

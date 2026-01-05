@@ -1,4 +1,5 @@
 ﻿using ClinicDesk.ControlHelpers;
+using ClinicDesk.Database;
 using ClinicDesk.Database.Models;
 using ReaLTaiizor.Forms;
 
@@ -12,12 +13,18 @@ public partial class AllInOneForm : MaterialForm
     {
         InitializeComponent();
 
-        FormClosed += (s, e) => Application.Exit();
-
         _grdHelper = new AppointmentsGrid(appointmentsGrd, AccountType.AllInOne);
+
+        FormClosed += (s, e) =>
+        {
+            ClinicDb.Instance.Client.RefreshUI -= RefreshUI;
+            Application.Exit();
+        };
+
+        ClinicDb.Instance.Client.RefreshUI += RefreshUI;
     }
 
-    private async void SecretaryForm_Load(object sender, EventArgs e)
+    private async void AllInOneForm_Load(object sender, EventArgs e)
     {
         await _grdHelper.RefreshList();
     }
@@ -51,5 +58,10 @@ public partial class AllInOneForm : MaterialForm
     private void settingsBtn_Click(object sender, EventArgs e)
     {
         AppContext.ShowDialog<SettingsForm>();
+    }
+
+    private async void RefreshUI()
+    {
+        await _grdHelper.RefreshList();
     }
 }
