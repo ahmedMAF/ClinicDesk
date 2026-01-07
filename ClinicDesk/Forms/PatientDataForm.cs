@@ -75,6 +75,9 @@ public partial class PatientDataForm : MaterialForm
             Patient.BloodType = (BloodType)bloodTypeCbo.SelectedIndex;
             Patient.ChronicDiseases = [.. _chronicDiseases];
             Patient.Notes = notesTxt.Text;
+            
+            if (Settings.Instance.IsDental)
+                TeethHelper.MarkMissingTeethByAge(Patient.Teeth!, Patient.Age);
 
             ClinicDb.Instance.Patients.Add(Patient);
         }

@@ -83,4 +83,19 @@ public static class TeethHelper
             new ToothGraphic { Name = "Lower Right Second Molar", Number = 85, Path = teeth[51] },
         ];
     }
+    
+    public static void MarkMissingTeethByAge(List<Tooth> teeth, int age)
+    {
+        if (age < 10)
+        {
+            for (int i = 0; i < 32; i++)
+                teeth[i].Status = ToothStatus.Missing;
+        }
+        
+        if (age == 0 || age > 11)
+        {
+            for (int i = 32; i < 52; i++)
+                teeth[i].Status = ToothStatus.Missing;
+        }
+    }
 }

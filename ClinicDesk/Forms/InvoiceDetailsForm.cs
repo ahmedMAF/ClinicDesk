@@ -15,6 +15,9 @@ public partial class InvoiceDetailsForm : MaterialForm
     {
         InitializeComponent();
         Utils.SetupPaymentsDataGrid(paymentsGrd);
+        
+        FormClosed += (s, e) => ClinicDb.Instance.Client.RefreshUI -= RefreshUI;
+        ClinicDb.Instance.Client.RefreshUI += RefreshUI;
     }
 
     internal void SetData(Invoice invoice)
@@ -53,6 +56,11 @@ public partial class InvoiceDetailsForm : MaterialForm
         ClinicDb.Instance.Payments.Remove(_invoice.Payments[e.RowIndex]);
         await ClinicDb.Instance.SaveChangesAsync();
 
+        RefreshList();
+    }
+    
+    private void RefreshUI()
+    {
         RefreshList();
     }
 }

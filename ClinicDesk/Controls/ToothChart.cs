@@ -166,7 +166,7 @@ public partial class ToothChart : Control
     private Color GetStatusColor(ToothStatus status) => status switch
     {
         ToothStatus.Normal => Color.White,
-        ToothStatus.Missing => Color.FromArgb(230, 230, 230),
+        ToothStatus.Missing => Color.Gray,
         ToothStatus.Implant => Color.FromArgb(76, 175, 80),
         ToothStatus.RootCanal => Color.FromArgb(244, 67, 54),
         _ => throw new NotImplementedException(status.ToString())

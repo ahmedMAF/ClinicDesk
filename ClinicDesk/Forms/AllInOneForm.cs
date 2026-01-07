@@ -58,6 +58,7 @@ public partial class AllInOneForm : MaterialForm
     private void settingsBtn_Click(object sender, EventArgs e)
     {
         AppContext.ShowDialog<SettingsForm>();
+        appointmentsGrd.BackgroundColor = Theme.BackdropColor;
     }
 
     private async void RefreshUI()

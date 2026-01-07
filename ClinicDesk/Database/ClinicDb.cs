@@ -21,10 +21,11 @@ public class ClinicDb : DbContext
     private static bool _wasMySqlRunning;
 
     private readonly Server? _server;
-    public Client Client { get; private set; }
 
     public static ClinicDb Instance { get; private set; } = null!;
     public static bool IsRunning { get; private set; }
+
+    public Client? Client { get; private set; }
 
     public DbSet<Patient> Patients { get; set; }
     public DbSet<Appointment> Appointments { get; set; }
@@ -35,16 +36,20 @@ public class ClinicDb : DbContext
     internal ClinicDb(DbContextOptions<ClinicDb> options) : base(options)
     {
         Database.Migrate();
-        IsRunning = true;
+        
+        if (Settings.Instance.AccountType == AccountType.AllInOne)
+            return;
 
         if (Settings.Instance.IsServer)
         {
             _server = new Server();
-            _server.StartAsync();
+            _ = _server.StartAsync();
         }
 
         Client = new Client();
-        Client.StartAsync();
+        _ = Client.StartAsync();
+        
+        IsRunning = true;
     }
 
     internal static void Initialize()
@@ -84,7 +89,7 @@ public class ClinicDb : DbContext
 
         if (Settings.Instance.IsServer)
             RunDatabaseService();
-
+            
         try
         {
             optionsBuilder.UseMySql(conn, ServerVersion.AutoDetect(conn));
@@ -123,7 +128,7 @@ public class ClinicDb : DbContext
             };
 
             _mySqlProcess = Process.Start(psi);
-            
+            Task.Delay(2000).Wait();
         }
 #else
         ServiceController service = new(ServiceName);
@@ -140,7 +145,7 @@ public class ClinicDb : DbContext
 
     public static void StopDatabaseService()
     {
-        // We should not kill the process if it was running before we started.
+        // We should not stop MySQL if it was running before we started.
         if (_wasMySqlRunning)
             return;
             
@@ -231,13 +236,13 @@ public class ClinicDb : DbContext
 
     public override int SaveChanges()
     {
-        _ = Client.SendAsync();
+        _ = Client?.SendAsync();
         return base.SaveChanges();
     }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        await Client.SendAsync();
+        await Client?.SendAsync();
         return await base.SaveChangesAsync(cancellationToken);
     }
 }

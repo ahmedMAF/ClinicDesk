@@ -10,9 +10,17 @@ public partial class StatsForm : MaterialForm
     public StatsForm()
     {
         InitializeComponent();
+        
+        FormClosed += (s, e) => ClinicDb.Instance.Client.RefreshUI -= RefreshUI;
+        ClinicDb.Instance.Client.RefreshUI += RefreshUI;
     }
 
     private void StatsForm_Load(object sender, EventArgs e)
+    {
+        RefreshStats();
+    }
+    
+    private void RefreshStats()
     {
         ClinicDb db = ClinicDb.Instance;
 
@@ -57,5 +65,10 @@ public partial class StatsForm : MaterialForm
 
         // result lookup
         int getCount(AppointmentStatus s) => statusCounts.FirstOrDefault(x => x.Status == s)?.Count ?? 0;
+    }
+    
+    private void RefreshUI()
+    {
+        RefreshStats();
     }
 }

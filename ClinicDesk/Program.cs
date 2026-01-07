@@ -25,13 +25,13 @@ internal static class Program
     {
         ApplicationConfiguration.Initialize();
         
-        /*using Mutex mutex = new(true, "ClinicDeskMutex", out bool createdNew);
+        using Mutex mutex = new(true, "ClinicDeskMutex", out bool createdNew);
         
         if (!createdNew)
         {
             MessageBox.Show("App is already running.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
-        }*/
+        }
         
         Application.Run(new AppContext());
     }

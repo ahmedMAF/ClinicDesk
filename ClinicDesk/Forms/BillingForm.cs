@@ -27,6 +27,9 @@ public partial class BillingForm : MaterialForm
             ["payBtn"] = payBtn_Click,
             ["payFullBtn"] = payFullBtn_Click
         });
+        
+        FormClosed += (s, e) => ClinicDb.Instance.Client.RefreshUI -= RefreshUI;
+        ClinicDb.Instance.Client.RefreshUI += RefreshUI;
     }
 
     internal void SetData(Patient patient)
@@ -272,5 +275,10 @@ public partial class BillingForm : MaterialForm
     private static bool IsPayButtonDisabled(InvoiceDto invoice)
     {
         return invoice.RemainingAmount == 0;
+    }
+    
+    private async void RefreshUI()
+    {
+        await RefreshList();
     }
 }

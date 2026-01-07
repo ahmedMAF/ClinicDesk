@@ -1,4 +1,5 @@
 ﻿using ClinicDesk.ControlHelpers;
+using ClinicDesk.Database;
 using ClinicDesk.Database.Models;
 using ClinicDesk.Utilities;
 using ReaLTaiizor.Child.Material;
@@ -16,6 +17,9 @@ public partial class PatientProfileForm : MaterialForm
     {
         InitializeComponent();
         _grdHelper = new VisitsGrid(visitsGrd);
+        
+        FormClosed += (s, e) => ClinicDb.Instance.Client.RefreshUI -= RefreshUI;
+        ClinicDb.Instance.Client.RefreshUI += RefreshUI;
     }
 
     internal void SetData(Patient patient)
@@ -25,10 +29,10 @@ public partial class PatientProfileForm : MaterialForm
 
     private void PatientProfileForm_Load(object sender, EventArgs e)
     {
-        RefreshData();
+        RefreshUI();
     }
 
-    private void RefreshData()
+    private void RefreshUI()
     {
         nameTxt.Text = _patient.Name;
         sexTxt.Text = _patient.Sex.ToString();
@@ -49,7 +53,7 @@ public partial class PatientProfileForm : MaterialForm
     {
         Hide();
         AppContext.ShowDialog<PatientDataForm>(form => form.SetData(_patient));
-        RefreshData();
+        RefreshUI();
         Show();
     }
 
