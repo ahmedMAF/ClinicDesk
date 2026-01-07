@@ -79,8 +79,6 @@ public class Server
 
                 string request = Encoding.UTF8.GetString(buffer, 0, bytesRead);
 
-                MessageBox.Show($"\"{request}\"");
-
                 if (request == DBChangedMessage)
                     await BroadcastRefreshUI(client);
             }
