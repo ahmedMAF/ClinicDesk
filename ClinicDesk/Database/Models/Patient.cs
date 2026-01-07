@@ -23,6 +23,9 @@ public class Patient
 
     [NotMapped]
     public TimeSpan Age => DateTime.Now - DateOfBirth;
+
+    [NotMapped]
+    public int AgeYears => Age.Days / 365;
     
     public static Patient New()
     {

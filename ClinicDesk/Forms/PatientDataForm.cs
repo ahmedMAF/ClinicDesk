@@ -1,5 +1,6 @@
 ﻿using ClinicDesk.Database;
 using ClinicDesk.Database.Models;
+using ClinicDesk.Utilities;
 using ReaLTaiizor.Forms;
 
 namespace ClinicDesk.Forms;
@@ -77,7 +78,7 @@ public partial class PatientDataForm : MaterialForm
             Patient.Notes = notesTxt.Text;
             
             if (Settings.Instance.IsDental)
-                TeethHelper.MarkMissingTeethByAge(Patient.Teeth!, Patient.Age);
+                TeethHelper.MarkMissingTeethByAge(Patient.Teeth!, Patient.AgeYears);
 
             ClinicDb.Instance.Patients.Add(Patient);
         }

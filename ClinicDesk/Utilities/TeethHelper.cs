@@ -1,5 +1,6 @@
 using System.Drawing.Drawing2D;
 using ClinicDesk.Controls;
+using ClinicDesk.Database.Models;
 
 namespace ClinicDesk.Utilities;
 

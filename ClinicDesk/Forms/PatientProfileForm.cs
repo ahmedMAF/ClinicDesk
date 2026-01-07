@@ -36,7 +36,7 @@ public partial class PatientProfileForm : MaterialForm
     {
         nameTxt.Text = _patient.Name;
         sexTxt.Text = _patient.Sex.ToString();
-        ageTxt.Text = (_patient.Age.Days / 365).ToString();
+        ageTxt.Text = _patient.AgeYears.ToString();
         maritalTxt.Text = _patient.MaritalStatus.ToString();
 
         bloodTypeTxt.Text = Utils.GetBloodTypeString(_patient.BloodType);
