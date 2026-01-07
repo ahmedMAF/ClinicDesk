@@ -62,7 +62,7 @@ internal static class Utils
 
         // Background
         using (Brush backBrush = new SolidBrush(Theme.DataGridHeaderColor))
-            e.Graphics.FillRectangle(backBrush, e.CellBounds);
+            e.Graphics!.FillRectangle(backBrush, e.CellBounds);
 
         // Border
         using (Pen borderPen = new(Theme.DataGridLinesColor))
@@ -75,10 +75,10 @@ internal static class Utils
         // Text
         TextRenderer.DrawText(
             e.Graphics,
-            e.FormattedValue.ToString(),
-            e.CellStyle.Font,
+            e.FormattedValue!.ToString(),
+            e.CellStyle!.Font,
             e.CellBounds,
-            ((DataGridView)sender).ForeColor,
+            ((DataGridView)sender!).ForeColor,
             TextFormatFlags.HorizontalCenter | TextFormatFlags.VerticalCenter);
 
         e.Handled = true;

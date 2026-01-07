@@ -645,34 +645,18 @@ namespace ClinicDesk.Forms
         }
 
         #endregion
-        private ComboBox bloodTypeCbo;
-        private System.Windows.Forms.GroupBox groupBox3;
-        private Label label7;
-        private Label label6;
-        private System.Windows.Forms.GroupBox groupBox1;
         private MaterialTextBoxEdit ageTxt;
-        private Label label4;
-        private TextBox dobTxt;
-        private ComboBox maritalCbo;
-        private Label label5;
-        private ComboBox sexCbo;
-        private Label label3;
-        private Label label2;
         private MaterialTextBoxEdit nameTxt;
         private MaterialTextBoxEdit sexTxt;
-        private Label label1;
         private DataGridView visitsGrd;
         private ReaLTaiizor.Controls.MaterialCard materialCard1;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel1;
         private TableLayoutPanel tableLayoutPanel1;
         private ReaLTaiizor.Controls.MaterialTextBoxEdit billTxt;
-        private ReaLTaiizor.Controls.MaterialTextBoxEdit materialTextBoxEdit2;
-        private ReaLTaiizor.Controls.MaterialTextBoxEdit materialTextBoxEdit3;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel3;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel2;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel4;
         private MaterialTextBoxEdit maritalTxt;
-        private ReaLTaiizor.Controls.MaterialTextBoxEdit materialTextBoxEdit4;
         private ReaLTaiizor.Controls.MaterialCard materialCard2;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel7;
         private ReaLTaiizor.Controls.MaterialTextBoxEdit bloodTypeTxt;

@@ -610,8 +610,6 @@
 
         #endregion
         private DateTimePicker dobPkr;
-        private Label label4;
-        private GroupBox groupBox2;
         private ReaLTaiizor.Controls.MaterialCard materialCard1;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel4;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel3;

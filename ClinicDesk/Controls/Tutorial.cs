@@ -73,6 +73,6 @@ public class TutorialStep
     public Point TextLocation { get; set; }
     public Point Location { get; set; }
     public Size Radius { get; set; }
-    public string Title { get; set; }
-    public string Text { get; set; }
+    public string Title { get; set; } = null!;
+    public string Text { get; set; } = null!;
 }

@@ -18,8 +18,8 @@ public partial class PatientProfileForm : MaterialForm
         InitializeComponent();
         _grdHelper = new VisitsGrid(visitsGrd);
         
-        FormClosed += (s, e) => ClinicDb.Instance.Client.RefreshUI -= RefreshUI;
-        ClinicDb.Instance.Client.RefreshUI += RefreshUI;
+        FormClosed += (s, e) => ClinicDb.Instance.Client?.RefreshUI -= RefreshUI;
+        ClinicDb.Instance.Client?.RefreshUI += RefreshUI;
     }
 
     internal void SetData(Patient patient)

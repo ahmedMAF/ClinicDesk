@@ -260,20 +260,11 @@
 
         #endregion
 
-        private Label label1;
-        private GroupBox groupBox1;
         private ReaLTaiizor.Controls.MaterialTextBoxEdit phoneTxt;
-        private Label label4;
-        private TextBox textBox3;
-        private Label label3;
-        private TextBox textBox2;
-        private Label label2;
         private DateTimePicker datePkr;
-        private Button cancelBtn;
         private DateTimePicker timePkr;
         private ReaLTaiizor.Controls.MaterialCard materialCard1;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel2;
-        private ReaLTaiizor.Controls.MaterialTextBoxEdit sexTxt;
         private ReaLTaiizor.Controls.MaterialTextBoxEdit nameTxt;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel1;
         private ReaLTaiizor.Controls.MaterialCard materialCard2;

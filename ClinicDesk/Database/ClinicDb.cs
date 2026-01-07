@@ -242,7 +242,9 @@ public class ClinicDb : DbContext
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        await Client?.SendAsync();
+        if (Client != null)
+            await Client.SendAsync();
+            
         return await base.SaveChangesAsync(cancellationToken);
     }
 }
