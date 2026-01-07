@@ -17,11 +17,11 @@ public partial class AllInOneForm : MaterialForm
 
         FormClosed += (s, e) =>
         {
-            ClinicDb.Instance.Client.RefreshUI -= RefreshUI;
+            ClinicDb.Instance.Client?.RefreshUI -= RefreshUI;
             Application.Exit();
         };
 
-        ClinicDb.Instance.Client.RefreshUI += RefreshUI;
+        ClinicDb.Instance.Client?.RefreshUI += RefreshUI;
     }
 
     private async void AllInOneForm_Load(object sender, EventArgs e)

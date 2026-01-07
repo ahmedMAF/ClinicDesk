@@ -98,7 +98,7 @@ public class Server
     {
         foreach (TcpClient client in _clients)
         {
-            IPAddress remoteIP = ((IPEndPoint)client.Client.RemoteEndPoint).Address;
+            IPAddress remoteIP = ((IPEndPoint)client.Client.RemoteEndPoint!).Address;
 
             // Don't send refresh UI command to same app instance on server, only other clients.
             // This causes double refresh and concurrency issue on database.

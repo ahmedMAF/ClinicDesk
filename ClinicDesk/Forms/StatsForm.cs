@@ -11,8 +11,8 @@ public partial class StatsForm : MaterialForm
     {
         InitializeComponent();
         
-        FormClosed += (s, e) => ClinicDb.Instance.Client.RefreshUI -= RefreshUI;
-        ClinicDb.Instance.Client.RefreshUI += RefreshUI;
+        FormClosed += (s, e) => ClinicDb.Instance.Client?.RefreshUI -= RefreshUI;
+        ClinicDb.Instance.Client?.RefreshUI += RefreshUI;
     }
 
     private void StatsForm_Load(object sender, EventArgs e)

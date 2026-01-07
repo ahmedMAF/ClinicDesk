@@ -9,7 +9,7 @@ public class VisitsGrid : GridButtonHelper
     private Patient _patient = null!;
     private int? _originalVisitId;
     private bool _isShowingOneVisit;
-    private List<VisitDto> _visits;
+    private List<VisitDto> _visits = null!;
 
     public VisitsGrid(DataGridView grd) : base(grd, null!)
     {
