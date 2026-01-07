@@ -69,6 +69,12 @@ public partial class StatsForm : MaterialForm
     
     private void RefreshUI()
     {
+        if (InvokeRequired)
+        {
+            BeginInvoke(RefreshUI);
+            return;
+        }
+
         RefreshStats();
     }
 }

@@ -34,6 +34,12 @@ public partial class PatientProfileForm : MaterialForm
 
     private void RefreshUI()
     {
+        if (InvokeRequired)
+        {
+            BeginInvoke(RefreshUI);
+            return;
+        }
+
         nameTxt.Text = _patient.Name;
         sexTxt.Text = _patient.Sex.ToString();
         ageTxt.Text = _patient.AgeYears.ToString();

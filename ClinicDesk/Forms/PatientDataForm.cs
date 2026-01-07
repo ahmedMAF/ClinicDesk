@@ -50,7 +50,7 @@ public partial class PatientDataForm : MaterialForm
         notesTxt.Text = patient.Notes;
     }
 
-    private void saveBtn_Click(object sender, EventArgs e)
+    private async void saveBtn_Click(object sender, EventArgs e)
     {
         foreach (CheckBox chk in chronicDiseasesGrp.Controls.OfType<CheckBox>())
             if (chk.Checked && chk.Name != "disOtherChk")
@@ -95,7 +95,7 @@ public partial class PatientDataForm : MaterialForm
         }
 
 
-        ClinicDb.Instance.SaveChanges();
+        await ClinicDb.Instance.SaveChangesAsync();
 
         DialogResult = DialogResult.OK;
         Close();

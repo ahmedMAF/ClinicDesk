@@ -62,6 +62,8 @@ public class Client
 
                 string message = Encoding.UTF8.GetString(buffer, 0, bytesRead);
 
+                MessageBox.Show($"\"{message}\"");
+
                 if (message == Server.RefreshMessage)
                     RefreshUI?.Invoke();
             }

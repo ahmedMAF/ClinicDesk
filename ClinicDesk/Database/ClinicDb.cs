@@ -36,7 +36,8 @@ public class ClinicDb : DbContext
     internal ClinicDb(DbContextOptions<ClinicDb> options) : base(options)
     {
         Database.Migrate();
-        
+        IsRunning = true;
+
         if (Settings.Instance.AccountType == AccountType.AllInOne)
             return;
 
@@ -48,8 +49,6 @@ public class ClinicDb : DbContext
 
         Client = new Client();
         _ = Client.StartAsync();
-        
-        IsRunning = true;
     }
 
     internal static void Initialize()
@@ -236,15 +235,19 @@ public class ClinicDb : DbContext
 
     public override int SaveChanges()
     {
+        int result = base.SaveChanges();
         _ = Client?.SendAsync();
-        return base.SaveChanges();
+
+        return result;
     }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
+        int result = await base.SaveChangesAsync(cancellationToken);
+
         if (Client != null)
             await Client.SendAsync();
-            
-        return await base.SaveChangesAsync(cancellationToken);
+
+        return result;
     }
 }

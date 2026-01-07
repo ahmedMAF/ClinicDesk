@@ -9,10 +9,12 @@ public class Server
     public const int BufferSize = 32;
     public const int Port = 8484;
 
-    public const string RefreshMessage = "REFRESH_UI";
-    public const string DBChangedMessage = "DB_CHANGED";
+    public const string RefreshMessage = "REFRESH_UI\n";
+    public const string DBChangedMessage = "DB_CHANGED\n";
 
     private readonly List<TcpClient> _clients = [];
+    private readonly Lock _clientsLock = new();
+
     private readonly byte[] _refreshMessage;
     private TcpListener _listener = null!;
     private bool _isRunning;
@@ -33,7 +35,12 @@ public class Server
             while (_isRunning)
             {
                 TcpClient client = await _listener.AcceptTcpClientAsync();
-                _clients.Add(client);
+
+                lock (_clientsLock)
+                {
+                    _clients.Add(client);
+                }
+
                 _ = HandleClientAsync(client);
             }
         }
@@ -72,8 +79,10 @@ public class Server
 
                 string request = Encoding.UTF8.GetString(buffer, 0, bytesRead);
 
+                MessageBox.Show($"\"{request}\"");
+
                 if (request == DBChangedMessage)
-                    await BroadcastRefreshUI();
+                    await BroadcastRefreshUI(client);
             }
         }
         catch (IOException)
@@ -88,23 +97,23 @@ public class Server
         finally
         {
             client.Close();
-            _clients.Remove(client);
-        }
 
-        _clients.Remove(client);
+            lock (_clientsLock)
+            {
+                _clients.Remove(client);
+            }
+        }
     }
 
-    private async Task BroadcastRefreshUI()
+    private async Task BroadcastRefreshUI(TcpClient exceptFor)
     {
         foreach (TcpClient client in _clients)
         {
-            IPAddress remoteIP = ((IPEndPoint)client.Client.RemoteEndPoint!).Address;
-
-            // Don't send refresh UI command to same app instance on server, only other clients.
-            // This causes double refresh and concurrency issue on database.
-            if (IPAddress.IsLoopback(remoteIP))
+            // Don't send refresh UI command to the client how caused the change
+            // It will update locally.
+            if (client == exceptFor)
                 continue;
-            
+
             try
             {
                 NetworkStream stream = client.GetStream();
@@ -113,7 +122,11 @@ public class Server
             catch (Exception ex)
             {
                 client.Close();
-                _clients.Remove(client);
+
+                lock (_clientsLock)
+                {
+                    _clients.Remove(client);
+                }
 
                 MessageBox.Show($"Error sending to client: {ex.Message}", "Network Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

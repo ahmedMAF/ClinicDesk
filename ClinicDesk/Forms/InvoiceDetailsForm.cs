@@ -61,6 +61,12 @@ public partial class InvoiceDetailsForm : MaterialForm
     
     private void RefreshUI()
     {
+        if (InvokeRequired)
+        {
+            BeginInvoke(RefreshUI);
+            return;
+        }
+
         RefreshList();
     }
 }

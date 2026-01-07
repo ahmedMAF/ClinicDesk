@@ -63,6 +63,12 @@ public partial class AllInOneForm : MaterialForm
 
     private async void RefreshUI()
     {
+        if (InvokeRequired)
+        {
+            BeginInvoke(RefreshUI);
+            return;
+        }
+
         await _grdHelper.RefreshList();
     }
 }

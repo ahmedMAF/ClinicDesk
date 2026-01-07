@@ -57,6 +57,12 @@ public partial class SecretaryForm : MaterialForm
 
     private async void RefreshUI()
     {
+        if (InvokeRequired)
+        {
+            BeginInvoke(RefreshUI);
+            return;
+        }
+
         await _grdHelper.RefreshList();
     }
 

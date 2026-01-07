@@ -279,6 +279,12 @@ public partial class BillingForm : MaterialForm
     
     private async void RefreshUI()
     {
+        if (InvokeRequired)
+        {
+            BeginInvoke(RefreshUI);
+            return;
+        }
+
         await RefreshList();
     }
 }
