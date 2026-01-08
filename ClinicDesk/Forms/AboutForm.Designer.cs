@@ -32,7 +32,8 @@
             pictureBox1 = new PictureBox();
             materialLabel1 = new ReaLTaiizor.Controls.MaterialLabel();
             materialLabel2 = new ReaLTaiizor.Controls.MaterialLabel();
-            label2 = new Label();
+            label2 = new ReaLTaiizor.Controls.MaterialLabel();
+            novaLink = new LinkLabel();
             panel1 = new Panel();
             materialLabel3 = new ReaLTaiizor.Controls.MaterialLabel();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -72,14 +73,25 @@
             materialLabel2.Name = "materialLabel2";
             materialLabel2.Size = new Size(292, 77);
             materialLabel2.TabIndex = 2;
-            materialLabel2.Text = "Designed by:\r\nNOVA for Integrated Solutions\r\n2025";
+            materialLabel2.Text = "Designed by:";
+            // 
+            // novaLink
+            // 
+            novaLink.AutoSize = true;
+            novaLink.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            novaLink.Location = new Point(17, 200);
+            novaLink.Name = "novaLink";
+            materialLabel2.TabIndex = 5;
+            novaLink.Text = "NOVA for Integrated Solutions";
+            novaLink.Click += novaLink_Click;
             // 
             // label2
             // 
-            label2.BackColor = Color.Transparent;
+            label2.Depth = 0;
+            label2.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             label2.Dock = DockStyle.Bottom;
-            label2.ForeColor = SystemColors.ControlText;
             label2.Location = new Point(3, 382);
+            label2.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             label2.Name = "label2";
             label2.Size = new Size(582, 30);
             label2.TabIndex = 3;
@@ -115,6 +127,7 @@
             Controls.Add(materialLabel3);
             Controls.Add(panel1);
             Controls.Add(label2);
+            Controls.Add(novaLink);
             Controls.Add(materialLabel2);
             Controls.Add(materialLabel1);
             Icon = (Icon)resources.GetObject("$this.Icon");
@@ -135,7 +148,8 @@
         private PictureBox pictureBox1;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel1;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel2;
-        private Label label2;
+        private ReaLTaiizor.Controls.MaterialLabel label2;
+        private LinkLabel novaLink;
         private Panel panel1;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel3;
     }
