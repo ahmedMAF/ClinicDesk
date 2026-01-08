@@ -29,19 +29,114 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(AboutForm));
+            pictureBox1 = new PictureBox();
+            materialLabel1 = new ReaLTaiizor.Controls.MaterialLabel();
+            materialLabel2 = new ReaLTaiizor.Controls.MaterialLabel();
+            label2 = new Label();
+            panel1 = new Panel();
+            materialLabel3 = new ReaLTaiizor.Controls.MaterialLabel();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
+            panel1.SuspendLayout();
             SuspendLayout();
+            // 
+            // pictureBox1
+            // 
+            pictureBox1.Dock = DockStyle.Fill;
+            pictureBox1.Image = Properties.Resources.icon;
+            pictureBox1.Location = new Point(0, 0);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(264, 318);
+            pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
+            pictureBox1.TabIndex = 0;
+            pictureBox1.TabStop = false;
+            // 
+            // materialLabel1
+            // 
+            materialLabel1.AutoSize = true;
+            materialLabel1.Depth = 0;
+            materialLabel1.Font = new Font("Roboto", 34F, FontStyle.Bold, GraphicsUnit.Pixel);
+            materialLabel1.FontType = ReaLTaiizor.Manager.MaterialSkinManager.FontType.H4;
+            materialLabel1.Location = new Point(17, 89);
+            materialLabel1.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialLabel1.Name = "materialLabel1";
+            materialLabel1.Size = new Size(159, 41);
+            materialLabel1.TabIndex = 1;
+            materialLabel1.Text = "ClinicDesk";
+            // 
+            // materialLabel2
+            // 
+            materialLabel2.Depth = 0;
+            materialLabel2.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel2.Location = new Point(17, 165);
+            materialLabel2.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialLabel2.Name = "materialLabel2";
+            materialLabel2.Size = new Size(292, 77);
+            materialLabel2.TabIndex = 2;
+            materialLabel2.Text = "Designed by:\r\nNOVA for Integrated Solutions\r\n2025";
+            // 
+            // label2
+            // 
+            label2.BackColor = Color.Transparent;
+            label2.Dock = DockStyle.Bottom;
+            label2.ForeColor = SystemColors.ControlText;
+            label2.Location = new Point(3, 382);
+            label2.Name = "label2";
+            label2.Size = new Size(582, 30);
+            label2.TabIndex = 3;
+            label2.Text = "© 2025-2026 ClinicDesk. All rights reserved.";
+            label2.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.Transparent;
+            panel1.Controls.Add(pictureBox1);
+            panel1.Dock = DockStyle.Right;
+            panel1.Location = new Point(321, 64);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(264, 318);
+            panel1.TabIndex = 4;
+            // 
+            // materialLabel3
+            // 
+            materialLabel3.Depth = 0;
+            materialLabel3.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel3.Location = new Point(17, 351);
+            materialLabel3.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialLabel3.Name = "materialLabel3";
+            materialLabel3.Size = new Size(90, 31);
+            materialLabel3.TabIndex = 5;
+            materialLabel3.Text = "v1.0.0";
             // 
             // AboutForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(588, 415);
+            Controls.Add(materialLabel3);
+            Controls.Add(panel1);
+            Controls.Add(label2);
+            Controls.Add(materialLabel2);
+            Controls.Add(materialLabel1);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "AboutForm";
-            Text = "AboutForm";
+            Sizable = false;
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "About ClinicDesk";
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
+            panel1.ResumeLayout(false);
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
+
+        private PictureBox pictureBox1;
+        private ReaLTaiizor.Controls.MaterialLabel materialLabel1;
+        private ReaLTaiizor.Controls.MaterialLabel materialLabel2;
+        private Label label2;
+        private Panel panel1;
+        private ReaLTaiizor.Controls.MaterialLabel materialLabel3;
     }
 }

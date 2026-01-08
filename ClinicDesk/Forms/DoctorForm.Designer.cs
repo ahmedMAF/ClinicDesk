@@ -34,6 +34,8 @@
             searchBtn = new ReaLTaiizor.Controls.MaterialButton();
             materialLabel1 = new ReaLTaiizor.Controls.MaterialLabel();
             monthCalendar1 = new MonthCalendar();
+            aboutBtn = new ReaLTaiizor.Controls.MaterialButton();
+            statsBtn = new ReaLTaiizor.Controls.MaterialButton();
             ((System.ComponentModel.ISupportInitialize)appointmentsGrd).BeginInit();
             SuspendLayout();
             // 
@@ -44,7 +46,7 @@
             appointmentsGrd.Location = new Point(12, 292);
             appointmentsGrd.Name = "appointmentsGrd";
             appointmentsGrd.RowHeadersWidth = 51;
-            appointmentsGrd.Size = new Size(702, 397);
+            appointmentsGrd.Size = new Size(912, 397);
             appointmentsGrd.TabIndex = 5;
             // 
             // settingsBtn
@@ -58,7 +60,7 @@
             settingsBtn.HighEmphasis = true;
             settingsBtn.Icon = null;
             settingsBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            settingsBtn.Location = new Point(516, 127);
+            settingsBtn.Location = new Point(726, 73);
             settingsBtn.Margin = new Padding(4, 6, 4, 6);
             settingsBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             settingsBtn.Name = "settingsBtn";
@@ -82,7 +84,7 @@
             searchBtn.HighEmphasis = true;
             searchBtn.Icon = null;
             searchBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            searchBtn.Location = new Point(516, 70);
+            searchBtn.Location = new Point(520, 73);
             searchBtn.Margin = new Padding(4, 6, 4, 6);
             searchBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             searchBtn.Name = "searchBtn";
@@ -114,11 +116,61 @@
             monthCalendar1.TabIndex = 12;
             monthCalendar1.DateSelected += monthCalendar1_DateSelected;
             // 
+            // aboutBtn
+            // 
+            aboutBtn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            aboutBtn.AutoSize = false;
+            aboutBtn.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            aboutBtn.CharacterCasing = ReaLTaiizor.Controls.MaterialButton.CharacterCasingEnum.Normal;
+            aboutBtn.Density = ReaLTaiizor.Controls.MaterialButton.MaterialButtonDensity.Default;
+            aboutBtn.Depth = 0;
+            aboutBtn.HighEmphasis = true;
+            aboutBtn.Icon = null;
+            aboutBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
+            aboutBtn.Location = new Point(726, 130);
+            aboutBtn.Margin = new Padding(4, 6, 4, 6);
+            aboutBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            aboutBtn.Name = "aboutBtn";
+            aboutBtn.NoAccentTextColor = Color.Empty;
+            aboutBtn.Size = new Size(198, 45);
+            aboutBtn.TabIndex = 15;
+            aboutBtn.Text = "About";
+            aboutBtn.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
+            aboutBtn.UseAccentColor = false;
+            aboutBtn.UseVisualStyleBackColor = true;
+            aboutBtn.Click += aboutBtn_Click;
+            // 
+            // statsBtn
+            // 
+            statsBtn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            statsBtn.AutoSize = false;
+            statsBtn.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            statsBtn.CharacterCasing = ReaLTaiizor.Controls.MaterialButton.CharacterCasingEnum.Normal;
+            statsBtn.Density = ReaLTaiizor.Controls.MaterialButton.MaterialButtonDensity.Default;
+            statsBtn.Depth = 0;
+            statsBtn.HighEmphasis = true;
+            statsBtn.Icon = null;
+            statsBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
+            statsBtn.Location = new Point(520, 130);
+            statsBtn.Margin = new Padding(4, 6, 4, 6);
+            statsBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            statsBtn.Name = "statsBtn";
+            statsBtn.NoAccentTextColor = Color.Empty;
+            statsBtn.Size = new Size(198, 45);
+            statsBtn.TabIndex = 14;
+            statsBtn.Text = "Statistics";
+            statsBtn.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
+            statsBtn.UseAccentColor = false;
+            statsBtn.UseVisualStyleBackColor = true;
+            statsBtn.Click += statsBtn_Click;
+            // 
             // DoctorForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(724, 701);
+            ClientSize = new Size(934, 701);
+            Controls.Add(aboutBtn);
+            Controls.Add(statsBtn);
             Controls.Add(materialLabel1);
             Controls.Add(monthCalendar1);
             Controls.Add(searchBtn);
@@ -141,5 +193,7 @@
         private ReaLTaiizor.Controls.MaterialButton searchBtn;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel1;
         private MonthCalendar monthCalendar1;
+        private ReaLTaiizor.Controls.MaterialButton aboutBtn;
+        private ReaLTaiizor.Controls.MaterialButton statsBtn;
     }
 }

@@ -30,7 +30,6 @@
         {
             materialLabel1 = new ReaLTaiizor.Controls.MaterialLabel();
             numOfPatientsTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
-            monthCalendar1 = new MonthCalendar();
             numOfAppsTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             materialLabel2 = new ReaLTaiizor.Controls.MaterialLabel();
             attTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
@@ -55,8 +54,16 @@
             paidTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             remainTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             materialLabel14 = new ReaLTaiizor.Controls.MaterialLabel();
+            dateFromPkr = new DateTimePicker();
+            materialCard3 = new ReaLTaiizor.Controls.MaterialCard();
+            allTimeChk = new ReaLTaiizor.Controls.MaterialCheckBox();
+            showBtn = new ReaLTaiizor.Controls.MaterialButton();
+            dateToPkr = new DateTimePicker();
+            materialLabel17 = new ReaLTaiizor.Controls.MaterialLabel();
+            materialLabel18 = new ReaLTaiizor.Controls.MaterialLabel();
             materialCard1.SuspendLayout();
             materialCard2.SuspendLayout();
+            materialCard3.SuspendLayout();
             SuspendLayout();
             // 
             // materialLabel1
@@ -100,13 +107,6 @@
             numOfPatientsTxt.TextAlign = HorizontalAlignment.Left;
             numOfPatientsTxt.TrailingIcon = null;
             numOfPatientsTxt.UseSystemPasswordChar = false;
-            // 
-            // monthCalendar1
-            // 
-            monthCalendar1.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            monthCalendar1.Location = new Point(349, 73);
-            monthCalendar1.Name = "monthCalendar1";
-            monthCalendar1.TabIndex = 2;
             // 
             // numOfAppsTxt
             // 
@@ -350,7 +350,7 @@
             materialCard1.Controls.Add(materialLabel4);
             materialCard1.Depth = 0;
             materialCard1.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            materialCard1.Location = new Point(12, 303);
+            materialCard1.Location = new Point(17, 303);
             materialCard1.Margin = new Padding(14);
             materialCard1.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialCard1.Name = "materialCard1";
@@ -414,7 +414,7 @@
             materialCard2.Controls.Add(materialLabel14);
             materialCard2.Depth = 0;
             materialCard2.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            materialCard2.Location = new Point(12, 633);
+            materialCard2.Location = new Point(17, 633);
             materialCard2.Margin = new Padding(14);
             materialCard2.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialCard2.Name = "materialCard2";
@@ -602,14 +602,122 @@
             materialLabel14.TabIndex = 7;
             materialLabel14.Text = "Remaining";
             // 
+            // dateFromPkr
+            // 
+            dateFromPkr.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            dateFromPkr.CustomFormat = "  dd/MM/yyyy";
+            dateFromPkr.Enabled = false;
+            dateFromPkr.Format = DateTimePickerFormat.Custom;
+            dateFromPkr.Location = new Point(136, 22);
+            dateFromPkr.Name = "dateFromPkr";
+            dateFromPkr.Size = new Size(261, 27);
+            dateFromPkr.TabIndex = 16;
+            // 
+            // materialCard3
+            // 
+            materialCard3.BackColor = Color.FromArgb(255, 255, 255);
+            materialCard3.Controls.Add(allTimeChk);
+            materialCard3.Controls.Add(showBtn);
+            materialCard3.Controls.Add(dateToPkr);
+            materialCard3.Controls.Add(dateFromPkr);
+            materialCard3.Controls.Add(materialLabel17);
+            materialCard3.Controls.Add(materialLabel18);
+            materialCard3.Depth = 0;
+            materialCard3.ForeColor = Color.FromArgb(222, 0, 0, 0);
+            materialCard3.Location = new Point(17, 78);
+            materialCard3.Margin = new Padding(14);
+            materialCard3.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialCard3.Name = "materialCard3";
+            materialCard3.Padding = new Padding(14);
+            materialCard3.Size = new Size(924, 197);
+            materialCard3.TabIndex = 16;
+            // 
+            // allTimeChk
+            // 
+            allTimeChk.AutoSize = true;
+            allTimeChk.Checked = true;
+            allTimeChk.CheckState = CheckState.Checked;
+            allTimeChk.Depth = 0;
+            allTimeChk.Location = new Point(27, 122);
+            allTimeChk.Margin = new Padding(0);
+            allTimeChk.MouseLocation = new Point(-1, -1);
+            allTimeChk.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            allTimeChk.Name = "allTimeChk";
+            allTimeChk.ReadOnly = false;
+            allTimeChk.Ripple = true;
+            allTimeChk.Size = new Size(93, 37);
+            allTimeChk.TabIndex = 37;
+            allTimeChk.Text = "All Time";
+            allTimeChk.UseAccentColor = false;
+            allTimeChk.UseVisualStyleBackColor = true;
+            allTimeChk.CheckedChanged += allTimeChk_CheckedChanged;
+            // 
+            // showBtn
+            // 
+            showBtn.AutoSize = false;
+            showBtn.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            showBtn.CharacterCasing = ReaLTaiizor.Controls.MaterialButton.CharacterCasingEnum.Normal;
+            showBtn.Density = ReaLTaiizor.Controls.MaterialButton.MaterialButtonDensity.Default;
+            showBtn.Depth = 0;
+            showBtn.HighEmphasis = true;
+            showBtn.Icon = null;
+            showBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
+            showBtn.Location = new Point(748, 141);
+            showBtn.Margin = new Padding(4, 6, 4, 6);
+            showBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            showBtn.Name = "showBtn";
+            showBtn.NoAccentTextColor = Color.Empty;
+            showBtn.Size = new Size(158, 36);
+            showBtn.TabIndex = 36;
+            showBtn.Text = "Show";
+            showBtn.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
+            showBtn.UseAccentColor = false;
+            showBtn.UseVisualStyleBackColor = true;
+            showBtn.Click += showBtn_Click;
+            // 
+            // dateToPkr
+            // 
+            dateToPkr.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            dateToPkr.CustomFormat = "  dd/MM/yyyy";
+            dateToPkr.Enabled = false;
+            dateToPkr.Format = DateTimePickerFormat.Custom;
+            dateToPkr.Location = new Point(136, 76);
+            dateToPkr.Name = "dateToPkr";
+            dateToPkr.Size = new Size(261, 27);
+            dateToPkr.TabIndex = 17;
+            // 
+            // materialLabel17
+            // 
+            materialLabel17.AutoSize = true;
+            materialLabel17.Depth = 0;
+            materialLabel17.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel17.Location = new Point(27, 30);
+            materialLabel17.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialLabel17.Name = "materialLabel17";
+            materialLabel17.Size = new Size(75, 19);
+            materialLabel17.TabIndex = 0;
+            materialLabel17.Text = "From Date";
+            // 
+            // materialLabel18
+            // 
+            materialLabel18.AutoSize = true;
+            materialLabel18.Depth = 0;
+            materialLabel18.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel18.Location = new Point(27, 84);
+            materialLabel18.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialLabel18.Name = "materialLabel18";
+            materialLabel18.Size = new Size(57, 19);
+            materialLabel18.TabIndex = 3;
+            materialLabel18.Text = "To Date";
+            // 
             // StatsForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(960, 847);
+            Controls.Add(materialCard3);
             Controls.Add(materialCard2);
             Controls.Add(materialCard1);
-            Controls.Add(monthCalendar1);
             Name = "StatsForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Stats";
@@ -618,6 +726,8 @@
             materialCard1.PerformLayout();
             materialCard2.ResumeLayout(false);
             materialCard2.PerformLayout();
+            materialCard3.ResumeLayout(false);
+            materialCard3.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -625,7 +735,6 @@
 
         private ReaLTaiizor.Controls.MaterialLabel materialLabel1;
         private ReaLTaiizor.Controls.MaterialTextBoxEdit numOfPatientsTxt;
-        private MonthCalendar monthCalendar1;
         private ReaLTaiizor.Controls.MaterialTextBoxEdit numOfAppsTxt;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel2;
         private ReaLTaiizor.Controls.MaterialTextBoxEdit attTxt;
@@ -650,5 +759,12 @@
         private ReaLTaiizor.Controls.MaterialLabel materialLabel14;
         private ReaLTaiizor.Controls.MaterialTextBoxEdit pendTxt;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel13;
+        private DateTimePicker dateFromPkr;
+        private ReaLTaiizor.Controls.MaterialCard materialCard3;
+        private ReaLTaiizor.Controls.MaterialLabel materialLabel17;
+        private ReaLTaiizor.Controls.MaterialLabel materialLabel18;
+        private DateTimePicker dateToPkr;
+        private ReaLTaiizor.Controls.MaterialButton showBtn;
+        private ReaLTaiizor.Controls.MaterialCheckBox allTimeChk;
     }
 }

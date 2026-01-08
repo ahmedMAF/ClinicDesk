@@ -25,10 +25,13 @@ public partial class SplashForm : Form
         skin.Theme = MaterialSkinManager.Themes.LIGHT;
 
         skin.ColorScheme = new MaterialColorScheme(
-            MaterialPrimary.Indigo500,
-            MaterialPrimary.Indigo700,
-            MaterialPrimary.Indigo100,
-            MaterialAccent.Red200,
+            Color.FromArgb(62, 126, 105),
+            Color.FromArgb(50, 100, 80),
+            Color.FromArgb(62, 126, 105),
+            // MaterialPrimary.Indigo700,
+            // MaterialPrimary.Indigo100,
+            //MaterialAccent.Red200,
+            Color.FromArgb(140, 9, 45),
             MaterialTextShade.WHITE
         );
 

@@ -1,6 +1,9 @@
+using ClinicDesk.Database;
 using ClinicDesk.Database.Dto;
 using ClinicDesk.Database.Models;
+using ClinicDesk.Forms;
 using ClinicDesk.Utilities;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicDesk.ControlHelpers;
 
@@ -11,17 +14,18 @@ public class VisitsGrid : GridButtonHelper
     private bool _isShowingOneVisit;
     private List<VisitDto> _visits = null!;
 
-    public VisitsGrid(DataGridView grd) : base(grd, null!)
+    public VisitsGrid(DataGridView grd, bool allowFollowup) : base(grd, null!)
     {
         ColumnActions = new Dictionary<string, Action<int>>
         {
-            ["showBtn"] = showBtn_Click
+            ["showBtn"] = showBtn_Click,
+            ["followupBtn"] = followupBtn_Click
         };
         
-        SetupVisitsDataGrid();
+        SetupVisitsDataGrid(allowFollowup);
     }
     
-    private void SetupVisitsDataGrid()
+    private void SetupVisitsDataGrid(bool allowFollowup)
     {
         Utils.SetupDataGrid(Grid);
         
@@ -64,6 +68,15 @@ public class VisitsGrid : GridButtonHelper
             HeaderText = "",
             UseColumnTextForButtonValue = false
         });
+
+        Grid.Columns.Add(new DataGridViewButtonColumn
+        {
+            Name = "followupBtn",
+            Width = 120,
+            HeaderText = "",
+            Text = "Follow Up",
+            UseColumnTextForButtonValue = true
+        });
     }
     
     private void showBtn_Click(int rowIndex)
@@ -75,6 +88,17 @@ public class VisitsGrid : GridButtonHelper
 
         _originalVisitId = rowIndex == 0 && _isShowingOneVisit ? null : visit.Id;
         PopulateGrid();
+    }
+
+    private async void followupBtn_Click(int rowIndex)
+    {
+        VisitDto visitDto = _visits[rowIndex];
+
+        Appointment? appointment = await ClinicDb.Instance.Appointments
+            .Include(a => a.Patient)
+            .FirstOrDefaultAsync(a => a.VisitId == visitDto.Id);
+
+        AppContext.ShowDialog<NewAppointmentForm>(form => form.SetData(appointment!, AppointmentAction.FollowUp));
     }
 
     private void Grid_CellPainting(object? sender, DataGridViewCellPaintingEventArgs e)

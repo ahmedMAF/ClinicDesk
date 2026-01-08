@@ -18,7 +18,7 @@ public partial class AppointmentForm : MaterialForm
     public AppointmentForm()
     {
         InitializeComponent();
-        _grdHelper = new VisitsGrid(visitsGrd);
+        _grdHelper = new VisitsGrid(visitsGrd, false);
         
         chartBtn.Visible = Settings.Instance.IsDental;
     }

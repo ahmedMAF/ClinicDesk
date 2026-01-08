@@ -344,7 +344,7 @@ public class AppointmentsGrid : GridButtonHelper
             _date = date.Value;
            
         // FIXME: This causes a race condition
-        // await Utils.MarkMissedAppointments();
+        await Utils.MarkMissedAppointments();
         await PopulateGrid();
     }
     

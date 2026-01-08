@@ -16,7 +16,7 @@ public partial class PatientProfileForm : MaterialForm
     public PatientProfileForm()
     {
         InitializeComponent();
-        _grdHelper = new VisitsGrid(visitsGrd);
+        _grdHelper = new VisitsGrid(visitsGrd, true);
         
         FormClosed += (s, e) => ClinicDb.Instance.Client?.RefreshUI -= RefreshUI;
         ClinicDb.Instance.Client?.RefreshUI += RefreshUI;

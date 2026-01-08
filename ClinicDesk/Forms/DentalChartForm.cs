@@ -42,7 +42,7 @@ public partial class DentalChartForm : MaterialForm
             _sb.Append("Filling: ").Append(e.Tooth.Filling).Append(Environment.NewLine);
        
         if (!string.IsNullOrWhiteSpace(e.Tooth.Notes))
-            _sb.Append("Notes: ").Append(Environment.NewLine).Append(e.Tooth.Notes);
+            _sb.Append(Environment.NewLine).Append("Notes: ").Append(Environment.NewLine).Append(e.Tooth.Notes);
         
         contentLbl.Text = _sb.ToString();
     }

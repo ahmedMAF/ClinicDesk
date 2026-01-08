@@ -10,7 +10,7 @@ public partial class StatsForm : MaterialForm
     public StatsForm()
     {
         InitializeComponent();
-        
+
         FormClosed += (s, e) => ClinicDb.Instance.Client?.RefreshUI -= RefreshUI;
         ClinicDb.Instance.Client?.RefreshUI += RefreshUI;
     }
@@ -19,16 +19,16 @@ public partial class StatsForm : MaterialForm
     {
         RefreshStats();
     }
-    
+
     private void RefreshStats()
     {
         ClinicDb db = ClinicDb.Instance;
 
-        DateTime start = monthCalendar1.SelectionStart;
-        DateTime end = monthCalendar1.SelectionEnd;
+        DateTime start = dateFromPkr.Value.Date;
+        DateTime end = dateToPkr.Value.Date;
 
         IQueryable<Appointment> query = db.Appointments
-            .Where(a => a.Date >= start && a.Date <= end);
+            .Where(a => allTimeChk.Checked || (a.Date >= start && a.Date <= end));
 
         int totalApps = query.Count();
         int totalPatients = query.Select(a => a.PatientId).Distinct().Count();
@@ -66,7 +66,7 @@ public partial class StatsForm : MaterialForm
         // result lookup
         int getCount(AppointmentStatus s) => statusCounts.FirstOrDefault(x => x.Status == s)?.Count ?? 0;
     }
-    
+
     private void RefreshUI()
     {
         if (InvokeRequired)
@@ -76,5 +76,16 @@ public partial class StatsForm : MaterialForm
         }
 
         RefreshStats();
+    }
+
+    private void showBtn_Click(object sender, EventArgs e)
+    {
+        RefreshUI();
+    }
+
+    private void allTimeChk_CheckedChanged(object sender, EventArgs e)
+    {
+        dateFromPkr.Enabled = !allTimeChk.Checked;
+        dateToPkr.Enabled = !allTimeChk.Checked;
     }
 }

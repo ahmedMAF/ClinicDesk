@@ -63,6 +63,16 @@ namespace ClinicDesk.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap icon {
+            get {
+                object obj = ResourceManager.GetObject("icon", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap logopng {
             get {
                 object obj = ResourceManager.GetObject("logopng", resourceCulture);
@@ -71,7 +81,19 @@ namespace ClinicDesk.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to test.
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap nova {
+            get {
+                object obj = ResourceManager.GetObject("nova", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 
+        ///M 1.888793,25.888147 C 1.250676,24.298525 2.532429,24.082109 3.877608,24.088744 C 5.094246,24.161804 6.515953,23.988132 5.980068,25.812383 C 6.168126,26.272456 6.453246,27.152705 6.093715,27.744374 C 5.74792,28.314272 2.97104,28.241303 2.267615,28.02849 C 1.674159,27.682807 1.747934,26.45241 1.888793,25.888147 Z
+        ///M 2.825748,19.360387 C 3.452218,19.102386 5.280657,19.194252 5.789605,19.453187 C 6.553027,19.779092 6.691426,20.408579 6.2048,21.34165 C 6.499454,22.591698 6.19141,23.172078 5.963719,23.32387 C  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string TeethSvg {
             get {

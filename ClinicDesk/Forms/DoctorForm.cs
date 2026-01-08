@@ -60,4 +60,14 @@ public partial class DoctorForm : MaterialForm
 
         await _grdHelper.RefreshList();
     }
+
+    private void aboutBtn_Click(object sender, EventArgs e)
+    {
+        AppContext.ShowDialog<AboutForm>();
+    }
+
+    private void statsBtn_Click(object sender, EventArgs e)
+    {
+        AppContext.ShowDialog<StatsForm>();
+    }
 }
