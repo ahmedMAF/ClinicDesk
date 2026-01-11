@@ -20,9 +20,10 @@ public partial class SplashForm : Form
         Task delay = Task.Delay(3000);
         await Task.Delay(500);
 
+        Settings settings = Settings.Instance;
         MaterialSkinManager skin = MaterialSkinManager.Instance;
 
-        skin.Theme = MaterialSkinManager.Themes.LIGHT;
+        skin.Theme = settings.IsDarkTheme ? MaterialSkinManager.Themes.DARK : MaterialSkinManager.Themes.LIGHT;
 
         skin.ColorScheme = new MaterialColorScheme(
             Color.FromArgb(60, 125, 105),
@@ -47,6 +48,10 @@ public partial class SplashForm : Form
       
         // We are good.
         LicenseDateHelper.SaveLastSeen();
+
+        if (settings.UseApi)
+            AppointmentApi.Initialize();
+
         ClinicDb.Initialize();
 
         if (!ClinicDb.IsRunning)
@@ -57,12 +62,12 @@ public partial class SplashForm : Form
         
         ClinicDb.AutoBackup();
         
-        if (Settings.Instance.IsDental)
+        if (settings.IsDental)
             TeethHelper.Initialize();
 
         await delay;
 
-        switch (Settings.Instance.AccountType)
+        switch (settings.AccountType)
         {
             case AccountType.Doctor:
                 AppContext.ShowForm<DoctorForm>();

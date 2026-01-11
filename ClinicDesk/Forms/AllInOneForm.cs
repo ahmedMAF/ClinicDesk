@@ -1,6 +1,7 @@
 ﻿using ClinicDesk.ControlHelpers;
 using ClinicDesk.Database;
 using ClinicDesk.Database.Models;
+using ReaLTaiizor.Controls;
 using ReaLTaiizor.Forms;
 
 namespace ClinicDesk.Forms;
@@ -18,10 +19,12 @@ public partial class AllInOneForm : MaterialForm
         FormClosed += (s, e) =>
         {
             ClinicDb.Instance.Client?.RefreshUI -= RefreshUI;
+            AppointmentApi.NewRequestsRecieved -= NewRequestsRecieved;
             Application.Exit();
         };
 
         ClinicDb.Instance.Client?.RefreshUI += RefreshUI;
+        AppointmentApi.NewRequestsRecieved += NewRequestsRecieved;
     }
 
     private async void AllInOneForm_Load(object sender, EventArgs e)
@@ -70,6 +73,33 @@ public partial class AllInOneForm : MaterialForm
         }
 
         await _grdHelper.RefreshList();
+    }
+
+    private void NewRequestsRecieved()
+    {
+        if (InvokeRequired)
+        {
+            BeginInvoke(NewRequestsRecieved);
+            return;
+        }
+
+        MaterialDialog dialog = new(
+            this,
+            "Notification",
+            "New appointment requests need your attention!",
+            "Show",
+            true,
+            "Not Now");
+
+        ((MaterialButton)dialog.AcceptButton).Click += (_, _) =>
+        {
+            dialog.Close();
+            AppContext.ShowDialog<AppointmentRequestsForm>();
+        };
+
+        ((MaterialButton)dialog.CancelButton).Click += (_, _) => dialog.Close();
+
+        dialog.Show(this);
     }
 
     private void aboutBtn_Click(object sender, EventArgs e)

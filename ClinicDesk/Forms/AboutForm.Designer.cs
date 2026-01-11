@@ -57,7 +57,7 @@
             materialLabel1.Depth = 0;
             materialLabel1.Font = new Font("Roboto", 34F, FontStyle.Bold, GraphicsUnit.Pixel);
             materialLabel1.FontType = ReaLTaiizor.Manager.MaterialSkinManager.FontType.H4;
-            materialLabel1.Location = new Point(17, 89);
+            materialLabel1.Location = new Point(17, 103);
             materialLabel1.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel1.Name = "materialLabel1";
             materialLabel1.Size = new Size(159, 41);
@@ -68,28 +68,18 @@
             // 
             materialLabel2.Depth = 0;
             materialLabel2.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel2.Location = new Point(17, 165);
+            materialLabel2.Location = new Point(17, 179);
             materialLabel2.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel2.Name = "materialLabel2";
-            materialLabel2.Size = new Size(292, 77);
-            materialLabel2.TabIndex = 2;
-            materialLabel2.Text = "Designed by:";
-            // 
-            // novaLink
-            // 
-            novaLink.AutoSize = true;
-            novaLink.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            novaLink.Location = new Point(17, 200);
-            novaLink.Name = "novaLink";
+            materialLabel2.Size = new Size(292, 23);
             materialLabel2.TabIndex = 5;
-            novaLink.Text = "NOVA for Integrated Solutions";
-            novaLink.Click += novaLink_Click;
+            materialLabel2.Text = "Designed by:";
             // 
             // label2
             // 
             label2.Depth = 0;
-            label2.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             label2.Dock = DockStyle.Bottom;
+            label2.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
             label2.Location = new Point(3, 382);
             label2.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             label2.Name = "label2";
@@ -97,6 +87,18 @@
             label2.TabIndex = 3;
             label2.Text = "© 2025-2026 ClinicDesk. All rights reserved.";
             label2.TextAlign = ContentAlignment.MiddleCenter;
+            // 
+            // novaLink
+            // 
+            novaLink.AutoSize = true;
+            novaLink.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            novaLink.Location = new Point(17, 202);
+            novaLink.Name = "novaLink";
+            novaLink.Size = new Size(205, 18);
+            novaLink.TabIndex = 6;
+            novaLink.TabStop = true;
+            novaLink.Text = "NOVA for Integrated Solutions";
+            novaLink.LinkClicked += novaLink_LinkClicked;
             // 
             // panel1
             // 

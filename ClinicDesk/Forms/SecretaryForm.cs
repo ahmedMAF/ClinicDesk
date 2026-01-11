@@ -1,6 +1,7 @@
 ﻿using ClinicDesk.ControlHelpers;
 using ClinicDesk.Database;
 using ClinicDesk.Database.Models;
+using ReaLTaiizor.Controls;
 using ReaLTaiizor.Forms;
 
 namespace ClinicDesk.Forms;
@@ -18,10 +19,13 @@ public partial class SecretaryForm : MaterialForm
         FormClosed += (s, e) =>
         {
             ClinicDb.Instance.Client?.RefreshUI -= RefreshUI;
+            AppointmentApi.NewRequestsRecieved -= NewRequestsRecieved;
+
             Application.Exit();
         };
 
         ClinicDb.Instance.Client?.RefreshUI += RefreshUI;
+        AppointmentApi.NewRequestsRecieved += NewRequestsRecieved;
     }
 
     private async void SecretaryForm_Load(object sender, EventArgs e)
@@ -64,6 +68,22 @@ public partial class SecretaryForm : MaterialForm
         }
 
         await _grdHelper.RefreshList();
+    }
+
+    private void NewRequestsRecieved()
+    {
+        if (InvokeRequired)
+        {
+            BeginInvoke(NewRequestsRecieved);
+            return;
+        }
+
+        MaterialDialog dialog = new(
+            this,
+            "Notification",
+            "New appointment requests need your attention!");
+
+        dialog.Show(this);
     }
 
     private void settingsBtn_Click(object sender, EventArgs e)

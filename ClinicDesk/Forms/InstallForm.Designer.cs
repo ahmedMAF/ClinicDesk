@@ -55,6 +55,9 @@
             materialLabel13 = new ReaLTaiizor.Controls.MaterialLabel();
             backupTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             materialCard2 = new ReaLTaiizor.Controls.MaterialCard();
+            apiUrltxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
+            materialLabel14 = new ReaLTaiizor.Controls.MaterialLabel();
+            apiSwt = new ReaLTaiizor.Controls.MaterialSwitch();
             isDentalSwt = new ReaLTaiizor.Controls.MaterialSwitch();
             materialLabel11 = new ReaLTaiizor.Controls.MaterialLabel();
             materialCard3 = new ReaLTaiizor.Controls.MaterialCard();
@@ -76,7 +79,7 @@
             installBtn.HighEmphasis = true;
             installBtn.Icon = null;
             installBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            installBtn.Location = new Point(860, 492);
+            installBtn.Location = new Point(861, 541);
             installBtn.Margin = new Padding(4, 6, 4, 6);
             installBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             installBtn.Name = "installBtn";
@@ -481,7 +484,7 @@
             materialCard1.Controls.Add(materialLabel5);
             materialCard1.Depth = 0;
             materialCard1.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            materialCard1.Location = new Point(17, 78);
+            materialCard1.Location = new Point(532, 78);
             materialCard1.Margin = new Padding(14);
             materialCard1.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialCard1.Name = "materialCard1";
@@ -587,19 +590,83 @@
             // materialCard2
             // 
             materialCard2.BackColor = Color.FromArgb(255, 255, 255);
+            materialCard2.Controls.Add(apiUrltxt);
+            materialCard2.Controls.Add(materialLabel14);
+            materialCard2.Controls.Add(apiSwt);
             materialCard2.Controls.Add(isDentalSwt);
             materialCard2.Controls.Add(materialLabel11);
             materialCard2.Controls.Add(accountCbo);
             materialCard2.Controls.Add(materialLabel6);
             materialCard2.Depth = 0;
             materialCard2.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            materialCard2.Location = new Point(532, 324);
+            materialCard2.Location = new Point(17, 324);
             materialCard2.Margin = new Padding(14);
             materialCard2.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialCard2.Name = "materialCard2";
             materialCard2.Padding = new Padding(14);
-            materialCard2.Size = new Size(487, 149);
+            materialCard2.Size = new Size(487, 253);
             materialCard2.TabIndex = 21;
+            // 
+            // apiUrltxt
+            // 
+            apiUrltxt.AnimateReadOnly = false;
+            apiUrltxt.AutoCompleteMode = AutoCompleteMode.None;
+            apiUrltxt.AutoCompleteSource = AutoCompleteSource.None;
+            apiUrltxt.BackgroundImageLayout = ImageLayout.None;
+            apiUrltxt.CharacterCasing = CharacterCasing.Normal;
+            apiUrltxt.Depth = 0;
+            apiUrltxt.Enabled = false;
+            apiUrltxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
+            apiUrltxt.HideSelection = true;
+            apiUrltxt.LeadingIcon = null;
+            apiUrltxt.Location = new Point(158, 177);
+            apiUrltxt.MaxLength = 32767;
+            apiUrltxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
+            apiUrltxt.Name = "apiUrltxt";
+            apiUrltxt.PasswordChar = '\0';
+            apiUrltxt.PrefixSuffixText = null;
+            apiUrltxt.ReadOnly = false;
+            apiUrltxt.RightToLeft = RightToLeft.No;
+            apiUrltxt.SelectedText = "";
+            apiUrltxt.SelectionLength = 0;
+            apiUrltxt.SelectionStart = 0;
+            apiUrltxt.ShortcutsEnabled = true;
+            apiUrltxt.Size = new Size(312, 48);
+            apiUrltxt.TabIndex = 17;
+            apiUrltxt.TabStop = false;
+            apiUrltxt.Text = "http://localhost/api/getlicense";
+            apiUrltxt.TextAlign = HorizontalAlignment.Left;
+            apiUrltxt.TrailingIcon = null;
+            apiUrltxt.UseSystemPasswordChar = false;
+            // 
+            // materialLabel14
+            // 
+            materialLabel14.AutoSize = true;
+            materialLabel14.Depth = 0;
+            materialLabel14.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel14.Location = new Point(20, 190);
+            materialLabel14.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialLabel14.Name = "materialLabel14";
+            materialLabel14.Size = new Size(58, 19);
+            materialLabel14.TabIndex = 16;
+            materialLabel14.Text = "API URL";
+            // 
+            // apiSwt
+            // 
+            apiSwt.AutoSize = true;
+            apiSwt.Depth = 0;
+            apiSwt.Location = new Point(14, 137);
+            apiSwt.Margin = new Padding(0);
+            apiSwt.MouseLocation = new Point(-1, -1);
+            apiSwt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            apiSwt.Name = "apiSwt";
+            apiSwt.Ripple = true;
+            apiSwt.Size = new Size(215, 37);
+            apiSwt.TabIndex = 15;
+            apiSwt.Text = "Use Appointments API";
+            apiSwt.UseAccentColor = false;
+            apiSwt.UseVisualStyleBackColor = true;
+            apiSwt.CheckedChanged += apiSwt_CheckedChanged;
             // 
             // isDentalSwt
             // 
@@ -642,7 +709,7 @@
             materialCard3.Controls.Add(materialLabel7);
             materialCard3.Depth = 0;
             materialCard3.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            materialCard3.Location = new Point(532, 78);
+            materialCard3.Location = new Point(17, 78);
             materialCard3.Margin = new Padding(14);
             materialCard3.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialCard3.Name = "materialCard3";
@@ -671,7 +738,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1040, 540);
+            ClientSize = new Size(1040, 598);
             Controls.Add(materialCard3);
             Controls.Add(materialCard2);
             Controls.Add(materialCard1);
@@ -726,5 +793,8 @@
         private ReaLTaiizor.Controls.MaterialLabel materialLabel12;
         private ReaLTaiizor.Controls.MaterialButton browseBtn;
         private FolderBrowserDialog folderBrowser;
+        private ReaLTaiizor.Controls.MaterialSwitch apiSwt;
+        private ReaLTaiizor.Controls.MaterialTextBoxEdit apiUrltxt;
+        private ReaLTaiizor.Controls.MaterialLabel materialLabel14;
     }
 }

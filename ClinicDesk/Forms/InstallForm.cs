@@ -30,6 +30,7 @@ public partial class InstallForm : MaterialForm
         backupTxt.Text = settings.BackupPath;
         daysSld.Value = settings.BackupDays;
         isDentalSwt.Checked = settings.IsDental;
+        apiUrltxt.Text = settings.AppointmentApiUrl;
 
         accountCbo.SelectedIndex = (int)settings.AccountType;
     }
@@ -48,6 +49,8 @@ public partial class InstallForm : MaterialForm
         string email = emailTxt.Text;
 
         AccountType type = (AccountType)accountCbo.SelectedIndex;
+        bool useApi = apiSwt.Checked;
+        string apiUrl = apiUrltxt.Text;
 
         if (!AppLicense.IsAvailable && !await AppLicense.RequestLicenseAsync(licenseUrl, name, email))
         {
@@ -89,6 +92,12 @@ public partial class InstallForm : MaterialForm
             return;
         }
 
+        if (useApi && !await AppointmentApi.TestApiUrl(apiUrl))
+        {
+            MessageBox.Show("Failed to connect to the API. Check the URL.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
         Settings settings = Settings.Instance;
 
         settings.Server = dbServer;
@@ -97,6 +106,8 @@ public partial class InstallForm : MaterialForm
         settings.User = dbUser;
         settings.Password = dbPassword;
         settings.AccountType = type;
+        settings.UseApi = useApi;
+        settings.AppointmentApiUrl = apiUrl;
         settings.BackupDays = daysSld.Value;
         settings.BackupPath = backupTxt.Text;
         settings.IsDental = isDentalSwt.Checked;
@@ -113,5 +124,10 @@ public partial class InstallForm : MaterialForm
     {
         if (folderBrowser.ShowDialog() == DialogResult.OK)
             backupTxt.Text = folderBrowser.SelectedPath;
+    }
+
+    private void apiSwt_CheckedChanged(object sender, EventArgs e)
+    {
+        apiUrltxt.Enabled = apiSwt.Checked;
     }
 }
