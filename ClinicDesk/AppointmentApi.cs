@@ -10,7 +10,7 @@ internal class AppointmentApi
     private static Timer _timer = null!;
     private static bool _isRunning;
 
-    private static readonly List<AppointmentRequest> _requests = [];
+    public static List<AppointmentRequest> Requests { get; private set; } = [];
 
     public static event Action? NewRequestsRecieved;
 
@@ -53,7 +53,7 @@ internal class AppointmentApi
             if (data == null || data.Count == 0)
                 return;
 
-            _requests.AddRange(data);
+            Requests.AddRange(data);
             NewRequestsRecieved?.Invoke();
         }
         catch

@@ -119,6 +119,50 @@ internal static class Utils
         });
     }
 
+    public static void SetupAppointmentRequestsDataGrid(DataGridView requestsGrd)
+    {
+        SetupDataGrid(requestsGrd);
+
+        requestsGrd.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Width = 50,
+            DataPropertyName = "Serial",
+            HeaderText = "No."
+        });
+
+        requestsGrd.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Width = 300,
+            DataPropertyName = "Name",
+            HeaderText = "Name"
+        });
+
+        requestsGrd.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Width = 120,
+            DataPropertyName = "Phone",
+            HeaderText = "Phone"
+        });
+
+        requestsGrd.Columns.Add(new DataGridViewButtonColumn
+        {
+            Name = "cancelBtn",
+            Width = 180,
+            HeaderText = "",
+            Text = "Cancel",
+            UseColumnTextForButtonValue = true
+        });
+
+        requestsGrd.Columns.Add(new DataGridViewButtonColumn
+        {
+            Name = "createBtn",
+            Width = 180,
+            HeaderText = "",
+            Text = "Create",
+            UseColumnTextForButtonValue = true
+        });
+    }
+
     public static void SetupInvoicesDataGrid(DataGridView invoicesGrd)
     {
         SetupDataGrid(invoicesGrd);

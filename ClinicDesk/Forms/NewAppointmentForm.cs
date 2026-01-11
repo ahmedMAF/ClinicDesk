@@ -24,6 +24,12 @@ public partial class NewAppointmentForm : MaterialForm
         SetData(appointment.Patient);
     }
 
+
+    internal void SetData(AppointmentRequest appointmentRequest)
+    {
+
+    }
+
     internal void SetData(Patient patient)
     {
         _patient = patient;
