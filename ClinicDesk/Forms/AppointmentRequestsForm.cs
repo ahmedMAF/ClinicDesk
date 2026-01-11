@@ -50,7 +50,7 @@ public partial class AppointmentRequestsForm : MaterialForm
 
     private async void createBtn_Click(int rowIndex)
     {
-        AppContext.ShowDialog<NewAppointmentForm>(form => form.SetData());
+        AppContext.ShowDialog<NewAppointmentForm>(form => form.SetData(AppointmentApi.Requests[rowIndex]));
 
         await AppointmentApi.SendRemoveRequest(_requests[rowIndex].Id);
         AppointmentApi.Requests.RemoveAt(rowIndex);
