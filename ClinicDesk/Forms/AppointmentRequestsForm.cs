@@ -1,6 +1,9 @@
 ﻿using ClinicDesk.ControlHelpers;
+using ClinicDesk.Database;
 using ClinicDesk.Database.Dto;
+using ClinicDesk.Database.Models;
 using ClinicDesk.Utilities;
+using Microsoft.EntityFrameworkCore;
 using ReaLTaiizor.Forms;
 
 namespace ClinicDesk.Forms;
@@ -50,7 +53,31 @@ public partial class AppointmentRequestsForm : MaterialForm
 
     private async void createBtn_Click(int rowIndex)
     {
-        AppContext.ShowDialog<NewAppointmentForm>(form => form.SetData(AppointmentApi.Requests[rowIndex]));
+        AppointmentRequest request = AppointmentApi.Requests[rowIndex];
+
+        Patient? patient = await ClinicDb.Instance.Patients
+            .AsNoTracking()
+            .FirstOrDefaultAsync(p => p.Name.Contains(request.Name) && (p.Phone == null || p.Phone.Contains(request.Phone)));
+
+        if (patient == null)
+        {
+            patient = Patient.New();
+
+            patient.Name = request.Name;
+            patient.Phone = request.Phone;
+            patient.Sex = request.Sex;
+            patient.MaritalStatus = request.MaritalStatus;
+            patient.DateOfBirth = request.DateOfBirth.Date;
+            patient.BloodType = request.BloodType;
+
+            if (Settings.Instance.IsDental)
+                TeethHelper.MarkMissingTeethByAge(patient.Teeth!, patient.AgeYears);
+
+            ClinicDb.Instance.Patients.Add(patient);
+            await ClinicDb.Instance.SaveChangesAsync();
+        }
+
+        AppContext.ShowDialog<NewAppointmentForm>(form => form.SetData(patient));
 
         await AppointmentApi.SendRemoveRequest(_requests[rowIndex].Id);
         AppointmentApi.Requests.RemoveAt(rowIndex);

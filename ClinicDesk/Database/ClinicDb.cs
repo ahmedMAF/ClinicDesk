@@ -127,7 +127,7 @@ public class ClinicDb : DbContext
             };
 
             _mySqlProcess = Process.Start(psi);
-            Task.Delay(2000).Wait();
+            Task.Delay(3000).Wait();
         }
 #else
         ServiceController service = new(ServiceName);

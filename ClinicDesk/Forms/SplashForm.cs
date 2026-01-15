@@ -21,17 +21,6 @@ public partial class SplashForm : Form
         await Task.Delay(500);
 
         Settings settings = Settings.Instance;
-        MaterialSkinManager skin = MaterialSkinManager.Instance;
-
-        skin.Theme = settings.IsDarkTheme ? MaterialSkinManager.Themes.DARK : MaterialSkinManager.Themes.LIGHT;
-
-        skin.ColorScheme = new MaterialColorScheme(
-            Color.FromArgb(60, 125, 105),
-            Color.FromArgb(50, 100, 80),
-            Color.FromArgb(100, 180, 150),
-            Color.FromArgb(140, 9, 45),
-            MaterialTextShade.WHITE
-        );
 
         if (!AppLicense.Validate())
         {

@@ -75,4 +75,5 @@ public class AppointmentRequest
     public Sex Sex { get; set; }
     public MaritalStatus MaritalStatus { get; set; }
     public DateTime DateOfBirth { get; set; }
+    public BloodType BloodType  { get; set; }
 }

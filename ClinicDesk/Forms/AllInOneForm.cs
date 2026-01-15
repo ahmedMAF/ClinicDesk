@@ -83,23 +83,12 @@ public partial class AllInOneForm : MaterialForm
             return;
         }
 
-        MaterialDialog dialog = new(
+        if (MaterialMessageBox.Show(
             this,
-            "Notification",
             "New appointment requests need your attention!",
-            "Show",
-            true,
-            "Not Now");
-
-        ((MaterialButton)dialog.AcceptButton).Click += (_, _) =>
-        {
-            dialog.Close();
+            "Notification",
+            MessageBoxButtons.YesNo, false) == DialogResult.Yes)
             AppContext.ShowDialog<AppointmentRequestsForm>();
-        };
-
-        ((MaterialButton)dialog.CancelButton).Click += (_, _) => dialog.Close();
-
-        dialog.Show(this);
     }
 
     private void aboutBtn_Click(object sender, EventArgs e)
@@ -110,5 +99,10 @@ public partial class AllInOneForm : MaterialForm
     private void statsBtn_Click(object sender, EventArgs e)
     {
         AppContext.ShowDialog<StatsForm>();
+    }
+
+    private void requestsBtn_Click(object sender, EventArgs e)
+    {
+        AppContext.ShowDialog<AppointmentRequestsForm>();
     }
 }

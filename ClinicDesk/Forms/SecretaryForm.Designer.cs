@@ -37,6 +37,7 @@
             statsBtn = new ReaLTaiizor.Controls.MaterialButton();
             aboutBtn = new ReaLTaiizor.Controls.MaterialButton();
             materialLabel1 = new ReaLTaiizor.Controls.MaterialLabel();
+            requestsBtn = new ReaLTaiizor.Controls.MaterialButton();
             ((System.ComponentModel.ISupportInitialize)appointmentsGrd).BeginInit();
             SuspendLayout();
             // 
@@ -55,11 +56,11 @@
             appointmentsGrd.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             appointmentsGrd.BackgroundColor = Color.White;
             appointmentsGrd.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            appointmentsGrd.Location = new Point(12, 292);
+            appointmentsGrd.Location = new Point(12, 298);
             appointmentsGrd.Name = "appointmentsGrd";
             appointmentsGrd.ReadOnly = true;
             appointmentsGrd.RowHeadersWidth = 51;
-            appointmentsGrd.Size = new Size(879, 404);
+            appointmentsGrd.Size = new Size(879, 398);
             appointmentsGrd.TabIndex = 4;
             // 
             // newAppointmentBtn
@@ -194,11 +195,36 @@
             materialLabel1.TabIndex = 7;
             materialLabel1.Text = "Show Appointments From";
             // 
+            // requestsBtn
+            // 
+            requestsBtn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            requestsBtn.AutoSize = false;
+            requestsBtn.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            requestsBtn.CharacterCasing = ReaLTaiizor.Controls.MaterialButton.CharacterCasingEnum.Normal;
+            requestsBtn.Density = ReaLTaiizor.Controls.MaterialButton.MaterialButtonDensity.Default;
+            requestsBtn.Depth = 0;
+            requestsBtn.HighEmphasis = true;
+            requestsBtn.Icon = null;
+            requestsBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
+            requestsBtn.Location = new Point(487, 244);
+            requestsBtn.Margin = new Padding(4, 6, 4, 6);
+            requestsBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            requestsBtn.Name = "requestsBtn";
+            requestsBtn.NoAccentTextColor = Color.Empty;
+            requestsBtn.Size = new Size(198, 45);
+            requestsBtn.TabIndex = 14;
+            requestsBtn.Text = "Appointment Requests";
+            requestsBtn.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
+            requestsBtn.UseAccentColor = false;
+            requestsBtn.UseVisualStyleBackColor = true;
+            requestsBtn.Click += requestsBtn_Click;
+            // 
             // SecretaryForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(903, 708);
+            Controls.Add(requestsBtn);
             Controls.Add(aboutBtn);
             Controls.Add(statsBtn);
             Controls.Add(settingsBtn);
@@ -227,5 +253,6 @@
         private ReaLTaiizor.Controls.MaterialButton statsBtn;
         private ReaLTaiizor.Controls.MaterialButton aboutBtn;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel1;
+        private ReaLTaiizor.Controls.MaterialButton requestsBtn;
     }
 }

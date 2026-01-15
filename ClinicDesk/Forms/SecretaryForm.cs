@@ -78,12 +78,12 @@ public partial class SecretaryForm : MaterialForm
             return;
         }
 
-        MaterialDialog dialog = new(
+        if (MaterialMessageBox.Show(
             this,
+            "New appointment requests need your attention!",
             "Notification",
-            "New appointment requests need your attention!");
-
-        dialog.Show(this);
+            MessageBoxButtons.YesNo, false) == DialogResult.Yes)
+            AppContext.ShowDialog<AppointmentRequestsForm>();
     }
 
     private void settingsBtn_Click(object sender, EventArgs e)
@@ -100,5 +100,10 @@ public partial class SecretaryForm : MaterialForm
     private void statsBtn_Click(object sender, EventArgs e)
     {
         AppContext.ShowDialog<StatsForm>();
+    }
+
+    private void requestsBtn_Click(object sender, EventArgs e)
+    {
+        AppContext.ShowDialog<AppointmentRequestsForm>();
     }
 }
