@@ -69,6 +69,7 @@ public partial class AppointmentRequestsForm : MaterialForm
             patient.MaritalStatus = request.MaritalStatus;
             patient.DateOfBirth = request.DateOfBirth.Date;
             patient.BloodType = request.BloodType;
+            patient.ChronicDiseases = [];
 
             if (Settings.Instance.IsDental)
                 TeethHelper.MarkMissingTeethByAge(patient.Teeth!, patient.AgeYears);

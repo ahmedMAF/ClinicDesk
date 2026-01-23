@@ -101,8 +101,9 @@ public partial class AllInOneForm : MaterialForm
         AppContext.ShowDialog<StatsForm>();
     }
 
-    private void requestsBtn_Click(object sender, EventArgs e)
+    private async void requestsBtn_Click(object sender, EventArgs e)
     {
         AppContext.ShowDialog<AppointmentRequestsForm>();
+        await _grdHelper.RefreshList();
     }
 }

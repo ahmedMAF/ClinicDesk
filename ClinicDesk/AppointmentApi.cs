@@ -1,5 +1,7 @@
 ﻿using ClinicDesk.Database.Models;
 using System.Net.Http.Json;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using Timer = System.Threading.Timer;
 
 namespace ClinicDesk;
@@ -7,6 +9,7 @@ namespace ClinicDesk;
 internal class AppointmentApi
 {
     private static HttpClient _httpClient = null!;
+    private static JsonSerializerOptions _options = null!;
     private static Timer _timer = null!;
     private static bool _isRunning;
 
@@ -16,20 +19,28 @@ internal class AppointmentApi
 
     public static void Initialize()
     {
+        _options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+
+        _options.Converters.Add(new JsonStringEnumConverter());
+
         _httpClient = new HttpClient();
-        _timer = new Timer(Callback, null, TimeSpan.Zero, TimeSpan.FromMinutes(10));
+        _timer = new Timer(Callback, null, TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(30));
     }
 
     public static async Task<bool> TestApiUrl(string url)
     {
-        HttpResponseMessage response = await _httpClient.GetAsync(url);
+        using HttpClient httpClient = new();
+        HttpResponseMessage response = await httpClient.GetAsync(url);
 
         return response.IsSuccessStatusCode;
     }
 
     public static async Task SendRemoveRequest(int id)
     {
-        HttpResponseMessage response = await _httpClient.PostAsync(Settings.Instance.AppointmentApiUrl, JsonContent.Create(id));
+        HttpResponseMessage response = await _httpClient.PostAsync(Settings.Instance.AppointmentApiUrl, JsonContent.Create(new Dictionary<string, int>{{ "id", id }}));
 
         response.EnsureSuccessStatusCode();
     }
@@ -48,12 +59,13 @@ internal class AppointmentApi
 
             response.EnsureSuccessStatusCode();
 
-            List<AppointmentRequest>? data = await response.Content.ReadFromJsonAsync<List<AppointmentRequest>>();
+            Response? data = await response.Content.ReadFromJsonAsync<Response>(_options);
 
-            if (data == null || data.Count == 0)
+            if (data == null || data.Data.Count == 0)
                 return;
 
-            Requests.AddRange(data);
+            Requests.Clear();
+            Requests.AddRange(data.Data);
             NewRequestsRecieved?.Invoke();
         }
         catch
@@ -64,6 +76,12 @@ internal class AppointmentApi
             _isRunning = false;
         }
     }
+}
+
+public class Response
+{
+    public bool Success { get; set; }
+    public List<AppointmentRequest> Data { get; set; } = null!;
 }
 
 public class AppointmentRequest

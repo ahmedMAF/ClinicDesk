@@ -23,10 +23,10 @@ public class AppContext : ApplicationContext
         skin.Theme = settings.IsDarkTheme ? MaterialSkinManager.Themes.DARK : MaterialSkinManager.Themes.LIGHT;
 
         skin.ColorScheme = new MaterialColorScheme(
-            Color.FromArgb(60, 125, 105),
-            Color.FromArgb(50, 100, 80),
-            Color.FromArgb(100, 180, 150),
-            Color.FromArgb(140, 9, 45),
+            ColorTranslator.FromHtml("#4CAF50"), // primary
+            ColorTranslator.FromHtml("#2E7D32"), // primaryDark
+            ColorTranslator.FromHtml("#81C784"), // primaryLight
+            ColorTranslator.FromHtml("#03A9F4"), // accent
             MaterialTextShade.WHITE
         );
 
