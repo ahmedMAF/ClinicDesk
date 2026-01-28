@@ -42,7 +42,6 @@ public partial class PatientSearchForm : MaterialForm
         }
 
         _patients = await ClinicDb.Instance.Patients
-            .AsNoTracking()
             .Where(p => p.Name.Contains(nameTxt.Text))
             .ToListAsync();
 
@@ -58,7 +57,6 @@ public partial class PatientSearchForm : MaterialForm
         }
 
         _patients = await ClinicDb.Instance.Patients
-            .AsNoTracking()
             .Where(p => p.Phone != null && p.Phone.Contains(phoneTxt.Text))
             .ToListAsync();
 

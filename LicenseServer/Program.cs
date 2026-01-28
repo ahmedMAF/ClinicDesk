@@ -21,22 +21,35 @@ public partial class Program
 
         app.MapGet("/api/status", () => "Running...").WithName("Status");
         app.MapPost("/api/getlicense", GetLicensePostAsync).WithName("GetLicense");
+        app.MapPost("/api/gettrailer", GetTrailerPostAsync).WithName("GetTrailer");
 
         app.Run();
     }
-
+    
     private static async Task GetLicensePostAsync(HttpRequest request, HttpResponse response)
+    {
+        string license = await GetLicense(request, DateTime.UtcNow.AddYears(1), false);
+        await SendLicense(license, response);
+    }
+    
+    private static async Task GetTrailerPostAsync(HttpRequest request, HttpResponse response)
+    {
+        string license = await GetLicense(request, DateTime.UtcNow.AddDays(30), true);
+        await SendLicense(license, response);
+    }
+    
+    private static async Task<string> GetLicense(HttpRequest request, DateTime date, bool isTrailer)
     {
         LicenseRequest? licenseRequest = await request.ReadFromJsonAsync<LicenseRequest>();
 
-        if (licenseRequest == null)
+        if (licenseRequest == null || string.IsNullOrWhiteSpace(licenseRequest.Name) || string.IsNullOrWhiteSpace(licenseRequest.Email))
         {
             response.StatusCode = 400;
             await response.WriteAsync("Invalid request");
             return;
         }
 
-        Console.WriteLine($"Requesting license for {licenseRequest.Name}, {licenseRequest.Email}");
+        Console.WriteLine($"Requesting license for: {licenseRequest.Name}, {licenseRequest.Email}");
 
         if (!ValidateHardwareId(licenseRequest.HardwareId))
         {
@@ -48,7 +61,7 @@ public partial class Program
         string license = License.New()
             .WithUniqueIdentifier(Guid.NewGuid())
             .As(LicenseType.Standard)
-            .ExpiresAt(DateTime.UtcNow.AddYears(1))
+            .ExpiresAt(date)
             .WithMaximumUtilization(1)
             .WithAdditionalAttributes(new Dictionary<string, string>
             {{ "HardwareId", licenseRequest.HardwareId.ToString() }})
@@ -57,13 +70,17 @@ public partial class Program
             .ToString();
 
         Console.WriteLine("License file generated.");
-
+        return license;
+    }
+    
+    private async Task SendLicense(string license, HttpResponse response)
+    {
         response.ContentType = "text/plain";
         await response.WriteAsync(license);
 
         Console.WriteLine($"Response sent. {Encoding.UTF8.GetByteCount(license)} bytes.");
     }
-
+    
     private static bool ValidateHardwareId(string id)
     {
         // Add your validation logic here

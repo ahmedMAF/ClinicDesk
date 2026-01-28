@@ -52,15 +52,24 @@ public partial class InstallForm : MaterialForm
         bool useApi = apiSwt.Checked;
         string apiUrl = apiUrltxt.Text;
 
-        if (!AppLicense.IsAvailable && !await AppLicense.RequestLicenseAsync(licenseUrl, name, email))
+        if (!AppLicense.IsAvailable)
         {
-            MessageBox.Show("Failed to request license, try again later.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
+            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(email))
+            {
+                MessageBox.Show("Please fill in your name and email.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            
+            if (!await AppLicense.RequestLicenseAsync(licenseUrl, name, email))
+            {
+                MessageBox.Show("Failed to request license, try again later.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
         }
 
         if (!AppLicense.Validate())
         {
-            MessageBox.Show("Failed to validate license, try requesting new one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show("Failed to validate license, try requesting a new one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
 

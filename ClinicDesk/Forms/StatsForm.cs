@@ -33,13 +33,14 @@ public partial class StatsForm : MaterialForm
         int totalApps = query.Count();
         int totalPatients = query.Select(a => a.PatientId).Distinct().Count();
 
+        // FIXME: Remove var and anonymous type.
         var statusCounts = query
             .GroupBy(a => a.Status)
             .Select(g => new { Status = g.Key, Count = g.Count() })
             .ToList();
 
         IQueryable<Invoice> invoices = db.Invoices
-            .Where(i => i.IssuedAt >= start && i.IssuedAt <= end);
+            .Where(i => allTimeChk.Checked || (i.IssuedAt >= start && i.IssuedAt <= end));
 
         int totalBills = invoices.Count();
 

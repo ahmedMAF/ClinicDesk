@@ -107,7 +107,7 @@ public class Server
     {
         foreach (TcpClient client in _clients)
         {
-            // Don't send refresh UI command to the client how caused the change
+            // Don't send refresh UI command to the client who caused the change
             // It will update locally.
             if (client == exceptFor)
                 continue;

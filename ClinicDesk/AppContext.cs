@@ -23,10 +23,10 @@ public class AppContext : ApplicationContext
         skin.Theme = settings.IsDarkTheme ? MaterialSkinManager.Themes.DARK : MaterialSkinManager.Themes.LIGHT;
 
         skin.ColorScheme = new MaterialColorScheme(
-            ColorTranslator.FromHtml("#4CAF50"), // primary
-            ColorTranslator.FromHtml("#2E7D32"), // primaryDark
-            ColorTranslator.FromHtml("#81C784"), // primaryLight
-            ColorTranslator.FromHtml("#03A9F4"), // accent
+            ColorTranslator.FromHtml("#4CAF50"),
+            ColorTranslator.FromHtml("#2E7D32"),
+            ColorTranslator.FromHtml("#81C784"),
+            ColorTranslator.FromHtml("#03A9F4"),
             MaterialTextShade.WHITE
         );
 
@@ -91,7 +91,12 @@ public class AppContext : ApplicationContext
     {
         if (AppointmentApi.Requests.Count > 0)
         {
-
+            if (MaterialMessageBox.Show(
+                this,
+                "There are appointment requests that need your attention! Do you want to see them?",
+                "Notification",
+                MessageBoxButtons.YesNo, false) == DialogResult.Yes)
+                ShowDialog<AppointmentRequestsForm>();
         }
 
         ClinicDb.StopDatabaseService();

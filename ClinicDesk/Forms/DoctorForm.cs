@@ -42,7 +42,7 @@ public partial class DoctorForm : MaterialForm
         if (AppContext.ShowDialog<PatientSearchForm>(actionAfterShow: (form, _) => patient = form.Patient) == DialogResult.Cancel)
             return;
 
-        AppContext.ShowDialog<PatientDataForm>(form => form.SetData(patient));
+        AppContext.ShowDialog<PatientProfileForm>(form => form.SetData(patient));
     }
 
     private async void monthCalendar1_DateSelected(object sender, DateRangeEventArgs e)

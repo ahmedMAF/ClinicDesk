@@ -75,7 +75,7 @@ public static class AppLicense
                 return false;
             }
         }
-        catch (Exception)
+        catch
         {
             return false;
         }

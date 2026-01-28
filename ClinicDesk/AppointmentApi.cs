@@ -27,7 +27,7 @@ internal class AppointmentApi
         _options.Converters.Add(new JsonStringEnumConverter());
 
         _httpClient = new HttpClient();
-        _timer = new Timer(Callback, null, TimeSpan.FromSeconds(10), TimeSpan.FromSeconds(30));
+        _timer = new Timer(Callback, null, TimeSpan.FromSeconds(10), TimeSpan.FromMinutes(10));
     }
 
     public static async Task<bool> TestApiUrl(string url)
@@ -63,10 +63,18 @@ internal class AppointmentApi
 
             if (data == null || data.Data.Count == 0)
                 return;
+            
+            bool raiseEvent = false;
+            
+            foreach (AppointmentRequest req in data.Data)
+                if (!Requests.Contains(req))
+                    raiseEvent = true;
 
             Requests.Clear();
             Requests.AddRange(data.Data);
-            NewRequestsRecieved?.Invoke();
+            
+            if (raiseEvent)
+                NewRequestsRecieved?.Invoke();
         }
         catch
         {   
