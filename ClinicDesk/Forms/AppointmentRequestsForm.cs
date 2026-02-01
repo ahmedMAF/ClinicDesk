@@ -40,6 +40,9 @@ public partial class AppointmentRequestsForm : MaterialForm
                 Phone = r.Phone
             })
             .ToList();
+            
+        for (int i = 0; i < _requests.Count; i++)
+            _requests[i].Serial = i + 1;
 
         requestsGrd.DataSource = _requests;
     }
