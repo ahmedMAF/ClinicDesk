@@ -18,12 +18,12 @@ public partial class AllInOneForm : MaterialForm
 
         FormClosed += (s, e) =>
         {
-            ClinicDb.Instance.Client?.RefreshUI -= RefreshUI;
+            ClinicDb.Client?.RefreshUI -= RefreshUI;
             AppointmentApi.NewRequestsRecieved -= NewRequestsRecieved;
             Application.Exit();
         };
 
-        ClinicDb.Instance.Client?.RefreshUI += RefreshUI;
+        ClinicDb.Client?.RefreshUI += RefreshUI;
         AppointmentApi.NewRequestsRecieved += NewRequestsRecieved;
     }
 

@@ -17,11 +17,11 @@ public partial class DoctorForm : MaterialForm
 
         FormClosed += (s, e) =>
         {
-            ClinicDb.Instance.Client?.RefreshUI -= RefreshUI;
+            ClinicDb.Client?.RefreshUI -= RefreshUI;
             Application.Exit();
         };
 
-        ClinicDb.Instance.Client?.RefreshUI += RefreshUI;
+        ClinicDb.Client?.RefreshUI += RefreshUI;
     }
 
     private async void DoctorForm_Load(object sender, EventArgs e)

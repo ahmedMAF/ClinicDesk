@@ -18,13 +18,13 @@ public partial class SecretaryForm : MaterialForm
 
         FormClosed += (s, e) =>
         {
-            ClinicDb.Instance.Client?.RefreshUI -= RefreshUI;
+            ClinicDb.Client?.RefreshUI -= RefreshUI;
             AppointmentApi.NewRequestsRecieved -= NewRequestsRecieved;
 
             Application.Exit();
         };
 
-        ClinicDb.Instance.Client?.RefreshUI += RefreshUI;
+        ClinicDb.Client?.RefreshUI += RefreshUI;
         AppointmentApi.NewRequestsRecieved += NewRequestsRecieved;
     }
 

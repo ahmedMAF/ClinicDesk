@@ -28,8 +28,8 @@ public partial class BillingForm : MaterialForm
             ["payFullBtn"] = payFullBtn_Click
         });
         
-        FormClosed += (s, e) => ClinicDb.Instance.Client?.RefreshUI -= RefreshUI;
-        ClinicDb.Instance.Client?.RefreshUI += RefreshUI;
+        FormClosed += (s, e) => ClinicDb.Client?.RefreshUI -= RefreshUI;
+        ClinicDb.Client?.RefreshUI += RefreshUI;
     }
 
     internal void SetData(Patient patient)
