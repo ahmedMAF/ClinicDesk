@@ -44,9 +44,8 @@ public class Server
                 _ = HandleClientAsync(client);
             }
         }
-        catch (SocketException ex)
+        catch
         {
-            MessageBox.Show($"Socket exception: {ex.Message}", "Network Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         _listener.Stop();
@@ -83,14 +82,8 @@ public class Server
                     await BroadcastRefreshUI(client);
             }
         }
-        catch (IOException)
+        catch
         {
-            // Client disconnected normally.
-        }
-        catch (Exception ex)
-        {
-            if (_isRunning)
-                MessageBox.Show(ex.Message, "Network Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
         finally
         {
@@ -105,6 +98,8 @@ public class Server
 
     private async Task BroadcastRefreshUI(TcpClient exceptFor)
     {
+        List<TcpClient> toRemove = [];
+
         foreach (TcpClient client in _clients)
         {
             // Don't send refresh UI command to the client who caused the change
@@ -117,16 +112,18 @@ public class Server
                 NetworkStream stream = client.GetStream();
                 await stream.WriteAsync(_refreshMessage);
             }
-            catch (Exception ex)
+            catch
             {
                 client.Close();
+                toRemove.Add(client);
+            }
+        }
 
-                lock (_clientsLock)
-                {
-                    _clients.Remove(client);
-                }
-
-                MessageBox.Show($"Error sending to client: {ex.Message}", "Network Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        foreach (TcpClient client in toRemove)
+        {
+            lock (_clientsLock)
+            {
+                _clients.Remove(client);
             }
         }
     }

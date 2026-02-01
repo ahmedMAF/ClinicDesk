@@ -49,7 +49,11 @@ public class ClinicDb : DbContext
             _ = _server.StartAsync();
         }
 
+        Console.WriteLine("Creating client.");
+
         Client = new Client();
+        Console.WriteLine("Starting client.");
+
         _ = Client.StartAsync();
     }
 
@@ -60,6 +64,9 @@ public class ClinicDb : DbContext
         do
         {
             bool success = Create(out ClinicDb? db);
+
+            // TEMP
+            Console.WriteLine(success);
 
             if (success)
             {

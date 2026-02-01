@@ -50,9 +50,8 @@ public class Client
         {
             await _client.GetStream().WriteAsync(_dbChangedMessage);
         }
-        catch (Exception ex)
+        catch
         {
-            MessageBox.Show($"Error sending message: {ex.Message}", "Network Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 
@@ -77,9 +76,8 @@ public class Client
                     RefreshUI?.Invoke();
             }
         }
-        catch (Exception ex)
+        catch
         {
-            MessageBox.Show($"Error receiving message: {ex.Message}", "Network Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
 
         MessageBox.Show("Connection lost to the application's server, usually this is the secretary computer or the computer with the database.", "Network Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
