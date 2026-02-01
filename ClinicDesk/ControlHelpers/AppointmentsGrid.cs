@@ -350,8 +350,8 @@ public class AppointmentsGrid : GridButtonHelper
             _date = date.Value;
 
         // FIXME: This may cause a race condition, doing it on server only may help, but is it right?
-        if (Settings.Instance.IsServer)
-            await Utils.MarkMissedAppointments();
+        //if (Settings.Instance.IsServer)
+        //    await Utils.MarkMissedAppointments();
 
         await PopulateGrid();
     }

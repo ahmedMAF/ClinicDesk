@@ -295,7 +295,7 @@ internal static class Utils
             if (appointment.Date.AddMinutes(30) < DateTime.Now)
                 appointment.Status = AppointmentStatus.Missed;
                 
-        await ClinicDb.Instance.SaveChangesAsync();
+        // await ClinicDb.Instance.SaveChangesAsync();
     }
 
     public static void NumTxt_KeyPress(object sender, KeyPressEventArgs e)
