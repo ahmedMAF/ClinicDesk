@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Diagnostics;
 using System.Text.Json;
+using System.Threading.Tasks;
 #if !DEBUG
 using System.ServiceProcess;
 #endif
@@ -20,12 +21,12 @@ public class ClinicDb : DbContext
 
     private static bool _wasMySqlRunning;
 
-    private readonly Server? _server;
+    private static Server? _server;
 
     public static ClinicDb Instance { get; private set; } = null!;
     public static bool IsRunning { get; private set; }
 
-    public Client? Client { get; private set; }
+    public static Client? Client { get; private set; }
 
     public DbSet<Patient> Patients { get; set; }
     public DbSet<Appointment> Appointments { get; set; }
@@ -39,34 +40,15 @@ public class ClinicDb : DbContext
             Database.Migrate();
 
         IsRunning = true;
-
-        if (Settings.Instance.AccountType == AccountType.AllInOne)
-            return;
-
-        if (Settings.Instance.IsServer)
-        {
-            _server = new Server();
-            _ = _server.StartAsync();
-        }
-
-        Console.WriteLine("Creating client.");
-
-        Client = new Client();
-        Console.WriteLine("Starting client.");
-
-        _ = Client.StartAsync();
     }
 
-    internal static void Initialize()
+    internal static async Task Initialize()
     {
         DialogResult result;
 
         do
         {
             bool success = Create(out ClinicDb? db);
-
-            // TEMP
-            Console.WriteLine(success);
 
             if (success)
             {
@@ -77,6 +59,19 @@ public class ClinicDb : DbContext
                 result = MessageBox.Show("Can't connect to database server.", "Database Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
         }
         while (result == DialogResult.Retry);
+
+
+        if (Settings.Instance.AccountType == AccountType.AllInOne)
+            return;
+
+        if (Settings.Instance.IsServer)
+        {
+            _server = new Server();
+            _ = _server.StartAsync();
+        }
+
+        Client = new Client();
+        await Client.StartAsync();
     }
 
     internal static bool TestConnection(string server, ushort port, string db, string user, string pass)
