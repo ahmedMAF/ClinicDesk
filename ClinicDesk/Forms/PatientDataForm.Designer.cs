@@ -118,7 +118,6 @@
             phoneTxt.TextAlign = HorizontalAlignment.Left;
             phoneTxt.TrailingIcon = null;
             phoneTxt.UseSystemPasswordChar = false;
-            phoneTxt.KeyPress += Utilities.Utils.NumTxt_KeyPress;
             // 
             // materialLabel8
             // 
@@ -290,12 +289,12 @@
             materialCard3.Controls.Add(materialLabel5);
             materialCard3.Depth = 0;
             materialCard3.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            materialCard3.Location = new Point(17, 460);
+            materialCard3.Location = new Point(716, 78);
             materialCard3.Margin = new Padding(14);
             materialCard3.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialCard3.Name = "materialCard3";
             materialCard3.Padding = new Padding(14);
-            materialCard3.Size = new Size(671, 347);
+            materialCard3.Size = new Size(671, 354);
             materialCard3.TabIndex = 35;
             // 
             // disOtherTxt
@@ -567,7 +566,7 @@
             saveBtn.HighEmphasis = true;
             saveBtn.Icon = null;
             saveBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            saveBtn.Location = new Point(532, 827);
+            saveBtn.Location = new Point(1229, 452);
             saveBtn.Margin = new Padding(4, 6, 4, 6);
             saveBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             saveBtn.Name = "saveBtn";
@@ -584,7 +583,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(705, 874);
+            ClientSize = new Size(1403, 501);
             Controls.Add(saveBtn);
             Controls.Add(materialCard2);
             Controls.Add(materialCard3);
@@ -598,7 +597,6 @@
             Sizable = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Add New Patient";
-            KeyPress += Utilities.Utils.CloseForm_KeyPress;
             materialCard2.ResumeLayout(false);
             materialCard1.ResumeLayout(false);
             materialCard3.ResumeLayout(false);

@@ -95,15 +95,15 @@ public class ClinicDb : DbContext
         try
         {
             optionsBuilder.UseMySql(conn, ServerVersion.AutoDetect(conn));
+            db = new ClinicDb(optionsBuilder.Options);
+
+            return true;
         }
-        catch (Exception)
+        catch
         {
             db = null;
             return false;
         }
-
-        db = new ClinicDb(optionsBuilder.Options);
-        return true;
     }
     
     private static void RunDatabaseService()

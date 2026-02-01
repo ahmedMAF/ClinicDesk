@@ -43,16 +43,12 @@ public partial class Program
         LicenseRequest? licenseRequest = await request.ReadFromJsonAsync<LicenseRequest>();
 
         if (licenseRequest == null || string.IsNullOrWhiteSpace(licenseRequest.Name) || string.IsNullOrWhiteSpace(licenseRequest.Email))
-        {
             return "";
-        }
 
         Console.WriteLine($"Requesting license for: {licenseRequest.Name}, {licenseRequest.Email}");
 
         if (!ValidateHardwareId(licenseRequest.HardwareId))
-        {
             return "";
-        }
 
         string license = License.New()
             .WithUniqueIdentifier(Guid.NewGuid())

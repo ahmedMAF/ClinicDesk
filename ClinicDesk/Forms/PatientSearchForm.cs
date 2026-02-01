@@ -42,6 +42,7 @@ public partial class PatientSearchForm : MaterialForm
         }
 
         _patients = await ClinicDb.Instance.Patients
+            .Include(p => p.Visits)
             .Where(p => p.Name.Contains(nameTxt.Text))
             .ToListAsync();
 
