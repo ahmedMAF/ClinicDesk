@@ -17,7 +17,6 @@ public partial class SplashForm : Form
 
     private async void SplashForm_Shown(object sender, EventArgs e)
     {
-        // Task delay = Task.Delay(3000);
         await Task.Delay(500);
 
         Settings settings = Settings.Instance;
@@ -53,8 +52,6 @@ public partial class SplashForm : Form
         
         if (settings.IsDental)
             TeethHelper.Initialize();
-
-        // await delay;
 
         switch (settings.AccountType)
         {

@@ -88,7 +88,7 @@ public partial class SettingsForm : MaterialForm
 
     private void backupBtn_Click(object sender, EventArgs e)
     {
-        ClinicDb.AutoBackup();
+        ClinicDb.Backup();
     }
 
     private void backupCustomBtn_Click(object sender, EventArgs e)

@@ -35,7 +35,9 @@ public class ClinicDb : DbContext
 
     internal ClinicDb(DbContextOptions<ClinicDb> options) : base(options)
     {
-        Database.Migrate();
+        if (Settings.Instance.IsServer)
+            Database.Migrate();
+
         IsRunning = true;
 
         if (Settings.Instance.AccountType == AccountType.AllInOne)
@@ -65,7 +67,7 @@ public class ClinicDb : DbContext
                 Instance = db!;
             }
             else
-                result = MessageBox.Show("Can't connect to MySQL.", "Database Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+                result = MessageBox.Show("Can't connect to database server.", "Database Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
         }
         while (result == DialogResult.Retry);
     }
@@ -174,39 +176,40 @@ public class ClinicDb : DbContext
 
         settings.LastBackup = DateTime.Now.Date;
         Settings.SaveSettings();
-        Backup(settings.BackupPath);
+        Backup();
     }
     
-    public static void Backup(string path)
+    public static void Backup(string? path = null)
     {
         Settings settings = Settings.Instance;
         
         if (!settings.IsServer)
             return;
         
-        string dumpFile = Path.Combine(path, $"{settings.Database}_{DateTime.UtcNow:yyyyMMdd_HHmmss}.sql");
+        string dumpFile = Path.Combine(path ?? settings.BackupPath, $"{settings.Database}_{DateTime.UtcNow:yyyyMMdd_HHmmss}.sql");
         
 #if DEBUG
-        string mySqlDumpPath = @"C:\\xampp\mysql\bin\mysqldump.exe";
+        string mySqlDumpPath = @"C:\xampp\mysql\bin\mysqldump.exe";
         
         if (!File.Exists(mySqlDumpPath))
-            mySqlDumpPath = @"C:\\Program Files\xampp\mysql\bin\mysqldump.exe";
+            mySqlDumpPath = @"C:\Program Files\xampp\mysql\bin\mysqldump.exe";
 #else
-        string mySqlDumpPath = @"C:\\Program Files\MySQL\MySQL Server 8.0\bin\mysqldump.exe";
+        string mySqlDumpPath = @"C:\Program Files\MySQL\MySQL Server 8.0\bin\mysqldump.exe";
 #endif
-    
-        // Create the command to execute
-        string command = $"\"{mySqlDumpPath}\" -u {settings.User} -p{settings.Password} {settings.Database} > \"{dumpFile}\"";
     
         ProcessStartInfo psi = new()
         {
-            FileName = "cmd.exe",
-            Arguments = $"/C {command}",
+            FileName = mySqlDumpPath,
+            Arguments = $"-u {settings.User} {settings.Database} -r \"{dumpFile}\"",
             RedirectStandardError = true,
+            RedirectStandardOutput = true,
             UseShellExecute = false,
             CreateNoWindow = true
         };
-    
+
+        // safe password passing.
+        psi.Environment["MYSQL_PWD"] = settings.Password;
+
         using Process? process = Process.Start(psi);
 
         if (process == null)
@@ -214,9 +217,14 @@ public class ClinicDb : DbContext
 
         string errorOutput = process.StandardError.ReadToEnd();
         process.WaitForExit();
-    
+
         if (process.ExitCode != 0)
-            MessageBox.Show($"mysqldump failed with exit code {process.ExitCode}.{Environment.NewLine}Error: {errorOutput}.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        {
+            MessageBox.Show($"Backup failed.{Environment.NewLine}Error: {errorOutput}.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        MessageBox.Show($"Backup done successfully.", "backup", MessageBoxButtons.OK, MessageBoxIcon.Information);
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)

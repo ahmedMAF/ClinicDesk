@@ -20,7 +20,18 @@ public class Client
     public async Task StartAsync()
     {
         _client = new TcpClient();
-        await _client.ConnectAsync(Settings.Instance.Server, Server.Port);
+
+        try
+        {
+            await _client.ConnectAsync(Settings.Instance.Server, Server.Port);
+        }
+        catch
+        {
+            MessageBox.Show("Can't connect to the application's server, usually this is the secretary computer or the computer with the database.", "Network Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            Application.Exit();
+            return;
+        }
+
         _isRunning = true;
 
         // Start listening for messages from the server.
@@ -70,5 +81,8 @@ public class Client
         {
             MessageBox.Show($"Error receiving message: {ex.Message}", "Network Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
+
+        MessageBox.Show("Connection lost to the application's server, usually this is the secretary computer or the computer with the database.", "Network Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        Application.Exit();
     }
 }
