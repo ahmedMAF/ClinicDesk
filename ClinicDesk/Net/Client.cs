@@ -27,7 +27,7 @@ public class Client
         }
         catch
         {
-            MessageBox.Show("Can't connect to the application's server, usually this is the secretary computer or the computer with the database.", "Network Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show($"Can't connect to the application's server, usually this is the secretary computer or the computer with the database.{Environment.NewLine}Main app connection failed.", "Network Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             Application.Exit();
             return;
         }

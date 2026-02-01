@@ -56,7 +56,7 @@ public class ClinicDb : DbContext
                 Instance = db!;
             }
             else
-                result = MessageBox.Show("Can't connect to database server.", "Database Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+                result = MessageBox.Show($"Can't connect to the application's server, usually this is the secretary computer or the computer with the database.{Environment.NewLine}MySQL connection failed.", "Database Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
         }
         while (result == DialogResult.Retry);
 
