@@ -20,14 +20,26 @@ public class Client
     public async Task StartAsync()
     {
         _client = new TcpClient();
+        DialogResult result;
 
-        try
+        do
         {
-            await _client.ConnectAsync(Settings.Instance.Server, Server.Port);
+            try
+            {
+                await _client.ConnectAsync(Settings.Instance.Server, Server.Port);
+                result = DialogResult.OK;
+            }
+            catch
+            {
+                result = MessageBox.Show($"Can't connect to the application's server, usually this is the secretary computer or the computer with the database.{Environment.NewLine}Main app connection failed.", "Network Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+                Application.Exit();
+                return;
+            }
         }
-        catch
+        while (result == DialogResult.Retry);
+
+        if (result == DialogResult.Cancel)
         {
-            MessageBox.Show($"Can't connect to the application's server, usually this is the secretary computer or the computer with the database.{Environment.NewLine}Main app connection failed.", "Network Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             Application.Exit();
             return;
         }

@@ -52,15 +52,20 @@ public class ClinicDb : DbContext
 
             if (success)
             {
-                result = DialogResult.OK;
                 Instance = db!;
+                result = DialogResult.OK;
             }
             else
                 result = MessageBox.Show($"Can't connect to the application's server, usually this is the secretary computer or the computer with the database.{Environment.NewLine}MySQL connection failed.", "Database Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
         }
         while (result == DialogResult.Retry);
 
-
+        if (result == DialogResult.Cancel)
+        {
+            Application.Exit();
+            return;
+        }
+            
         if (Settings.Instance.AccountType == AccountType.AllInOne)
             return;
 
