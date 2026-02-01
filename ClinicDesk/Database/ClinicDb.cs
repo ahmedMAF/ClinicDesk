@@ -72,13 +72,19 @@ public class ClinicDb : DbContext
 
     internal static bool TestConnection(string server, ushort port, string db, string user, string pass)
     {
+        if (server is "localhost" or "127.0.0.1")
+            RunDatabaseService();
+
         return Create($"Server={server};Port={port};Database={db};User={user};Password={pass};", out _);
     }
 
     internal static bool Create(out ClinicDb? db)
     {
         Settings settings = Settings.Instance;
-        
+
+        if (Settings.Instance.IsServer)
+            RunDatabaseService();
+
         return Create($"Server={settings.Server};Port={settings.Port};Database={settings.Database};User={settings.User};Password={settings.Password};", out db);
     }
 
@@ -86,9 +92,6 @@ public class ClinicDb : DbContext
     {
         DbContextOptionsBuilder<ClinicDb> optionsBuilder = new();
 
-        if (Settings.Instance.IsServer)
-            RunDatabaseService();
-            
         try
         {
             optionsBuilder.UseMySql(conn, ServerVersion.AutoDetect(conn));

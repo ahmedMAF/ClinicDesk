@@ -44,18 +44,14 @@ public partial class Program
 
         if (licenseRequest == null || string.IsNullOrWhiteSpace(licenseRequest.Name) || string.IsNullOrWhiteSpace(licenseRequest.Email))
         {
-            response.StatusCode = 400;
-            await response.WriteAsync("Invalid request");
-            return;
+            return "";
         }
 
         Console.WriteLine($"Requesting license for: {licenseRequest.Name}, {licenseRequest.Email}");
 
         if (!ValidateHardwareId(licenseRequest.HardwareId))
         {
-            response.StatusCode = 400;
-            await response.WriteAsync("Invalid hardware ID");
-            return;
+            return "";
         }
 
         string license = License.New()
@@ -73,9 +69,18 @@ public partial class Program
         return license;
     }
     
-    private async Task SendLicense(string license, HttpResponse response)
+    private static async Task SendLicense(string license, HttpResponse response)
     {
         response.ContentType = "text/plain";
+
+        if (string.IsNullOrWhiteSpace(license))
+        {
+            response.StatusCode = 400;
+            await response.WriteAsync("Invalid request");
+            return;
+        }
+
+        response.StatusCode = 200;
         await response.WriteAsync(license);
 
         Console.WriteLine($"Response sent. {Encoding.UTF8.GetByteCount(license)} bytes.");
