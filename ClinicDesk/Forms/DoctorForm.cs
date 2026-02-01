@@ -32,7 +32,7 @@ public partial class DoctorForm : MaterialForm
     private void settingsBtn_Click(object sender, EventArgs e)
     {
         AppContext.ShowDialog<SettingsForm>();
-        appointmentsGrd.BackgroundColor = Theme.BackdropColor;
+        appointmentsGrd.BackgroundColor = Theme.BackgroundColor;
     }
 
     private void searchBtn_Click(object sender, EventArgs e)

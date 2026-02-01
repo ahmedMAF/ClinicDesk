@@ -89,7 +89,7 @@ public partial class SecretaryForm : MaterialForm
     private void settingsBtn_Click(object sender, EventArgs e)
     {
         AppContext.ShowDialog<SettingsForm>();
-        appointmentsGrd.BackgroundColor = Theme.BackdropColor;
+        appointmentsGrd.BackgroundColor = Theme.BackgroundColor;
     }
 
     private void aboutBtn_Click(object sender, EventArgs e)

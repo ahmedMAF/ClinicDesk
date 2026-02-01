@@ -261,10 +261,12 @@ public class AppointmentsGrid : GridButtonHelper
     
     private void Grid_RowPrePaint(object? sender, DataGridViewRowPrePaintEventArgs e)
     {
-        if (Grid.Rows[e.RowIndex].DataBoundItem is not AppointmentDto appointment)
+        DataGridViewRow row = Grid.Rows[e.RowIndex];
+
+        if (row.DataBoundItem is not AppointmentDto appointment)
             return;
 
-        Grid.Rows[e.RowIndex].DefaultCellStyle.BackColor = appointment.Status switch
+        Color color = appointment.Status switch
         {
             AppointmentStatus.Pending => Theme.DataGridRowBackColor,
             AppointmentStatus.Attended => Theme.DataGridAttendedRowBackColor,
@@ -273,6 +275,10 @@ public class AppointmentsGrid : GridButtonHelper
             AppointmentStatus.Rescheduled => Theme.DataGridRescheduledRowBackColor,
             _ => Theme.DataGridRowBackColor
         };
+
+        row.DefaultCellStyle.BackColor = color;
+        row.DefaultCellStyle.SelectionBackColor = color;
+        row.DefaultCellStyle.SelectionForeColor = Grid.ForeColor;
     }
     
     private void Grid_CellPainting(object? sender, DataGridViewCellPaintingEventArgs e)
@@ -342,9 +348,11 @@ public class AppointmentsGrid : GridButtonHelper
     {
         if (date.HasValue)
             _date = date.Value;
-           
-        // FIXME: This causes a race condition
-        await Utils.MarkMissedAppointments();
+
+        // FIXME: This may cause a race condition, doing it on server only may help, but is it right?
+        if (Settings.Instance.IsServer)
+            await Utils.MarkMissedAppointments();
+
         await PopulateGrid();
     }
     

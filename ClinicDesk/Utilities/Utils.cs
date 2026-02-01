@@ -32,13 +32,14 @@ internal static class Utils
         grd.RowHeadersVisible = false;
         grd.EnableHeadersVisualStyles = false;
         grd.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-        grd.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+        grd.SelectionMode = DataGridViewSelectionMode.RowHeaderSelect;
         grd.MultiSelect = false;
         grd.ReadOnly = true;
         grd.RowHeadersWidth = 50;
+        grd.BorderStyle = BorderStyle.None;
 
-        grd.BackgroundColor = Theme.BackdropColor;
-        grd.DefaultCellStyle.BackColor = Theme.BackdropColor;
+        grd.BackgroundColor = Theme.BackgroundColor;
+        grd.DefaultCellStyle.BackColor = Theme.BackgroundColor;
         grd.GridColor = Theme.DataGridLinesColor;
 
         grd.CellPainting += Grid_CellPainting;
@@ -64,13 +65,19 @@ internal static class Utils
         using (Brush backBrush = new SolidBrush(Theme.DataGridHeaderColor))
             e.Graphics!.FillRectangle(backBrush, e.CellBounds);
 
+        Rectangle rect = new(
+            e.CellBounds.X,
+            e.CellBounds.Y,
+            e.CellBounds.Width,
+            e.CellBounds.Height - 1);
+
+        // Prevent first cell left border from clipping.
+        if (e.ColumnIndex != 0)
+            rect.X -= 1;
+
         // Border
         using (Pen borderPen = new(Theme.DataGridLinesColor))
-            e.Graphics.DrawRectangle(borderPen,
-                e.CellBounds.X,
-                e.CellBounds.Y,
-                e.CellBounds.Width - 1,
-                e.CellBounds.Height - 1);
+            e.Graphics.DrawRectangle(borderPen, rect);
 
         // Text
         TextRenderer.DrawText(

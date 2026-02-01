@@ -1,6 +1,7 @@
 using ClinicDesk.Database;
 using ClinicDesk.Forms;
 using ReaLTaiizor.Colors;
+using ReaLTaiizor.Controls;
 using ReaLTaiizor.Forms;
 using ReaLTaiizor.Manager;
 using ReaLTaiizor.Util;
@@ -92,7 +93,6 @@ public class AppContext : ApplicationContext
         if (AppointmentApi.Requests.Count > 0)
         {
             if (MaterialMessageBox.Show(
-                this,
                 "There are appointment requests that need your attention! Do you want to see them?",
                 "Notification",
                 MessageBoxButtons.YesNo, false) == DialogResult.Yes)

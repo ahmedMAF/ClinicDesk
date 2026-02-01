@@ -26,7 +26,7 @@ public partial class ToothDropDown : UserControl
 
     private void ToothDropDown_Load(object sender, EventArgs e)
     {
-        BackColor = Theme.BackdropColor;
+        BackColor = Theme.BackgroundColor;
     }
 
     private void saveBtn_Click(object sender, EventArgs e)
