@@ -253,7 +253,7 @@ public partial class BillingForm : MaterialForm
         if (invoicesGrd.Rows[e.RowIndex].DataBoundItem is not InvoiceDto invoice)
             return;
 
-       invoicesGrd.Rows[e.RowIndex].DefaultCellStyle.BackColor = invoice.RemainingAmount == 0 ? Color.LightGray : Color.White;
+       invoicesGrd.Rows[e.RowIndex].DefaultCellStyle.BackColor = invoice.RemainingAmount == 0 ? Theme.DataGridMissedRowBackColor : Theme.DataGridRowBackColor;
     }
     
     private void invoicesGrd_CellPainting(object? sender, DataGridViewCellPaintingEventArgs e)

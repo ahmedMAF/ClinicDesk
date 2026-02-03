@@ -99,6 +99,7 @@ public class AppContext : ApplicationContext
                 ShowDialog<AppointmentRequestsForm>();
         }
 
+        AppointmentApi.Shutdown();
         ClinicDb.StopDatabaseService();
     }
 }

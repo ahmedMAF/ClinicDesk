@@ -1,9 +1,9 @@
-﻿using ClinicDesk.Database;
-using ClinicDesk.Database.Models;
-using Microsoft.EntityFrameworkCore;
-using System.Management;
+﻿using System.Management;
 using System.Security.Cryptography;
 using System.Text;
+using ClinicDesk.Database;
+using ClinicDesk.Database.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicDesk.Utilities;
 
@@ -40,11 +40,23 @@ internal static class Utils
 
         grd.BackgroundColor = Theme.BackgroundColor;
         grd.DefaultCellStyle.BackColor = Theme.BackgroundColor;
+        grd.DefaultCellStyle.SelectionBackColor = Theme.BackgroundColor;
+        grd.DefaultCellStyle.SelectionForeColor = grd.ForeColor;
         grd.GridColor = Theme.DataGridLinesColor;
 
         grd.CellPainting += Grid_CellPainting;
+        grd.RowPrePaint += Grid_RowPrePaint;
     }
-    
+
+    private static void Grid_RowPrePaint(object? sender, DataGridViewRowPrePaintEventArgs e)
+    {
+        DataGridView grid = (DataGridView)sender!;
+        DataGridViewRow row = grid.Rows[e.RowIndex];
+
+        row.DefaultCellStyle.SelectionBackColor = row.DefaultCellStyle.BackColor;
+        row.DefaultCellStyle.SelectionForeColor = grid.ForeColor;
+    }
+
     public static Color DarkenColor(Color color, float factor)
     {
         factor = 1f - Math.Clamp(factor, 0f, 1f);

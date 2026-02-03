@@ -32,8 +32,6 @@ public class Client
             catch
             {
                 result = MessageBox.Show($"Can't connect to the application's server, usually this is the secretary computer or the computer with the database.{Environment.NewLine}Main app connection failed.", "Network Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
-                Application.Exit();
-                return;
             }
         }
         while (result == DialogResult.Retry);

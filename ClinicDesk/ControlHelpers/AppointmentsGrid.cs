@@ -47,10 +47,10 @@ public class AppointmentsGrid : GridButtonHelper
     
     private void SetupAppointmentsDataGrid()
     {
-        Utils.SetupDataGrid(Grid);
-        
         Grid.RowPrePaint += Grid_RowPrePaint;
         Grid.CellPainting += Grid_CellPainting;
+
+        Utils.SetupDataGrid(Grid);
 
         Grid.Columns.Add(new DataGridViewTextBoxColumn
         {
@@ -266,7 +266,7 @@ public class AppointmentsGrid : GridButtonHelper
         if (row.DataBoundItem is not AppointmentDto appointment)
             return;
 
-        Color color = appointment.Status switch
+        row.DefaultCellStyle.BackColor = appointment.Status switch
         {
             AppointmentStatus.Pending => Theme.DataGridRowBackColor,
             AppointmentStatus.Attended => Theme.DataGridAttendedRowBackColor,
@@ -275,10 +275,6 @@ public class AppointmentsGrid : GridButtonHelper
             AppointmentStatus.Rescheduled => Theme.DataGridRescheduledRowBackColor,
             _ => Theme.DataGridRowBackColor
         };
-
-        row.DefaultCellStyle.BackColor = color;
-        row.DefaultCellStyle.SelectionBackColor = color;
-        row.DefaultCellStyle.SelectionForeColor = Grid.ForeColor;
     }
     
     private void Grid_CellPainting(object? sender, DataGridViewCellPaintingEventArgs e)

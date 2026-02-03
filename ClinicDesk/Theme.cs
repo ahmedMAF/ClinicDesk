@@ -6,7 +6,7 @@ public class Theme
 {
     public static Color BackgroundColor => Instance.BackgroundColor;
 
-    public static Color DataGridHeaderColor => Instance.Theme == Themes.LIGHT ? Color.White : Color.FromArgb(255, 50, 50, 50);
+    public static Color DataGridHeaderColor => BackgroundColor;
     public static Color DataGridLinesColor => Instance.Theme == Themes.LIGHT ? Color.Black : Color.White;
 
     public static Color DataGridRowBackColor => BackgroundColor;

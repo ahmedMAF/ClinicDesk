@@ -32,17 +32,32 @@ internal class AppointmentApi
 
     public static async Task<bool> TestApiUrl(string url)
     {
-        using HttpClient httpClient = new();
-        HttpResponseMessage response = await httpClient.GetAsync(url);
+        HttpClient httpClient = new();
 
-        return response.IsSuccessStatusCode;
+        try
+        {
+            HttpResponseMessage response = await httpClient.GetAsync(url);
+            return response.IsSuccessStatusCode;
+        }
+        catch
+        {
+            return false;
+        }
+        finally
+        {
+            httpClient.Dispose();
+        }
     }
 
     public static async Task SendRemoveRequest(int id)
     {
-        HttpResponseMessage response = await _httpClient.PostAsync(Settings.Instance.AppointmentApiUrl, JsonContent.Create(new Dictionary<string, int>{{ "id", id }}));
-
-        response.EnsureSuccessStatusCode();
+        try
+        {
+            await _httpClient.PostAsync(Settings.Instance.AppointmentApiUrl, JsonContent.Create(new Dictionary<string, int>{{ "id", id }}));
+        }
+        catch
+        {
+        }
     }
 
     private static async void Callback(object? state)
@@ -57,7 +72,11 @@ internal class AppointmentApi
         {
             HttpResponseMessage response = await _httpClient.GetAsync(Settings.Instance.AppointmentApiUrl);
 
-            response.EnsureSuccessStatusCode();
+            if (!response.IsSuccessStatusCode)
+            {
+                _isRunning = false;
+                return;
+            }
 
             Response? data = await response.Content.ReadFromJsonAsync<Response>(_options);
 
@@ -83,6 +102,11 @@ internal class AppointmentApi
         {
             _isRunning = false;
         }
+    }
+
+    public static void Shutdown()
+    {
+        _httpClient?.Dispose();
     }
 }
 
