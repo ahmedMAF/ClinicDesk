@@ -55,20 +55,12 @@ public partial class SplashForm : Form
 
         switch (settings.AccountType)
         {
-            case AccountType.Doctor:
-                AppContext.ShowForm<DoctorForm>();
-                break;
-
-            case AccountType.Secretary:
-                AppContext.ShowForm<SecretaryForm>();
-                break;
-
             case AccountType.AllInOne:
                 AppContext.ShowForm<AllInOneForm>();
                 break;
 
             default:
-                AppContext.ShowForm<WelcomeForm>();
+                AppContext.ShowForm<LoginForm>();
                 break;
         }
 

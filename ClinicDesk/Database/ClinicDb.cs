@@ -28,6 +28,7 @@ public class ClinicDb : DbContext
 
     public static Client? Client { get; private set; }
 
+    public DbSet<User> Users { get; set; }
     public DbSet<Patient> Patients { get; set; }
     public DbSet<Appointment> Appointments { get; set; }
     public DbSet<Visit> Visits { get; set; }
@@ -69,14 +70,14 @@ public class ClinicDb : DbContext
         if (Settings.Instance.AccountType == AccountType.AllInOne)
             return;
 
-        if (Settings.Instance.IsServer)
+        /*if (Settings.Instance.IsServer)
         {
             _server = new Server();
             _ = _server.StartAsync();
         }
 
         Client = new Client();
-        await Client.StartAsync();
+        await Client.StartAsync();*/
     }
 
     internal static bool TestConnection(string server, ushort port, string db, string user, string pass)

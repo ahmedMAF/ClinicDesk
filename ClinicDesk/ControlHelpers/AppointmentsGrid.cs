@@ -10,10 +10,11 @@ namespace ClinicDesk.ControlHelpers;
 public class AppointmentsGrid : GridButtonHelper
 {
     private readonly AccountType _accountType;
-    
     private DateTime _date = DateTime.Now.Date;
     private List<AppointmentDto> _appointments = null!;
     
+    public int? UserId { get; set; }
+
     public AppointmentsGrid(DataGridView grd, AccountType accountType) : base(grd, null!)
     {
         _accountType = accountType;
@@ -356,7 +357,7 @@ public class AppointmentsGrid : GridButtonHelper
     {
         _appointments = await ClinicDb.Instance.Appointments
             .AsNoTracking()
-            .Where(a => a.Date.Date == _date)
+            .Where(a => a.Date.Date == _date && (UserId == null || a.UserId == UserId))
             .Select(a => new AppointmentDto
             {
                 Id = a.Id,

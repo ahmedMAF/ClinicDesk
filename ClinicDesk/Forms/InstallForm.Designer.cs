@@ -61,8 +61,12 @@
             isDentalSwt = new ReaLTaiizor.Controls.MaterialSwitch();
             materialLabel11 = new ReaLTaiizor.Controls.MaterialLabel();
             materialCard3 = new ReaLTaiizor.Controls.MaterialCard();
+            passwordTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
+            materialLabel15 = new ReaLTaiizor.Controls.MaterialLabel();
             materialLabel12 = new ReaLTaiizor.Controls.MaterialLabel();
             folderBrowser = new FolderBrowserDialog();
+            usernameTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
+            materialLabel16 = new ReaLTaiizor.Controls.MaterialLabel();
             materialCard1.SuspendLayout();
             materialCard2.SuspendLayout();
             materialCard3.SuspendLayout();
@@ -79,12 +83,12 @@
             installBtn.HighEmphasis = true;
             installBtn.Icon = null;
             installBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            installBtn.Location = new Point(861, 541);
-            installBtn.Margin = new Padding(4, 6, 4, 6);
+            installBtn.Location = new Point(984, 711);
+            installBtn.Margin = new Padding(5, 8, 5, 8);
             installBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             installBtn.Name = "installBtn";
             installBtn.NoAccentTextColor = Color.Empty;
-            installBtn.Size = new Size(158, 36);
+            installBtn.Size = new Size(181, 48);
             installBtn.TabIndex = 0;
             installBtn.Text = "Install";
             installBtn.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -94,15 +98,15 @@
             // 
             // materialLabel1
             // 
-            materialLabel1.AutoSize = true;
             materialLabel1.Depth = 0;
             materialLabel1.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel1.Location = new Point(20, 54);
+            materialLabel1.Location = new Point(23, 55);
             materialLabel1.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel1.Name = "materialLabel1";
-            materialLabel1.Size = new Size(45, 19);
+            materialLabel1.Size = new Size(152, 48);
             materialLabel1.TabIndex = 1;
             materialLabel1.Text = "Server";
+            materialLabel1.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // dbServerTxt
             // 
@@ -115,7 +119,8 @@
             dbServerTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             dbServerTxt.HideSelection = true;
             dbServerTxt.LeadingIcon = null;
-            dbServerTxt.Location = new Point(158, 41);
+            dbServerTxt.Location = new Point(181, 55);
+            dbServerTxt.Margin = new Padding(3, 4, 3, 4);
             dbServerTxt.MaxLength = 32767;
             dbServerTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             dbServerTxt.Name = "dbServerTxt";
@@ -127,7 +132,7 @@
             dbServerTxt.SelectionLength = 0;
             dbServerTxt.SelectionStart = 0;
             dbServerTxt.ShortcutsEnabled = true;
-            dbServerTxt.Size = new Size(312, 48);
+            dbServerTxt.Size = new Size(357, 48);
             dbServerTxt.TabIndex = 2;
             dbServerTxt.TabStop = false;
             dbServerTxt.TextAlign = HorizontalAlignment.Left;
@@ -149,11 +154,12 @@
             accountCbo.IntegralHeight = false;
             accountCbo.ItemHeight = 43;
             accountCbo.Items.AddRange(new object[] { "Choose Type...", "Doctor", "Secretary", "All-In-One" });
-            accountCbo.Location = new Point(158, 40);
+            accountCbo.Location = new Point(181, 335);
+            accountCbo.Margin = new Padding(3, 4, 3, 4);
             accountCbo.MaxDropDownItems = 4;
             accountCbo.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             accountCbo.Name = "accountCbo";
-            accountCbo.Size = new Size(312, 49);
+            accountCbo.Size = new Size(357, 49);
             accountCbo.StartIndex = 0;
             accountCbo.TabIndex = 3;
             // 
@@ -168,7 +174,8 @@
             dbPortTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             dbPortTxt.HideSelection = true;
             dbPortTxt.LeadingIcon = null;
-            dbPortTxt.Location = new Point(158, 95);
+            dbPortTxt.Location = new Point(181, 111);
+            dbPortTxt.Margin = new Padding(3, 4, 3, 4);
             dbPortTxt.MaxLength = 32767;
             dbPortTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             dbPortTxt.Name = "dbPortTxt";
@@ -180,7 +187,7 @@
             dbPortTxt.SelectionLength = 0;
             dbPortTxt.SelectionStart = 0;
             dbPortTxt.ShortcutsEnabled = true;
-            dbPortTxt.Size = new Size(312, 48);
+            dbPortTxt.Size = new Size(357, 48);
             dbPortTxt.TabIndex = 6;
             dbPortTxt.TabStop = false;
             dbPortTxt.TextAlign = HorizontalAlignment.Left;
@@ -189,15 +196,15 @@
             // 
             // materialLabel2
             // 
-            materialLabel2.AutoSize = true;
             materialLabel2.Depth = 0;
             materialLabel2.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel2.Location = new Point(20, 108);
+            materialLabel2.Location = new Point(23, 111);
             materialLabel2.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel2.Name = "materialLabel2";
-            materialLabel2.Size = new Size(30, 19);
+            materialLabel2.Size = new Size(152, 48);
             materialLabel2.TabIndex = 5;
             materialLabel2.Text = "Port";
+            materialLabel2.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // dbNameTxt
             // 
@@ -210,7 +217,8 @@
             dbNameTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             dbNameTxt.HideSelection = true;
             dbNameTxt.LeadingIcon = null;
-            dbNameTxt.Location = new Point(158, 149);
+            dbNameTxt.Location = new Point(180, 167);
+            dbNameTxt.Margin = new Padding(3, 4, 3, 4);
             dbNameTxt.MaxLength = 32767;
             dbNameTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             dbNameTxt.Name = "dbNameTxt";
@@ -222,7 +230,7 @@
             dbNameTxt.SelectionLength = 0;
             dbNameTxt.SelectionStart = 0;
             dbNameTxt.ShortcutsEnabled = true;
-            dbNameTxt.Size = new Size(312, 48);
+            dbNameTxt.Size = new Size(357, 48);
             dbNameTxt.TabIndex = 8;
             dbNameTxt.TabStop = false;
             dbNameTxt.TextAlign = HorizontalAlignment.Left;
@@ -231,15 +239,15 @@
             // 
             // materialLabel3
             // 
-            materialLabel3.AutoSize = true;
             materialLabel3.Depth = 0;
             materialLabel3.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel3.Location = new Point(20, 162);
+            materialLabel3.Location = new Point(23, 167);
             materialLabel3.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel3.Name = "materialLabel3";
-            materialLabel3.Size = new Size(69, 19);
+            materialLabel3.Size = new Size(151, 48);
             materialLabel3.TabIndex = 7;
             materialLabel3.Text = "Database";
+            materialLabel3.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // dbUserTxt
             // 
@@ -252,7 +260,8 @@
             dbUserTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             dbUserTxt.HideSelection = true;
             dbUserTxt.LeadingIcon = null;
-            dbUserTxt.Location = new Point(158, 203);
+            dbUserTxt.Location = new Point(180, 223);
+            dbUserTxt.Margin = new Padding(3, 4, 3, 4);
             dbUserTxt.MaxLength = 32767;
             dbUserTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             dbUserTxt.Name = "dbUserTxt";
@@ -264,7 +273,7 @@
             dbUserTxt.SelectionLength = 0;
             dbUserTxt.SelectionStart = 0;
             dbUserTxt.ShortcutsEnabled = true;
-            dbUserTxt.Size = new Size(312, 48);
+            dbUserTxt.Size = new Size(357, 48);
             dbUserTxt.TabIndex = 10;
             dbUserTxt.TabStop = false;
             dbUserTxt.TextAlign = HorizontalAlignment.Left;
@@ -273,15 +282,15 @@
             // 
             // materialLabel4
             // 
-            materialLabel4.AutoSize = true;
             materialLabel4.Depth = 0;
             materialLabel4.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel4.Location = new Point(20, 216);
+            materialLabel4.Location = new Point(23, 223);
             materialLabel4.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel4.Name = "materialLabel4";
-            materialLabel4.Size = new Size(32, 19);
+            materialLabel4.Size = new Size(151, 48);
             materialLabel4.TabIndex = 9;
             materialLabel4.Text = "User";
+            materialLabel4.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // dbPasswordTxt
             // 
@@ -294,7 +303,8 @@
             dbPasswordTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             dbPasswordTxt.HideSelection = true;
             dbPasswordTxt.LeadingIcon = null;
-            dbPasswordTxt.Location = new Point(158, 257);
+            dbPasswordTxt.Location = new Point(180, 279);
+            dbPasswordTxt.Margin = new Padding(3, 4, 3, 4);
             dbPasswordTxt.MaxLength = 32767;
             dbPasswordTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             dbPasswordTxt.Name = "dbPasswordTxt";
@@ -306,7 +316,7 @@
             dbPasswordTxt.SelectionLength = 0;
             dbPasswordTxt.SelectionStart = 0;
             dbPasswordTxt.ShortcutsEnabled = true;
-            dbPasswordTxt.Size = new Size(312, 48);
+            dbPasswordTxt.Size = new Size(357, 48);
             dbPasswordTxt.TabIndex = 12;
             dbPasswordTxt.TabStop = false;
             dbPasswordTxt.TextAlign = HorizontalAlignment.Left;
@@ -315,27 +325,27 @@
             // 
             // materialLabel5
             // 
-            materialLabel5.AutoSize = true;
             materialLabel5.Depth = 0;
             materialLabel5.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel5.Location = new Point(20, 270);
+            materialLabel5.Location = new Point(23, 279);
             materialLabel5.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel5.Name = "materialLabel5";
-            materialLabel5.Size = new Size(71, 19);
+            materialLabel5.Size = new Size(151, 48);
             materialLabel5.TabIndex = 11;
             materialLabel5.Text = "Password";
+            materialLabel5.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // materialLabel6
             // 
-            materialLabel6.AutoSize = true;
             materialLabel6.Depth = 0;
             materialLabel6.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel6.Location = new Point(20, 58);
+            materialLabel6.Location = new Point(23, 335);
             materialLabel6.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel6.Name = "materialLabel6";
-            materialLabel6.Size = new Size(98, 19);
+            materialLabel6.Size = new Size(152, 49);
             materialLabel6.TabIndex = 13;
             materialLabel6.Text = "Account Type";
+            materialLabel6.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // licenseServerUrlTxt
             // 
@@ -348,7 +358,8 @@
             licenseServerUrlTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             licenseServerUrlTxt.HideSelection = true;
             licenseServerUrlTxt.LeadingIcon = null;
-            licenseServerUrlTxt.Location = new Point(158, 41);
+            licenseServerUrlTxt.Location = new Point(181, 55);
+            licenseServerUrlTxt.Margin = new Padding(3, 4, 3, 4);
             licenseServerUrlTxt.MaxLength = 32767;
             licenseServerUrlTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             licenseServerUrlTxt.Name = "licenseServerUrlTxt";
@@ -360,7 +371,7 @@
             licenseServerUrlTxt.SelectionLength = 0;
             licenseServerUrlTxt.SelectionStart = 0;
             licenseServerUrlTxt.ShortcutsEnabled = true;
-            licenseServerUrlTxt.Size = new Size(312, 48);
+            licenseServerUrlTxt.Size = new Size(357, 48);
             licenseServerUrlTxt.TabIndex = 15;
             licenseServerUrlTxt.TabStop = false;
             licenseServerUrlTxt.Text = "http://localhost/api/getlicense";
@@ -370,15 +381,15 @@
             // 
             // materialLabel8
             // 
-            materialLabel8.AutoSize = true;
             materialLabel8.Depth = 0;
             materialLabel8.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel8.Location = new Point(20, 54);
+            materialLabel8.Location = new Point(23, 55);
             materialLabel8.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel8.Name = "materialLabel8";
-            materialLabel8.Size = new Size(136, 19);
+            materialLabel8.Size = new Size(152, 48);
             materialLabel8.TabIndex = 14;
             materialLabel8.Text = "License Server URL";
+            materialLabel8.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // nameTxt
             // 
@@ -391,7 +402,8 @@
             nameTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             nameTxt.HideSelection = true;
             nameTxt.LeadingIcon = null;
-            nameTxt.Location = new Point(158, 95);
+            nameTxt.Location = new Point(181, 111);
+            nameTxt.Margin = new Padding(3, 4, 3, 4);
             nameTxt.MaxLength = 32767;
             nameTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             nameTxt.Name = "nameTxt";
@@ -403,7 +415,7 @@
             nameTxt.SelectionLength = 0;
             nameTxt.SelectionStart = 0;
             nameTxt.ShortcutsEnabled = true;
-            nameTxt.Size = new Size(312, 48);
+            nameTxt.Size = new Size(357, 48);
             nameTxt.TabIndex = 17;
             nameTxt.TabStop = false;
             nameTxt.TextAlign = HorizontalAlignment.Left;
@@ -412,15 +424,15 @@
             // 
             // materialLabel7
             // 
-            materialLabel7.AutoSize = true;
             materialLabel7.Depth = 0;
             materialLabel7.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel7.Location = new Point(20, 108);
+            materialLabel7.Location = new Point(23, 111);
             materialLabel7.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel7.Name = "materialLabel7";
-            materialLabel7.Size = new Size(43, 19);
+            materialLabel7.Size = new Size(152, 48);
             materialLabel7.TabIndex = 16;
             materialLabel7.Text = "Name";
+            materialLabel7.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // emailTxt
             // 
@@ -433,7 +445,8 @@
             emailTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             emailTxt.HideSelection = true;
             emailTxt.LeadingIcon = null;
-            emailTxt.Location = new Point(158, 149);
+            emailTxt.Location = new Point(181, 167);
+            emailTxt.Margin = new Padding(3, 4, 3, 4);
             emailTxt.MaxLength = 32767;
             emailTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             emailTxt.Name = "emailTxt";
@@ -445,7 +458,7 @@
             emailTxt.SelectionLength = 0;
             emailTxt.SelectionStart = 0;
             emailTxt.ShortcutsEnabled = true;
-            emailTxt.Size = new Size(312, 48);
+            emailTxt.Size = new Size(357, 48);
             emailTxt.TabIndex = 19;
             emailTxt.TabStop = false;
             emailTxt.TextAlign = HorizontalAlignment.Left;
@@ -454,15 +467,15 @@
             // 
             // materialLabel9
             // 
-            materialLabel9.AutoSize = true;
             materialLabel9.Depth = 0;
             materialLabel9.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel9.Location = new Point(20, 162);
+            materialLabel9.Location = new Point(23, 167);
             materialLabel9.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel9.Name = "materialLabel9";
-            materialLabel9.Size = new Size(41, 19);
+            materialLabel9.Size = new Size(152, 48);
             materialLabel9.TabIndex = 18;
             materialLabel9.Text = "Email";
+            materialLabel9.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // materialCard1
             // 
@@ -484,17 +497,16 @@
             materialCard1.Controls.Add(materialLabel5);
             materialCard1.Depth = 0;
             materialCard1.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            materialCard1.Location = new Point(532, 78);
-            materialCard1.Margin = new Padding(14);
+            materialCard1.Location = new Point(608, 104);
+            materialCard1.Margin = new Padding(16, 19, 16, 19);
             materialCard1.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialCard1.Name = "materialCard1";
-            materialCard1.Padding = new Padding(14);
-            materialCard1.Size = new Size(487, 427);
+            materialCard1.Padding = new Padding(16, 19, 16, 19);
+            materialCard1.Size = new Size(557, 450);
             materialCard1.TabIndex = 20;
             // 
             // browseBtn
             // 
-            browseBtn.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             browseBtn.AutoSize = false;
             browseBtn.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             browseBtn.CharacterCasing = ReaLTaiizor.Controls.MaterialButton.CharacterCasingEnum.Normal;
@@ -503,12 +515,12 @@
             browseBtn.HighEmphasis = true;
             browseBtn.Icon = null;
             browseBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            browseBtn.Location = new Point(422, 311);
-            browseBtn.Margin = new Padding(4, 6, 4, 6);
+            browseBtn.Location = new Point(481, 335);
+            browseBtn.Margin = new Padding(5, 8, 5, 8);
             browseBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             browseBtn.Name = "browseBtn";
             browseBtn.NoAccentTextColor = Color.Empty;
-            browseBtn.Size = new Size(48, 48);
+            browseBtn.Size = new Size(55, 48);
             browseBtn.TabIndex = 23;
             browseBtn.Text = "...";
             browseBtn.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Outlined;
@@ -520,12 +532,13 @@
             // 
             daysSld.Depth = 0;
             daysSld.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            daysSld.Location = new Point(20, 368);
+            daysSld.Location = new Point(23, 395);
+            daysSld.Margin = new Padding(3, 4, 3, 4);
             daysSld.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             daysSld.Name = "daysSld";
             daysSld.RangeMax = 7;
             daysSld.RangeMin = 1;
-            daysSld.Size = new Size(450, 40);
+            daysSld.Size = new Size(515, 40);
             daysSld.StepChange = 1;
             daysSld.TabIndex = 16;
             daysSld.Text = "Backup Frequency";
@@ -538,7 +551,7 @@
             materialLabel10.Depth = 0;
             materialLabel10.Font = new Font("Roboto Medium", 20F, FontStyle.Bold, GraphicsUnit.Pixel);
             materialLabel10.FontType = ReaLTaiizor.Manager.MaterialSkinManager.FontType.H6;
-            materialLabel10.Location = new Point(17, 14);
+            materialLabel10.Location = new Point(19, 19);
             materialLabel10.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel10.Name = "materialLabel10";
             materialLabel10.Size = new Size(86, 24);
@@ -547,15 +560,15 @@
             // 
             // materialLabel13
             // 
-            materialLabel13.AutoSize = true;
             materialLabel13.Depth = 0;
             materialLabel13.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel13.Location = new Point(20, 324);
+            materialLabel13.Location = new Point(23, 335);
             materialLabel13.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel13.Name = "materialLabel13";
-            materialLabel13.Size = new Size(91, 19);
+            materialLabel13.Size = new Size(151, 48);
             materialLabel13.TabIndex = 5;
             materialLabel13.Text = "Backup Path";
+            materialLabel13.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // backupTxt
             // 
@@ -568,7 +581,8 @@
             backupTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             backupTxt.HideSelection = true;
             backupTxt.LeadingIcon = null;
-            backupTxt.Location = new Point(158, 311);
+            backupTxt.Location = new Point(180, 335);
+            backupTxt.Margin = new Padding(3, 4, 3, 4);
             backupTxt.MaxLength = 32767;
             backupTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             backupTxt.Name = "backupTxt";
@@ -580,7 +594,7 @@
             backupTxt.SelectionLength = 0;
             backupTxt.SelectionStart = 0;
             backupTxt.ShortcutsEnabled = true;
-            backupTxt.Size = new Size(257, 48);
+            backupTxt.Size = new Size(294, 48);
             backupTxt.TabIndex = 6;
             backupTxt.TabStop = false;
             backupTxt.TextAlign = HorizontalAlignment.Left;
@@ -595,16 +609,14 @@
             materialCard2.Controls.Add(apiSwt);
             materialCard2.Controls.Add(isDentalSwt);
             materialCard2.Controls.Add(materialLabel11);
-            materialCard2.Controls.Add(accountCbo);
-            materialCard2.Controls.Add(materialLabel6);
             materialCard2.Depth = 0;
             materialCard2.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            materialCard2.Location = new Point(17, 324);
-            materialCard2.Margin = new Padding(14);
+            materialCard2.Location = new Point(19, 550);
+            materialCard2.Margin = new Padding(16, 19, 16, 19);
             materialCard2.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialCard2.Name = "materialCard2";
-            materialCard2.Padding = new Padding(14);
-            materialCard2.Size = new Size(487, 253);
+            materialCard2.Padding = new Padding(16, 19, 16, 19);
+            materialCard2.Size = new Size(557, 210);
             materialCard2.TabIndex = 21;
             // 
             // apiUrltxt
@@ -619,7 +631,8 @@
             apiUrltxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             apiUrltxt.HideSelection = true;
             apiUrltxt.LeadingIcon = null;
-            apiUrltxt.Location = new Point(158, 177);
+            apiUrltxt.Location = new Point(181, 139);
+            apiUrltxt.Margin = new Padding(3, 4, 3, 4);
             apiUrltxt.MaxLength = 32767;
             apiUrltxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             apiUrltxt.Name = "apiUrltxt";
@@ -631,7 +644,7 @@
             apiUrltxt.SelectionLength = 0;
             apiUrltxt.SelectionStart = 0;
             apiUrltxt.ShortcutsEnabled = true;
-            apiUrltxt.Size = new Size(312, 48);
+            apiUrltxt.Size = new Size(357, 48);
             apiUrltxt.TabIndex = 17;
             apiUrltxt.TabStop = false;
             apiUrltxt.Text = "http://localhost/api/getlicense";
@@ -641,21 +654,21 @@
             // 
             // materialLabel14
             // 
-            materialLabel14.AutoSize = true;
             materialLabel14.Depth = 0;
             materialLabel14.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel14.Location = new Point(20, 190);
+            materialLabel14.Location = new Point(23, 139);
             materialLabel14.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel14.Name = "materialLabel14";
-            materialLabel14.Size = new Size(58, 19);
+            materialLabel14.Size = new Size(152, 48);
             materialLabel14.TabIndex = 16;
             materialLabel14.Text = "API URL";
+            materialLabel14.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // apiSwt
             // 
             apiSwt.AutoSize = true;
             apiSwt.Depth = 0;
-            apiSwt.Location = new Point(14, 137);
+            apiSwt.Location = new Point(23, 98);
             apiSwt.Margin = new Padding(0);
             apiSwt.MouseLocation = new Point(-1, -1);
             apiSwt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
@@ -672,7 +685,7 @@
             // 
             isDentalSwt.AutoSize = true;
             isDentalSwt.Depth = 0;
-            isDentalSwt.Location = new Point(14, 100);
+            isDentalSwt.Location = new Point(23, 61);
             isDentalSwt.Margin = new Padding(0);
             isDentalSwt.MouseLocation = new Point(-1, -1);
             isDentalSwt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
@@ -690,32 +703,82 @@
             materialLabel11.Depth = 0;
             materialLabel11.Font = new Font("Roboto Medium", 20F, FontStyle.Bold, GraphicsUnit.Pixel);
             materialLabel11.FontType = ReaLTaiizor.Manager.MaterialSkinManager.FontType.H6;
-            materialLabel11.Location = new Point(17, 14);
+            materialLabel11.Location = new Point(19, 19);
             materialLabel11.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel11.Name = "materialLabel11";
-            materialLabel11.Size = new Size(75, 24);
+            materialLabel11.Size = new Size(115, 24);
             materialLabel11.TabIndex = 13;
-            materialLabel11.Text = "Settings";
+            materialLabel11.Text = "App Settings";
             // 
             // materialCard3
             // 
             materialCard3.BackColor = Color.FromArgb(255, 255, 255);
+            materialCard3.Controls.Add(usernameTxt);
+            materialCard3.Controls.Add(materialLabel16);
+            materialCard3.Controls.Add(passwordTxt);
+            materialCard3.Controls.Add(materialLabel15);
             materialCard3.Controls.Add(materialLabel12);
             materialCard3.Controls.Add(emailTxt);
             materialCard3.Controls.Add(licenseServerUrlTxt);
+            materialCard3.Controls.Add(accountCbo);
+            materialCard3.Controls.Add(materialLabel6);
             materialCard3.Controls.Add(materialLabel9);
             materialCard3.Controls.Add(materialLabel8);
             materialCard3.Controls.Add(nameTxt);
             materialCard3.Controls.Add(materialLabel7);
             materialCard3.Depth = 0;
             materialCard3.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            materialCard3.Location = new Point(17, 78);
-            materialCard3.Margin = new Padding(14);
+            materialCard3.Location = new Point(19, 104);
+            materialCard3.Margin = new Padding(16, 19, 16, 19);
             materialCard3.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialCard3.Name = "materialCard3";
-            materialCard3.Padding = new Padding(14);
-            materialCard3.Size = new Size(487, 218);
+            materialCard3.Padding = new Padding(16, 19, 16, 19);
+            materialCard3.Size = new Size(557, 408);
             materialCard3.TabIndex = 22;
+            // 
+            // passwordTxt
+            // 
+            passwordTxt.AnimateReadOnly = false;
+            passwordTxt.AutoCompleteMode = AutoCompleteMode.None;
+            passwordTxt.AutoCompleteSource = AutoCompleteSource.None;
+            passwordTxt.BackgroundImageLayout = ImageLayout.None;
+            passwordTxt.CharacterCasing = CharacterCasing.Normal;
+            passwordTxt.Depth = 0;
+            passwordTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
+            passwordTxt.HideSelection = true;
+            passwordTxt.Hint = "For Login";
+            passwordTxt.LeadingIcon = null;
+            passwordTxt.Location = new Point(181, 279);
+            passwordTxt.Margin = new Padding(3, 4, 3, 4);
+            passwordTxt.MaxLength = 32767;
+            passwordTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
+            passwordTxt.Name = "passwordTxt";
+            passwordTxt.PasswordChar = '\0';
+            passwordTxt.PrefixSuffixText = null;
+            passwordTxt.ReadOnly = false;
+            passwordTxt.RightToLeft = RightToLeft.No;
+            passwordTxt.SelectedText = "";
+            passwordTxt.SelectionLength = 0;
+            passwordTxt.SelectionStart = 0;
+            passwordTxt.ShortcutsEnabled = true;
+            passwordTxt.Size = new Size(357, 48);
+            passwordTxt.TabIndex = 21;
+            passwordTxt.TabStop = false;
+            passwordTxt.TextAlign = HorizontalAlignment.Left;
+            passwordTxt.TrailingIcon = null;
+            passwordTxt.UseSystemPasswordChar = false;
+            // 
+            // materialLabel15
+            // 
+            materialLabel15.Depth = 0;
+            materialLabel15.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel15.Location = new Point(23, 279);
+            materialLabel15.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialLabel15.Name = "materialLabel15";
+            materialLabel15.Size = new Size(152, 48);
+            materialLabel15.TabIndex = 20;
+            materialLabel15.Text = "Password";
+            materialLabel15.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // materialLabel12
             // 
@@ -723,30 +786,76 @@
             materialLabel12.Depth = 0;
             materialLabel12.Font = new Font("Roboto Medium", 20F, FontStyle.Bold, GraphicsUnit.Pixel);
             materialLabel12.FontType = ReaLTaiizor.Manager.MaterialSkinManager.FontType.H6;
-            materialLabel12.Location = new Point(17, 14);
+            materialLabel12.Location = new Point(19, 19);
             materialLabel12.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel12.Name = "materialLabel12";
-            materialLabel12.Size = new Size(70, 24);
+            materialLabel12.Size = new Size(89, 24);
             materialLabel12.TabIndex = 13;
-            materialLabel12.Text = "License";
+            materialLabel12.Text = "User Data";
             // 
             // folderBrowser
             // 
             folderBrowser.Description = "Select a folder to store database backups in";
             // 
+            // usernameTxt
+            // 
+            usernameTxt.AnimateReadOnly = false;
+            usernameTxt.AutoCompleteMode = AutoCompleteMode.None;
+            usernameTxt.AutoCompleteSource = AutoCompleteSource.None;
+            usernameTxt.BackgroundImageLayout = ImageLayout.None;
+            usernameTxt.CharacterCasing = CharacterCasing.Normal;
+            usernameTxt.Depth = 0;
+            usernameTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
+            usernameTxt.HideSelection = true;
+            usernameTxt.Hint = "For Login";
+            usernameTxt.LeadingIcon = null;
+            usernameTxt.Location = new Point(181, 223);
+            usernameTxt.Margin = new Padding(3, 4, 3, 4);
+            usernameTxt.MaxLength = 32767;
+            usernameTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
+            usernameTxt.Name = "usernameTxt";
+            usernameTxt.PasswordChar = '\0';
+            usernameTxt.PrefixSuffixText = null;
+            usernameTxt.ReadOnly = false;
+            usernameTxt.RightToLeft = RightToLeft.No;
+            usernameTxt.SelectedText = "";
+            usernameTxt.SelectionLength = 0;
+            usernameTxt.SelectionStart = 0;
+            usernameTxt.ShortcutsEnabled = true;
+            usernameTxt.Size = new Size(357, 48);
+            usernameTxt.TabIndex = 23;
+            usernameTxt.TabStop = false;
+            usernameTxt.TextAlign = HorizontalAlignment.Left;
+            usernameTxt.TrailingIcon = null;
+            usernameTxt.UseSystemPasswordChar = false;
+            // 
+            // materialLabel16
+            // 
+            materialLabel16.Depth = 0;
+            materialLabel16.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel16.Location = new Point(23, 223);
+            materialLabel16.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialLabel16.Name = "materialLabel16";
+            materialLabel16.Size = new Size(152, 48);
+            materialLabel16.TabIndex = 22;
+            materialLabel16.Text = "Username";
+            materialLabel16.TextAlign = ContentAlignment.MiddleLeft;
+            // 
             // InstallForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1040, 598);
+            ClientSize = new Size(1189, 787);
             Controls.Add(materialCard3);
             Controls.Add(materialCard2);
             Controls.Add(materialCard1);
             Controls.Add(installBtn);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            Margin = new Padding(3, 4, 3, 4);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "InstallForm";
+            Padding = new Padding(3, 85, 3, 4);
             Sizable = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Install ClinicDesk";
@@ -796,5 +905,9 @@
         private ReaLTaiizor.Controls.MaterialSwitch apiSwt;
         private ReaLTaiizor.Controls.MaterialTextBoxEdit apiUrltxt;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel14;
+        private ReaLTaiizor.Controls.MaterialTextBoxEdit passwordTxt;
+        private ReaLTaiizor.Controls.MaterialLabel materialLabel15;
+        private ReaLTaiizor.Controls.MaterialTextBoxEdit usernameTxt;
+        private ReaLTaiizor.Controls.MaterialLabel materialLabel16;
     }
 }

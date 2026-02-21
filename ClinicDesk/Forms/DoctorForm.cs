@@ -24,6 +24,11 @@ public partial class DoctorForm : MaterialForm
         ClinicDb.Client?.RefreshUI += RefreshUI;
     }
 
+    internal void SetData(User user)
+    {
+        _grdHelper.UserId = user.Id;
+    }
+
     private async void DoctorForm_Load(object sender, EventArgs e)
     {
         await _grdHelper.RefreshList();

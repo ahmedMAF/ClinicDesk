@@ -40,6 +40,8 @@
             materialLabel3 = new ReaLTaiizor.Controls.MaterialLabel();
             materialLabel4 = new ReaLTaiizor.Controls.MaterialLabel();
             saveBtn = new ReaLTaiizor.Controls.MaterialButton();
+            doctorCbo = new ReaLTaiizor.Controls.MaterialComboBox();
+            materialLabel5 = new ReaLTaiizor.Controls.MaterialLabel();
             materialCard1.SuspendLayout();
             materialCard2.SuspendLayout();
             SuspendLayout();
@@ -174,6 +176,8 @@
             // 
             materialCard2.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             materialCard2.BackColor = Color.FromArgb(255, 255, 255);
+            materialCard2.Controls.Add(materialLabel5);
+            materialCard2.Controls.Add(doctorCbo);
             materialCard2.Controls.Add(timePkr);
             materialCard2.Controls.Add(materialLabel3);
             materialCard2.Controls.Add(datePkr);
@@ -185,7 +189,7 @@
             materialCard2.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialCard2.Name = "materialCard2";
             materialCard2.Padding = new Padding(14);
-            materialCard2.Size = new Size(576, 135);
+            materialCard2.Size = new Size(576, 187);
             materialCard2.TabIndex = 34;
             // 
             // materialLabel3
@@ -222,7 +226,7 @@
             saveBtn.HighEmphasis = true;
             saveBtn.Icon = null;
             saveBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            saveBtn.Location = new Point(435, 388);
+            saveBtn.Location = new Point(435, 440);
             saveBtn.Margin = new Padding(4, 6, 4, 6);
             saveBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             saveBtn.Name = "saveBtn";
@@ -235,11 +239,45 @@
             saveBtn.UseVisualStyleBackColor = true;
             saveBtn.Click += saveBtn_Click;
             // 
+            // doctorCbo
+            // 
+            doctorCbo.AutoResize = false;
+            doctorCbo.BackColor = Color.FromArgb(255, 255, 255);
+            doctorCbo.Depth = 0;
+            doctorCbo.DrawMode = DrawMode.OwnerDrawVariable;
+            doctorCbo.DropDownHeight = 174;
+            doctorCbo.DropDownStyle = ComboBoxStyle.DropDownList;
+            doctorCbo.DropDownWidth = 121;
+            doctorCbo.Font = new Font("Roboto Medium", 14F, FontStyle.Bold, GraphicsUnit.Pixel);
+            doctorCbo.ForeColor = Color.FromArgb(222, 0, 0, 0);
+            doctorCbo.FormattingEnabled = true;
+            doctorCbo.IntegralHeight = false;
+            doctorCbo.ItemHeight = 43;
+            doctorCbo.Location = new Point(127, 121);
+            doctorCbo.MaxDropDownItems = 4;
+            doctorCbo.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
+            doctorCbo.Name = "doctorCbo";
+            doctorCbo.Size = new Size(432, 49);
+            doctorCbo.StartIndex = 0;
+            doctorCbo.TabIndex = 7;
+            // 
+            // materialLabel5
+            // 
+            materialLabel5.Depth = 0;
+            materialLabel5.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel5.Location = new Point(17, 119);
+            materialLabel5.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialLabel5.Name = "materialLabel5";
+            materialLabel5.Size = new Size(104, 48);
+            materialLabel5.TabIndex = 8;
+            materialLabel5.Text = "Doctor";
+            materialLabel5.TextAlign = ContentAlignment.MiddleLeft;
+            // 
             // NewAppointmentForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(610, 440);
+            ClientSize = new Size(610, 492);
             Controls.Add(saveBtn);
             Controls.Add(materialCard2);
             Controls.Add(materialCard1);
@@ -252,7 +290,6 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "New Appointment";
             Load += NewAppointmentForm_Load;
-            KeyPress += Utilities.Utils.CloseForm_KeyPress;
             materialCard1.ResumeLayout(false);
             materialCard2.ResumeLayout(false);
             ResumeLayout(false);
@@ -271,5 +308,7 @@
         private ReaLTaiizor.Controls.MaterialLabel materialLabel3;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel4;
         private ReaLTaiizor.Controls.MaterialButton saveBtn;
+        private ReaLTaiizor.Controls.MaterialLabel materialLabel5;
+        private ReaLTaiizor.Controls.MaterialComboBox doctorCbo;
     }
 }

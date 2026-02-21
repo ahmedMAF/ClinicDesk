@@ -1,4 +1,6 @@
 ﻿using ClinicDesk.Database;
+using ClinicDesk.Database.Models;
+using Microsoft.EntityFrameworkCore;
 using ReaLTaiizor.Forms;
 
 namespace ClinicDesk.Forms;
@@ -47,10 +49,13 @@ public partial class InstallForm : MaterialForm
 
         string name = nameTxt.Text;
         string email = emailTxt.Text;
+        string username = usernameTxt.Text;
+        string password = passwordTxt.Text;
 
         AccountType type = (AccountType)accountCbo.SelectedIndex;
         bool useApi = apiSwt.Checked;
         string apiUrl = apiUrltxt.Text;
+        bool isServer = dbServer is "127.0.0.1" or "localhost";
 
         if (!AppLicense.IsAvailable)
         {
@@ -59,7 +64,7 @@ public partial class InstallForm : MaterialForm
                 MessageBox.Show("Please fill in your name and email.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            
+
             if (!await AppLicense.RequestLicenseAsync(licenseUrl, name, email))
             {
                 MessageBox.Show("Failed to request license, try again later.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -79,14 +84,17 @@ public partial class InstallForm : MaterialForm
             return;
         }
 
-        try
+        if (isServer)
         {
-            Directory.CreateDirectory(backupPath);
-        }
-        catch (Exception)
-        {
-            MessageBox.Show($"Couldn't create the backup folder. Check the path again.{Environment.NewLine}{backupPath}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
+            try
+            {
+                Directory.CreateDirectory(backupPath);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show($"Couldn't create the backup folder. Check the path again.{Environment.NewLine}{backupPath}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
         }
 
         if (type == AccountType.NotDefined)
@@ -95,10 +103,34 @@ public partial class InstallForm : MaterialForm
             return;
         }
 
+        if (string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(username))
+        {
+            MessageBox.Show("Please set a username and a password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
         if (!ClinicDb.TestConnection(dbServer, dbPort, database, dbUser, dbPassword))
         {
-            MessageBox.Show("Failed to create and connect to the database. Check the connection data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            if (isServer)
+                MessageBox.Show("Failed to create and connect to the database locally. Check the connection data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            else
+                MessageBox.Show("Failed to connect to the server. Check the connection data and make sure the server is running.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
             return;
+        }
+
+        if (type != AccountType.AllInOne)
+        {
+            ClinicDb.Instance.Users.Add(new User
+            {
+                Name = name,
+                Email = email,
+                Role = (UserRole)((int)type - 1),
+                Username = username,
+                Password = passwordTxt.Text
+            });
+
+            await ClinicDb.Instance.SaveChangesAsync();
         }
 
         if (useApi && !await AppointmentApi.TestApiUrl(apiUrl))
@@ -125,8 +157,8 @@ public partial class InstallForm : MaterialForm
         Settings.SaveSettings();
 
         _doneInstall = true;
-        Close();
         AppContext.ShowForm<SplashForm>();
+        Close();
     }
 
     private void browseBtn_Click(object sender, EventArgs e)

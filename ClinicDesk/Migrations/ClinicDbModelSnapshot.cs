@@ -48,6 +48,9 @@ namespace ClinicDesk.Migrations
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint unsigned");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("VisitId")
                         .HasColumnType("int");
 
@@ -56,6 +59,8 @@ namespace ClinicDesk.Migrations
                     b.HasIndex("OriginalAppointmentId");
 
                     b.HasIndex("PatientId");
+
+                    b.HasIndex("UserId");
 
                     b.HasIndex("VisitId");
 
@@ -160,6 +165,38 @@ namespace ClinicDesk.Migrations
                     b.ToTable("Payments");
                 });
 
+            modelBuilder.Entity("ClinicDesk.Database.Models.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("ClinicDesk.Database.Models.Visit", b =>
                 {
                     b.Property<int>("Id")
@@ -209,6 +246,12 @@ namespace ClinicDesk.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("ClinicDesk.Database.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ClinicDesk.Database.Models.Visit", "Visit")
                         .WithMany()
                         .HasForeignKey("VisitId");
@@ -216,6 +259,8 @@ namespace ClinicDesk.Migrations
                     b.Navigation("OriginalAppointment");
 
                     b.Navigation("Patient");
+
+                    b.Navigation("User");
 
                     b.Navigation("Visit");
                 });

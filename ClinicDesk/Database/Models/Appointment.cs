@@ -6,7 +6,10 @@ public class Appointment
 
     public int PatientId { get; set; }
     public Patient Patient { get; set; } = null!;
-    
+
+    public int UserId { get; set; }
+    public User User { get; set; } = null!;
+
     public DateTime Date { get; set; }
     public AppointmentStatus Status { get; set; }
     public string? Notes { get; set; }

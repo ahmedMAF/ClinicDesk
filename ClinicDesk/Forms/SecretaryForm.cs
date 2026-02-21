@@ -28,6 +28,11 @@ public partial class SecretaryForm : MaterialForm
         AppointmentApi.NewRequestsRecieved += NewRequestsRecieved;
     }
 
+    internal void SetData(User user)
+    {
+        _grdHelper.UserId = user.Id;
+    }
+
     private async void SecretaryForm_Load(object sender, EventArgs e)
     {
         await _grdHelper.RefreshList();

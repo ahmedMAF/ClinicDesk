@@ -1,5 +1,6 @@
 using Portable.Licensing;
 using System.Text;
+using System.Text.Json;
 
 namespace LicenseServer;
 
@@ -21,24 +22,17 @@ public partial class Program
 
         app.MapGet("/api/status", () => "Running...").WithName("Status");
         app.MapPost("/api/getlicense", GetLicensePostAsync).WithName("GetLicense");
-        app.MapPost("/api/gettrailer", GetTrailerPostAsync).WithName("GetTrailer");
 
         app.Run();
     }
     
     private static async Task GetLicensePostAsync(HttpRequest request, HttpResponse response)
     {
-        string license = await GetLicense(request, DateTime.UtcNow.AddYears(1), false);
+        string license = await GetLicense(request);
         await SendLicense(license, response);
     }
     
-    private static async Task GetTrailerPostAsync(HttpRequest request, HttpResponse response)
-    {
-        string license = await GetLicense(request, DateTime.UtcNow.AddDays(30), true);
-        await SendLicense(license, response);
-    }
-    
-    private static async Task<string> GetLicense(HttpRequest request, DateTime date, bool isTrailer)
+    private static async Task<string> GetLicense(HttpRequest request)
     {
         LicenseRequest? licenseRequest = await request.ReadFromJsonAsync<LicenseRequest>();
 
@@ -50,10 +44,13 @@ public partial class Program
         if (!ValidateHardwareId(licenseRequest.HardwareId))
             return "";
 
+        using FileStream file = File.OpenRead("data.json");
+        LicenseData? licenseData = JsonSerializer.Deserialize<LicenseData>(file) ?? new();
+
         string license = License.New()
             .WithUniqueIdentifier(Guid.NewGuid())
-            .As(LicenseType.Standard)
-            .ExpiresAt(date)
+            .As(licenseData.LicenseType)
+            .ExpiresAt(DateTime.UtcNow.Add(licenseData.ExpirationDuration))
             .WithMaximumUtilization(1)
             .WithAdditionalAttributes(new Dictionary<string, string>
             {{ "HardwareId", licenseRequest.HardwareId.ToString() }})

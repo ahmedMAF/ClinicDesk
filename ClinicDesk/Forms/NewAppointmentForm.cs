@@ -2,6 +2,7 @@
 using ClinicDesk.Database.Models;
 using ReaLTaiizor.Forms;
 using ClinicDesk.ControlHelpers;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicDesk.Forms;
 
@@ -10,6 +11,7 @@ public partial class NewAppointmentForm : MaterialForm
     private Patient _patient = null!;
     private AppointmentAction _action;
     private Appointment? _appointment;
+    private User[] _doctors = null!;
 
     public NewAppointmentForm()
     {
@@ -34,9 +36,25 @@ public partial class NewAppointmentForm : MaterialForm
         saveBtn.Enabled = true;
     }
 
-    private void NewAppointmentForm_Load(object sender, EventArgs e)
+    private async void NewAppointmentForm_Load(object sender, EventArgs e)
     {
         datePkr.Value = DateTime.Now;
+
+        _doctors = await ClinicDb.Instance.Users
+            .Where(u => u.Role == UserRole.Doctor)
+            .ToArrayAsync();
+
+        string[] doctors = [.. _doctors.Select(u => u.Name)];
+
+        doctorCbo.Items.AddRange(doctors);
+
+        if (_appointment != null)
+        {
+            doctorCbo.SelectedIndex = Array.FindIndex(_doctors, d => d.Id == _appointment.UserId);
+            datePkr.Value = _appointment.Date;
+            timePkr.Value = _appointment.Date;
+            doctorCbo.Enabled = false;
+        }
     }
 
     private void cancelBtn_Click(object sender, EventArgs e)
@@ -46,9 +64,12 @@ public partial class NewAppointmentForm : MaterialForm
 
     private async void saveBtn_Click(object sender, EventArgs e)
     {
+        int doctorId = _doctors[doctorCbo.SelectedIndex].Id;
+
         Appointment appointment = new()
         {
             PatientId = _patient.Id,
+            UserId = doctorId,
             Date = datePkr.Value.Date + timePkr.Value.TimeOfDay
         };
 
