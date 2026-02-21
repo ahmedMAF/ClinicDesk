@@ -581,8 +581,7 @@
             // 
             // PatientDataForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             ClientSize = new Size(1403, 501);
             Controls.Add(saveBtn);
             Controls.Add(materialCard2);

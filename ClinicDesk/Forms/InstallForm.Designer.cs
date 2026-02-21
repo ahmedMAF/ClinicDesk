@@ -736,8 +736,7 @@
             // 
             // InstallForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             ClientSize = new Size(1040, 598);
             Controls.Add(materialCard3);
             Controls.Add(materialCard2);

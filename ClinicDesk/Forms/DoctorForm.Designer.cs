@@ -166,8 +166,7 @@
             // 
             // DoctorForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             ClientSize = new Size(934, 701);
             Controls.Add(aboutBtn);
             Controls.Add(statsBtn);

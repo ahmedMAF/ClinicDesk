@@ -65,9 +65,8 @@
             amountTxt.TextAlign = HorizontalAlignment.Left;
             amountTxt.TrailingIcon = null;
             amountTxt.UseSystemPasswordChar = false;
-            amountTxt.TextChanged += amountTxt_TextChanged;
             amountTxt.KeyPress += amountTxt_KeyPress;
-            amountTxt.KeyPress += Utilities.Utils.NumDotTxt_KeyPress;
+            amountTxt.TextChanged += amountTxt_TextChanged;
             // 
             // payBtn
             // 
@@ -129,8 +128,7 @@
             // 
             // PaymentForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             ClientSize = new Size(445, 181);
             Controls.Add(cancelBtn);
             Controls.Add(materialLabel1);
@@ -145,7 +143,6 @@
             Sizable = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Payment";
-            KeyPress += Utilities.Utils.CloseForm_KeyPress;
             ResumeLayout(false);
             PerformLayout();
         }

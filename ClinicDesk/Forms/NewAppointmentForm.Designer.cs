@@ -237,8 +237,7 @@
             // 
             // NewAppointmentForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             ClientSize = new Size(610, 440);
             Controls.Add(saveBtn);
             Controls.Add(materialCard2);
@@ -252,7 +251,6 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "New Appointment";
             Load += NewAppointmentForm_Load;
-            KeyPress += Utilities.Utils.CloseForm_KeyPress;
             materialCard1.ResumeLayout(false);
             materialCard2.ResumeLayout(false);
             ResumeLayout(false);

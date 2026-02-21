@@ -50,7 +50,7 @@
             invoicesGrd.Name = "invoicesGrd";
             invoicesGrd.ReadOnly = true;
             invoicesGrd.RowHeadersWidth = 51;
-            invoicesGrd.Size = new Size(1218, 913);
+            invoicesGrd.Size = new Size(1236, 913);
             invoicesGrd.TabIndex = 5;
             invoicesGrd.CellPainting += invoicesGrd_CellPainting;
             invoicesGrd.RowPrePaint += invoicesGrd_RowPrePaint;
@@ -141,9 +141,8 @@
             // 
             // BillingForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1236, 1102);
+            AutoScaleMode = AutoScaleMode.None;
+            ClientSize = new Size(1254, 1102);
             Controls.Add(materialLabel2);
             Controls.Add(phoneTxt);
             Controls.Add(materialLabel1);

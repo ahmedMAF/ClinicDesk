@@ -620,8 +620,7 @@ namespace ClinicDesk.Forms
             // 
             // AppointmentForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             ClientSize = new Size(1092, 1013);
             Controls.Add(materialCard3);
             Controls.Add(materialButton1);

@@ -123,8 +123,7 @@
             // 
             // AboutForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             ClientSize = new Size(588, 415);
             Controls.Add(materialLabel3);
             Controls.Add(panel1);

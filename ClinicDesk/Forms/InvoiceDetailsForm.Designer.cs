@@ -51,8 +51,7 @@
             // 
             // InvoiceDetailsForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             ClientSize = new Size(1042, 450);
             Controls.Add(paymentsGrd);
             Icon = (Icon)resources.GetObject("$this.Icon");

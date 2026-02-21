@@ -45,8 +45,7 @@
             // 
             // AppointmentRequestsForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             ClientSize = new Size(830, 450);
             Controls.Add(requestsGrd);
             Icon = (Icon)resources.GetObject("$this.Icon");

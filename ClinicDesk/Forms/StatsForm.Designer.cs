@@ -712,8 +712,7 @@
             // 
             // StatsForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             ClientSize = new Size(960, 847);
             Controls.Add(materialCard3);
             Controls.Add(materialCard2);
