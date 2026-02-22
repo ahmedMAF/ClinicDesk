@@ -31,6 +31,8 @@ public partial class SecretaryForm : MaterialForm
     internal void SetData(User user)
     {
         _grdHelper.UserId = user.Id;
+
+        Text = $"ClinicDesk - {user.Name}"; 
     }
 
     private async void SecretaryForm_Load(object sender, EventArgs e)

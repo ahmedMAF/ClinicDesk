@@ -37,15 +37,15 @@
             // 
             // materialLabel2
             // 
-            materialLabel2.AutoSize = true;
             materialLabel2.Depth = 0;
             materialLabel2.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel2.Location = new Point(15, 142);
+            materialLabel2.Location = new Point(15, 125);
             materialLabel2.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel2.Name = "materialLabel2";
-            materialLabel2.Size = new Size(71, 19);
+            materialLabel2.Size = new Size(73, 48);
             materialLabel2.TabIndex = 9;
             materialLabel2.Text = "Password";
+            materialLabel2.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // passwordTxt
             // 
@@ -80,15 +80,15 @@
             // 
             // materialLabel1
             // 
-            materialLabel1.AutoSize = true;
             materialLabel1.Depth = 0;
             materialLabel1.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel1.Location = new Point(15, 88);
+            materialLabel1.Location = new Point(15, 71);
             materialLabel1.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel1.Name = "materialLabel1";
-            materialLabel1.Size = new Size(41, 19);
+            materialLabel1.Size = new Size(73, 48);
             materialLabel1.TabIndex = 8;
-            materialLabel1.Text = "Email";
+            materialLabel1.Text = "Username";
+            materialLabel1.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // usernameTxt
             // 
@@ -164,7 +164,6 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Login";
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion

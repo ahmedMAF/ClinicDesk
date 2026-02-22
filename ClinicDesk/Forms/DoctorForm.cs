@@ -27,6 +27,8 @@ public partial class DoctorForm : MaterialForm
     internal void SetData(User user)
     {
         _grdHelper.UserId = user.Id;
+
+        Text = $"ClinicDesk - Dr. {user.Name}";
     }
 
     private async void DoctorForm_Load(object sender, EventArgs e)

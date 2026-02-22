@@ -49,6 +49,9 @@ public class ClinicDb : DbContext
 
         do
         {
+            if (Settings.Instance.IsServer)
+                RunDatabaseService();
+
             bool success = Create(out ClinicDb? db);
 
             if (success)
@@ -57,7 +60,9 @@ public class ClinicDb : DbContext
                 result = DialogResult.OK;
             }
             else
+            {
                 result = MessageBox.Show($"Can't connect to the application's server, usually this is the secretary computer or the computer with the database.{Environment.NewLine}MySQL connection failed.", "Database Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
+            }
         }
         while (result == DialogResult.Retry);
 
@@ -85,15 +90,17 @@ public class ClinicDb : DbContext
         if (server is "localhost" or "127.0.0.1")
             RunDatabaseService();
 
-        return Create($"Server={server};Port={port};Database={db};User={user};Password={pass};", out _);
+        bool success = Create($"Server={server};Port={port};Database={db};User={user};Password={pass};", out ClinicDb? instance);
+
+        if (success)
+            Instance = instance!;
+
+        return success;
     }
 
     internal static bool Create(out ClinicDb? db)
     {
         Settings settings = Settings.Instance;
-
-        if (Settings.Instance.IsServer)
-            RunDatabaseService();
 
         return Create($"Server={settings.Server};Port={settings.Port};Database={settings.Database};User={settings.User};Password={settings.Password};", out db);
     }
