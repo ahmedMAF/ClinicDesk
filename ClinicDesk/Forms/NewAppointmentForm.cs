@@ -64,6 +64,12 @@ public partial class NewAppointmentForm : MaterialForm
 
     private async void saveBtn_Click(object sender, EventArgs e)
     {
+        if (doctorCbo.SelectedIndex == -1)
+        {
+            errorProvider.SetError(doctorCbo, "Please select a doctor.");
+            return;
+        }
+
         int doctorId = _doctors[doctorCbo.SelectedIndex].Id;
 
         Appointment appointment = new()
@@ -87,5 +93,10 @@ public partial class NewAppointmentForm : MaterialForm
         ClinicDb.Instance.Appointments.Add(appointment);
         await ClinicDb.Instance.SaveChangesAsync();
         Close();
+    }
+
+    private void doctorCbo_SelectedIndexChanged(object sender, EventArgs e)
+    {
+        errorProvider.SetError(doctorCbo, null);
     }
 }

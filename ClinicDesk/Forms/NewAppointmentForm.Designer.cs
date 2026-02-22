@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(NewAppointmentForm));
             timePkr = new DateTimePicker();
             datePkr = new DateTimePicker();
@@ -37,13 +38,15 @@
             nameTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             materialLabel1 = new ReaLTaiizor.Controls.MaterialLabel();
             materialCard2 = new ReaLTaiizor.Controls.MaterialCard();
+            materialLabel5 = new ReaLTaiizor.Controls.MaterialLabel();
+            doctorCbo = new ReaLTaiizor.Controls.MaterialComboBox();
             materialLabel3 = new ReaLTaiizor.Controls.MaterialLabel();
             materialLabel4 = new ReaLTaiizor.Controls.MaterialLabel();
             saveBtn = new ReaLTaiizor.Controls.MaterialButton();
-            doctorCbo = new ReaLTaiizor.Controls.MaterialComboBox();
-            materialLabel5 = new ReaLTaiizor.Controls.MaterialLabel();
+            errorProvider = new ErrorProvider(components);
             materialCard1.SuspendLayout();
             materialCard2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)errorProvider).BeginInit();
             SuspendLayout();
             // 
             // timePkr
@@ -192,6 +195,41 @@
             materialCard2.Size = new Size(576, 187);
             materialCard2.TabIndex = 34;
             // 
+            // materialLabel5
+            // 
+            materialLabel5.Depth = 0;
+            materialLabel5.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel5.Location = new Point(17, 119);
+            materialLabel5.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialLabel5.Name = "materialLabel5";
+            materialLabel5.Size = new Size(104, 48);
+            materialLabel5.TabIndex = 8;
+            materialLabel5.Text = "Doctor";
+            materialLabel5.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // doctorCbo
+            // 
+            doctorCbo.AutoResize = false;
+            doctorCbo.BackColor = Color.FromArgb(255, 255, 255);
+            doctorCbo.Depth = 0;
+            doctorCbo.DrawMode = DrawMode.OwnerDrawVariable;
+            doctorCbo.DropDownHeight = 174;
+            doctorCbo.DropDownStyle = ComboBoxStyle.DropDownList;
+            doctorCbo.DropDownWidth = 121;
+            doctorCbo.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Bold, GraphicsUnit.Pixel);
+            doctorCbo.ForeColor = Color.FromArgb(222, 0, 0, 0);
+            doctorCbo.FormattingEnabled = true;
+            doctorCbo.IntegralHeight = false;
+            doctorCbo.ItemHeight = 43;
+            doctorCbo.Location = new Point(127, 121);
+            doctorCbo.MaxDropDownItems = 4;
+            doctorCbo.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
+            doctorCbo.Name = "doctorCbo";
+            doctorCbo.Size = new Size(417, 49);
+            doctorCbo.StartIndex = 0;
+            doctorCbo.TabIndex = 7;
+            doctorCbo.SelectedIndexChanged += doctorCbo_SelectedIndexChanged;
+            // 
             // materialLabel3
             // 
             materialLabel3.Depth = 0;
@@ -239,39 +277,9 @@
             saveBtn.UseVisualStyleBackColor = true;
             saveBtn.Click += saveBtn_Click;
             // 
-            // doctorCbo
+            // errorProvider
             // 
-            doctorCbo.AutoResize = false;
-            doctorCbo.BackColor = Color.FromArgb(255, 255, 255);
-            doctorCbo.Depth = 0;
-            doctorCbo.DrawMode = DrawMode.OwnerDrawVariable;
-            doctorCbo.DropDownHeight = 174;
-            doctorCbo.DropDownStyle = ComboBoxStyle.DropDownList;
-            doctorCbo.DropDownWidth = 121;
-            doctorCbo.Font = new Font("Roboto Medium", 14F, FontStyle.Bold, GraphicsUnit.Pixel);
-            doctorCbo.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            doctorCbo.FormattingEnabled = true;
-            doctorCbo.IntegralHeight = false;
-            doctorCbo.ItemHeight = 43;
-            doctorCbo.Location = new Point(127, 121);
-            doctorCbo.MaxDropDownItems = 4;
-            doctorCbo.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
-            doctorCbo.Name = "doctorCbo";
-            doctorCbo.Size = new Size(432, 49);
-            doctorCbo.StartIndex = 0;
-            doctorCbo.TabIndex = 7;
-            // 
-            // materialLabel5
-            // 
-            materialLabel5.Depth = 0;
-            materialLabel5.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel5.Location = new Point(17, 119);
-            materialLabel5.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
-            materialLabel5.Name = "materialLabel5";
-            materialLabel5.Size = new Size(104, 48);
-            materialLabel5.TabIndex = 8;
-            materialLabel5.Text = "Doctor";
-            materialLabel5.TextAlign = ContentAlignment.MiddleLeft;
+            errorProvider.ContainerControl = this;
             // 
             // NewAppointmentForm
             // 
@@ -292,6 +300,7 @@
             Load += NewAppointmentForm_Load;
             materialCard1.ResumeLayout(false);
             materialCard2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)errorProvider).EndInit();
             ResumeLayout(false);
         }
 
@@ -310,5 +319,6 @@
         private ReaLTaiizor.Controls.MaterialButton saveBtn;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel5;
         private ReaLTaiizor.Controls.MaterialComboBox doctorCbo;
+        private ErrorProvider errorProvider;
     }
 }

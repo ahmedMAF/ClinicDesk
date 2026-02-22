@@ -30,8 +30,6 @@ public partial class SecretaryForm : MaterialForm
 
     internal void SetData(User user)
     {
-        _grdHelper.UserId = user.Id;
-
         Text = $"ClinicDesk - {user.Name}"; 
     }
 

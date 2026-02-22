@@ -28,11 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             materialLabel2 = new ReaLTaiizor.Controls.MaterialLabel();
             passwordTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             materialLabel1 = new ReaLTaiizor.Controls.MaterialLabel();
             usernameTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             loginBtn = new ReaLTaiizor.Controls.MaterialButton();
+            errorProvider = new ErrorProvider(components);
+            ((System.ComponentModel.ISupportInitialize)errorProvider).BeginInit();
             SuspendLayout();
             // 
             // materialLabel2
@@ -71,12 +74,13 @@
             passwordTxt.SelectionLength = 0;
             passwordTxt.SelectionStart = 0;
             passwordTxt.ShortcutsEnabled = true;
-            passwordTxt.Size = new Size(459, 48);
+            passwordTxt.Size = new Size(439, 48);
             passwordTxt.TabIndex = 7;
             passwordTxt.TabStop = false;
             passwordTxt.TextAlign = HorizontalAlignment.Left;
             passwordTxt.TrailingIcon = null;
             passwordTxt.UseSystemPasswordChar = false;
+            passwordTxt.TextChanged += passwordTxt_TextChanged;
             // 
             // materialLabel1
             // 
@@ -114,12 +118,13 @@
             usernameTxt.SelectionLength = 0;
             usernameTxt.SelectionStart = 0;
             usernameTxt.ShortcutsEnabled = true;
-            usernameTxt.Size = new Size(459, 48);
+            usernameTxt.Size = new Size(439, 48);
             usernameTxt.TabIndex = 6;
             usernameTxt.TabStop = false;
             usernameTxt.TextAlign = HorizontalAlignment.Left;
             usernameTxt.TrailingIcon = null;
             usernameTxt.UseSystemPasswordChar = false;
+            usernameTxt.TextChanged += usernameTxt_TextChanged;
             // 
             // loginBtn
             // 
@@ -132,7 +137,7 @@
             loginBtn.HighEmphasis = true;
             loginBtn.Icon = null;
             loginBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            loginBtn.Location = new Point(386, 182);
+            loginBtn.Location = new Point(366, 182);
             loginBtn.Margin = new Padding(4, 6, 4, 6);
             loginBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             loginBtn.Name = "loginBtn";
@@ -145,6 +150,10 @@
             loginBtn.UseVisualStyleBackColor = true;
             loginBtn.Click += loginBtn_ClickAsync;
             // 
+            // errorProvider
+            // 
+            errorProvider.ContainerControl = this;
+            // 
             // LoginForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -155,6 +164,7 @@
             Controls.Add(passwordTxt);
             Controls.Add(materialLabel1);
             Controls.Add(usernameTxt);
+            KeyPreview = true;
             Margin = new Padding(2, 3, 2, 3);
             MaximizeBox = false;
             MinimizeBox = false;
@@ -163,6 +173,8 @@
             Sizable = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Login";
+            KeyPress += LoginForm_KeyPress;
+            ((System.ComponentModel.ISupportInitialize)errorProvider).EndInit();
             ResumeLayout(false);
         }
 
@@ -173,5 +185,6 @@
         private ReaLTaiizor.Controls.MaterialLabel materialLabel1;
         private ReaLTaiizor.Controls.MaterialTextBoxEdit usernameTxt;
         private ReaLTaiizor.Controls.MaterialButton loginBtn;
+        private ErrorProvider errorProvider;
     }
 }
