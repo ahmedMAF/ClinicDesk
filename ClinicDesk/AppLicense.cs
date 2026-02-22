@@ -8,10 +8,13 @@ namespace ClinicDesk;
 public static class AppLicense
 {
     private static readonly string PublicKey = "MIIBKjCB4wYHKoZIzj0CATCB1wIBATAsBgcqhkjOPQEBAiEA/////wAAAAEAAAAAAAAAAAAAAAD///////////////8wWwQg/////wAAAAEAAAAAAAAAAAAAAAD///////////////wEIFrGNdiqOpPns+u9VXaYhrxlHQawzFOw9jvOPD4n0mBLAxUAxJ02CIbnBJNqZnjhE50mt4GffpAEIQNrF9Hy4SxCR/i85uVjpEDydwN9gS3rM6D0oTlF2JjClgIhAP////8AAAAA//////////+85vqtpxeehPO5ysL8YyVRAgEBA0IABK/qbAC/fQ5C5inBbSqi3wK+nKLVLc+COVT8wnMwTaRDtDbrfMk5AzDDpqSFW3PXV793SJyY8F/lp+Df3KuU2Z4=";
+    private static License _license = null!;
 
     public static bool IsValid { get; private set; }
     
     public static bool IsAvailable => File.Exists(GetDefaultLicensePath());
+
+    public static bool ExpiresInWeek => _license != null && _license.Expiration > DateTime.UtcNow && _license.Expiration <= DateTime.UtcNow.AddDays(7);
 
     internal static bool Validate()
     {
@@ -22,9 +25,9 @@ public static class AppLicense
         }
         
         string licenseText = File.ReadAllText(GetDefaultLicensePath());
-        License license = License.Load(licenseText);
+        _license = License.Load(licenseText);
 
-        IEnumerable<IValidationFailure> validationResult = license.Validate()
+        IEnumerable<IValidationFailure> validationResult = _license.Validate()
             .Signature(PublicKey)
             .And()
             .ExpirationDate()
@@ -32,7 +35,7 @@ public static class AppLicense
 
         if (!validationResult.Any())
         {
-            string storedId = license.AdditionalAttributes.Get("HardwareId");
+            string storedId = _license.AdditionalAttributes.Get("HardwareId");
             string actualId = Utils.GetHardwareId();
 
             if (storedId != actualId)
