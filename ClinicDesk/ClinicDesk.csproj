@@ -29,8 +29,8 @@
             <PrivateAssets>all</PrivateAssets>
         </PackageReference>
         <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="9.0.0" />
-        <PackageReference Include="Portable.Licensing" Version="1.1.0" />
         <PackageReference Include="ReaLTaiizor" Version="3.8.1.4" />
+        <PackageReference Include="Standard.Licensing" Version="1.2.2" />
         <PackageReference Include="System.Management" Version="10.0.0" />
     </ItemGroup>
 
