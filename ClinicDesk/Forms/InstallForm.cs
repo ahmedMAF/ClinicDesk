@@ -47,6 +47,7 @@ public partial class InstallForm : MaterialForm
 
         string name = nameTxt.Text;
         string email = emailTxt.Text;
+        bool isServer = dbServer is "127.0.0.1" or "localhost";
 
         AccountType type = (AccountType)accountCbo.SelectedIndex;
         bool useApi = apiSwt.Checked;
@@ -79,14 +80,17 @@ public partial class InstallForm : MaterialForm
             return;
         }
 
-        try
+        if (isServer)
         {
-            Directory.CreateDirectory(backupPath);
-        }
-        catch (Exception)
-        {
-            MessageBox.Show($"Couldn't create the backup folder. Check the path again.{Environment.NewLine}{backupPath}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
+            try
+            {
+                Directory.CreateDirectory(backupPath);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show($"Couldn't create the backup folder. Check the path again.{Environment.NewLine}{backupPath}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
         }
 
         if (type == AccountType.NotDefined)
@@ -97,7 +101,7 @@ public partial class InstallForm : MaterialForm
 
         if (!ClinicDb.TestConnection(dbServer, dbPort, database, dbUser, dbPassword))
         {
-            MessageBox.Show("Failed to create and connect to the database. Check the connection data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            MessageBox.Show("Failed to connect to the database. Check the connection data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
 

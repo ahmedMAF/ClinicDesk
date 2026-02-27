@@ -16,6 +16,8 @@ public partial class AllInOneForm : MaterialForm
 
         _grdHelper = new AppointmentsGrid(appointmentsGrd, AccountType.AllInOne);
 
+        requestsBtn.Visible = Settings.Instance.UseApi;
+
         FormClosed += (s, e) =>
         {
             ClinicDb.Client?.RefreshUI -= RefreshUI;

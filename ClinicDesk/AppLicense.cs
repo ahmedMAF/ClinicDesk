@@ -1,6 +1,6 @@
 using ClinicDesk.Utilities;
-using Portable.Licensing;
-using Portable.Licensing.Validation;
+using Standard.Licensing;
+using Standard.Licensing.Validation;
 using System.Net.Http.Json;
 
 namespace ClinicDesk;

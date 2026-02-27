@@ -1,4 +1,4 @@
-using Portable.Licensing;
+using Standard.Licensing;
 using System.Text;
 
 namespace LicenseServer;

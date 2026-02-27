@@ -16,6 +16,8 @@ public partial class SecretaryForm : MaterialForm
 
         _grdHelper = new AppointmentsGrid(appointmentsGrd, AccountType.Secretary);
 
+        requestsBtn.Visible = Settings.Instance.UseApi;
+
         FormClosed += (s, e) =>
         {
             ClinicDb.Client?.RefreshUI -= RefreshUI;

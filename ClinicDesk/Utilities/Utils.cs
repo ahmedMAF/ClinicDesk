@@ -1,9 +1,11 @@
-﻿using System.Management;
-using System.Security.Cryptography;
-using System.Text;
-using ClinicDesk.Database;
+﻿using ClinicDesk.Database;
 using ClinicDesk.Database.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
+using System.Management;
+using System.Security.Cryptography;
+using System.Security.Principal;
+using System.Text;
 
 namespace ClinicDesk.Utilities;
 
@@ -359,5 +361,31 @@ internal static class Utils
             return obj[wmiProperty]?.ToString() ?? "";
             
         return "";
+    }
+
+    internal static void InstallMariaDb()
+    {
+        if (IsRunningAsAdmin())
+        {
+            MessageBox.Show("MariaDB installation requires administrator privileges. Please run the installer as administrator.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        ProcessStartInfo psi = new()
+        {
+            FileName = "msiexec",
+            Arguments = "/i mariadb.msi /qn",
+            UseShellExecute = true,
+            Verb = "runas"
+        };
+
+        Process.Start(psi);
+    }
+
+    private static bool IsRunningAsAdmin()
+    {
+        using WindowsIdentity identity = WindowsIdentity.GetCurrent();
+        WindowsPrincipal principal = new WindowsPrincipal(identity);
+        return principal.IsInRole(WindowsBuiltInRole.Administrator);
     }
 }

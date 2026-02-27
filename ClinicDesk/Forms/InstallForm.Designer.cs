@@ -63,6 +63,7 @@
             materialCard3 = new ReaLTaiizor.Controls.MaterialCard();
             materialLabel12 = new ReaLTaiizor.Controls.MaterialLabel();
             folderBrowser = new FolderBrowserDialog();
+            progressBar = new ReaLTaiizor.Controls.MaterialProgressBar();
             materialCard1.SuspendLayout();
             materialCard2.SuspendLayout();
             materialCard3.SuspendLayout();
@@ -734,10 +735,24 @@
             // 
             folderBrowser.Description = "Select a folder to store database backups in";
             // 
+            // progressBar
+            // 
+            progressBar.Depth = 0;
+            progressBar.Location = new Point(532, 541);
+            progressBar.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            progressBar.Name = "progressBar";
+            progressBar.Size = new Size(322, 36);
+            progressBar.Style = ProgressBarStyle.Marquee;
+            progressBar.TabIndex = 23;
+            progressBar.UseAccentColor = false;
+            progressBar.Value = 80;
+            progressBar.Visible = false;
+            // 
             // InstallForm
             // 
             AutoScaleMode = AutoScaleMode.None;
             ClientSize = new Size(1040, 598);
+            Controls.Add(progressBar);
             Controls.Add(materialCard3);
             Controls.Add(materialCard2);
             Controls.Add(materialCard1);
@@ -795,5 +810,6 @@
         private ReaLTaiizor.Controls.MaterialSwitch apiSwt;
         private ReaLTaiizor.Controls.MaterialTextBoxEdit apiUrltxt;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel14;
+        private ReaLTaiizor.Controls.MaterialProgressBar progressBar;
     }
 }
