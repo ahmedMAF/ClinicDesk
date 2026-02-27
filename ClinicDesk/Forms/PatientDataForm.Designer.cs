@@ -128,7 +128,7 @@
             materialLabel8.Name = "materialLabel8";
             materialLabel8.Size = new Size(104, 48);
             materialLabel8.TabIndex = 0;
-            materialLabel8.Text = "Phone";
+            materialLabel8.Text = "Phone *";
             materialLabel8.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // materialCard1
@@ -231,7 +231,7 @@
             materialLabel2.Name = "materialLabel2";
             materialLabel2.Size = new Size(104, 48);
             materialLabel2.TabIndex = 6;
-            materialLabel2.Text = "Sex";
+            materialLabel2.Text = "Sex *";
             materialLabel2.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // nameTxt
@@ -274,7 +274,7 @@
             materialLabel1.Name = "materialLabel1";
             materialLabel1.Size = new Size(104, 48);
             materialLabel1.TabIndex = 0;
-            materialLabel1.Text = "Full Name";
+            materialLabel1.Text = "Full Name *";
             materialLabel1.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // materialCard3

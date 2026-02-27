@@ -25,10 +25,10 @@ public partial class PaymentForm : MaterialForm
 
     private void payBtn_Click(object sender, EventArgs e)
     {
-        PaymentAmount = decimal.Parse(amountTxt.Text);
-        
-        if (PaymentAmount <= 0)
+        if (!decimal.TryParse(amountTxt.Text, out decimal amount))
             return;
+        
+        PaymentAmount = amount;
 
         DialogResult = DialogResult.OK;
         Close();
