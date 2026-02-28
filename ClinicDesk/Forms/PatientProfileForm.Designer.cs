@@ -473,8 +473,7 @@
             // 
             // PatientProfileForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             ClientSize = new Size(1092, 682);
             Controls.Add(chartBtn);
             Controls.Add(editBtn);

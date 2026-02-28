@@ -49,13 +49,14 @@ public partial class InstallForm : MaterialForm
 
         string name = nameTxt.Text;
         string email = emailTxt.Text;
+
         string username = usernameTxt.Text;
         string password = passwordTxt.Text;
+        bool isServer = dbServer is "127.0.0.1" or "localhost";
 
         AccountType type = (AccountType)accountCbo.SelectedIndex;
         bool useApi = apiSwt.Checked;
         string apiUrl = apiUrltxt.Text;
-        bool isServer = dbServer is "127.0.0.1" or "localhost";
 
         if (!AppLicense.IsAvailable)
         {

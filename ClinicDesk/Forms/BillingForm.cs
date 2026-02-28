@@ -76,7 +76,6 @@ public partial class BillingForm : MaterialForm
     private async void detailsBtn_Click(int rowIndex)
     {
         Invoice? invoice = await ClinicDb.Instance.Invoices
-            .AsNoTracking()
             .Include(i => i.Payments)
             .FirstOrDefaultAsync(i => i.Id == _invoices[rowIndex].Id);
 

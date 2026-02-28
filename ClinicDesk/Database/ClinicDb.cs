@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Diagnostics;
 using System.Text.Json;
-using System.Threading.Tasks;
 #if !DEBUG
 using System.ServiceProcess;
 #endif
@@ -14,7 +13,7 @@ namespace ClinicDesk.Database;
 public class ClinicDb : DbContext
 {
 #if !DEBUG
-    private const string ServiceName = "MySQL80";
+    private const string ServiceName = "MariaDB";
 #else
     private static Process? _mySqlProcess;
 #endif
@@ -202,16 +201,34 @@ public class ClinicDb : DbContext
             return;
         
         string dumpFile = Path.Combine(path ?? settings.BackupPath, $"{settings.Database}_{DateTime.UtcNow:yyyyMMdd_HHmmss}.sql");
-        
+
 #if DEBUG
         string mySqlDumpPath = @"C:\xampp\mysql\bin\mysqldump.exe";
         
         if (!File.Exists(mySqlDumpPath))
             mySqlDumpPath = @"C:\Program Files\xampp\mysql\bin\mysqldump.exe";
 #else
-        string mySqlDumpPath = @"C:\Program Files\MySQL\MySQL Server 8.0\bin\mysqldump.exe";
+        string mySqlDumpPath = "";
+        string programFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+
+        foreach (var dir in Directory.GetDirectories(programFiles, "MariaDB*", SearchOption.TopDirectoryOnly))
+        {
+            string dumpPath = Path.Combine(dir, "bin", "mysqldump.exe");
+
+            if (File.Exists(dumpPath))
+            {
+                mySqlDumpPath = dumpPath;
+                break;
+            }
+        }
+
+        if (string.IsNullOrWhiteSpace(mySqlDumpPath))
+        {
+            MessageBox.Show($"Backup failed.{Environment.NewLine}Error: mysqldump.exe not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
 #endif
-    
+
         ProcessStartInfo psi = new()
         {
             FileName = mySqlDumpPath,
@@ -261,18 +278,32 @@ public class ClinicDb : DbContext
 
     public override int SaveChanges()
     {
-        int result = base.SaveChanges();
-        _ = Client?.SendAsync();
+        int result = 0;
+
+        try
+        {
+            result = base.SaveChanges();
+            _ = Client?.SendAsync();
+        }
+        catch
+        { }
 
         return result;
     }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
-        int result = await base.SaveChangesAsync(cancellationToken);
+        int result = 0;
 
-        if (Client != null)
-            await Client.SendAsync();
+        try
+        {
+            result = await base.SaveChangesAsync(cancellationToken);
+
+            if (Client != null)
+                await Client.SendAsync();
+        }
+        catch
+        { }
 
         return result;
     }

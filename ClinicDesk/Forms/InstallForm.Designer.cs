@@ -67,6 +67,7 @@
             folderBrowser = new FolderBrowserDialog();
             usernameTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             materialLabel16 = new ReaLTaiizor.Controls.MaterialLabel();
+            progressBar = new ReaLTaiizor.Controls.MaterialProgressBar();
             materialCard1.SuspendLayout();
             materialCard2.SuspendLayout();
             materialCard3.SuspendLayout();
@@ -840,12 +841,25 @@
             materialLabel16.TabIndex = 22;
             materialLabel16.Text = "Username";
             materialLabel16.TextAlign = ContentAlignment.MiddleLeft;
+            //
+            // progressBar
+            // 
+            progressBar.Depth = 0;
+            progressBar.Location = new Point(532, 541);
+            progressBar.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            progressBar.Name = "progressBar";
+            progressBar.Size = new Size(322, 36);
+            progressBar.Style = ProgressBarStyle.Marquee;
+            progressBar.TabIndex = 23;
+            progressBar.UseAccentColor = false;
+            progressBar.Value = 80;
+            progressBar.Visible = false;
             // 
             // InstallForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             ClientSize = new Size(1189, 787);
+            Controls.Add(progressBar);
             Controls.Add(materialCard3);
             Controls.Add(materialCard2);
             Controls.Add(materialCard1);
@@ -909,5 +923,6 @@
         private ReaLTaiizor.Controls.MaterialLabel materialLabel15;
         private ReaLTaiizor.Controls.MaterialTextBoxEdit usernameTxt;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel16;
+        private ReaLTaiizor.Controls.MaterialProgressBar progressBar;
     }
 }

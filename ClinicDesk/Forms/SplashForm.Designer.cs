@@ -83,8 +83,7 @@
             // 
             // SplashForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             BackgroundImage = Properties.Resources.logopng;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(640, 360);

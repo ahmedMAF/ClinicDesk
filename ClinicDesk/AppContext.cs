@@ -1,3 +1,4 @@
+using ClinicDesk.Controls;
 using ClinicDesk.Database;
 using ClinicDesk.Forms;
 using ReaLTaiizor.Colors;
@@ -31,11 +32,14 @@ public class AppContext : ApplicationContext
             MaterialTextShade.WHITE
         );
 
-        if (Settings.Instance.AccountType == AccountType.NotDefined)
+        if (settings.AccountType == AccountType.NotDefined)
         {
             ShowForm<InstallForm>();
             return;
         }
+
+        if (settings.IsServer && AppLicense.ExpiresInWeek)
+            MessageBox.Show("Your license is expiring soon! Please contact support to renew it.", "License Expiration", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
         ShowForm<SplashForm>();
     }

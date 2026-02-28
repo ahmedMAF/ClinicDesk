@@ -66,8 +66,7 @@
             // 
             // WelcomeForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             ClientSize = new Size(876, 528);
             Controls.Add(allBtn);
             Controls.Add(secretBtn);

@@ -108,8 +108,7 @@
             // 
             // DentalChartForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             ClientSize = new Size(900, 622);
             Controls.Add(materialCard1);
             Controls.Add(saveBtn);

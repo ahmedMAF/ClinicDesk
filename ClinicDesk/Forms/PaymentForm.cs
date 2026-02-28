@@ -30,6 +30,8 @@ public partial class PaymentForm : MaterialForm
         
         PaymentAmount = amount;
 
+        PaymentAmount = amount;
+
         DialogResult = DialogResult.OK;
         Close();
     }

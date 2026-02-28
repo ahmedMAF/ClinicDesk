@@ -150,7 +150,6 @@
             phoneTxt.TrailingIcon = null;
             phoneTxt.UseSystemPasswordChar = false;
             phoneTxt.KeyPress += phoneTxt_KeyPress;
-            phoneTxt.KeyPress += Utilities.Utils.NumTxt_KeyPress;
             // 
             // searchPhoneBtn
             // 
@@ -188,8 +187,7 @@
             // 
             // PatientSearchForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             ClientSize = new Size(700, 470);
             Controls.Add(patientsGrd);
             Controls.Add(materialLabel2);
@@ -208,7 +206,6 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Patient Search";
             Load += PatientSearchForm_Load;
-            KeyPress += Utilities.Utils.CloseForm_KeyPress;
             ((System.ComponentModel.ISupportInitialize)patientsGrd).EndInit();
             ResumeLayout(false);
             PerformLayout();

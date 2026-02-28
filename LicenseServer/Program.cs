@@ -1,4 +1,4 @@
-using Portable.Licensing;
+using Standard.Licensing;
 using System.Text;
 using System.Text.Json;
 
