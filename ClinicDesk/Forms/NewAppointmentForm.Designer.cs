@@ -238,7 +238,7 @@
             // NewAppointmentForm
             // 
             AutoScaleMode = AutoScaleMode.None;
-            ClientSize = new Size(610, 440);
+            ClientSize = new Size(610, 493);
             Controls.Add(saveBtn);
             Controls.Add(materialCard2);
             Controls.Add(materialCard1);
@@ -248,6 +248,7 @@
             MinimizeBox = false;
             Name = "NewAppointmentForm";
             ShowInTaskbar = false;
+            Sizable = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "New Appointment";
             Load += NewAppointmentForm_Load;

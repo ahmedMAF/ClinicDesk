@@ -91,10 +91,7 @@ public partial class BillingForm : MaterialForm
         if (IsPayButtonDisabled(invoice))
             return;
 
-        decimal paymentAmount = 0;
-
-        if (AppContext.ShowDialog<PaymentForm>(form => form.SetData(invoice.RemainingAmount), async (form, _) => await PerformPayment(invoice, form.Amount, form.Method)) == DialogResult.Cancel)
-            return;
+        AppContext.ShowDialog<PaymentForm>(form => form.SetData(invoice.RemainingAmount), async (form, result) => await PerformPayment(invoice, form.Amount, form.Method, result));
     }
 
     private async void payFullBtn_Click(int rowIndex)
@@ -108,8 +105,11 @@ public partial class BillingForm : MaterialForm
         await PerformPayment(invoice, invoice.RemainingAmount, "Cash");
     }
 
-    private async Task PerformPayment(InvoiceDto invoice, decimal amount, string method)
+    private async Task PerformPayment(InvoiceDto invoice, decimal amount, string method, DialogResult result = default)
     {
+        if (result == DialogResult.Cancel)
+            return;
+
         Payment payment = new()
         {
             InvoiceId = invoice.Id,

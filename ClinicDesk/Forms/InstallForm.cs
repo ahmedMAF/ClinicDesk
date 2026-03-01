@@ -40,6 +40,8 @@ public partial class InstallForm : MaterialForm
     {
         progressBar.Visible = true;
 
+        await Task.Yield();
+
         string licenseUrl = licenseServerUrlTxt.Text;
 
         string dbServer = dbServerTxt.Text;

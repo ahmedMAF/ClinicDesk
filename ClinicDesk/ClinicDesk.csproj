@@ -17,10 +17,6 @@
     <DebugType>none</DebugType>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <InvariantGlobalization>true</InvariantGlobalization>
-  </PropertyGroup>
-
   <ItemGroup>
     <Content Include="icon.ico" />
   </ItemGroup>
