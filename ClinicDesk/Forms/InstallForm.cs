@@ -39,113 +39,130 @@ public partial class InstallForm : MaterialForm
     private async void installBtn_Click(object sender, EventArgs e)
     {
         progressBar.Visible = true;
+        installBtn.Enabled = false;
 
-        await Task.Yield();
-
-        string licenseUrl = licenseServerUrlTxt.Text;
-
-        string dbServer = dbServerTxt.Text;
-        string database = dbNameTxt.Text;
-        string dbUser = dbUserTxt.Text;
-        string dbPassword = dbPasswordTxt.Text;
-        string backupPath = backupTxt.Text;
-
-        string name = nameTxt.Text;
-        string email = emailTxt.Text;
-        bool isServer = dbServer is "127.0.0.1" or "localhost";
-
-        AccountType type = (AccountType)accountCbo.SelectedIndex;
-        bool useApi = apiSwt.Checked;
-        string apiUrl = apiUrltxt.Text;
-
-        if (!AppLicense.IsAvailable)
+        try
         {
-            if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(email))
+            await Task.Yield();
+
+            string licenseUrl = licenseServerUrlTxt.Text;
+
+            string dbServer = dbServerTxt.Text;
+            string database = dbNameTxt.Text;
+            string dbUser = dbUserTxt.Text;
+            string dbPassword = dbPasswordTxt.Text;
+            string backupPath = backupTxt.Text;
+
+            string name = nameTxt.Text;
+            string email = emailTxt.Text;
+            bool isServer = dbServer is "127.0.0.1" or "localhost";
+
+            AccountType type = (AccountType)accountCbo.SelectedIndex;
+            bool useApi = apiSwt.Checked;
+            string apiUrl = apiUrltxt.Text;
+
+            if (!AppLicense.IsAvailable)
             {
-                MessageBox.Show("Please fill in your name and email.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (string.IsNullOrWhiteSpace(name) || string.IsNullOrWhiteSpace(email))
+                {
+                    MessageBox.Show("Please fill in your name and email.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                if (!await AppLicense.RequestLicenseAsync(licenseUrl, name, email))
+                {
+                    MessageBox.Show("Failed to request license, try again later.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+            if (!AppLicense.Validate())
+            {
+                MessageBox.Show("Failed to validate license, try requesting a new one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            if (!ushort.TryParse(dbPortTxt.Text, out ushort dbPort))
+            {
+                MessageBox.Show("The port must be a number between 0 and 65535.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (isServer)
+            {
+                try
+                {
+                    Directory.CreateDirectory(backupPath);
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show($"Couldn't create the backup folder. Check the path again.{Environment.NewLine}{backupPath}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+            if (type == AccountType.NotDefined)
+            {
+                MessageBox.Show("Must choose an account type.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            if (isServer)
+            {
+                ClinicDb.GetDbServerType();
+
+                if (!ClinicDb.IsServerInstalled)
+                {
+                    await Utils.InstallMariaDb();
+                }
+            }
+
+            // TestConnection is synchronous and can block the UI — run it on the thread pool
+            bool canConnect = await Task.Run(() => ClinicDb.TestConnection(dbServer, dbPort, database, dbUser, dbPassword));
             
-            if (!await AppLicense.RequestLicenseAsync(licenseUrl, name, email))
+            if (!canConnect)
             {
-                MessageBox.Show("Failed to request license, try again later.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Failed to connect to the database. Check the connection data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-        }
 
-        if (!AppLicense.Validate())
-        {
-            MessageBox.Show("Failed to validate license, try requesting a new one.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
-        }
-
-        if (!ushort.TryParse(dbPortTxt.Text, out ushort dbPort))
-        {
-            MessageBox.Show("The port must be a number between 0 and 65535.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
-        }
-
-        if (isServer)
-        {
-            try
+            if (useApi && !await AppointmentApi.TestApiUrlAsync(apiUrl))
             {
-                Directory.CreateDirectory(backupPath);
-            }
-            catch (Exception)
-            {
-                MessageBox.Show($"Couldn't create the backup folder. Check the path again.{Environment.NewLine}{backupPath}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Failed to connect to the API. Check the URL.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-        }
 
-        if (type == AccountType.NotDefined)
+            Settings settings = Settings.Instance;
+
+            settings.Server = dbServer;
+            settings.Port = dbPort;
+            settings.Database = database;
+            settings.User = dbUser;
+            settings.Password = dbPassword;
+            settings.AccountType = type;
+            settings.UseApi = useApi;
+            settings.AppointmentApiUrl = apiUrl;
+            settings.BackupDays = daysSld.Value;
+            settings.BackupPath = backupTxt.Text;
+            settings.IsDental = isDentalSwt.Checked;
+            settings.LastBackup = DateTime.Now.Date;
+
+            Settings.SaveSettings();
+
+            _doneInstall = true;
+            Close();
+            AppContext.ShowForm<SplashForm>();
+        }
+        catch (Exception ex)
         {
-            MessageBox.Show("Must choose an account type.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
+            MessageBox.Show($"Installation failed: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
-
-        if (isServer)
+        finally
         {
-            ClinicDb.GetDbServerType();
-
-            if (!ClinicDb.IsServerInstalled)
-            {
-                Utils.InstallMariaDb();
-            }
+            // If the form closed above, these no-ops are harmless.
+            progressBar.Visible = false;
+            installBtn.Enabled = true;
         }
-
-        if (!ClinicDb.TestConnection(dbServer, dbPort, database, dbUser, dbPassword))
-        {
-            MessageBox.Show("Failed to connect to the database. Check the connection data.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
-        }
-
-        if (useApi && !await AppointmentApi.TestApiUrl(apiUrl))
-        {
-            MessageBox.Show("Failed to connect to the API. Check the URL.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
-        }
-
-        Settings settings = Settings.Instance;
-
-        settings.Server = dbServer;
-        settings.Port = dbPort;
-        settings.Database = database;
-        settings.User = dbUser;
-        settings.Password = dbPassword;
-        settings.AccountType = type;
-        settings.UseApi = useApi;
-        settings.AppointmentApiUrl = apiUrl;
-        settings.BackupDays = daysSld.Value;
-        settings.BackupPath = backupTxt.Text;
-        settings.IsDental = isDentalSwt.Checked;
-        settings.LastBackup = DateTime.Now.Date;
-
-        Settings.SaveSettings();
-
-        _doneInstall = true;
-        Close();
-        AppContext.ShowForm<SplashForm>();
     }
 
     private void browseBtn_Click(object sender, EventArgs e)

@@ -737,9 +737,10 @@
             // 
             // progressBar
             // 
-            progressBar.Location = new Point(608, 711);
+            progressBar.Location = new Point(532, 541);
+            progressBar.MarqueeAnimationSpeed = 40;
             progressBar.Name = "progressBar";
-            progressBar.Size = new Size(368, 48);
+            progressBar.Size = new Size(322, 36);
             progressBar.Style = ProgressBarStyle.Marquee;
             progressBar.TabIndex = 23;
             progressBar.Value = 100;

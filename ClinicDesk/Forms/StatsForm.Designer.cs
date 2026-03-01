@@ -40,13 +40,11 @@
             materialLabel5 = new ReaLTaiizor.Controls.MaterialLabel();
             cancelTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             materialLabel6 = new ReaLTaiizor.Controls.MaterialLabel();
-            materialLabel7 = new ReaLTaiizor.Controls.MaterialLabel();
             materialCard1 = new ReaLTaiizor.Controls.MaterialCard();
             pendTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             materialLabel13 = new ReaLTaiizor.Controls.MaterialLabel();
             materialCard2 = new ReaLTaiizor.Controls.MaterialCard();
             numOfBillsTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
-            materialLabel8 = new ReaLTaiizor.Controls.MaterialLabel();
             materialLabel9 = new ReaLTaiizor.Controls.MaterialLabel();
             materialLabel10 = new ReaLTaiizor.Controls.MaterialLabel();
             totalTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
@@ -89,7 +87,7 @@
             numOfPatientsTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             numOfPatientsTxt.HideSelection = true;
             numOfPatientsTxt.LeadingIcon = null;
-            numOfPatientsTxt.Location = new Point(212, 17);
+            numOfPatientsTxt.Location = new Point(241, 17);
             numOfPatientsTxt.MaxLength = 32767;
             numOfPatientsTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             numOfPatientsTxt.Name = "numOfPatientsTxt";
@@ -119,7 +117,7 @@
             numOfAppsTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             numOfAppsTxt.HideSelection = true;
             numOfAppsTxt.LeadingIcon = null;
-            numOfAppsTxt.Location = new Point(212, 71);
+            numOfAppsTxt.Location = new Point(241, 71);
             numOfAppsTxt.MaxLength = 32767;
             numOfAppsTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             numOfAppsTxt.Name = "numOfAppsTxt";
@@ -161,7 +159,7 @@
             attTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             attTxt.HideSelection = true;
             attTxt.LeadingIcon = null;
-            attTxt.Location = new Point(242, 125);
+            attTxt.Location = new Point(271, 125);
             attTxt.MaxLength = 32767;
             attTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             attTxt.Name = "attTxt";
@@ -203,7 +201,7 @@
             missTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             missTxt.HideSelection = true;
             missTxt.LeadingIcon = null;
-            missTxt.Location = new Point(493, 125);
+            missTxt.Location = new Point(271, 287);
             missTxt.MaxLength = 32767;
             missTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             missTxt.Name = "missTxt";
@@ -226,10 +224,10 @@
             // 
             materialLabel4.Depth = 0;
             materialLabel4.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel4.Location = new Point(402, 125);
+            materialLabel4.Location = new Point(136, 287);
             materialLabel4.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel4.Name = "materialLabel4";
-            materialLabel4.Size = new Size(85, 48);
+            materialLabel4.Size = new Size(100, 48);
             materialLabel4.TabIndex = 7;
             materialLabel4.Text = "Missed";
             materialLabel4.TextAlign = ContentAlignment.MiddleLeft;
@@ -245,7 +243,7 @@
             reschTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             reschTxt.HideSelection = true;
             reschTxt.LeadingIcon = null;
-            reschTxt.Location = new Point(242, 179);
+            reschTxt.Location = new Point(271, 179);
             reschTxt.MaxLength = 32767;
             reschTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             reschTxt.Name = "reschTxt";
@@ -287,7 +285,7 @@
             cancelTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             cancelTxt.HideSelection = true;
             cancelTxt.LeadingIcon = null;
-            cancelTxt.Location = new Point(493, 179);
+            cancelTxt.Location = new Point(271, 341);
             cancelTxt.MaxLength = 32767;
             cancelTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             cancelTxt.Name = "cancelTxt";
@@ -310,25 +308,13 @@
             // 
             materialLabel6.Depth = 0;
             materialLabel6.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel6.Location = new Point(402, 179);
+            materialLabel6.Location = new Point(136, 341);
             materialLabel6.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel6.Name = "materialLabel6";
-            materialLabel6.Size = new Size(85, 48);
+            materialLabel6.Size = new Size(100, 48);
             materialLabel6.TabIndex = 11;
             materialLabel6.Text = "Cancelled";
             materialLabel6.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // materialLabel7
-            // 
-            materialLabel7.Depth = 0;
-            materialLabel7.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel7.Location = new Point(27, 125);
-            materialLabel7.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
-            materialLabel7.Name = "materialLabel7";
-            materialLabel7.Size = new Size(103, 48);
-            materialLabel7.TabIndex = 13;
-            materialLabel7.Text = "Of which";
-            materialLabel7.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // materialCard1
             // 
@@ -336,7 +322,6 @@
             materialCard1.Controls.Add(pendTxt);
             materialCard1.Controls.Add(materialLabel13);
             materialCard1.Controls.Add(numOfPatientsTxt);
-            materialCard1.Controls.Add(materialLabel7);
             materialCard1.Controls.Add(materialLabel1);
             materialCard1.Controls.Add(cancelTxt);
             materialCard1.Controls.Add(materialLabel2);
@@ -355,7 +340,7 @@
             materialCard1.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialCard1.Name = "materialCard1";
             materialCard1.Padding = new Padding(14);
-            materialCard1.Size = new Size(659, 302);
+            materialCard1.Size = new Size(472, 417);
             materialCard1.TabIndex = 14;
             // 
             // pendTxt
@@ -369,7 +354,7 @@
             pendTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             pendTxt.HideSelection = true;
             pendTxt.LeadingIcon = null;
-            pendTxt.Location = new Point(242, 233);
+            pendTxt.Location = new Point(271, 233);
             pendTxt.MaxLength = 32767;
             pendTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             pendTxt.Name = "pendTxt";
@@ -404,7 +389,6 @@
             // 
             materialCard2.BackColor = Color.FromArgb(255, 255, 255);
             materialCard2.Controls.Add(numOfBillsTxt);
-            materialCard2.Controls.Add(materialLabel8);
             materialCard2.Controls.Add(materialLabel9);
             materialCard2.Controls.Add(materialLabel10);
             materialCard2.Controls.Add(totalTxt);
@@ -414,7 +398,7 @@
             materialCard2.Controls.Add(materialLabel14);
             materialCard2.Depth = 0;
             materialCard2.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            materialCard2.Location = new Point(704, 246);
+            materialCard2.Location = new Point(517, 246);
             materialCard2.Margin = new Padding(14);
             materialCard2.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialCard2.Name = "materialCard2";
@@ -451,18 +435,6 @@
             numOfBillsTxt.TextAlign = HorizontalAlignment.Left;
             numOfBillsTxt.TrailingIcon = null;
             numOfBillsTxt.UseSystemPasswordChar = false;
-            // 
-            // materialLabel8
-            // 
-            materialLabel8.Depth = 0;
-            materialLabel8.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel8.Location = new Point(27, 125);
-            materialLabel8.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
-            materialLabel8.Name = "materialLabel8";
-            materialLabel8.Size = new Size(103, 48);
-            materialLabel8.TabIndex = 13;
-            materialLabel8.Text = "Of which";
-            materialLabel8.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // materialLabel9
             // 
@@ -610,7 +582,7 @@
             dateFromPkr.Format = DateTimePickerFormat.Custom;
             dateFromPkr.Location = new Point(136, 25);
             dateFromPkr.Name = "dateFromPkr";
-            dateFromPkr.Size = new Size(336, 27);
+            dateFromPkr.Size = new Size(271, 27);
             dateFromPkr.TabIndex = 16;
             // 
             // materialCard3
@@ -629,7 +601,7 @@
             materialCard3.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialCard3.Name = "materialCard3";
             materialCard3.Padding = new Padding(14);
-            materialCard3.Size = new Size(1087, 140);
+            materialCard3.Size = new Size(900, 140);
             materialCard3.TabIndex = 16;
             // 
             // allTimeChk
@@ -683,7 +655,7 @@
             dateToPkr.Format = DateTimePickerFormat.Custom;
             dateToPkr.Location = new Point(136, 79);
             dateToPkr.Name = "dateToPkr";
-            dateToPkr.Size = new Size(336, 27);
+            dateToPkr.Size = new Size(271, 27);
             dateToPkr.TabIndex = 17;
             // 
             // materialLabel17
@@ -713,7 +685,7 @@
             // StatsForm
             // 
             AutoScaleMode = AutoScaleMode.None;
-            ClientSize = new Size(1124, 575);
+            ClientSize = new Size(941, 695);
             Controls.Add(materialCard3);
             Controls.Add(materialCard2);
             Controls.Add(materialCard1);
@@ -742,11 +714,9 @@
         private ReaLTaiizor.Controls.MaterialLabel materialLabel5;
         private ReaLTaiizor.Controls.MaterialTextBoxEdit cancelTxt;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel6;
-        private ReaLTaiizor.Controls.MaterialLabel materialLabel7;
         private ReaLTaiizor.Controls.MaterialCard materialCard1;
         private ReaLTaiizor.Controls.MaterialCard materialCard2;
         private ReaLTaiizor.Controls.MaterialTextBoxEdit numOfBillsTxt;
-        private ReaLTaiizor.Controls.MaterialLabel materialLabel8;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel9;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel10;
         private ReaLTaiizor.Controls.MaterialTextBoxEdit totalTxt;

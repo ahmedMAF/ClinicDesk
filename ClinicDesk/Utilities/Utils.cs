@@ -1,6 +1,7 @@
 ﻿using ClinicDesk.Database;
 using ClinicDesk.Database.Models;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Management;
 using System.Security.Cryptography;
@@ -363,7 +364,7 @@ internal static class Utils
         return "";
     }
 
-    internal static void InstallMariaDb()
+    internal static async Task InstallMariaDb()
     {
         if (!IsRunningAsAdmin())
         {
@@ -385,7 +386,28 @@ internal static class Utils
             Verb = "runas"
         };
 
-        Process.Start(psi);
+        try
+        {
+            using Process? proc = Process.Start(psi);
+
+            if (proc is null)
+            {
+                MessageBox.Show("Failed to start the MariaDB installer.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            // Wait for the installer process to exit without blocking the UI thread.
+            await proc.WaitForExitAsync();
+        }
+        catch (Win32Exception ex) when (ex.NativeErrorCode == 1223)
+        {
+            // The user cancelled the UAC elevation dialog.
+            MessageBox.Show("MariaDB installation was cancelled by the user.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Failed to start MariaDB installer: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
     }
 
     private static bool IsRunningAsAdmin()
