@@ -38,6 +38,8 @@
             aboutBtn = new ReaLTaiizor.Controls.MaterialButton();
             statsBtn = new ReaLTaiizor.Controls.MaterialButton();
             requestsBtn = new ReaLTaiizor.Controls.MaterialButton();
+            newPatientBtn = new ReaLTaiizor.Controls.MaterialButton();
+            searchBtn = new ReaLTaiizor.Controls.MaterialButton();
             ((System.ComponentModel.ISupportInitialize)appointmentsGrd).BeginInit();
             SuspendLayout();
             // 
@@ -60,7 +62,7 @@
             appointmentsGrd.Name = "appointmentsGrd";
             appointmentsGrd.ReadOnly = true;
             appointmentsGrd.RowHeadersWidth = 51;
-            appointmentsGrd.Size = new Size(930, 401);
+            appointmentsGrd.Size = new Size(1080, 401);
             appointmentsGrd.TabIndex = 4;
             // 
             // newAppointmentBtn
@@ -74,7 +76,7 @@
             newAppointmentBtn.HighEmphasis = true;
             newAppointmentBtn.Icon = null;
             newAppointmentBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            newAppointmentBtn.Location = new Point(538, 70);
+            newAppointmentBtn.Location = new Point(688, 70);
             newAppointmentBtn.Margin = new Padding(4, 6, 4, 6);
             newAppointmentBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             newAppointmentBtn.Name = "newAppointmentBtn";
@@ -98,7 +100,7 @@
             billingBtn.HighEmphasis = true;
             billingBtn.Icon = null;
             billingBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            billingBtn.Location = new Point(538, 127);
+            billingBtn.Location = new Point(688, 127);
             billingBtn.Margin = new Padding(4, 6, 4, 6);
             billingBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             billingBtn.Name = "billingBtn";
@@ -134,7 +136,7 @@
             settingsBtn.HighEmphasis = true;
             settingsBtn.Icon = null;
             settingsBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            settingsBtn.Location = new Point(744, 70);
+            settingsBtn.Location = new Point(894, 70);
             settingsBtn.Margin = new Padding(4, 6, 4, 6);
             settingsBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             settingsBtn.Name = "settingsBtn";
@@ -158,7 +160,7 @@
             aboutBtn.HighEmphasis = true;
             aboutBtn.Icon = null;
             aboutBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            aboutBtn.Location = new Point(744, 127);
+            aboutBtn.Location = new Point(894, 127);
             aboutBtn.Margin = new Padding(4, 6, 4, 6);
             aboutBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             aboutBtn.Name = "aboutBtn";
@@ -182,7 +184,7 @@
             statsBtn.HighEmphasis = true;
             statsBtn.Icon = null;
             statsBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            statsBtn.Location = new Point(538, 184);
+            statsBtn.Location = new Point(688, 184);
             statsBtn.Margin = new Padding(4, 6, 4, 6);
             statsBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             statsBtn.Name = "statsBtn";
@@ -206,7 +208,7 @@
             requestsBtn.HighEmphasis = true;
             requestsBtn.Icon = null;
             requestsBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            requestsBtn.Location = new Point(538, 241);
+            requestsBtn.Location = new Point(688, 241);
             requestsBtn.Margin = new Padding(4, 6, 4, 6);
             requestsBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             requestsBtn.Name = "requestsBtn";
@@ -219,10 +221,60 @@
             requestsBtn.UseVisualStyleBackColor = true;
             requestsBtn.Click += requestsBtn_Click;
             // 
+            // newPatientBtn
+            // 
+            newPatientBtn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            newPatientBtn.AutoSize = false;
+            newPatientBtn.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            newPatientBtn.CharacterCasing = ReaLTaiizor.Controls.MaterialButton.CharacterCasingEnum.Normal;
+            newPatientBtn.Density = ReaLTaiizor.Controls.MaterialButton.MaterialButtonDensity.Default;
+            newPatientBtn.Depth = 0;
+            newPatientBtn.HighEmphasis = true;
+            newPatientBtn.Icon = null;
+            newPatientBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
+            newPatientBtn.Location = new Point(482, 127);
+            newPatientBtn.Margin = new Padding(4, 6, 4, 6);
+            newPatientBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            newPatientBtn.Name = "newPatientBtn";
+            newPatientBtn.NoAccentTextColor = Color.Empty;
+            newPatientBtn.Size = new Size(198, 45);
+            newPatientBtn.TabIndex = 15;
+            newPatientBtn.Text = "New Patient";
+            newPatientBtn.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
+            newPatientBtn.UseAccentColor = false;
+            newPatientBtn.UseVisualStyleBackColor = true;
+            newPatientBtn.Click += newPatientBtn_Click;
+            // 
+            // searchBtn
+            // 
+            searchBtn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            searchBtn.AutoSize = false;
+            searchBtn.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            searchBtn.CharacterCasing = ReaLTaiizor.Controls.MaterialButton.CharacterCasingEnum.Normal;
+            searchBtn.Density = ReaLTaiizor.Controls.MaterialButton.MaterialButtonDensity.Default;
+            searchBtn.Depth = 0;
+            searchBtn.HighEmphasis = true;
+            searchBtn.Icon = null;
+            searchBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
+            searchBtn.Location = new Point(482, 70);
+            searchBtn.Margin = new Padding(4, 6, 4, 6);
+            searchBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            searchBtn.Name = "searchBtn";
+            searchBtn.NoAccentTextColor = Color.Empty;
+            searchBtn.Size = new Size(198, 45);
+            searchBtn.TabIndex = 14;
+            searchBtn.Text = "Search for Patient";
+            searchBtn.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
+            searchBtn.UseAccentColor = false;
+            searchBtn.UseVisualStyleBackColor = true;
+            searchBtn.Click += searchBtn_Click;
+            // 
             // AllInOneForm
             // 
             AutoScaleMode = AutoScaleMode.None;
-            ClientSize = new Size(954, 708);
+            ClientSize = new Size(1104, 708);
+            Controls.Add(newPatientBtn);
+            Controls.Add(searchBtn);
             Controls.Add(requestsBtn);
             Controls.Add(aboutBtn);
             Controls.Add(statsBtn);
@@ -253,5 +305,7 @@
         private ReaLTaiizor.Controls.MaterialButton aboutBtn;
         private ReaLTaiizor.Controls.MaterialButton statsBtn;
         private ReaLTaiizor.Controls.MaterialButton requestsBtn;
+        private ReaLTaiizor.Controls.MaterialButton newPatientBtn;
+        private ReaLTaiizor.Controls.MaterialButton searchBtn;
     }
 }

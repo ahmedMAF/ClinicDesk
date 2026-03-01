@@ -3,24 +3,23 @@ using ClinicDesk.Net;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System.Diagnostics;
-using System.Text.Json;
-#if !DEBUG
 using System.ServiceProcess;
-#endif
+using System.Text.Json;
 
 namespace ClinicDesk.Database;
 
 public class ClinicDb : DbContext
 {
-#if !DEBUG
     private const string ServiceName = "MariaDB";
-#else
-    private static Process? _mySqlProcess;
-#endif
 
+    private static Process? _mySqlProcess;
+
+    private static DbServerType _dbServerType;
     private static bool _wasMySqlRunning;
 
     private static Server? _server;
+
+    public static bool IsServerInstalled =>_dbServerType != DbServerType.None;
 
     public static ClinicDb Instance { get; private set; } = null!;
     public static bool IsRunning { get; private set; }
@@ -78,6 +77,25 @@ public class ClinicDb : DbContext
         await Client.StartAsync();
     }
 
+    internal static void GetDbServerType()
+    {
+        if (File.Exists(@"C:\xampp\mysql\bin\mysqld.exe") || File.Exists(@"C:\Program Files\xampp\mysql\bin\mysqld.exe"))
+        {
+            _dbServerType = DbServerType.XAMPP;
+            return;
+        }
+
+        try
+        {
+            ServiceController service = new(ServiceName);
+            _dbServerType = DbServerType.MariaDB;
+
+            return;
+        }
+        catch
+        { }
+    }
+
     internal static bool TestConnection(string server, ushort port, string db, string user, string pass)
     {
         if (server is "localhost" or "127.0.0.1")
@@ -116,31 +134,36 @@ public class ClinicDb : DbContext
     
     private static void RunDatabaseService()
     {
-#if DEBUG
-        _wasMySqlRunning = Process.GetProcessesByName("mysqld").Length != 0;
-
-        if (!_wasMySqlRunning)
+        if (_dbServerType == DbServerType.XAMPP)
         {
-            string path = @"C:\xampp\mysql\bin\mysqld.exe";
-            string iniPath = @"C:\xampp\mysql\bin\my.ini";
+            _wasMySqlRunning = Process.GetProcessesByName("mysqld").Length != 0;
 
-            if (!File.Exists(path))
+            if (!_wasMySqlRunning)
             {
-                path = @"C:\Program Files\xampp\mysql\bin\mysqld.exe";
-                iniPath = @"C:\Program Files\xampp\mysql\bin\my.ini";
+                string path = @"C:\xampp\mysql\bin\mysqld.exe";
+                string iniPath = @"C:\xampp\mysql\bin\my.ini";
+
+                if (!File.Exists(path))
+                {
+                    path = @"C:\Program Files\xampp\mysql\bin\mysqld.exe";
+                    iniPath = @"C:\Program Files\xampp\mysql\bin\my.ini";
+                }
+
+                ProcessStartInfo psi = new()
+                {
+                    FileName = path,
+                    Arguments = $"--defaults-file=\"{iniPath}\" --standalone",
+                    CreateNoWindow = true
+                };
+
+                _mySqlProcess = Process.Start(psi);
+                Task.Delay(3000).Wait();
             }
 
-            ProcessStartInfo psi = new()
-            {
-                FileName = path,
-                Arguments = $"--defaults-file=\"{iniPath}\" --standalone",
-                CreateNoWindow = true
-            };
-
-            _mySqlProcess = Process.Start(psi);
-            Task.Delay(3000).Wait();
+            return;
         }
-#else
+
+
         ServiceController service = new(ServiceName);
         
         _wasMySqlRunning = service.Status == ServiceControllerStatus.Running;
@@ -150,7 +173,6 @@ public class ClinicDb : DbContext
             service.Start();
             service.WaitForStatus(ServiceControllerStatus.Running, TimeSpan.FromSeconds(10));
         }
-#endif
     }
 
     public static void StopDatabaseService()
@@ -158,19 +180,22 @@ public class ClinicDb : DbContext
         // We should not stop MySQL if it was running before we started.
         if (_wasMySqlRunning)
             return;
-            
-#if DEBUG
-        if (_mySqlProcess != null && !_mySqlProcess.HasExited)
+
+        if (_dbServerType == DbServerType.XAMPP)
         {
-            _mySqlProcess.Kill();
-            _mySqlProcess.Dispose();
+            if (_mySqlProcess != null && !_mySqlProcess.HasExited)
+            {
+                _mySqlProcess.Kill();
+                _mySqlProcess.Dispose();
+            }
+
+            return;
         }
-#else
+
         ServiceController service = new(ServiceName);
         
         if (service.Status != ServiceControllerStatus.Stopped)
             service.Stop();
-#endif
     }
     
     public static void AutoBackup()
@@ -193,33 +218,36 @@ public class ClinicDb : DbContext
             return;
         
         string dumpFile = Path.Combine(path ?? settings.BackupPath, $"{settings.Database}_{DateTime.UtcNow:yyyyMMdd_HHmmss}.sql");
-
-#if DEBUG
-        string mySqlDumpPath = @"C:\xampp\mysql\bin\mysqldump.exe";
-        
-        if (!File.Exists(mySqlDumpPath))
-            mySqlDumpPath = @"C:\Program Files\xampp\mysql\bin\mysqldump.exe";
-#else
         string mySqlDumpPath = "";
-        string programFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
 
-        foreach (var dir in Directory.GetDirectories(programFiles, "MariaDB*", SearchOption.TopDirectoryOnly))
+        if (_dbServerType == DbServerType.XAMPP)
         {
-            string dumpPath = Path.Combine(dir, "bin", "mysqldump.exe");
+            mySqlDumpPath = @"C:\xampp\mysql\bin\mysqldump.exe";
 
-            if (File.Exists(dumpPath))
+            if (!File.Exists(mySqlDumpPath))
+                mySqlDumpPath = @"C:\Program Files\xampp\mysql\bin\mysqldump.exe";
+        }
+        else
+        {
+            string programFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
+
+            foreach (var dir in Directory.GetDirectories(programFiles, "MariaDB*", SearchOption.TopDirectoryOnly))
             {
-                mySqlDumpPath = dumpPath;
-                break;
+                string dumpPath = Path.Combine(dir, "bin", "mysqldump.exe");
+
+                if (File.Exists(dumpPath))
+                {
+                    mySqlDumpPath = dumpPath;
+                    break;
+                }
+            }
+
+            if (string.IsNullOrWhiteSpace(mySqlDumpPath))
+            {
+                MessageBox.Show($"Backup failed.{Environment.NewLine}Error: mysqldump.exe not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
             }
         }
-
-        if (string.IsNullOrWhiteSpace(mySqlDumpPath))
-        {
-            MessageBox.Show($"Backup failed.{Environment.NewLine}Error: mysqldump.exe not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            return;
-        }
-#endif
 
         ProcessStartInfo psi = new()
         {

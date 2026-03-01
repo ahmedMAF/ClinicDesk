@@ -365,9 +365,15 @@ internal static class Utils
 
     internal static void InstallMariaDb()
     {
-        if (IsRunningAsAdmin())
+        if (!IsRunningAsAdmin())
         {
             MessageBox.Show("MariaDB installation requires administrator privileges. Please run the installer as administrator.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        if (File.Exists("mariadb.msi"))
+        {
+            MessageBox.Show("MariaDB installer not found. Please make sure 'mariadb.msi' is in the application directory.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
 
@@ -385,7 +391,8 @@ internal static class Utils
     private static bool IsRunningAsAdmin()
     {
         using WindowsIdentity identity = WindowsIdentity.GetCurrent();
-        WindowsPrincipal principal = new WindowsPrincipal(identity);
+        WindowsPrincipal principal = new(identity);
+
         return principal.IsInRole(WindowsBuiltInRole.Administrator);
     }
 }

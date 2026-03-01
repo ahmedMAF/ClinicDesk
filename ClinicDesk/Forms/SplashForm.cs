@@ -40,6 +40,7 @@ public partial class SplashForm : Form
         if (settings.UseApi)
             AppointmentApi.Initialize();
 
+        ClinicDb.GetDbServerType();
         await ClinicDb.Initialize();
 
         if (!ClinicDb.IsRunning)

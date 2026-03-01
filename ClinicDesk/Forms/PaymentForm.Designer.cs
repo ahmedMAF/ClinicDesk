@@ -33,6 +33,8 @@
             payBtn = new ReaLTaiizor.Controls.MaterialButton();
             materialLabel1 = new ReaLTaiizor.Controls.MaterialLabel();
             cancelBtn = new ReaLTaiizor.Controls.MaterialButton();
+            materialLabel2 = new ReaLTaiizor.Controls.MaterialLabel();
+            methodCbo = new ReaLTaiizor.Controls.MaterialComboBox();
             SuspendLayout();
             // 
             // amountTxt
@@ -46,7 +48,7 @@
             amountTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             amountTxt.HideSelection = true;
             amountTxt.LeadingIcon = null;
-            amountTxt.Location = new Point(118, 75);
+            amountTxt.Location = new Point(122, 75);
             amountTxt.MaxLength = 32767;
             amountTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             amountTxt.Name = "amountTxt";
@@ -58,7 +60,7 @@
             amountTxt.SelectionLength = 0;
             amountTxt.SelectionStart = 0;
             amountTxt.ShortcutsEnabled = true;
-            amountTxt.Size = new Size(312, 48);
+            amountTxt.Size = new Size(308, 48);
             amountTxt.TabIndex = 0;
             amountTxt.TabStop = false;
             amountTxt.Text = "0";
@@ -78,7 +80,7 @@
             payBtn.HighEmphasis = true;
             payBtn.Icon = null;
             payBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            payBtn.Location = new Point(280, 132);
+            payBtn.Location = new Point(280, 187);
             payBtn.Margin = new Padding(4, 6, 4, 6);
             payBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             payBtn.Name = "payBtn";
@@ -93,15 +95,15 @@
             // 
             // materialLabel1
             // 
-            materialLabel1.AutoSize = true;
             materialLabel1.Depth = 0;
             materialLabel1.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel1.Location = new Point(6, 91);
+            materialLabel1.Location = new Point(6, 75);
             materialLabel1.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel1.Name = "materialLabel1";
-            materialLabel1.Size = new Size(106, 19);
+            materialLabel1.Size = new Size(110, 48);
             materialLabel1.TabIndex = 2;
-            materialLabel1.Text = "Amount to Pay";
+            materialLabel1.Text = "Amount";
+            materialLabel1.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // cancelBtn
             // 
@@ -113,7 +115,7 @@
             cancelBtn.HighEmphasis = true;
             cancelBtn.Icon = null;
             cancelBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            cancelBtn.Location = new Point(122, 132);
+            cancelBtn.Location = new Point(122, 187);
             cancelBtn.Margin = new Padding(4, 6, 4, 6);
             cancelBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             cancelBtn.Name = "cancelBtn";
@@ -126,10 +128,47 @@
             cancelBtn.UseVisualStyleBackColor = true;
             cancelBtn.Click += cancelBtn_Click;
             // 
+            // materialLabel2
+            // 
+            materialLabel2.Depth = 0;
+            materialLabel2.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel2.Location = new Point(6, 129);
+            materialLabel2.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialLabel2.Name = "materialLabel2";
+            materialLabel2.Size = new Size(110, 48);
+            materialLabel2.TabIndex = 4;
+            materialLabel2.Text = "Method";
+            materialLabel2.TextAlign = ContentAlignment.MiddleLeft;
+            // 
+            // methodCbo
+            // 
+            methodCbo.AutoResize = false;
+            methodCbo.BackColor = Color.FromArgb(255, 255, 255);
+            methodCbo.Depth = 0;
+            methodCbo.DrawMode = DrawMode.OwnerDrawVariable;
+            methodCbo.DropDownHeight = 174;
+            methodCbo.DropDownStyle = ComboBoxStyle.DropDownList;
+            methodCbo.DropDownWidth = 121;
+            methodCbo.Font = new Font("Microsoft Sans Serif", 14F, FontStyle.Bold, GraphicsUnit.Pixel);
+            methodCbo.ForeColor = Color.FromArgb(222, 0, 0, 0);
+            methodCbo.FormattingEnabled = true;
+            methodCbo.IntegralHeight = false;
+            methodCbo.ItemHeight = 43;
+            methodCbo.Items.AddRange(new object[] { "Cash", "Credit Card", "Cheque", "Bank Transfer", "Mobile Payment" });
+            methodCbo.Location = new Point(122, 129);
+            methodCbo.MaxDropDownItems = 4;
+            methodCbo.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
+            methodCbo.Name = "methodCbo";
+            methodCbo.Size = new Size(308, 49);
+            methodCbo.StartIndex = 0;
+            methodCbo.TabIndex = 5;
+            // 
             // PaymentForm
             // 
             AutoScaleMode = AutoScaleMode.None;
-            ClientSize = new Size(445, 181);
+            ClientSize = new Size(445, 242);
+            Controls.Add(methodCbo);
+            Controls.Add(materialLabel2);
             Controls.Add(cancelBtn);
             Controls.Add(materialLabel1);
             Controls.Add(payBtn);
@@ -144,7 +183,6 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Payment";
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -153,5 +191,7 @@
         private ReaLTaiizor.Controls.MaterialButton payBtn;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel1;
         private ReaLTaiizor.Controls.MaterialButton cancelBtn;
+        private ReaLTaiizor.Controls.MaterialLabel materialLabel2;
+        private ReaLTaiizor.Controls.MaterialComboBox methodCbo;
     }
 }
