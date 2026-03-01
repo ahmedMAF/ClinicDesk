@@ -30,8 +30,6 @@ public partial class PaymentForm : MaterialForm
         if (!decimal.TryParse(amountTxt.Text, out decimal amount))
             return;
         
-        PaymentAmount = amount;
-
         Amount = amount;
         Method = methodCbo.Text;
 
