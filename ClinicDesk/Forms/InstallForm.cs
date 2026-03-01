@@ -1,6 +1,7 @@
 ﻿using ClinicDesk.Database;
 using ClinicDesk.Database.Models;
 using Microsoft.EntityFrameworkCore;
+using ClinicDesk.Utilities;
 using ReaLTaiizor.Forms;
 
 namespace ClinicDesk.Forms;
@@ -39,6 +40,8 @@ public partial class InstallForm : MaterialForm
 
     private async void installBtn_Click(object sender, EventArgs e)
     {
+        progressBar.Visible = true;
+
         string licenseUrl = licenseServerUrlTxt.Text;
 
         string dbServer = dbServerTxt.Text;
@@ -108,6 +111,16 @@ public partial class InstallForm : MaterialForm
         {
             MessageBox.Show("Please set a username and a password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
+        } 
+        
+        if (isServer)
+        {
+            ClinicDb.GetDbServerType();
+
+            if (!ClinicDb.IsServerInstalled)
+            {
+                Utils.InstallMariaDb();
+            }
         }
 
         if (!ClinicDb.TestConnection(dbServer, dbPort, database, dbUser, dbPassword))

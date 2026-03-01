@@ -14,11 +14,11 @@ public partial class PatientDataForm : MaterialForm
     public PatientDataForm()
     {
         InitializeComponent();
+        Text = "Add New Patient";
     }
 
     internal void SetData(string name, string phone)
     {
-        Text = "Add New Patient";
         nameTxt.Text = name;
         phoneTxt.Text = phone;
     }
@@ -52,6 +52,18 @@ public partial class PatientDataForm : MaterialForm
 
     private async void saveBtn_Click(object sender, EventArgs e)
     {
+        if (string.IsNullOrWhiteSpace(nameTxt.Text))
+        {
+            errorProvider.SetError(nameTxt, "Name is required");
+            return;
+        }
+
+        if (string.IsNullOrWhiteSpace(phoneTxt.Text))
+        {
+            errorProvider.SetError(phoneTxt, "Phone is required");
+            return;
+        }
+
         foreach (CheckBox chk in chronicDiseasesGrp.Controls.OfType<CheckBox>())
             if (chk.Checked && chk.Name != "disOtherChk")
                 _chronicDiseases.Add(chk.Text);
@@ -67,7 +79,7 @@ public partial class PatientDataForm : MaterialForm
         if (Patient == null)
         {
             Patient = Patient.New();
-            
+
             Patient.Name = nameTxt.Text;
             Patient.Phone = phoneTxt.Text;
             Patient.Sex = (Sex)sexCbo.SelectedIndex;
@@ -76,7 +88,7 @@ public partial class PatientDataForm : MaterialForm
             Patient.BloodType = (BloodType)bloodTypeCbo.SelectedIndex;
             Patient.ChronicDiseases = [.. _chronicDiseases];
             Patient.Notes = notesTxt.Text;
-            
+
             if (Settings.Instance.IsDental)
                 TeethHelper.MarkMissingTeethByAge(Patient.Teeth!, Patient.AgeYears);
 
@@ -99,5 +111,10 @@ public partial class PatientDataForm : MaterialForm
 
         DialogResult = DialogResult.OK;
         Close();
+    }
+
+    private void ClearError(object sender, EventArgs e)
+    {
+        errorProvider.SetError((Control)sender, string.Empty);
     }
 }

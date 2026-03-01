@@ -114,4 +114,19 @@ public partial class SecretaryForm : MaterialForm
         AppContext.ShowDialog<AppointmentRequestsForm>();
         await _grdHelper.RefreshList();
     }
+
+    private void newPatientBtn_Click(object sender, EventArgs e)
+    {
+        AppContext.ShowDialog<PatientDataForm>();
+    }
+
+    private void searchBtn_Click(object sender, EventArgs e)
+    {
+        Patient patient = null!;
+
+        if (AppContext.ShowDialog<PatientSearchForm>(actionAfterShow: (form, _) => patient = form.Patient) == DialogResult.Cancel)
+            return;
+
+        AppContext.ShowDialog<PatientProfileForm>(form => form.SetData(patient));
+    }
 }

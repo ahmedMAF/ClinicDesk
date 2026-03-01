@@ -29,7 +29,7 @@ public class MaterialMessage : MaterialForm
     private string _text;
     private string _title;
 
-    private MaterialMessage(string text, string title, string mainButtonText, string? secondaryButtonText, MessageBoxIcon icon, bool useAccentColor)
+    private MaterialMessage(Form form, string text, string title, string mainButtonText, string? secondaryButtonText, MessageBoxIcon icon, bool useAccentColor)
     {
         _title = title;
         _text = text;
@@ -63,8 +63,7 @@ public class MaterialMessage : MaterialForm
             Name = "validationButton",
             AutoSize = false,
             DialogResult = DialogResult.OK,
-            DrawShadows = false,
-            Type = MaterialButton.MaterialButtonType.Text,
+            Type = MaterialButton.MaterialButtonType.Contained,
             UseAccentColor = useAccentColor,
             Text = mainButtonText
         };
@@ -81,8 +80,7 @@ public class MaterialMessage : MaterialForm
                 Name = "cancelButton",
                 AutoSize = false,
                 DialogResult = DialogResult.Cancel,
-                DrawShadows = false,
-                Type = MaterialButton.MaterialButtonType.Text,
+                Type = MaterialButton.MaterialButtonType.Outlined,
                 UseAccentColor = useAccentColor,
                 Text = secondaryButtonText
             };
@@ -102,25 +100,22 @@ public class MaterialMessage : MaterialForm
             _iconBox = new PictureBox
             {
                 BackColor = Color.Transparent,
-                Location = new Point(12, 12),
+                Location = new Point(LeftRightPadding, _headerHeight + TextTopPadding + 10),
                 Name = "iconBox",
-                Size = new Size(32, 32),
+                Size = new Size(48, 48),
                 SizeMode = PictureBoxSizeMode.Zoom,
-                TabStop = false
-            };
-
-            _iconBox.Image = icon switch
-            {
-                MessageBoxIcon.Asterisk => SystemIcons.Information.ToBitmap(),
-                MessageBoxIcon.Exclamation => SystemIcons.Warning.ToBitmap(),
-                MessageBoxIcon.Hand => SystemIcons.Error.ToBitmap(),
-                MessageBoxIcon.Question => SystemIcons.Question.ToBitmap(),
-                _ => null
+                TabStop = false,
+                Image = icon switch
+                {
+                    MessageBoxIcon.Asterisk => SystemIcons.Information.ToBitmap(),
+                    MessageBoxIcon.Exclamation => SystemIcons.Warning.ToBitmap(),
+                    MessageBoxIcon.Hand => SystemIcons.Error.ToBitmap(),
+                    MessageBoxIcon.Question => SystemIcons.Question.ToBitmap(),
+                    _ => null
+                }
             };
 
             Controls.Add(_iconBox);
-
-            rectWidth -= _iconBox.Left * 2 + _iconBox.Width;
         }
 
         _titleRect = new Rectangle(
@@ -134,6 +129,14 @@ public class MaterialMessage : MaterialForm
             _headerHeight + TextTopPadding,
             rectWidth,
             rectHeight + 19);
+
+        if (icon != MessageBoxIcon.None)
+        {
+            int delta = _iconBox.Right;
+
+            _textRect.X += delta;
+            _textRect.Width -= delta;
+        }
 
         Height = _headerHeight + TextTopPadding + _textRect.Height + TextBottomPadding + 52;
         Region = Region.FromHrgn(CreateRoundRectRgn(0, 0, Width, Height, 6, 6));
@@ -155,16 +158,37 @@ public class MaterialMessage : MaterialForm
             _cancelButton.Left = _cancelbuttonBounds.Left;
         }
 
-        // ((System.ComponentModel.ISupportInitialize)_iconBox).EndInit();
         ResumeLayout(false);
         PerformLayout();
     }
 
-    public static DialogResult Show(string text, string title, string mainButtonText = "OK", string? secondaryButtonText = null, MessageBoxIcon icon = default, bool useAccentColor = false)
+    public static DialogResult Show(Form form, string text, string title, string mainButtonText = "OK", string? secondaryButtonText = null, MessageBoxIcon icon = default, bool useAccentColor = false)
     {
-        MaterialMessage msg = new(text, title, mainButtonText, secondaryButtonText, icon, useAccentColor);
-        DialogResult result = msg.ShowDialog();
+        Form formOverlay = new()
+        {
+            BackColor = Color.Black,
+            Opacity = 0.5,
+            MinimizeBox = false,
+            MaximizeBox = false,
+            Text = "",
+            ShowIcon = false,
+            ControlBox = false,
+            FormBorderStyle = FormBorderStyle.None,
+            Size = form.Size,
+            ShowInTaskbar = false,
+            Owner = form,
+            Visible = true,
+            Location = form.Location,
+            Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom,
+        };
+
+        MaterialMessage msg = new(form, text, title, mainButtonText, secondaryButtonText, icon, useAccentColor);
+        msg.CenterToParent();
+
+        formOverlay.Show();
+        DialogResult result = msg.ShowDialog(form);
         msg.Dispose();
+        formOverlay.Close();
 
         return result;
     }
@@ -188,7 +212,7 @@ public class MaterialMessage : MaterialForm
             Close();
     }
 
-    private void CloseDialog(object sender, EventArgs e)
+    private void CloseDialog(object? sender, EventArgs e)
     {
         _closeAnimation = true;
         _animationManager.StartNewAnimation(AnimationDirection.Out);

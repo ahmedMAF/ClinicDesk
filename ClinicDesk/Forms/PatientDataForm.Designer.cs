@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(PatientDataForm));
             dobPkr = new DateTimePicker();
             materialCard2 = new ReaLTaiizor.Controls.MaterialCard();
@@ -58,18 +59,21 @@
             notesTxt = new ReaLTaiizor.Controls.MaterialMultiLineTextBoxEdit();
             materialLabel5 = new ReaLTaiizor.Controls.MaterialLabel();
             saveBtn = new ReaLTaiizor.Controls.MaterialButton();
+            errorProvider = new ErrorProvider(components);
             materialCard2.SuspendLayout();
             materialCard1.SuspendLayout();
             materialCard3.SuspendLayout();
             materialCard4.SuspendLayout();
             chronicDiseasesGrp.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)errorProvider).BeginInit();
             SuspendLayout();
             // 
             // dobPkr
             // 
+            dobPkr.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             dobPkr.Location = new Point(127, 133);
             dobPkr.Name = "dobPkr";
-            dobPkr.Size = new Size(371, 27);
+            dobPkr.Size = new Size(317, 27);
             dobPkr.TabIndex = 9;
             dobPkr.Value = new DateTime(2000, 1, 1, 0, 0, 0, 0);
             // 
@@ -85,7 +89,7 @@
             materialCard2.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialCard2.Name = "materialCard2";
             materialCard2.Padding = new Padding(14);
-            materialCard2.Size = new Size(672, 79);
+            materialCard2.Size = new Size(479, 79);
             materialCard2.TabIndex = 34;
             // 
             // phoneTxt
@@ -112,12 +116,13 @@
             phoneTxt.SelectionLength = 0;
             phoneTxt.SelectionStart = 0;
             phoneTxt.ShortcutsEnabled = true;
-            phoneTxt.Size = new Size(370, 48);
+            phoneTxt.Size = new Size(316, 48);
             phoneTxt.TabIndex = 1;
             phoneTxt.TabStop = false;
             phoneTxt.TextAlign = HorizontalAlignment.Left;
             phoneTxt.TrailingIcon = null;
             phoneTxt.UseSystemPasswordChar = false;
+            phoneTxt.TextChanged += ClearError;
             // 
             // materialLabel8
             // 
@@ -149,11 +154,12 @@
             materialCard1.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialCard1.Name = "materialCard1";
             materialCard1.Padding = new Padding(14);
-            materialCard1.Size = new Size(671, 247);
+            materialCard1.Size = new Size(478, 247);
             materialCard1.TabIndex = 33;
             // 
             // maritalCbo
             // 
+            maritalCbo.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             maritalCbo.AutoResize = false;
             maritalCbo.BackColor = Color.FromArgb(255, 255, 255);
             maritalCbo.Depth = 0;
@@ -171,12 +177,13 @@
             maritalCbo.MaxDropDownItems = 4;
             maritalCbo.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             maritalCbo.Name = "maritalCbo";
-            maritalCbo.Size = new Size(371, 49);
+            maritalCbo.Size = new Size(317, 49);
             maritalCbo.StartIndex = 0;
             maritalCbo.TabIndex = 11;
             // 
             // sexCbo
             // 
+            sexCbo.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             sexCbo.AutoResize = false;
             sexCbo.BackColor = Color.FromArgb(255, 255, 255);
             sexCbo.Depth = 0;
@@ -194,7 +201,7 @@
             sexCbo.MaxDropDownItems = 4;
             sexCbo.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             sexCbo.Name = "sexCbo";
-            sexCbo.Size = new Size(371, 49);
+            sexCbo.Size = new Size(317, 49);
             sexCbo.StartIndex = 0;
             sexCbo.TabIndex = 10;
             // 
@@ -231,7 +238,7 @@
             materialLabel2.Name = "materialLabel2";
             materialLabel2.Size = new Size(104, 48);
             materialLabel2.TabIndex = 6;
-            materialLabel2.Text = "Sex *";
+            materialLabel2.Text = "Sex";
             materialLabel2.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // nameTxt
@@ -258,12 +265,13 @@
             nameTxt.SelectionLength = 0;
             nameTxt.SelectionStart = 0;
             nameTxt.ShortcutsEnabled = true;
-            nameTxt.Size = new Size(371, 48);
+            nameTxt.Size = new Size(317, 48);
             nameTxt.TabIndex = 1;
             nameTxt.TabStop = false;
             nameTxt.TextAlign = HorizontalAlignment.Left;
             nameTxt.TrailingIcon = null;
             nameTxt.UseSystemPasswordChar = false;
+            nameTxt.TextChanged += ClearError;
             // 
             // materialLabel1
             // 
@@ -289,7 +297,7 @@
             materialCard3.Controls.Add(materialLabel5);
             materialCard3.Depth = 0;
             materialCard3.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            materialCard3.Location = new Point(716, 78);
+            materialCard3.Location = new Point(523, 78);
             materialCard3.Margin = new Padding(14);
             materialCard3.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialCard3.Name = "materialCard3";
@@ -566,7 +574,7 @@
             saveBtn.HighEmphasis = true;
             saveBtn.Icon = null;
             saveBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            saveBtn.Location = new Point(1229, 452);
+            saveBtn.Location = new Point(1036, 452);
             saveBtn.Margin = new Padding(4, 6, 4, 6);
             saveBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             saveBtn.Name = "saveBtn";
@@ -579,10 +587,14 @@
             saveBtn.UseVisualStyleBackColor = true;
             saveBtn.Click += saveBtn_Click;
             // 
+            // errorProvider
+            // 
+            errorProvider.ContainerControl = this;
+            // 
             // PatientDataForm
             // 
             AutoScaleMode = AutoScaleMode.None;
-            ClientSize = new Size(1403, 501);
+            ClientSize = new Size(1210, 501);
             Controls.Add(saveBtn);
             Controls.Add(materialCard2);
             Controls.Add(materialCard3);
@@ -602,6 +614,7 @@
             materialCard4.ResumeLayout(false);
             chronicDiseasesGrp.ResumeLayout(false);
             chronicDiseasesGrp.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)errorProvider).EndInit();
             ResumeLayout(false);
         }
 
@@ -635,5 +648,6 @@
         private ReaLTaiizor.Controls.MaterialCheckBox materialCheckBox7;
         private ReaLTaiizor.Controls.MaterialMultiLineTextBoxEdit disOtherTxt;
         private ReaLTaiizor.Controls.MaterialButton saveBtn;
+        private ErrorProvider errorProvider;
     }
 }

@@ -8,6 +8,8 @@ public class ClinicDbDesignFactory : IDesignTimeDbContextFactory<ClinicDb>
     {
         Settings.Initialize();
 
+        ClinicDb.GetDbServerType();
+
         if (!ClinicDb.Create(out ClinicDb? db))
             throw new Exception("Can't connect to MySQL.");
 

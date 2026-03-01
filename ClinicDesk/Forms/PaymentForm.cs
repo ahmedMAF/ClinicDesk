@@ -5,7 +5,9 @@ namespace ClinicDesk.Forms;
 public partial class PaymentForm : MaterialForm
 {
     private decimal _maxAmount;
-    public decimal PaymentAmount { get; private set; }
+
+    public decimal Amount { get; private set; }
+    public string Method { get; private set; } = null!;
 
     public PaymentForm()
     {
@@ -30,7 +32,8 @@ public partial class PaymentForm : MaterialForm
         
         PaymentAmount = amount;
 
-        PaymentAmount = amount;
+        Amount = amount;
+        Method = methodCbo.Text;
 
         DialogResult = DialogResult.OK;
         Close();

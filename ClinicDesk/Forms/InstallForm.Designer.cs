@@ -67,7 +67,7 @@
             folderBrowser = new FolderBrowserDialog();
             usernameTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             materialLabel16 = new ReaLTaiizor.Controls.MaterialLabel();
-            progressBar = new ReaLTaiizor.Controls.MaterialProgressBar();
+            progressBar = new ProgressBar();
             materialCard1.SuspendLayout();
             materialCard2.SuspendLayout();
             materialCard3.SuspendLayout();
@@ -844,15 +844,12 @@
             //
             // progressBar
             // 
-            progressBar.Depth = 0;
             progressBar.Location = new Point(532, 541);
-            progressBar.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             progressBar.Name = "progressBar";
             progressBar.Size = new Size(322, 36);
             progressBar.Style = ProgressBarStyle.Marquee;
             progressBar.TabIndex = 23;
-            progressBar.UseAccentColor = false;
-            progressBar.Value = 80;
+            progressBar.Value = 50;
             progressBar.Visible = false;
             // 
             // InstallForm
@@ -923,6 +920,6 @@
         private ReaLTaiizor.Controls.MaterialLabel materialLabel15;
         private ReaLTaiizor.Controls.MaterialTextBoxEdit usernameTxt;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel16;
-        private ReaLTaiizor.Controls.MaterialProgressBar progressBar;
+        private ProgressBar progressBar;
     }
 }

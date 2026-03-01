@@ -92,10 +92,8 @@ public partial class BillingForm : MaterialForm
 
         decimal paymentAmount = 0;
 
-        if (AppContext.ShowDialog<PaymentForm>(form => form.SetData(invoice.RemainingAmount), (form, _) => paymentAmount = form.PaymentAmount) == DialogResult.Cancel)
+        if (AppContext.ShowDialog<PaymentForm>(form => form.SetData(invoice.RemainingAmount), async (form, _) => await PerformPayment(invoice, form.Amount, form.Method)) == DialogResult.Cancel)
             return;
-
-        await PerformPayment(invoice, paymentAmount);
     }
 
     private async void payFullBtn_Click(int rowIndex)
@@ -106,15 +104,16 @@ public partial class BillingForm : MaterialForm
             MessageBox.Show($"Are you sure you want to fully pay this invoice with a value of \"{invoice.RemainingAmount:0.00}\"?", "Payment Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
             return;
 
-        await PerformPayment(invoice, invoice.RemainingAmount);
+        await PerformPayment(invoice, invoice.RemainingAmount, "Cash");
     }
 
-    private async Task PerformPayment(InvoiceDto invoice, decimal amount)
+    private async Task PerformPayment(InvoiceDto invoice, decimal amount, string method)
     {
         Payment payment = new()
         {
             InvoiceId = invoice.Id,
-            Amount = amount
+            Amount = amount,
+            Method = method
         };
 
         ClinicDb.Instance.Payments.Add(payment);
