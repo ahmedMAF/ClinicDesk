@@ -30,7 +30,7 @@ internal class AppointmentApi
         _timer = new Timer(Callback, null, TimeSpan.FromSeconds(10), TimeSpan.FromMinutes(10));
     }
 
-    public static async Task<bool> TestApiUrl(string url)
+    public static async Task<bool> TestApiUrlAsync(string url)
     {
         HttpClient httpClient = new();
 

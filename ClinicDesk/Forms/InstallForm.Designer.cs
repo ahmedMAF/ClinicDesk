@@ -61,12 +61,12 @@
             isDentalSwt = new ReaLTaiizor.Controls.MaterialSwitch();
             materialLabel11 = new ReaLTaiizor.Controls.MaterialLabel();
             materialCard3 = new ReaLTaiizor.Controls.MaterialCard();
+            usernameTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
+            materialLabel16 = new ReaLTaiizor.Controls.MaterialLabel();
             passwordTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             materialLabel15 = new ReaLTaiizor.Controls.MaterialLabel();
             materialLabel12 = new ReaLTaiizor.Controls.MaterialLabel();
             folderBrowser = new FolderBrowserDialog();
-            usernameTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
-            materialLabel16 = new ReaLTaiizor.Controls.MaterialLabel();
             progressBar = new ProgressBar();
             materialCard1.SuspendLayout();
             materialCard2.SuspendLayout();
@@ -84,12 +84,12 @@
             installBtn.HighEmphasis = true;
             installBtn.Icon = null;
             installBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            installBtn.Location = new Point(984, 711);
+            installBtn.Location = new Point(984, 724);
             installBtn.Margin = new Padding(5, 8, 5, 8);
             installBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             installBtn.Name = "installBtn";
             installBtn.NoAccentTextColor = Color.Empty;
-            installBtn.Size = new Size(181, 48);
+            installBtn.Size = new Size(181, 36);
             installBtn.TabIndex = 0;
             installBtn.Text = "Install";
             installBtn.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
@@ -737,6 +737,50 @@
             materialCard3.Size = new Size(557, 408);
             materialCard3.TabIndex = 22;
             // 
+            // usernameTxt
+            // 
+            usernameTxt.AnimateReadOnly = false;
+            usernameTxt.AutoCompleteMode = AutoCompleteMode.None;
+            usernameTxt.AutoCompleteSource = AutoCompleteSource.None;
+            usernameTxt.BackgroundImageLayout = ImageLayout.None;
+            usernameTxt.CharacterCasing = CharacterCasing.Normal;
+            usernameTxt.Depth = 0;
+            usernameTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
+            usernameTxt.HideSelection = true;
+            usernameTxt.Hint = "For Login";
+            usernameTxt.LeadingIcon = null;
+            usernameTxt.Location = new Point(181, 223);
+            usernameTxt.Margin = new Padding(3, 4, 3, 4);
+            usernameTxt.MaxLength = 32767;
+            usernameTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
+            usernameTxt.Name = "usernameTxt";
+            usernameTxt.PasswordChar = '\0';
+            usernameTxt.PrefixSuffixText = null;
+            usernameTxt.ReadOnly = false;
+            usernameTxt.RightToLeft = RightToLeft.No;
+            usernameTxt.SelectedText = "";
+            usernameTxt.SelectionLength = 0;
+            usernameTxt.SelectionStart = 0;
+            usernameTxt.ShortcutsEnabled = true;
+            usernameTxt.Size = new Size(357, 48);
+            usernameTxt.TabIndex = 23;
+            usernameTxt.TabStop = false;
+            usernameTxt.TextAlign = HorizontalAlignment.Left;
+            usernameTxt.TrailingIcon = null;
+            usernameTxt.UseSystemPasswordChar = false;
+            // 
+            // materialLabel16
+            // 
+            materialLabel16.Depth = 0;
+            materialLabel16.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
+            materialLabel16.Location = new Point(23, 223);
+            materialLabel16.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialLabel16.Name = "materialLabel16";
+            materialLabel16.Size = new Size(152, 48);
+            materialLabel16.TabIndex = 22;
+            materialLabel16.Text = "Username";
+            materialLabel16.TextAlign = ContentAlignment.MiddleLeft;
+            // 
             // passwordTxt
             // 
             passwordTxt.AnimateReadOnly = false;
@@ -798,55 +842,12 @@
             // 
             folderBrowser.Description = "Select a folder to store database backups in";
             // 
-            // usernameTxt
-            // 
-            usernameTxt.AnimateReadOnly = false;
-            usernameTxt.AutoCompleteMode = AutoCompleteMode.None;
-            usernameTxt.AutoCompleteSource = AutoCompleteSource.None;
-            usernameTxt.BackgroundImageLayout = ImageLayout.None;
-            usernameTxt.CharacterCasing = CharacterCasing.Normal;
-            usernameTxt.Depth = 0;
-            usernameTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
-            usernameTxt.HideSelection = true;
-            usernameTxt.Hint = "For Login";
-            usernameTxt.LeadingIcon = null;
-            usernameTxt.Location = new Point(181, 223);
-            usernameTxt.Margin = new Padding(3, 4, 3, 4);
-            usernameTxt.MaxLength = 32767;
-            usernameTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
-            usernameTxt.Name = "usernameTxt";
-            usernameTxt.PasswordChar = '\0';
-            usernameTxt.PrefixSuffixText = null;
-            usernameTxt.ReadOnly = false;
-            usernameTxt.RightToLeft = RightToLeft.No;
-            usernameTxt.SelectedText = "";
-            usernameTxt.SelectionLength = 0;
-            usernameTxt.SelectionStart = 0;
-            usernameTxt.ShortcutsEnabled = true;
-            usernameTxt.Size = new Size(357, 48);
-            usernameTxt.TabIndex = 23;
-            usernameTxt.TabStop = false;
-            usernameTxt.TextAlign = HorizontalAlignment.Left;
-            usernameTxt.TrailingIcon = null;
-            usernameTxt.UseSystemPasswordChar = false;
-            // 
-            // materialLabel16
-            // 
-            materialLabel16.Depth = 0;
-            materialLabel16.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel16.Location = new Point(23, 223);
-            materialLabel16.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
-            materialLabel16.Name = "materialLabel16";
-            materialLabel16.Size = new Size(152, 48);
-            materialLabel16.TabIndex = 22;
-            materialLabel16.Text = "Username";
-            materialLabel16.TextAlign = ContentAlignment.MiddleLeft;
-            //
             // progressBar
             // 
-            progressBar.Location = new Point(608, 711);
+            progressBar.Location = new Point(608, 724);
+            progressBar.MarqueeAnimationSpeed = 40;
             progressBar.Name = "progressBar";
-            progressBar.Size = new Size(368, 48);
+            progressBar.Size = new Size(368, 36);
             progressBar.Style = ProgressBarStyle.Marquee;
             progressBar.TabIndex = 23;
             progressBar.Value = 100;
