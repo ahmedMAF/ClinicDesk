@@ -100,5 +100,25 @@ namespace ClinicDesk.Properties {
                 return ResourceManager.GetString("TeethSvg", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap wifi_16 {
+            get {
+                object obj = ResourceManager.GetObject("wifi-16", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap wifi_16__1_ {
+            get {
+                object obj = ResourceManager.GetObject("wifi-16 (1)", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

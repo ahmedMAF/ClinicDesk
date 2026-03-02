@@ -40,7 +40,10 @@
             requestsBtn = new ReaLTaiizor.Controls.MaterialButton();
             newPatientBtn = new ReaLTaiizor.Controls.MaterialButton();
             searchBtn = new ReaLTaiizor.Controls.MaterialButton();
+            statusStrip = new StatusStrip();
+            conStatusLbl = new ToolStripStatusLabel();
             ((System.ComponentModel.ISupportInitialize)appointmentsGrd).BeginInit();
+            statusStrip.SuspendLayout();
             SuspendLayout();
             // 
             // monthCalendar1
@@ -62,7 +65,7 @@
             appointmentsGrd.Name = "appointmentsGrd";
             appointmentsGrd.ReadOnly = true;
             appointmentsGrd.RowHeadersWidth = 51;
-            appointmentsGrd.Size = new Size(1080, 401);
+            appointmentsGrd.Size = new Size(1080, 381);
             appointmentsGrd.TabIndex = 4;
             // 
             // newAppointmentBtn
@@ -269,10 +272,32 @@
             searchBtn.UseVisualStyleBackColor = true;
             searchBtn.Click += searchBtn_Click;
             // 
+            // statusStrip
+            // 
+            statusStrip.ImageScalingSize = new Size(20, 20);
+            statusStrip.Items.AddRange(new ToolStripItem[] { conStatusLbl });
+            statusStrip.LayoutStyle = ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            statusStrip.Location = new Point(3, 679);
+            statusStrip.Name = "statusStrip";
+            statusStrip.Size = new Size(1098, 26);
+            statusStrip.TabIndex = 16;
+            statusStrip.Text = "statusStrip1";
+            // 
+            // conStatusLbl
+            // 
+            conStatusLbl.Image = Properties.Resources.wifi_16;
+            conStatusLbl.ImageAlign = ContentAlignment.MiddleRight;
+            conStatusLbl.ImageScaling = ToolStripItemImageScaling.None;
+            conStatusLbl.Margin = new Padding(8, 4, 0, 2);
+            conStatusLbl.Name = "conStatusLbl";
+            conStatusLbl.Size = new Size(96, 20);
+            conStatusLbl.Text = "Connected";
+            // 
             // AllInOneForm
             // 
             AutoScaleMode = AutoScaleMode.None;
             ClientSize = new Size(1104, 708);
+            Controls.Add(statusStrip);
             Controls.Add(newPatientBtn);
             Controls.Add(searchBtn);
             Controls.Add(requestsBtn);
@@ -291,6 +316,8 @@
             WindowState = FormWindowState.Maximized;
             Load += AllInOneForm_Load;
             ((System.ComponentModel.ISupportInitialize)appointmentsGrd).EndInit();
+            statusStrip.ResumeLayout(false);
+            statusStrip.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -307,5 +334,7 @@
         private ReaLTaiizor.Controls.MaterialButton requestsBtn;
         private ReaLTaiizor.Controls.MaterialButton newPatientBtn;
         private ReaLTaiizor.Controls.MaterialButton searchBtn;
+        private StatusStrip statusStrip;
+        private ToolStripStatusLabel conStatusLbl;
     }
 }
