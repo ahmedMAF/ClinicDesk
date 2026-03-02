@@ -45,14 +45,14 @@
             paymentsGrd.Name = "paymentsGrd";
             paymentsGrd.ReadOnly = true;
             paymentsGrd.RowHeadersWidth = 51;
-            paymentsGrd.Size = new Size(1030, 377);
+            paymentsGrd.Size = new Size(888, 427);
             paymentsGrd.TabIndex = 6;
             paymentsGrd.CellMouseClick += appointmentsGrd_CellMouseClick;
             // 
             // InvoiceDetailsForm
             // 
             AutoScaleMode = AutoScaleMode.None;
-            ClientSize = new Size(1042, 450);
+            ClientSize = new Size(900, 500);
             Controls.Add(paymentsGrd);
             Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "InvoiceDetailsForm";

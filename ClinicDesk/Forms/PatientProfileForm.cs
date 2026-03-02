@@ -31,6 +31,7 @@ public partial class PatientProfileForm : MaterialForm
 
     private void PatientProfileForm_Load(object sender, EventArgs e)
     {
+        chartBtn.Visible = Settings.Instance.AccountType != AccountType.Secretary;
         RefreshUI();
     }
 

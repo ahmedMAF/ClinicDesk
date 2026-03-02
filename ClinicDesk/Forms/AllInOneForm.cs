@@ -10,6 +10,7 @@ namespace ClinicDesk.Forms;
 public partial class AllInOneForm : MaterialForm
 {
     private readonly AppointmentsGrid _grdHelper;
+    private readonly SemaphoreSlim _refreshLock = new(1, 1);
 
     public AllInOneForm()
     {
@@ -37,7 +38,18 @@ public partial class AllInOneForm : MaterialForm
 
     private async void monthCalendar1_DateSelected(object sender, DateRangeEventArgs e)
     {
-        await _grdHelper.RefreshList(monthCalendar1.SelectionStart.Date);
+        // already running, ignore this call
+        if (!await _refreshLock.WaitAsync(0))
+            return;
+
+        try
+        {
+            await _grdHelper.RefreshList(monthCalendar1.SelectionStart.Date);
+        }
+        finally
+        {
+            _refreshLock.Release();
+        }
     }
 
     private async void newAppointmentBtn_Click(object sender, EventArgs e)

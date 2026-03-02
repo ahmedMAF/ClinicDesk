@@ -39,7 +39,10 @@ public partial class PaymentForm : MaterialForm
     
     private void amountTxt_TextChanged(object sender, EventArgs e)
     {
-        if (decimal.Parse(amountTxt.Text) > _maxAmount)
+        if (!decimal.TryParse(amountTxt.Text, out decimal amount))
+            return;
+
+        if (amount > _maxAmount)
             amountTxt.Text = _maxAmount.ToString("0.00");
     }
     
