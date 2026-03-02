@@ -46,26 +46,26 @@
             invoicesGrd.BackgroundColor = Color.White;
             invoicesGrd.BorderStyle = BorderStyle.None;
             invoicesGrd.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            invoicesGrd.Location = new Point(12, 183);
+            invoicesGrd.Location = new Point(12, 129);
             invoicesGrd.Name = "invoicesGrd";
             invoicesGrd.ReadOnly = true;
             invoicesGrd.RowHeadersWidth = 51;
-            invoicesGrd.Size = new Size(1236, 913);
+            invoicesGrd.Size = new Size(1132, 465);
             invoicesGrd.TabIndex = 5;
             invoicesGrd.CellPainting += invoicesGrd_CellPainting;
             invoicesGrd.RowPrePaint += invoicesGrd_RowPrePaint;
             // 
             // materialLabel2
             // 
-            materialLabel2.AutoSize = true;
             materialLabel2.Depth = 0;
             materialLabel2.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel2.Location = new Point(12, 142);
+            materialLabel2.Location = new Point(438, 75);
             materialLabel2.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel2.Name = "materialLabel2";
-            materialLabel2.Size = new Size(46, 19);
+            materialLabel2.Size = new Size(73, 48);
             materialLabel2.TabIndex = 9;
             materialLabel2.Text = "Phone";
+            materialLabel2.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // phoneTxt
             // 
@@ -78,7 +78,7 @@
             phoneTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             phoneTxt.HideSelection = true;
             phoneTxt.LeadingIcon = null;
-            phoneTxt.Location = new Point(91, 129);
+            phoneTxt.Location = new Point(517, 75);
             phoneTxt.MaxLength = 32767;
             phoneTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             phoneTxt.Name = "phoneTxt";
@@ -99,15 +99,15 @@
             // 
             // materialLabel1
             // 
-            materialLabel1.AutoSize = true;
             materialLabel1.Depth = 0;
             materialLabel1.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel1.Location = new Point(12, 85);
+            materialLabel1.Location = new Point(12, 75);
             materialLabel1.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel1.Name = "materialLabel1";
-            materialLabel1.Size = new Size(73, 19);
+            materialLabel1.Size = new Size(85, 48);
             materialLabel1.TabIndex = 7;
             materialLabel1.Text = "Full Name";
+            materialLabel1.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // nameTxt
             // 
@@ -120,7 +120,7 @@
             nameTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             nameTxt.HideSelection = true;
             nameTxt.LeadingIcon = null;
-            nameTxt.Location = new Point(91, 75);
+            nameTxt.Location = new Point(103, 75);
             nameTxt.MaxLength = 32767;
             nameTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             nameTxt.Name = "nameTxt";
@@ -142,7 +142,7 @@
             // BillingForm
             // 
             AutoScaleMode = AutoScaleMode.None;
-            ClientSize = new Size(1254, 1102);
+            ClientSize = new Size(1150, 600);
             Controls.Add(materialLabel2);
             Controls.Add(phoneTxt);
             Controls.Add(materialLabel1);
@@ -157,7 +157,6 @@
             Load += BillingForm_Load;
             ((System.ComponentModel.ISupportInitialize)invoicesGrd).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion

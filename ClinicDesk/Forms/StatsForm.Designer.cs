@@ -28,22 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StatsForm));
             materialLabel1 = new ReaLTaiizor.Controls.MaterialLabel();
             numOfPatientsTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             numOfAppsTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             materialLabel2 = new ReaLTaiizor.Controls.MaterialLabel();
-            attTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
-            materialLabel3 = new ReaLTaiizor.Controls.MaterialLabel();
-            missTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
-            materialLabel4 = new ReaLTaiizor.Controls.MaterialLabel();
-            reschTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
-            materialLabel5 = new ReaLTaiizor.Controls.MaterialLabel();
-            cancelTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
-            materialLabel6 = new ReaLTaiizor.Controls.MaterialLabel();
             materialCard1 = new ReaLTaiizor.Controls.MaterialCard();
-            pendTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
-            materialLabel13 = new ReaLTaiizor.Controls.MaterialLabel();
+            appointmentList = new ReaLTaiizor.Controls.MaterialListView();
+            columnHeader3 = new ColumnHeader();
+            columnHeader4 = new ColumnHeader();
             materialCard2 = new ReaLTaiizor.Controls.MaterialCard();
+            methodList = new ReaLTaiizor.Controls.MaterialListView();
+            columnHeader1 = new ColumnHeader();
+            columnHeader5 = new ColumnHeader();
+            columnHeader2 = new ColumnHeader();
             numOfBillsTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             materialLabel9 = new ReaLTaiizor.Controls.MaterialLabel();
             materialLabel10 = new ReaLTaiizor.Controls.MaterialLabel();
@@ -59,6 +57,13 @@
             dateToPkr = new DateTimePicker();
             materialLabel17 = new ReaLTaiizor.Controls.MaterialLabel();
             materialLabel18 = new ReaLTaiizor.Controls.MaterialLabel();
+            materialCheckBox1 = new ReaLTaiizor.Controls.MaterialCheckBox();
+            materialCheckBox2 = new ReaLTaiizor.Controls.MaterialCheckBox();
+            materialCheckBox3 = new ReaLTaiizor.Controls.MaterialCheckBox();
+            materialCheckBox4 = new ReaLTaiizor.Controls.MaterialCheckBox();
+            materialCheckBox5 = new ReaLTaiizor.Controls.MaterialCheckBox();
+            materialCheckBox6 = new ReaLTaiizor.Controls.MaterialCheckBox();
+            materialCheckBox7 = new ReaLTaiizor.Controls.MaterialCheckBox();
             materialCard1.SuspendLayout();
             materialCard2.SuspendLayout();
             materialCard3.SuspendLayout();
@@ -87,7 +92,7 @@
             numOfPatientsTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             numOfPatientsTxt.HideSelection = true;
             numOfPatientsTxt.LeadingIcon = null;
-            numOfPatientsTxt.Location = new Point(241, 17);
+            numOfPatientsTxt.Location = new Point(212, 17);
             numOfPatientsTxt.MaxLength = 32767;
             numOfPatientsTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             numOfPatientsTxt.Name = "numOfPatientsTxt";
@@ -117,7 +122,7 @@
             numOfAppsTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             numOfAppsTxt.HideSelection = true;
             numOfAppsTxt.LeadingIcon = null;
-            numOfAppsTxt.Location = new Point(241, 71);
+            numOfAppsTxt.Location = new Point(212, 71);
             numOfAppsTxt.MaxLength = 32767;
             numOfAppsTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             numOfAppsTxt.Name = "numOfAppsTxt";
@@ -148,191 +153,14 @@
             materialLabel2.Text = "Number of Appointments";
             materialLabel2.TextAlign = ContentAlignment.MiddleLeft;
             // 
-            // attTxt
-            // 
-            attTxt.AnimateReadOnly = false;
-            attTxt.AutoCompleteMode = AutoCompleteMode.None;
-            attTxt.AutoCompleteSource = AutoCompleteSource.None;
-            attTxt.BackgroundImageLayout = ImageLayout.None;
-            attTxt.CharacterCasing = CharacterCasing.Normal;
-            attTxt.Depth = 0;
-            attTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
-            attTxt.HideSelection = true;
-            attTxt.LeadingIcon = null;
-            attTxt.Location = new Point(271, 125);
-            attTxt.MaxLength = 32767;
-            attTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
-            attTxt.Name = "attTxt";
-            attTxt.PasswordChar = '\0';
-            attTxt.PrefixSuffixText = null;
-            attTxt.ReadOnly = true;
-            attTxt.RightToLeft = RightToLeft.No;
-            attTxt.SelectedText = "";
-            attTxt.SelectionLength = 0;
-            attTxt.SelectionStart = 0;
-            attTxt.ShortcutsEnabled = true;
-            attTxt.Size = new Size(136, 48);
-            attTxt.TabIndex = 6;
-            attTxt.TabStop = false;
-            attTxt.TextAlign = HorizontalAlignment.Left;
-            attTxt.TrailingIcon = null;
-            attTxt.UseSystemPasswordChar = false;
-            // 
-            // materialLabel3
-            // 
-            materialLabel3.Depth = 0;
-            materialLabel3.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel3.Location = new Point(136, 125);
-            materialLabel3.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
-            materialLabel3.Name = "materialLabel3";
-            materialLabel3.Size = new Size(100, 48);
-            materialLabel3.TabIndex = 5;
-            materialLabel3.Text = "Attended";
-            materialLabel3.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // missTxt
-            // 
-            missTxt.AnimateReadOnly = false;
-            missTxt.AutoCompleteMode = AutoCompleteMode.None;
-            missTxt.AutoCompleteSource = AutoCompleteSource.None;
-            missTxt.BackgroundImageLayout = ImageLayout.None;
-            missTxt.CharacterCasing = CharacterCasing.Normal;
-            missTxt.Depth = 0;
-            missTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
-            missTxt.HideSelection = true;
-            missTxt.LeadingIcon = null;
-            missTxt.Location = new Point(271, 287);
-            missTxt.MaxLength = 32767;
-            missTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
-            missTxt.Name = "missTxt";
-            missTxt.PasswordChar = '\0';
-            missTxt.PrefixSuffixText = null;
-            missTxt.ReadOnly = true;
-            missTxt.RightToLeft = RightToLeft.No;
-            missTxt.SelectedText = "";
-            missTxt.SelectionLength = 0;
-            missTxt.SelectionStart = 0;
-            missTxt.ShortcutsEnabled = true;
-            missTxt.Size = new Size(136, 48);
-            missTxt.TabIndex = 8;
-            missTxt.TabStop = false;
-            missTxt.TextAlign = HorizontalAlignment.Left;
-            missTxt.TrailingIcon = null;
-            missTxt.UseSystemPasswordChar = false;
-            // 
-            // materialLabel4
-            // 
-            materialLabel4.Depth = 0;
-            materialLabel4.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel4.Location = new Point(136, 287);
-            materialLabel4.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
-            materialLabel4.Name = "materialLabel4";
-            materialLabel4.Size = new Size(100, 48);
-            materialLabel4.TabIndex = 7;
-            materialLabel4.Text = "Missed";
-            materialLabel4.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // reschTxt
-            // 
-            reschTxt.AnimateReadOnly = false;
-            reschTxt.AutoCompleteMode = AutoCompleteMode.None;
-            reschTxt.AutoCompleteSource = AutoCompleteSource.None;
-            reschTxt.BackgroundImageLayout = ImageLayout.None;
-            reschTxt.CharacterCasing = CharacterCasing.Normal;
-            reschTxt.Depth = 0;
-            reschTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
-            reschTxt.HideSelection = true;
-            reschTxt.LeadingIcon = null;
-            reschTxt.Location = new Point(271, 179);
-            reschTxt.MaxLength = 32767;
-            reschTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
-            reschTxt.Name = "reschTxt";
-            reschTxt.PasswordChar = '\0';
-            reschTxt.PrefixSuffixText = null;
-            reschTxt.ReadOnly = true;
-            reschTxt.RightToLeft = RightToLeft.No;
-            reschTxt.SelectedText = "";
-            reschTxt.SelectionLength = 0;
-            reschTxt.SelectionStart = 0;
-            reschTxt.ShortcutsEnabled = true;
-            reschTxt.Size = new Size(136, 48);
-            reschTxt.TabIndex = 10;
-            reschTxt.TabStop = false;
-            reschTxt.TextAlign = HorizontalAlignment.Left;
-            reschTxt.TrailingIcon = null;
-            reschTxt.UseSystemPasswordChar = false;
-            // 
-            // materialLabel5
-            // 
-            materialLabel5.Depth = 0;
-            materialLabel5.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel5.Location = new Point(136, 179);
-            materialLabel5.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
-            materialLabel5.Name = "materialLabel5";
-            materialLabel5.Size = new Size(100, 48);
-            materialLabel5.TabIndex = 9;
-            materialLabel5.Text = "Rescheduled";
-            materialLabel5.TextAlign = ContentAlignment.MiddleLeft;
-            // 
-            // cancelTxt
-            // 
-            cancelTxt.AnimateReadOnly = false;
-            cancelTxt.AutoCompleteMode = AutoCompleteMode.None;
-            cancelTxt.AutoCompleteSource = AutoCompleteSource.None;
-            cancelTxt.BackgroundImageLayout = ImageLayout.None;
-            cancelTxt.CharacterCasing = CharacterCasing.Normal;
-            cancelTxt.Depth = 0;
-            cancelTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
-            cancelTxt.HideSelection = true;
-            cancelTxt.LeadingIcon = null;
-            cancelTxt.Location = new Point(271, 341);
-            cancelTxt.MaxLength = 32767;
-            cancelTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
-            cancelTxt.Name = "cancelTxt";
-            cancelTxt.PasswordChar = '\0';
-            cancelTxt.PrefixSuffixText = null;
-            cancelTxt.ReadOnly = true;
-            cancelTxt.RightToLeft = RightToLeft.No;
-            cancelTxt.SelectedText = "";
-            cancelTxt.SelectionLength = 0;
-            cancelTxt.SelectionStart = 0;
-            cancelTxt.ShortcutsEnabled = true;
-            cancelTxt.Size = new Size(136, 48);
-            cancelTxt.TabIndex = 12;
-            cancelTxt.TabStop = false;
-            cancelTxt.TextAlign = HorizontalAlignment.Left;
-            cancelTxt.TrailingIcon = null;
-            cancelTxt.UseSystemPasswordChar = false;
-            // 
-            // materialLabel6
-            // 
-            materialLabel6.Depth = 0;
-            materialLabel6.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel6.Location = new Point(136, 341);
-            materialLabel6.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
-            materialLabel6.Name = "materialLabel6";
-            materialLabel6.Size = new Size(100, 48);
-            materialLabel6.TabIndex = 11;
-            materialLabel6.Text = "Cancelled";
-            materialLabel6.TextAlign = ContentAlignment.MiddleLeft;
-            // 
             // materialCard1
             // 
             materialCard1.BackColor = Color.FromArgb(255, 255, 255);
-            materialCard1.Controls.Add(pendTxt);
-            materialCard1.Controls.Add(materialLabel13);
+            materialCard1.Controls.Add(appointmentList);
             materialCard1.Controls.Add(numOfPatientsTxt);
             materialCard1.Controls.Add(materialLabel1);
-            materialCard1.Controls.Add(cancelTxt);
             materialCard1.Controls.Add(materialLabel2);
-            materialCard1.Controls.Add(materialLabel6);
             materialCard1.Controls.Add(numOfAppsTxt);
-            materialCard1.Controls.Add(reschTxt);
-            materialCard1.Controls.Add(materialLabel3);
-            materialCard1.Controls.Add(materialLabel5);
-            materialCard1.Controls.Add(attTxt);
-            materialCard1.Controls.Add(missTxt);
-            materialCard1.Controls.Add(materialLabel4);
             materialCard1.Depth = 0;
             materialCard1.ForeColor = Color.FromArgb(222, 0, 0, 0);
             materialCard1.Location = new Point(17, 246);
@@ -340,54 +168,42 @@
             materialCard1.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialCard1.Name = "materialCard1";
             materialCard1.Padding = new Padding(14);
-            materialCard1.Size = new Size(472, 417);
+            materialCard1.Size = new Size(407, 417);
             materialCard1.TabIndex = 14;
             // 
-            // pendTxt
+            // appointmentList
             // 
-            pendTxt.AnimateReadOnly = false;
-            pendTxt.AutoCompleteMode = AutoCompleteMode.None;
-            pendTxt.AutoCompleteSource = AutoCompleteSource.None;
-            pendTxt.BackgroundImageLayout = ImageLayout.None;
-            pendTxt.CharacterCasing = CharacterCasing.Normal;
-            pendTxt.Depth = 0;
-            pendTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
-            pendTxt.HideSelection = true;
-            pendTxt.LeadingIcon = null;
-            pendTxt.Location = new Point(271, 233);
-            pendTxt.MaxLength = 32767;
-            pendTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
-            pendTxt.Name = "pendTxt";
-            pendTxt.PasswordChar = '\0';
-            pendTxt.PrefixSuffixText = null;
-            pendTxt.ReadOnly = true;
-            pendTxt.RightToLeft = RightToLeft.No;
-            pendTxt.SelectedText = "";
-            pendTxt.SelectionLength = 0;
-            pendTxt.SelectionStart = 0;
-            pendTxt.ShortcutsEnabled = true;
-            pendTxt.Size = new Size(136, 48);
-            pendTxt.TabIndex = 15;
-            pendTxt.TabStop = false;
-            pendTxt.TextAlign = HorizontalAlignment.Left;
-            pendTxt.TrailingIcon = null;
-            pendTxt.UseSystemPasswordChar = false;
+            appointmentList.AutoSizeTable = false;
+            appointmentList.BackColor = Color.FromArgb(255, 255, 255);
+            appointmentList.BorderStyle = BorderStyle.None;
+            appointmentList.Columns.AddRange(new ColumnHeader[] { columnHeader3, columnHeader4 });
+            appointmentList.Depth = 0;
+            appointmentList.FullRowSelect = true;
+            appointmentList.Location = new Point(27, 138);
+            appointmentList.MinimumSize = new Size(200, 100);
+            appointmentList.MouseLocation = new Point(-1, -1);
+            appointmentList.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
+            appointmentList.Name = "appointmentList";
+            appointmentList.OwnerDraw = true;
+            appointmentList.Size = new Size(351, 262);
+            appointmentList.TabIndex = 11;
+            appointmentList.UseCompatibleStateImageBehavior = false;
+            appointmentList.View = View.Details;
             // 
-            // materialLabel13
+            // columnHeader3
             // 
-            materialLabel13.Depth = 0;
-            materialLabel13.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel13.Location = new Point(136, 233);
-            materialLabel13.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
-            materialLabel13.Name = "materialLabel13";
-            materialLabel13.Size = new Size(100, 48);
-            materialLabel13.TabIndex = 14;
-            materialLabel13.Text = "Pending";
-            materialLabel13.TextAlign = ContentAlignment.MiddleLeft;
+            columnHeader3.Text = "Status";
+            columnHeader3.Width = 120;
+            // 
+            // columnHeader4
+            // 
+            columnHeader4.Text = "Count";
+            columnHeader4.Width = 230;
             // 
             // materialCard2
             // 
             materialCard2.BackColor = Color.FromArgb(255, 255, 255);
+            materialCard2.Controls.Add(methodList);
             materialCard2.Controls.Add(numOfBillsTxt);
             materialCard2.Controls.Add(materialLabel9);
             materialCard2.Controls.Add(materialLabel10);
@@ -398,13 +214,47 @@
             materialCard2.Controls.Add(materialLabel14);
             materialCard2.Depth = 0;
             materialCard2.ForeColor = Color.FromArgb(222, 0, 0, 0);
-            materialCard2.Location = new Point(517, 246);
+            materialCard2.Location = new Point(452, 246);
             materialCard2.Margin = new Padding(14);
             materialCard2.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialCard2.Name = "materialCard2";
             materialCard2.Padding = new Padding(14);
-            materialCard2.Size = new Size(400, 250);
+            materialCard2.Size = new Size(400, 417);
             materialCard2.TabIndex = 15;
+            // 
+            // methodList
+            // 
+            methodList.AutoSizeTable = false;
+            methodList.BackColor = Color.FromArgb(255, 255, 255);
+            methodList.BorderStyle = BorderStyle.None;
+            methodList.Columns.AddRange(new ColumnHeader[] { columnHeader1, columnHeader5, columnHeader2 });
+            methodList.Depth = 0;
+            methodList.FullRowSelect = true;
+            methodList.Location = new Point(27, 243);
+            methodList.MinimumSize = new Size(200, 100);
+            methodList.MouseLocation = new Point(-1, -1);
+            methodList.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
+            methodList.Name = "methodList";
+            methodList.OwnerDraw = true;
+            methodList.Size = new Size(351, 157);
+            methodList.TabIndex = 10;
+            methodList.UseCompatibleStateImageBehavior = false;
+            methodList.View = View.Details;
+            // 
+            // columnHeader1
+            // 
+            columnHeader1.Text = "Method";
+            columnHeader1.Width = 110;
+            // 
+            // columnHeader5
+            // 
+            columnHeader5.Text = "Count";
+            columnHeader5.Width = 100;
+            // 
+            // columnHeader2
+            // 
+            columnHeader2.Text = "Amount";
+            columnHeader2.Width = 140;
             // 
             // numOfBillsTxt
             // 
@@ -582,7 +432,7 @@
             dateFromPkr.Format = DateTimePickerFormat.Custom;
             dateFromPkr.Location = new Point(136, 25);
             dateFromPkr.Name = "dateFromPkr";
-            dateFromPkr.Size = new Size(271, 27);
+            dateFromPkr.Size = new Size(206, 27);
             dateFromPkr.TabIndex = 16;
             // 
             // materialCard3
@@ -601,7 +451,7 @@
             materialCard3.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialCard3.Name = "materialCard3";
             materialCard3.Padding = new Padding(14);
-            materialCard3.Size = new Size(900, 140);
+            materialCard3.Size = new Size(835, 140);
             materialCard3.TabIndex = 16;
             // 
             // allTimeChk
@@ -655,7 +505,7 @@
             dateToPkr.Format = DateTimePickerFormat.Custom;
             dateToPkr.Location = new Point(136, 79);
             dateToPkr.Name = "dateToPkr";
-            dateToPkr.Size = new Size(271, 27);
+            dateToPkr.Size = new Size(206, 27);
             dateToPkr.TabIndex = 17;
             // 
             // materialLabel17
@@ -682,13 +532,133 @@
             materialLabel18.Text = "To Date";
             materialLabel18.TextAlign = ContentAlignment.MiddleLeft;
             // 
+            // materialCheckBox1
+            // 
+            materialCheckBox1.AutoSize = true;
+            materialCheckBox1.Depth = 0;
+            materialCheckBox1.Location = new Point(0, 0);
+            materialCheckBox1.Margin = new Padding(0);
+            materialCheckBox1.MouseLocation = new Point(-1, -1);
+            materialCheckBox1.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialCheckBox1.Name = "materialCheckBox1";
+            materialCheckBox1.ReadOnly = false;
+            materialCheckBox1.Ripple = true;
+            materialCheckBox1.Size = new Size(10, 10);
+            materialCheckBox1.TabIndex = 0;
+            materialCheckBox1.Text = "materialCheckBox1";
+            materialCheckBox1.UseAccentColor = false;
+            materialCheckBox1.UseVisualStyleBackColor = true;
+            // 
+            // materialCheckBox2
+            // 
+            materialCheckBox2.AutoSize = true;
+            materialCheckBox2.Depth = 0;
+            materialCheckBox2.Location = new Point(0, 0);
+            materialCheckBox2.Margin = new Padding(0);
+            materialCheckBox2.MouseLocation = new Point(-1, -1);
+            materialCheckBox2.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialCheckBox2.Name = "materialCheckBox2";
+            materialCheckBox2.ReadOnly = false;
+            materialCheckBox2.Ripple = true;
+            materialCheckBox2.Size = new Size(10, 10);
+            materialCheckBox2.TabIndex = 0;
+            materialCheckBox2.Text = "materialCheckBox2";
+            materialCheckBox2.UseAccentColor = false;
+            materialCheckBox2.UseVisualStyleBackColor = true;
+            // 
+            // materialCheckBox3
+            // 
+            materialCheckBox3.AutoSize = true;
+            materialCheckBox3.Depth = 0;
+            materialCheckBox3.Location = new Point(0, 0);
+            materialCheckBox3.Margin = new Padding(0);
+            materialCheckBox3.MouseLocation = new Point(-1, -1);
+            materialCheckBox3.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialCheckBox3.Name = "materialCheckBox3";
+            materialCheckBox3.ReadOnly = false;
+            materialCheckBox3.Ripple = true;
+            materialCheckBox3.Size = new Size(10, 10);
+            materialCheckBox3.TabIndex = 0;
+            materialCheckBox3.Text = "materialCheckBox3";
+            materialCheckBox3.UseAccentColor = false;
+            materialCheckBox3.UseVisualStyleBackColor = true;
+            // 
+            // materialCheckBox4
+            // 
+            materialCheckBox4.AutoSize = true;
+            materialCheckBox4.Depth = 0;
+            materialCheckBox4.Location = new Point(0, 0);
+            materialCheckBox4.Margin = new Padding(0);
+            materialCheckBox4.MouseLocation = new Point(-1, -1);
+            materialCheckBox4.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialCheckBox4.Name = "materialCheckBox4";
+            materialCheckBox4.ReadOnly = false;
+            materialCheckBox4.Ripple = true;
+            materialCheckBox4.Size = new Size(10, 10);
+            materialCheckBox4.TabIndex = 0;
+            materialCheckBox4.Text = "materialCheckBox4";
+            materialCheckBox4.UseAccentColor = false;
+            materialCheckBox4.UseVisualStyleBackColor = true;
+            // 
+            // materialCheckBox5
+            // 
+            materialCheckBox5.AutoSize = true;
+            materialCheckBox5.Depth = 0;
+            materialCheckBox5.Location = new Point(0, 0);
+            materialCheckBox5.Margin = new Padding(0);
+            materialCheckBox5.MouseLocation = new Point(-1, -1);
+            materialCheckBox5.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialCheckBox5.Name = "materialCheckBox5";
+            materialCheckBox5.ReadOnly = false;
+            materialCheckBox5.Ripple = true;
+            materialCheckBox5.Size = new Size(10, 10);
+            materialCheckBox5.TabIndex = 0;
+            materialCheckBox5.Text = "materialCheckBox5";
+            materialCheckBox5.UseAccentColor = false;
+            materialCheckBox5.UseVisualStyleBackColor = true;
+            // 
+            // materialCheckBox6
+            // 
+            materialCheckBox6.AutoSize = true;
+            materialCheckBox6.Depth = 0;
+            materialCheckBox6.Location = new Point(0, 0);
+            materialCheckBox6.Margin = new Padding(0);
+            materialCheckBox6.MouseLocation = new Point(-1, -1);
+            materialCheckBox6.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialCheckBox6.Name = "materialCheckBox6";
+            materialCheckBox6.ReadOnly = false;
+            materialCheckBox6.Ripple = true;
+            materialCheckBox6.Size = new Size(10, 10);
+            materialCheckBox6.TabIndex = 0;
+            materialCheckBox6.Text = "materialCheckBox6";
+            materialCheckBox6.UseAccentColor = false;
+            materialCheckBox6.UseVisualStyleBackColor = true;
+            // 
+            // materialCheckBox7
+            // 
+            materialCheckBox7.AutoSize = true;
+            materialCheckBox7.Depth = 0;
+            materialCheckBox7.Location = new Point(0, 0);
+            materialCheckBox7.Margin = new Padding(0);
+            materialCheckBox7.MouseLocation = new Point(-1, -1);
+            materialCheckBox7.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            materialCheckBox7.Name = "materialCheckBox7";
+            materialCheckBox7.ReadOnly = false;
+            materialCheckBox7.Ripple = true;
+            materialCheckBox7.Size = new Size(10, 10);
+            materialCheckBox7.TabIndex = 0;
+            materialCheckBox7.Text = "materialCheckBox7";
+            materialCheckBox7.UseAccentColor = false;
+            materialCheckBox7.UseVisualStyleBackColor = true;
+            // 
             // StatsForm
             // 
             AutoScaleMode = AutoScaleMode.None;
-            ClientSize = new Size(941, 695);
+            ClientSize = new Size(875, 688);
             Controls.Add(materialCard3);
             Controls.Add(materialCard2);
             Controls.Add(materialCard1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "StatsForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Stats";
@@ -706,14 +676,6 @@
         private ReaLTaiizor.Controls.MaterialTextBoxEdit numOfPatientsTxt;
         private ReaLTaiizor.Controls.MaterialTextBoxEdit numOfAppsTxt;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel2;
-        private ReaLTaiizor.Controls.MaterialTextBoxEdit attTxt;
-        private ReaLTaiizor.Controls.MaterialLabel materialLabel3;
-        private ReaLTaiizor.Controls.MaterialTextBoxEdit missTxt;
-        private ReaLTaiizor.Controls.MaterialLabel materialLabel4;
-        private ReaLTaiizor.Controls.MaterialTextBoxEdit reschTxt;
-        private ReaLTaiizor.Controls.MaterialLabel materialLabel5;
-        private ReaLTaiizor.Controls.MaterialTextBoxEdit cancelTxt;
-        private ReaLTaiizor.Controls.MaterialLabel materialLabel6;
         private ReaLTaiizor.Controls.MaterialCard materialCard1;
         private ReaLTaiizor.Controls.MaterialCard materialCard2;
         private ReaLTaiizor.Controls.MaterialTextBoxEdit numOfBillsTxt;
@@ -724,8 +686,6 @@
         private ReaLTaiizor.Controls.MaterialTextBoxEdit paidTxt;
         private ReaLTaiizor.Controls.MaterialTextBoxEdit remainTxt;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel14;
-        private ReaLTaiizor.Controls.MaterialTextBoxEdit pendTxt;
-        private ReaLTaiizor.Controls.MaterialLabel materialLabel13;
         private DateTimePicker dateFromPkr;
         private ReaLTaiizor.Controls.MaterialCard materialCard3;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel17;
@@ -733,5 +693,19 @@
         private DateTimePicker dateToPkr;
         private ReaLTaiizor.Controls.MaterialButton showBtn;
         private ReaLTaiizor.Controls.MaterialCheckBox allTimeChk;
+        private ReaLTaiizor.Controls.MaterialCheckBox materialCheckBox1;
+        private ReaLTaiizor.Controls.MaterialCheckBox materialCheckBox2;
+        private ReaLTaiizor.Controls.MaterialCheckBox materialCheckBox3;
+        private ReaLTaiizor.Controls.MaterialCheckBox materialCheckBox4;
+        private ReaLTaiizor.Controls.MaterialCheckBox materialCheckBox5;
+        private ReaLTaiizor.Controls.MaterialCheckBox materialCheckBox6;
+        private ReaLTaiizor.Controls.MaterialCheckBox materialCheckBox7;
+        private ReaLTaiizor.Controls.MaterialListView methodList;
+        private ColumnHeader columnHeader1;
+        private ColumnHeader columnHeader2;
+        private ReaLTaiizor.Controls.MaterialListView appointmentList;
+        private ColumnHeader columnHeader3;
+        private ColumnHeader columnHeader4;
+        private ColumnHeader columnHeader5;
     }
 }
