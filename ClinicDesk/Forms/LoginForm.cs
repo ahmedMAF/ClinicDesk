@@ -7,11 +7,17 @@ namespace ClinicDesk.Forms;
 
 public partial class LoginForm : MaterialForm
 {
+    private bool _loginDone;
+
     public LoginForm()
     {
         InitializeComponent();
 
-        FormClosed += (s, e) => Application.Exit();
+        FormClosed += (s, e) =>
+        {
+            if (!_loginDone)
+                Application.Exit();
+        };
     }
 
     private async void loginBtn_ClickAsync(object sender, EventArgs e)
@@ -39,6 +45,7 @@ public partial class LoginForm : MaterialForm
 
         AppContext.ShowForm<MainForm>(form => form.SetData(user));
 
+        _loginDone = true;
         Close();
     }
 
