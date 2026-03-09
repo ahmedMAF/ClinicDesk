@@ -77,7 +77,7 @@ public partial class AppointmentRequestsForm : MaterialForm
             if (Settings.Instance.IsDental)
                 TeethHelper.MarkMissingTeethByAge(patient.Teeth!, patient.AgeYears);
 
-            ClinicDb.SafeExecNonQueryAsync<Patient>(table => table.Add(patient));
+            ClinicDb.SafeExecNonQuery<Patient>(table => table.Add(patient));
             await ClinicDb.Instance.SaveChangesAsync();
         }
 

@@ -95,7 +95,7 @@ public partial class NewAppointmentForm : MaterialForm
         else if (_action == AppointmentAction.Reschedule)
             appointment.OriginalAppointmentId = _appointment!.OriginalAppointmentId;
 
-        ClinicDb.SafeExecNonQueryAsync<Appointment>(table => table.Add(appointment));
+        ClinicDb.SafeExecNonQuery<Appointment>(table => table.Add(appointment));
         await ClinicDb.Instance.SaveChangesAsync();
         Close();
     }

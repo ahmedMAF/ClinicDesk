@@ -60,7 +60,7 @@ public partial class AppointmentForm : MaterialForm
             Treatment = treatmentTxt.Text
         };
 
-        ClinicDb.SafeExecNonQueryAsync<Visit>(table => table.Add(visit));
+        ClinicDb.SafeExecNonQuery<Visit>(table => table.Add(visit));
 
         if (decimal.TryParse(billTxt.Text, out decimal bill) && bill > 0)
         {
@@ -70,7 +70,7 @@ public partial class AppointmentForm : MaterialForm
                 TotalAmount = bill
             };
 
-            ClinicDb.SafeExecNonQueryAsync<Invoice>(table => table.Add(invoice));
+            ClinicDb.SafeExecNonQuery<Invoice>(table => table.Add(invoice));
         }
 
         _appointment.Visit = visit;

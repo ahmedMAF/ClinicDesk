@@ -193,7 +193,7 @@ public class ClinicDb : DbContext
         return default;
     }
 
-    public static void SafeExecNonQueryAsync<TEntity>(Action<DbSet<TEntity>> queryFunc) where TEntity : class
+    public static void SafeExecNonQuery<TEntity>(Action<DbSet<TEntity>> queryFunc) where TEntity : class
     {
         try
         {

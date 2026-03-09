@@ -1,6 +1,5 @@
 ﻿using ClinicDesk.Database;
 using ClinicDesk.Database.Models;
-using Microsoft.EntityFrameworkCore;
 using ClinicDesk.Utilities;
 using ReaLTaiizor.Forms;
 
@@ -57,6 +56,8 @@ public partial class InstallForm : MaterialForm
 
             string name = nameTxt.Text;
             string email = emailTxt.Text;
+            string username = usernameTxt.Text;
+            string password = passwordTxt.Text;
             bool isServer = dbServer is "127.0.0.1" or "localhost";
 
             AccountType type = (AccountType)accountCbo.SelectedIndex;
@@ -119,6 +120,12 @@ public partial class InstallForm : MaterialForm
                 }
             }
 
+            if (string.IsNullOrWhiteSpace(password) || string.IsNullOrWhiteSpace(username))
+            {
+                MessageBox.Show("Please set a username and a password.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             // TestConnection is synchronous and can block the UI — run it on the thread pool
             bool canConnect = await Task.Run(() => ClinicDb.TestConnection(dbServer, dbPort, database, dbUser, dbPassword));
             
@@ -133,6 +140,17 @@ public partial class InstallForm : MaterialForm
                 MessageBox.Show("Failed to connect to the API. Check the URL.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
+
+            ClinicDb.SafeExecNonQuery<User>(table => table.Add(new User
+            {
+                Name = name,
+                Email = email,
+                Role = (UserRole)((int)type - 1),
+                Username = username,
+                Password = passwordTxt.Text
+            }));
+
+            await ClinicDb.Instance.SaveChangesAsync();
 
             Settings settings = Settings.Instance;
 
