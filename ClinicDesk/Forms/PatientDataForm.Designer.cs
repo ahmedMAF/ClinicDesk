@@ -1,4 +1,6 @@
-﻿namespace ClinicDesk.Forms
+﻿using ClinicDesk.Utilities;
+
+namespace ClinicDesk.Forms
 {
     partial class PatientDataForm
     {
@@ -122,6 +124,7 @@
             phoneTxt.TextAlign = HorizontalAlignment.Left;
             phoneTxt.TrailingIcon = null;
             phoneTxt.UseSystemPasswordChar = false;
+            phoneTxt.KeyPress += Utils.NumTxt_KeyPress;
             phoneTxt.TextChanged += ClearError;
             // 
             // materialLabel8

@@ -46,7 +46,7 @@
             appointmentsGrd.Location = new Point(12, 292);
             appointmentsGrd.Name = "appointmentsGrd";
             appointmentsGrd.RowHeadersWidth = 51;
-            appointmentsGrd.Size = new Size(912, 397);
+            appointmentsGrd.Size = new Size(912, 403);
             appointmentsGrd.TabIndex = 5;
             // 
             // settingsBtn

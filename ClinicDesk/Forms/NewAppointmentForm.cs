@@ -2,6 +2,7 @@
 using ClinicDesk.Database.Models;
 using ReaLTaiizor.Forms;
 using ClinicDesk.ControlHelpers;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicDesk.Forms;
 
@@ -52,8 +53,8 @@ public partial class NewAppointmentForm : MaterialForm
             Date = datePkr.Value.Date + timePkr.Value.TimeOfDay
         };
 
-        bool confict = ClinicDb.Instance.Appointments
-            .Any(a => a.Status == AppointmentStatus.Pending && appointment.Date >= a.Date.AddMinutes(-11) && appointment.Date <= a.Date.AddMinutes(10));
+        bool confict = await ClinicDb.SafeExecAsync<Appointment, bool>(table => table
+            .AnyAsync(a => a.Status == AppointmentStatus.Pending && appointment.Date >= a.Date.AddMinutes(-11) && appointment.Date <= a.Date.AddMinutes(10)));
 
         if (confict && MessageBox.Show($"There is another pending appointment in this time.{Environment.NewLine}Are you sure you want to continue?", "Conflict", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
             return;
@@ -63,7 +64,7 @@ public partial class NewAppointmentForm : MaterialForm
         else if (_action == AppointmentAction.Reschedule)
             appointment.OriginalAppointmentId = _appointment!.OriginalAppointmentId;
 
-        ClinicDb.Instance.Appointments.Add(appointment);
+        ClinicDb.SafeExecNonQueryAsync<Appointment>(table => table.Add(appointment));
         await ClinicDb.Instance.SaveChangesAsync();
         Close();
     }

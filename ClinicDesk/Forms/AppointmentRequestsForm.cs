@@ -58,9 +58,9 @@ public partial class AppointmentRequestsForm : MaterialForm
     {
         AppointmentRequest request = AppointmentApi.Requests[rowIndex];
 
-        Patient? patient = await ClinicDb.Instance.Patients
+        Patient? patient = await ClinicDb.SafeExecAsync<Patient, Patient?>(table => table
             .AsNoTracking()
-            .FirstOrDefaultAsync(p => p.Name.Contains(request.Name) && (p.Phone == null || p.Phone.Contains(request.Phone)));
+            .FirstOrDefaultAsync(p => p.Name.Contains(request.Name) && (p.Phone == null || p.Phone.Contains(request.Phone))));
 
         if (patient == null)
         {
@@ -77,7 +77,7 @@ public partial class AppointmentRequestsForm : MaterialForm
             if (Settings.Instance.IsDental)
                 TeethHelper.MarkMissingTeethByAge(patient.Teeth!, patient.AgeYears);
 
-            ClinicDb.Instance.Patients.Add(patient);
+            ClinicDb.SafeExecNonQueryAsync<Patient>(table => table.Add(patient));
             await ClinicDb.Instance.SaveChangesAsync();
         }
 

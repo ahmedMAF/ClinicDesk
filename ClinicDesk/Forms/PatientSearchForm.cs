@@ -41,10 +41,15 @@ public partial class PatientSearchForm : MaterialForm
             return;
         }
 
-        _patients = await ClinicDb.Instance.Patients
+        List<Patient>? patients = await ClinicDb.SafeExecAsync<Patient, List<Patient>>(table => table
             .Include(p => p.Visits)
             .Where(p => p.Name.Contains(nameTxt.Text))
-            .ToListAsync();
+            .ToListAsync());
+
+        if (patients == null)
+            return;
+
+        _patients = patients;
 
         CheckSearchResult();
     }
@@ -57,9 +62,14 @@ public partial class PatientSearchForm : MaterialForm
             return;
         }
 
-        _patients = await ClinicDb.Instance.Patients
+        List<Patient>? patients = await ClinicDb.SafeExecAsync<Patient, List<Patient>>(table => table
             .Where(p => p.Phone != null && p.Phone.Contains(phoneTxt.Text))
-            .ToListAsync();
+            .ToListAsync());
+
+        if (patients == null)
+            return;
+
+        _patients = patients;
 
         CheckSearchResult();
     }

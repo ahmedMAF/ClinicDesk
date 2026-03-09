@@ -145,6 +145,7 @@ public partial class InstallForm : MaterialForm
             settings.BackupDays = daysSld.Value;
             settings.BackupPath = backupTxt.Text;
             settings.IsDental = isDentalSwt.Checked;
+            settings.UseConnectionCheck = useConnChk.Checked;
             settings.LastBackup = DateTime.Now.Date;
 
             Settings.SaveSettings();

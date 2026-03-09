@@ -1,36 +1,65 @@
 ﻿using ClinicDesk.ControlHelpers;
 using ClinicDesk.Database;
 using ClinicDesk.Database.Models;
-using Lidgren.Network;
 using ReaLTaiizor.Controls;
 using ReaLTaiizor.Forms;
-using System.Data;
 
 namespace ClinicDesk.Forms;
 
-public partial class SecretaryForm : MaterialForm
+public partial class MainForm : MaterialForm
 {
     private readonly AppointmentsGrid _grdHelper;
     private readonly SemaphoreSlim _refreshLock = new(1, 1);
 
-    public SecretaryForm()
+    public MainForm()
     {
         InitializeComponent();
 
-        _grdHelper = new AppointmentsGrid(appointmentsGrd, AccountType.Secretary);
+        Settings settings = Settings.Instance;
 
-        requestsBtn.Visible = Settings.Instance.UseApi;
+        _grdHelper = new AppointmentsGrid(appointmentsGrd, settings.AccountType);
+
+        bool notDoctor = settings.AccountType != AccountType.Doctor;
+        bool useApi = settings.UseApi && notDoctor;
+
+        requestsBtn.Visible = useApi;
+        newAppointmentBtn.Visible = notDoctor;
+        newPatientBtn.Visible = notDoctor;
+        billingBtn.Visible = notDoctor;
+
+        bool showConnectionIndicator = settings.UseConnectionCheck && settings.AccountType != AccountType.AllInOne;
+        statusStrip.Visible = showConnectionIndicator;
+
+        if (!showConnectionIndicator)
+        {
+            
+        }
+
+        if (!notDoctor)
+        {
+            searchBtn.Location = new Point(701, 73);
+            statsBtn.Location = new Point(701, 130);
+        }
 
         FormClosed += (s, e) =>
         {
-            AppointmentApi.NewRequestsRecieved -= NewRequestsRecieved;
+            if (showConnectionIndicator)
+                ClinicDb.ConnectionStateChanged -= ConnectionStateChanged;
+
+            if (useApi)
+                AppointmentApi.NewRequestsRecieved -= NewRequestsRecieved;
+
             Application.Exit();
         };
 
-        AppointmentApi.NewRequestsRecieved += NewRequestsRecieved;
+        if (showConnectionIndicator)
+            ClinicDb.ConnectionStateChanged += ConnectionStateChanged;
+
+        if (useApi)
+            AppointmentApi.NewRequestsRecieved += NewRequestsRecieved;
     }
 
-    private async void SecretaryForm_Load(object sender, EventArgs e)
+    private async void MainForm_Load(object sender, EventArgs e)
     {
         await _grdHelper.RefreshList();
     }
@@ -72,56 +101,25 @@ public partial class SecretaryForm : MaterialForm
         AppContext.ShowDialog<BillingForm>(form => form.SetData(patient));
     }
 
-    private async void RefreshUI()
+    private void ConnectionStateChanged(bool isAvailable)
     {
         if (InvokeRequired)
         {
-            BeginInvoke(RefreshUI);
+            BeginInvoke(() => ConnectionStateChanged(isAvailable));
             return;
         }
 
-        await _grdHelper.RefreshList();
-    }
-
-    /*private void LanConnectionStateChanged(NetPeerStatus status)
-    {
-        if (InvokeRequired)
+        if (isAvailable)
         {
-            BeginInvoke(() => LanConnectionStateChanged(status));
-            return;
-        }
-
-        if (status == NetPeerStatus.Running)
-        {
-            lanConStatusLbl.Image = Properties.Resources.connected;
-            lanConStatusLbl.Text = "LAN: Connected";
+            conStatusLbl.Image = Properties.Resources.connected;
+            conStatusLbl.Text = "Connected";
         }
         else
         {
-            lanConStatusLbl.Image = Properties.Resources.disconnected;
-            lanConStatusLbl.Text = "LAN: Disconnected";
+            conStatusLbl.Image = Properties.Resources.disconnected;
+            conStatusLbl.Text = "Disconnected";
         }
     }
-
-    private void DbConnectionStateChanged(object sender, StateChangeEventArgs e)
-    {
-        if (InvokeRequired)
-        {
-            BeginInvoke(() => DbConnectionStateChanged(sender, e));
-            return;
-        }
-
-        if (e.CurrentState == ConnectionState.Open)
-        {
-            dbConStatusLbl.Image = Properties.Resources.connected;
-            dbConStatusLbl.Text = "DB: Connected";
-        }
-        else
-        {
-            dbConStatusLbl.Image = Properties.Resources.disconnected;
-            dbConStatusLbl.Text = "DB: Disconnected";
-        }
-    }*/
 
     private void NewRequestsRecieved()
     {

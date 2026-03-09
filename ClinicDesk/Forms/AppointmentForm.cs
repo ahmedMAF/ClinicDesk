@@ -60,17 +60,17 @@ public partial class AppointmentForm : MaterialForm
             Treatment = treatmentTxt.Text
         };
 
-        ClinicDb.Instance.Visits.Add(visit);
+        ClinicDb.SafeExecNonQueryAsync<Visit>(table => table.Add(visit));
 
         if (decimal.TryParse(billTxt.Text, out decimal bill) && bill > 0)
         {
             Invoice invoice = new()
             {
-                Visit = visit,
+                Patient = _patient,
                 TotalAmount = bill
             };
 
-            ClinicDb.Instance.Invoices.Add(invoice);
+            ClinicDb.SafeExecNonQueryAsync<Invoice>(table => table.Add(invoice));
         }
 
         _appointment.Visit = visit;

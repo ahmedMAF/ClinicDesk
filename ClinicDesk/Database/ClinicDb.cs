@@ -1,10 +1,13 @@
 ﻿using ClinicDesk.Database.Models;
-using ClinicDesk.Net;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using System;
+using System.Data;
+using System.Data.Common;
 using System.Diagnostics;
 using System.ServiceProcess;
 using System.Text.Json;
+using Timer = System.Timers.Timer;
 
 namespace ClinicDesk.Database;
 
@@ -16,21 +19,21 @@ public class ClinicDb : DbContext
 
     private static DbServerType _dbServerType;
     private static bool _wasMySqlRunning;
-
-    private static Server? _server;
+    private static Timer _timer = null!;
+    private static bool _lastStatus;
 
     public static bool IsServerInstalled =>_dbServerType != DbServerType.None;
 
     public static ClinicDb Instance { get; private set; } = null!;
     public static bool IsRunning { get; private set; }
 
-    public static Client? Client { get; private set; }
-
     public DbSet<Patient> Patients { get; set; }
     public DbSet<Appointment> Appointments { get; set; }
     public DbSet<Visit> Visits { get; set; }
     public DbSet<Invoice> Invoices { get; set; }
     public DbSet<Payment> Payments { get; set; }
+
+    public static event Action<bool>? ConnectionStateChanged;
 
     internal ClinicDb(DbContextOptions<ClinicDb> options) : base(options)
     {
@@ -59,22 +62,46 @@ public class ClinicDb : DbContext
         while (result == DialogResult.Retry);
 
         if (result == DialogResult.Cancel)
-        {
             Application.Exit();
-            return;
-        }
-            
-        if (Settings.Instance.AccountType == AccountType.AllInOne)
-            return;
 
-        if (Settings.Instance.IsServer)
+        if (Settings.Instance.UseConnectionCheck)
         {
-            _server = new Server();
-            _ = _server.StartAsync();
+            _timer = new Timer
+            {
+                AutoReset = true,
+                Interval = 2000
+            };
+
+            _timer.Elapsed += async (_, _) => await CheckStatusAsync();
+            _timer.Start();
+        }
+    }
+
+    private static async Task CheckStatusAsync()
+    {
+        bool isAvailable;
+
+        try
+        {
+            Instance.Database.SetCommandTimeout(1);
+            isAvailable = await Instance.Database.CanConnectAsync();
+            Instance.Database.SetCommandTimeout(null);
+        }
+        catch
+        {
+            isAvailable = false;
         }
 
-        Client = new Client();
-        await Client.StartAsync();
+        if (isAvailable != _lastStatus)
+        {
+            _lastStatus = isAvailable;
+            ConnectionStateChanged?.Invoke(isAvailable);
+
+            if (isAvailable)
+                AppContext.HideConnectionLostDialog();
+            else
+                AppContext.ShowConnectionLostDialog();
+        }
     }
 
     internal static void GetDbServerType()
@@ -120,7 +147,8 @@ public class ClinicDb : DbContext
 
         try
         {
-            optionsBuilder.UseMySql(conn, ServerVersion.AutoDetect(conn));
+            optionsBuilder.UseMySql(conn, new MySqlServerVersion(new Version(8, 0)));
+
             db = new ClinicDb(optionsBuilder.Options);
 
             return true;
@@ -131,7 +159,56 @@ public class ClinicDb : DbContext
             return false;
         }
     }
-    
+
+    public static async Task<TResult?> SafeExecAsync<TEntity, TResult>(Func<DbSet<TEntity>, Task<TResult>> queryFunc) where TEntity : class
+    {
+        try
+        {
+            return await queryFunc(Instance.Set<TEntity>());
+        }
+        catch (DbUpdateException dbEx)
+        {
+            // Handle EF-specific errors
+            Console.WriteLine($"Database update error: {dbEx.Message}");
+        }
+        catch (DbException sqlEx)
+        {
+            // Handle SQL errors
+            Console.WriteLine($"SQL error: {sqlEx.Message}");
+        }
+        catch (Exception ex)
+        {
+            // Handle any other error
+            Console.WriteLine($"Unexpected error: {ex.Message}");
+        }
+
+        return default;
+    }
+
+    public static void SafeExecNonQueryAsync<TEntity>(Action<DbSet<TEntity>> queryFunc) where TEntity : class
+    {
+        try
+        {
+            queryFunc(Instance.Set<TEntity>());
+        }
+        catch (DbUpdateException dbEx)
+        {
+            // Handle EF-specific errors
+            Console.WriteLine($"Database update error: {dbEx.Message}");
+        }
+        catch (DbException sqlEx)
+        {
+            // Handle SQL errors
+            Console.WriteLine($"SQL error: {sqlEx.Message}");
+        }
+        catch (Exception ex)
+        {
+            // Handle any other error
+            Console.WriteLine($"Unexpected error: {ex.Message}");
+        }
+    }
+
+
     private static void RunDatabaseService()
     {
         if (_dbServerType == DbServerType.XAMPP)
@@ -178,7 +255,7 @@ public class ClinicDb : DbContext
     public static void StopDatabaseService()
     {
         // We should not stop MySQL if it was running before we started.
-        if (_wasMySqlRunning)
+        if (_wasMySqlRunning || _dbServerType == DbServerType.None)
             return;
 
         if (_dbServerType == DbServerType.XAMPP)
@@ -296,35 +373,9 @@ public class ClinicDb : DbContext
             .HasColumnType("json");
     }
 
-    public override int SaveChanges()
+    internal static void Shutdown()
     {
-        int result = 0;
-
-        try
-        {
-            result = base.SaveChanges();
-            _ = Client?.SendAsync();
-        }
-        catch
-        { }
-
-        return result;
-    }
-
-    public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
-    {
-        int result = 0;
-
-        try
-        {
-            result = await base.SaveChangesAsync(cancellationToken);
-
-            if (Client != null)
-                await Client.SendAsync();
-        }
-        catch
-        { }
-
-        return result;
+        _timer?.Stop();
+        StopDatabaseService();
     }
 }

@@ -55,6 +55,7 @@
             materialLabel13 = new ReaLTaiizor.Controls.MaterialLabel();
             backupTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             materialCard2 = new ReaLTaiizor.Controls.MaterialCard();
+            useConnChk = new ReaLTaiizor.Controls.MaterialSwitch();
             apiUrltxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             materialLabel14 = new ReaLTaiizor.Controls.MaterialLabel();
             apiSwt = new ReaLTaiizor.Controls.MaterialSwitch();
@@ -80,7 +81,7 @@
             installBtn.HighEmphasis = true;
             installBtn.Icon = null;
             installBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            installBtn.Location = new Point(861, 541);
+            installBtn.Location = new Point(861, 572);
             installBtn.Margin = new Padding(4, 6, 4, 6);
             installBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             installBtn.Name = "installBtn";
@@ -591,6 +592,7 @@
             // materialCard2
             // 
             materialCard2.BackColor = Color.FromArgb(255, 255, 255);
+            materialCard2.Controls.Add(useConnChk);
             materialCard2.Controls.Add(apiUrltxt);
             materialCard2.Controls.Add(materialLabel14);
             materialCard2.Controls.Add(apiSwt);
@@ -605,8 +607,26 @@
             materialCard2.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialCard2.Name = "materialCard2";
             materialCard2.Padding = new Padding(14);
-            materialCard2.Size = new Size(487, 253);
+            materialCard2.Size = new Size(487, 285);
             materialCard2.TabIndex = 21;
+            // 
+            // useConnChk
+            // 
+            useConnChk.AutoSize = true;
+            useConnChk.Checked = true;
+            useConnChk.CheckState = CheckState.Checked;
+            useConnChk.Depth = 0;
+            useConnChk.Location = new Point(14, 174);
+            useConnChk.Margin = new Padding(0);
+            useConnChk.MouseLocation = new Point(-1, -1);
+            useConnChk.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            useConnChk.Name = "useConnChk";
+            useConnChk.Ripple = true;
+            useConnChk.Size = new Size(215, 37);
+            useConnChk.TabIndex = 18;
+            useConnChk.Text = "Use Connection Check";
+            useConnChk.UseAccentColor = false;
+            useConnChk.UseVisualStyleBackColor = true;
             // 
             // apiUrltxt
             // 
@@ -620,7 +640,7 @@
             apiUrltxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
             apiUrltxt.HideSelection = true;
             apiUrltxt.LeadingIcon = null;
-            apiUrltxt.Location = new Point(158, 177);
+            apiUrltxt.Location = new Point(158, 214);
             apiUrltxt.MaxLength = 32767;
             apiUrltxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             apiUrltxt.Name = "apiUrltxt";
@@ -645,7 +665,7 @@
             materialLabel14.AutoSize = true;
             materialLabel14.Depth = 0;
             materialLabel14.Font = new Font("Roboto", 14F, FontStyle.Regular, GraphicsUnit.Pixel);
-            materialLabel14.Location = new Point(20, 190);
+            materialLabel14.Location = new Point(20, 227);
             materialLabel14.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialLabel14.Name = "materialLabel14";
             materialLabel14.Size = new Size(58, 19);
@@ -737,7 +757,8 @@
             // 
             // progressBar
             // 
-            progressBar.Location = new Point(532, 541);
+            progressBar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            progressBar.Location = new Point(532, 572);
             progressBar.MarqueeAnimationSpeed = 40;
             progressBar.Name = "progressBar";
             progressBar.Size = new Size(322, 36);
@@ -749,7 +770,7 @@
             // InstallForm
             // 
             AutoScaleMode = AutoScaleMode.None;
-            ClientSize = new Size(1040, 598);
+            ClientSize = new Size(1040, 629);
             Controls.Add(progressBar);
             Controls.Add(materialCard3);
             Controls.Add(materialCard2);
@@ -809,5 +830,6 @@
         private ReaLTaiizor.Controls.MaterialTextBoxEdit apiUrltxt;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel14;
         private ProgressBar progressBar;
+        private ReaLTaiizor.Controls.MaterialSwitch useConnChk;
     }
 }
