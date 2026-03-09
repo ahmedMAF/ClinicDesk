@@ -10,6 +10,8 @@ public partial class LoginForm : MaterialForm
     public LoginForm()
     {
         InitializeComponent();
+
+        FormClosed += (s, e) => Application.Exit();
     }
 
     private async void loginBtn_ClickAsync(object sender, EventArgs e)
@@ -30,7 +32,10 @@ public partial class LoginForm : MaterialForm
             .FirstOrDefaultAsync(u => u.Username == usernameTxt.Text && u.Password == passwordTxt.Text));
 
         if (user == null)
+        {
+            MessageBox.Show("Invalid username or password.", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
+        }
 
         AppContext.ShowForm<MainForm>(form => form.SetData(user));
 

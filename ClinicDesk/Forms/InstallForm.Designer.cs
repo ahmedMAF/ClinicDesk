@@ -628,7 +628,7 @@
             useConnChk.Checked = true;
             useConnChk.CheckState = CheckState.Checked;
             useConnChk.Depth = 0;
-            useConnChk.Location = new Point(14, 174);
+            useConnChk.Location = new Point(265, 61);
             useConnChk.Margin = new Padding(0);
             useConnChk.MouseLocation = new Point(-1, -1);
             useConnChk.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
