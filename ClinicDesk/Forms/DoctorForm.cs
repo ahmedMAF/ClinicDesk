@@ -1,14 +1,16 @@
 ﻿using ClinicDesk.ControlHelpers;
 using ClinicDesk.Database;
 using ClinicDesk.Database.Models;
+using Lidgren.Network;
 using ReaLTaiizor.Forms;
+using System.Data;
 
 namespace ClinicDesk.Forms;
 
 public partial class DoctorForm : MaterialForm
 {
     private readonly AppointmentsGrid _grdHelper;
-    private readonly SemaphoreSlim _refreshLock = new SemaphoreSlim(1, 1);
+    private readonly SemaphoreSlim _refreshLock = new(1, 1);
 
     public DoctorForm()
     {
@@ -16,13 +18,7 @@ public partial class DoctorForm : MaterialForm
 
         _grdHelper = new AppointmentsGrid(appointmentsGrd, AccountType.Doctor);
 
-        FormClosed += (s, e) =>
-        {
-            ClinicDb.Client?.RefreshUI -= RefreshUI;
-            Application.Exit();
-        };
-
-        ClinicDb.Client?.RefreshUI += RefreshUI;
+        FormClosed += (s, e) => Application.Exit();
     }
 
     internal void SetData(User user)
@@ -89,4 +85,44 @@ public partial class DoctorForm : MaterialForm
     {
         AppContext.ShowDialog<StatsForm>();
     }
+
+    /*private void LanConnectionStateChanged(NetPeerStatus status)
+    {
+        if (InvokeRequired)
+        {
+            BeginInvoke(() => LanConnectionStateChanged(status));
+            return;
+        }
+
+        if (status == NetPeerStatus.Running)
+        {
+            lanConStatusLbl.Image = Properties.Resources.connected;
+            lanConStatusLbl.Text = "LAN: Connected";
+        }
+        else
+        {
+            lanConStatusLbl.Image = Properties.Resources.disconnected;
+            lanConStatusLbl.Text = "LAN: Disconnected";
+        }
+    }
+
+    private void DbConnectionStateChanged(object sender, StateChangeEventArgs e)
+    {
+        if (InvokeRequired)
+        {
+            BeginInvoke(() => DbConnectionStateChanged(sender, e));
+            return;
+        }
+
+        if (e.CurrentState == ConnectionState.Open)
+        {
+            dbConStatusLbl.Image = Properties.Resources.connected;
+            dbConStatusLbl.Text = "DB: Connected";
+        }
+        else
+        {
+            dbConStatusLbl.Image = Properties.Resources.disconnected;
+            dbConStatusLbl.Text = "DB: Disconnected";
+        }
+    }*/
 }

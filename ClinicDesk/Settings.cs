@@ -25,6 +25,7 @@ public partial class Settings
     public bool IsDental { get; internal set; }
     public bool IsDarkTheme { get; internal set; }
     public bool UseApi { get; internal set; }
+    public bool UseConnectionCheck { get; internal set; }
     public string BackupPath { get; internal set; } = @"D:\ClinicDesk Backup";
     public string AppointmentApiUrl { get; internal set; } = "https://nova4is.com/api/appointments";
     public int BackupDays { get; internal set; } = 2;

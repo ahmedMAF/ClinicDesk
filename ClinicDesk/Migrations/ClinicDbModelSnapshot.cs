@@ -78,19 +78,18 @@ namespace ClinicDesk.Migrations
                     b.Property<DateTime>("IssuedAt")
                         .HasColumnType("datetime(6)");
 
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
+
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint unsigned");
 
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(65,30)");
 
-                    b.Property<int>("VisitId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("VisitId")
-                        .IsUnique();
+                    b.HasIndex("PatientId");
 
                     b.ToTable("Invoices");
                 });
@@ -212,6 +211,9 @@ namespace ClinicDesk.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<int>("InvoiceId")
+                        .HasColumnType("int");
+
                     b.Property<int?>("OriginalVisitId")
                         .HasColumnType("int");
 
@@ -226,6 +228,8 @@ namespace ClinicDesk.Migrations
                         .HasColumnType("tinyint unsigned");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("InvoiceId");
 
                     b.HasIndex("OriginalVisitId");
 
@@ -267,13 +271,13 @@ namespace ClinicDesk.Migrations
 
             modelBuilder.Entity("ClinicDesk.Database.Models.Invoice", b =>
                 {
-                    b.HasOne("ClinicDesk.Database.Models.Visit", "Visit")
-                        .WithOne("Invoice")
-                        .HasForeignKey("ClinicDesk.Database.Models.Invoice", "VisitId")
+                    b.HasOne("ClinicDesk.Database.Models.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Visit");
+                    b.Navigation("Patient");
                 });
 
             modelBuilder.Entity("ClinicDesk.Database.Models.Payment", b =>
@@ -289,6 +293,12 @@ namespace ClinicDesk.Migrations
 
             modelBuilder.Entity("ClinicDesk.Database.Models.Visit", b =>
                 {
+                    b.HasOne("ClinicDesk.Database.Models.Invoice", "Invoice")
+                        .WithMany()
+                        .HasForeignKey("InvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("ClinicDesk.Database.Models.Visit", "OriginalVisit")
                         .WithMany("FollowUps")
                         .HasForeignKey("OriginalVisitId");
@@ -298,6 +308,8 @@ namespace ClinicDesk.Migrations
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Invoice");
 
                     b.Navigation("OriginalVisit");
 
@@ -324,9 +336,6 @@ namespace ClinicDesk.Migrations
             modelBuilder.Entity("ClinicDesk.Database.Models.Visit", b =>
                 {
                     b.Navigation("FollowUps");
-
-                    b.Navigation("Invoice")
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

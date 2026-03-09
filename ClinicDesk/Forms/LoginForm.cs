@@ -26,23 +26,13 @@ public partial class LoginForm : MaterialForm
             return;
         }
 
-        User? user = await ClinicDb.Instance.Users
-            .FirstOrDefaultAsync(u => u.Username == usernameTxt.Text && u.Password == passwordTxt.Text);
+        User? user = await ClinicDb.SafeExecAsync<User, User?>(table => table
+            .FirstOrDefaultAsync(u => u.Username == usernameTxt.Text && u.Password == passwordTxt.Text));
 
         if (user == null)
-        {
             return;
-        }
 
-        switch (user.Role)
-        {
-            case UserRole.Doctor:
-                AppContext.ShowForm<DoctorForm>(form => form.SetData(user));
-                break;
-            case UserRole.Secretary:
-                AppContext.ShowForm<SecretaryForm>(form => form.SetData(user));
-                break;
-        }
+        AppContext.ShowForm<MainForm>(form => form.SetData(user));
 
         Close();
     }

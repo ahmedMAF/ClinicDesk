@@ -175,11 +175,14 @@ public class AppointmentsGrid : GridButtonHelper
 
     private async void profileBtn_Click(int rowIndex)
     {
-        Patient? patient = await ClinicDb.Instance.Patients
+        Patient? patient = await ClinicDb.SafeExecAsync<Patient, Patient?>(patients => patients
             .Include(p => p.Visits)
-            .FirstOrDefaultAsync(p => p.Id == _appointments[rowIndex].PatientId);
+            .FirstOrDefaultAsync(p => p.Id == _appointments[rowIndex].PatientId));
 
-        AppContext.ShowDialog<PatientProfileForm>(form => form.SetData(patient!));
+        if (patient == null)
+            return;
+
+        AppContext.ShowDialog<PatientProfileForm>(form => form.SetData(patient));
     }
     
     private async void visitBtn_Click(int rowIndex)
@@ -189,23 +192,26 @@ public class AppointmentsGrid : GridButtonHelper
         if (IsVisitButtonDisabled(appointmentDto))
             return;
 
-        Appointment? appointment = await ClinicDb.Instance.Appointments
+        Appointment? appointment = await ClinicDb.SafeExecAsync<Appointment, Appointment?>(table => table
             .Include(a => a.OriginalAppointment)
-            .FirstOrDefaultAsync(a => a.Id == appointmentDto.Id);
+            .FirstOrDefaultAsync(a => a.Id == appointmentDto.Id));
         
-        Patient? patient = await ClinicDb.Instance.Patients
+        Patient? patient = await ClinicDb.SafeExecAsync<Patient, Patient?>(table => table
             .Include(p => p.Visits)
-            .FirstOrDefaultAsync(p => p.Id == appointment!.PatientId);
+            .FirstOrDefaultAsync(p => p.Id == appointment!.PatientId));
 
-        AppContext.ShowDialog<AppointmentForm>(form => form.SetData(appointment!, patient!));
+        if (patient == null || appointment == null)
+            return;
+
+        AppContext.ShowDialog<AppointmentForm>(form => form.SetData(appointment, patient));
 
         await RefreshList();
     }
 
     private async void billingBtn_Click(int rowIndex)
     {
-        Patient? patient = await ClinicDb.Instance.Patients
-            .FirstOrDefaultAsync(p => p.Id == _appointments[rowIndex].PatientId);
+        Patient? patient = await ClinicDb.SafeExecAsync<Patient, Patient?>(table => table
+            .FirstOrDefaultAsync(p => p.Id == _appointments[rowIndex].PatientId));
 
         AppContext.ShowDialog<BillingForm>(form => form.SetData(patient!));
     }
@@ -217,11 +223,14 @@ public class AppointmentsGrid : GridButtonHelper
         if (IsFollowUpButtonDisabled(appointmentDto))
             return;
 
-        Appointment? appointment = await ClinicDb.Instance.Appointments
+        Appointment? appointment = await ClinicDb.SafeExecAsync<Appointment, Appointment?>(table => table
             .Include(a => a.Patient)
-            .FirstOrDefaultAsync(a => a.Id == appointmentDto.Id);
+            .FirstOrDefaultAsync(a => a.Id == appointmentDto.Id));
 
-        AppContext.ShowDialog<NewAppointmentForm>(form => form.SetData(appointment!, AppointmentAction.FollowUp));
+        if (appointment == null)
+            return;
+
+        AppContext.ShowDialog<NewAppointmentForm>(form => form.SetData(appointment, AppointmentAction.FollowUp));
         
         await RefreshList();
     }
@@ -233,12 +242,15 @@ public class AppointmentsGrid : GridButtonHelper
         if (IsRescheduleButtonDisabled(appointmentDto))
             return;
 
-        Appointment? appointment = await ClinicDb.Instance.Appointments
+        Appointment? appointment = await ClinicDb.SafeExecAsync<Appointment, Appointment?>(table => table
             .Include(a => a.Patient)
-            .FirstOrDefaultAsync(a => a.Id == appointmentDto.Id);
+            .FirstOrDefaultAsync(a => a.Id == appointmentDto.Id));
 
-        appointment!.Status = AppointmentStatus.Rescheduled;
-        AppContext.ShowDialog<NewAppointmentForm>(form => form.SetData(appointment!, AppointmentAction.Reschedule));
+        if (appointment == null)
+            return;
+
+        appointment.Status = AppointmentStatus.Rescheduled;
+        AppContext.ShowDialog<NewAppointmentForm>(form => form.SetData(appointment, AppointmentAction.Reschedule));
         
         await RefreshList();
     }
@@ -250,11 +262,14 @@ public class AppointmentsGrid : GridButtonHelper
         if (IsCancelButtonDisabled(appointmentDto))
             return;
 
-        Appointment? appointment = await ClinicDb.Instance.Appointments
+        Appointment? appointment = await ClinicDb.SafeExecAsync<Appointment, Appointment?>(table => table
             .Include(a => a.Patient)
-            .FirstOrDefaultAsync(a => a.Id == appointmentDto.Id);
+            .FirstOrDefaultAsync(a => a.Id == appointmentDto.Id));
 
-        appointment!.Status = AppointmentStatus.Cancelled;
+        if (appointment == null)
+            return;
+
+        appointment.Status = AppointmentStatus.Cancelled;
         await ClinicDb.Instance.SaveChangesAsync();
         
         await RefreshList();
@@ -355,7 +370,7 @@ public class AppointmentsGrid : GridButtonHelper
     
     private async Task PopulateGrid()
     {
-        _appointments = await ClinicDb.Instance.Appointments
+        List<AppointmentDto>? appointments = await ClinicDb.SafeExecAsync<Appointment, List<AppointmentDto>>(table => table
             .AsNoTracking()
             .Where(a => a.Date.Date == _date && (UserId == null || a.UserId == UserId))
             .Select(a => new AppointmentDto
@@ -369,8 +384,13 @@ public class AppointmentsGrid : GridButtonHelper
             })
             .OrderBy(a => a.Status)
             .ThenBy(a => a.Time)
-            .ToListAsync();
+            .ToListAsync());
+
+        if (appointments == null)
+            return;
             
+        _appointments = appointments;
+
         for (int i = 0; i < _appointments.Count; i++)
             _appointments[i].Serial = i + 1;
 

@@ -12,7 +12,13 @@ namespace ClinicDesk;
 public class AppContext : ApplicationContext
 {
     private static readonly Dictionary<Type, Form> _openForms = [];
-    
+
+    private static Form _lastForm = null!;
+    private static Form _formOverlay = null!;
+    private static Form _connectionLostForm = null!;
+
+    public static Form CurrentForm { get; private set; } = null!;
+
     public AppContext()
     {
         Application.ApplicationExit += ApplicationExit;
@@ -70,6 +76,9 @@ public class AppContext : ApplicationContext
             actionAfterShow?.Invoke(formT);
         }
 
+        _lastForm = CurrentForm;
+        CurrentForm = formT;
+
         return formT;
     }
     
@@ -84,12 +93,99 @@ public class AppContext : ApplicationContext
             MaterialSkinManager.Instance.AddFormToManage(mat);
 
         form.FormClosed += (s, e) => _openForms.Remove(formType);
-        
+
         actionBeforeShow?.Invoke(form);
+        _lastForm = CurrentForm;
+        CurrentForm = form;
+
+        Form overlay = new()
+        {
+            BackColor = Color.Black,
+            Opacity = 0.5,
+            MinimizeBox = false,
+            MaximizeBox = false,
+            Text = "",
+            ShowIcon = false,
+            ControlBox = false,
+            FormBorderStyle = FormBorderStyle.None,
+            Size = _lastForm.Size,
+            ShowInTaskbar = false,
+            Owner = _lastForm,
+            Visible = true,
+            Location = _lastForm.Location,
+            Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom,
+        };
+
+        // close overlay when dialog closes
+        form.FormClosed += (_, _) =>
+        {
+            Form owner = overlay.Owner;
+            overlay.Close();
+            owner.BringToFront();
+            owner.Activate();
+        };
+
+        overlay.Show();
+
         DialogResult result = form.ShowDialog();
+
+        CurrentForm = _lastForm;
         actionAfterShow?.Invoke(form, result);
-        
+
         return result;
+    }
+
+    internal static void ShowConnectionLostDialog()
+    {
+        if (CurrentForm == null || CurrentForm.IsDisposed || _connectionLostForm != null)
+            return;
+
+        if (CurrentForm.InvokeRequired)
+        {
+            CurrentForm.Invoke(ShowConnectionLostDialog);
+            return;
+        }
+
+        _formOverlay = new Form()
+        {
+            BackColor = Color.Black,
+            Opacity = 0.5,
+            MinimizeBox = false,
+            MaximizeBox = false,
+            Text = "",
+            ShowIcon = false,
+            ControlBox = false,
+            FormBorderStyle = FormBorderStyle.None,
+            Size = CurrentForm.Size,
+            ShowInTaskbar = false,
+            Owner = CurrentForm,
+            Visible = true,
+            Location = CurrentForm.Location,
+            Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom,
+        };
+
+        _formOverlay.Show();
+
+        _connectionLostForm = new ConnectionLostForm()
+        {
+            StartPosition = FormStartPosition.CenterParent,
+            Owner = CurrentForm
+        };
+
+        _connectionLostForm.ShowDialog();
+        _formOverlay.Close();
+    }
+
+    internal static void HideConnectionLostDialog()
+    {
+        if (CurrentForm.InvokeRequired)
+        {
+            CurrentForm.Invoke(HideConnectionLostDialog);
+            return;
+        }
+
+        _connectionLostForm?.Close();
+        _formOverlay?.Close();
     }
 
     private void ApplicationExit(object? sender, EventArgs e)
@@ -104,6 +200,6 @@ public class AppContext : ApplicationContext
         }
 
         AppointmentApi.Shutdown();
-        ClinicDb.StopDatabaseService();
+        ClinicDb.Shutdown();
     }
 }

@@ -32,7 +32,7 @@ internal static class Program
             MessageBox.Show("App is already running.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return;
         }
-        
+
         Application.Run(new AppContext());
     }
 }

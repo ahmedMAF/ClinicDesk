@@ -40,21 +40,26 @@ public partial class NewAppointmentForm : MaterialForm
     {
         datePkr.Value = DateTime.Now;
 
-        _doctors = await ClinicDb.Instance.Users
+        User[]? doctors = await ClinicDb.SafeExecAsync<User, User[]>(table => table
             .Where(u => u.Role == UserRole.Doctor)
-            .ToArrayAsync();
+            .ToArrayAsync());
 
-        string[] doctors = [.. _doctors.Select(u => u.Name)];
+        if (doctors == null)
+            return;
+
+        _doctors = doctors;
+
+        string[] doctorsNames = [.. _doctors.Select(u => u.Name)];
 
         doctorCbo.Items.AddRange(doctors);
 
-        if (_appointment != null)
-        {
-            doctorCbo.SelectedIndex = Array.FindIndex(_doctors, d => d.Id == _appointment.UserId);
-            datePkr.Value = _appointment.Date;
-            timePkr.Value = _appointment.Date;
-            doctorCbo.Enabled = false;
-        }
+        if (_appointment == null)
+            return;
+        
+        doctorCbo.SelectedIndex = Array.FindIndex(_doctors, d => d.Id == _appointment.UserId);
+        datePkr.Value = _appointment.Date;
+        timePkr.Value = _appointment.Date;
+        doctorCbo.Enabled = false;
     }
 
     private void cancelBtn_Click(object sender, EventArgs e)
@@ -79,8 +84,8 @@ public partial class NewAppointmentForm : MaterialForm
             Date = datePkr.Value.Date + timePkr.Value.TimeOfDay
         };
 
-        bool confict = ClinicDb.Instance.Appointments
-            .Any(a => a.Status == AppointmentStatus.Pending && appointment.Date >= a.Date.AddMinutes(-11) && appointment.Date <= a.Date.AddMinutes(10));
+        bool confict = await ClinicDb.SafeExecAsync<Appointment, bool>(table => table
+            .AnyAsync(a => a.Status == AppointmentStatus.Pending && appointment.Date >= a.Date.AddMinutes(-11) && appointment.Date <= a.Date.AddMinutes(10)));
 
         if (confict && MessageBox.Show($"There is another pending appointment in this time.{Environment.NewLine}Are you sure you want to continue?", "Conflict", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
             return;
@@ -90,7 +95,7 @@ public partial class NewAppointmentForm : MaterialForm
         else if (_action == AppointmentAction.Reschedule)
             appointment.OriginalAppointmentId = _appointment!.OriginalAppointmentId;
 
-        ClinicDb.Instance.Appointments.Add(appointment);
+        ClinicDb.SafeExecNonQueryAsync<Appointment>(table => table.Add(appointment));
         await ClinicDb.Instance.SaveChangesAsync();
         Close();
     }

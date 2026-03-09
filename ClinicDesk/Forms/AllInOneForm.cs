@@ -1,6 +1,4 @@
 ﻿using ClinicDesk.ControlHelpers;
-using ClinicDesk.Controls;
-using ClinicDesk.Database;
 using ClinicDesk.Database.Models;
 using ReaLTaiizor.Controls;
 using ReaLTaiizor.Forms;
@@ -22,12 +20,10 @@ public partial class AllInOneForm : MaterialForm
 
         FormClosed += (s, e) =>
         {
-            ClinicDb.Client?.RefreshUI -= RefreshUI;
             AppointmentApi.NewRequestsRecieved -= NewRequestsRecieved;
             Application.Exit();
         };
 
-        ClinicDb.Client?.RefreshUI += RefreshUI;
         AppointmentApi.NewRequestsRecieved += NewRequestsRecieved;
     }
 

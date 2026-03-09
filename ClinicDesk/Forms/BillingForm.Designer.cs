@@ -34,6 +34,8 @@
             phoneTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             materialLabel1 = new ReaLTaiizor.Controls.MaterialLabel();
             nameTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
+            billingBtn = new ReaLTaiizor.Controls.MaterialButton();
+            billTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             ((System.ComponentModel.ISupportInitialize)invoicesGrd).BeginInit();
             SuspendLayout();
             // 
@@ -46,11 +48,11 @@
             invoicesGrd.BackgroundColor = Color.White;
             invoicesGrd.BorderStyle = BorderStyle.None;
             invoicesGrd.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            invoicesGrd.Location = new Point(12, 129);
+            invoicesGrd.Location = new Point(12, 141);
             invoicesGrd.Name = "invoicesGrd";
             invoicesGrd.ReadOnly = true;
             invoicesGrd.RowHeadersWidth = 51;
-            invoicesGrd.Size = new Size(1132, 465);
+            invoicesGrd.Size = new Size(1150, 500);
             invoicesGrd.TabIndex = 5;
             invoicesGrd.CellPainting += invoicesGrd_CellPainting;
             invoicesGrd.RowPrePaint += invoicesGrd_RowPrePaint;
@@ -139,10 +141,67 @@
             nameTxt.TrailingIcon = null;
             nameTxt.UseSystemPasswordChar = false;
             // 
+            // billingBtn
+            // 
+            billingBtn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            billingBtn.AutoSize = false;
+            billingBtn.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            billingBtn.CharacterCasing = ReaLTaiizor.Controls.MaterialButton.CharacterCasingEnum.Normal;
+            billingBtn.Density = ReaLTaiizor.Controls.MaterialButton.MaterialButtonDensity.Default;
+            billingBtn.Depth = 0;
+            billingBtn.HighEmphasis = true;
+            billingBtn.Icon = null;
+            billingBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
+            billingBtn.Location = new Point(1044, 75);
+            billingBtn.Margin = new Padding(4, 6, 4, 6);
+            billingBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            billingBtn.Name = "billingBtn";
+            billingBtn.NoAccentTextColor = Color.Empty;
+            billingBtn.Size = new Size(117, 45);
+            billingBtn.TabIndex = 10;
+            billingBtn.Text = "Add Bill";
+            billingBtn.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
+            billingBtn.UseAccentColor = false;
+            billingBtn.UseVisualStyleBackColor = true;
+            billingBtn.Click += billingBtn_Click;
+            // 
+            // billTxt
+            // 
+            billTxt.AnimateReadOnly = false;
+            billTxt.AutoCompleteMode = AutoCompleteMode.None;
+            billTxt.AutoCompleteSource = AutoCompleteSource.None;
+            billTxt.BackgroundImageLayout = ImageLayout.None;
+            billTxt.CharacterCasing = CharacterCasing.Normal;
+            billTxt.Depth = 0;
+            billTxt.Font = new Font("Microsoft Sans Serif", 16F, FontStyle.Regular, GraphicsUnit.Pixel);
+            billTxt.HideSelection = true;
+            billTxt.Hint = "Bill Amount";
+            billTxt.LeadingIcon = null;
+            billTxt.Location = new Point(925, 75);
+            billTxt.MaxLength = 32767;
+            billTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
+            billTxt.Name = "billTxt";
+            billTxt.PasswordChar = '\0';
+            billTxt.PrefixSuffixText = null;
+            billTxt.ReadOnly = false;
+            billTxt.RightToLeft = RightToLeft.No;
+            billTxt.SelectedText = "";
+            billTxt.SelectionLength = 0;
+            billTxt.SelectionStart = 0;
+            billTxt.ShortcutsEnabled = true;
+            billTxt.Size = new Size(112, 48);
+            billTxt.TabIndex = 11;
+            billTxt.TabStop = false;
+            billTxt.TextAlign = HorizontalAlignment.Left;
+            billTxt.TrailingIcon = null;
+            billTxt.UseSystemPasswordChar = false;
+            // 
             // BillingForm
             // 
             AutoScaleMode = AutoScaleMode.None;
-            ClientSize = new Size(1150, 600);
+            ClientSize = new Size(1168, 647);
+            Controls.Add(billTxt);
+            Controls.Add(billingBtn);
             Controls.Add(materialLabel2);
             Controls.Add(phoneTxt);
             Controls.Add(materialLabel1);
@@ -165,5 +224,7 @@
         private ReaLTaiizor.Controls.MaterialTextBoxEdit phoneTxt;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel1;
         private ReaLTaiizor.Controls.MaterialTextBoxEdit nameTxt;
+        private ReaLTaiizor.Controls.MaterialButton billingBtn;
+        private ReaLTaiizor.Controls.MaterialTextBoxEdit billTxt;
     }
 }

@@ -19,9 +19,6 @@ public partial class PatientProfileForm : MaterialForm
         _grdHelper = new VisitsGrid(visitsGrd, true);
 
         editBtn.Enabled = Settings.Instance.AccountType != AccountType.Doctor;
-        
-        FormClosed += (s, e) => ClinicDb.Client?.RefreshUI -= RefreshUI;
-        ClinicDb.Client?.RefreshUI += RefreshUI;
     }
 
     internal void SetData(Patient patient)

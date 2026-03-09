@@ -302,13 +302,15 @@ internal static class Utils
     
     public static async Task MarkMissedAppointments()
     {
-        List<Appointment> appointments = await ClinicDb.Instance.Appointments
-            .Where(a => a.Status == AppointmentStatus.Pending)
-            .ToListAsync();
-            
+        List<Appointment>? appointments = await ClinicDb.SafeExecAsync<Appointment, List<Appointment>>(table => table
+            .Where(a => a.Status == AppointmentStatus.Pending && a.Date.AddMinutes(30) < DateTime.Now)
+            .ToListAsync());
+
+        if (appointments == null)
+            return;
+
         foreach (Appointment appointment in appointments)
-            if (appointment.Date.AddMinutes(30) < DateTime.Now)
-                appointment.Status = AppointmentStatus.Missed;
+            appointment.Status = AppointmentStatus.Missed;
                 
         // await ClinicDb.Instance.SaveChangesAsync();
     }
@@ -348,10 +350,25 @@ internal static class Utils
     public static byte[] GetHardwareIdBytes()
     {
         string cpu = GetWMI("Win32_Processor", "ProcessorId");
-        string disk = GetWMI("Win32_DiskDrive", "SerialNumber");
+        string disk = GetSystemDiskSerial();
         string board = GetWMI("Win32_BaseBoard", "SerialNumber");
 
         return SHA256.HashData(Encoding.UTF8.GetBytes($"{cpu}-{disk}-{board}"));
+    }
+
+    private static string GetSystemDiskSerial()
+    {
+        using var searcher = new ManagementObjectSearcher("SELECT SerialNumber, InterfaceType FROM Win32_DiskDrive");
+
+        IEnumerable<ManagementObject> dirves = from ManagementObject obj in searcher.Get()
+                                             let interfaceType = obj["InterfaceType"]?.ToString()
+                                             where interfaceType != "USB"
+                                             select obj;
+
+        foreach (ManagementObject obj in dirves)
+            return obj["SerialNumber"]?.ToString()?.Trim() ?? "";
+
+        return "";
     }
 
     private static string GetWMI(string wmiClass, string wmiProperty)

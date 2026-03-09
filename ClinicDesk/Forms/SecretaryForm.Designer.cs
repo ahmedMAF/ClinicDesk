@@ -62,7 +62,7 @@
             appointmentsGrd.Name = "appointmentsGrd";
             appointmentsGrd.ReadOnly = true;
             appointmentsGrd.RowHeadersWidth = 51;
-            appointmentsGrd.Size = new Size(1093, 398);
+            appointmentsGrd.Size = new Size(1093, 346);
             appointmentsGrd.TabIndex = 4;
             // 
             // newAppointmentBtn
@@ -272,7 +272,7 @@
             // SecretaryForm
             // 
             AutoScaleMode = AutoScaleMode.None;
-            ClientSize = new Size(1117, 708);
+            ClientSize = new Size(1117, 650);
             Controls.Add(newPatientBtn);
             Controls.Add(searchBtn);
             Controls.Add(requestsBtn);

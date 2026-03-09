@@ -11,7 +11,7 @@ namespace ClinicDesk.Forms;
 
 public partial class BillingForm : MaterialForm
 {
-    private Patient? _patient;
+    private Patient _patient = null!;
 
     private List<InvoiceDto> _invoices = null!;
     private readonly GridButtonHelper _grdHelper;
@@ -27,9 +27,6 @@ public partial class BillingForm : MaterialForm
             ["payBtn"] = payBtn_Click,
             ["payFullBtn"] = payFullBtn_Click
         });
-        
-        FormClosed += (s, e) => ClinicDb.Client?.RefreshUI -= RefreshUI;
-        ClinicDb.Client?.RefreshUI += RefreshUI;
     }
 
     internal void SetData(Patient patient)
@@ -46,10 +43,10 @@ public partial class BillingForm : MaterialForm
 
     private async Task RefreshList()
     {
-        _invoices = await ClinicDb.Instance.Invoices
+        List<InvoiceDto>? invoices = await ClinicDb.SafeExecAsync<Invoice, List<InvoiceDto>>(table => table
             .AsNoTracking()
             .Include(i => i.Payments)
-            .Where(i => i.Visit.PatientId == _patient!.Id)
+            .Where(i => i.PatientId == _patient.Id)
             .Select(i => new InvoiceDto
             {
                 Id = i.Id,
@@ -57,7 +54,12 @@ public partial class BillingForm : MaterialForm
                 TotalAmount = i.TotalAmount,
                 PaidAmount = i.Payments.Sum(p => p.Amount),
             })
-            .ToListAsync();
+            .ToListAsync());
+
+        if (invoices == null)
+            return;
+
+        _invoices = invoices;
 
         for (int i = 0; i < _invoices.Count; i++)
             _invoices[i].RemainingAmount = _invoices[i].TotalAmount - _invoices[i].PaidAmount;
@@ -66,7 +68,7 @@ public partial class BillingForm : MaterialForm
             .OrderBy(i => i.RemainingAmount == 0)
             .ThenBy(i => i.IssuedAt)
             .ToList();
-        
+
         for (int i = 0; i < _invoices.Count; i++)
             _invoices[i].Serial = i + 1;
 
@@ -75,11 +77,14 @@ public partial class BillingForm : MaterialForm
 
     private async void detailsBtn_Click(int rowIndex)
     {
-        Invoice? invoice = await ClinicDb.Instance.Invoices
+        Invoice? invoice = await ClinicDb.SafeExecAsync<Invoice, Invoice?>(table => table
             .Include(i => i.Payments)
-            .FirstOrDefaultAsync(i => i.Id == _invoices[rowIndex].Id);
+            .FirstOrDefaultAsync(i => i.Id == _invoices[rowIndex].Id));
 
-        AppContext.ShowDialog<InvoiceDetailsForm>(form => form.SetData(invoice!));
+        if (invoice == null)
+            return;
+
+        AppContext.ShowDialog<InvoiceDetailsForm>(form => form.SetData(invoice));
         await RefreshList();
     }
 
@@ -116,7 +121,7 @@ public partial class BillingForm : MaterialForm
             Method = method
         };
 
-        ClinicDb.Instance.Payments.Add(payment);
+        ClinicDb.SafeExecNonQueryAsync<Payment>(table => table.Add(payment));
         await ClinicDb.Instance.SaveChangesAsync();
 
         await RefreshList();
@@ -129,7 +134,7 @@ public partial class BillingForm : MaterialForm
 
         invoicesGrd.Rows[e.RowIndex].DefaultCellStyle.BackColor = invoice.RemainingAmount == 0 ? Theme.DataGridMissedRowBackColor : Theme.DataGridRowBackColor;
     }
-    
+
     private void invoicesGrd_CellPainting(object? sender, DataGridViewCellPaintingEventArgs e)
     {
         if (e.ColumnIndex == -1 || e.RowIndex == -1)
@@ -150,7 +155,7 @@ public partial class BillingForm : MaterialForm
     {
         return invoice.RemainingAmount == 0;
     }
-    
+
     private async void RefreshUI()
     {
         if (InvokeRequired)
@@ -158,6 +163,23 @@ public partial class BillingForm : MaterialForm
             BeginInvoke(RefreshUI);
             return;
         }
+
+        await RefreshList();
+    }
+
+    private async void billingBtn_Click(object sender, EventArgs e)
+    {
+        if (!decimal.TryParse(billTxt.Text, out decimal bill) || bill <= 0)
+            return;
+        
+        Invoice invoice = new()
+        {
+            Patient = _patient,
+            TotalAmount = bill
+        };
+
+        ClinicDb.SafeExecNonQueryAsync<Invoice>(table => table.Add(invoice));
+        await ClinicDb.Instance.SaveChangesAsync();
 
         await RefreshList();
     }

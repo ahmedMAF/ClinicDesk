@@ -94,9 +94,12 @@ public class VisitsGrid : GridButtonHelper
     {
         VisitDto visitDto = _visits[rowIndex];
 
-        Appointment? appointment = await ClinicDb.Instance.Appointments
+        Appointment? appointment = await ClinicDb.SafeExecAsync<Appointment, Appointment?>(table => table
             .Include(a => a.Patient)
-            .FirstOrDefaultAsync(a => a.VisitId == visitDto.Id);
+            .FirstOrDefaultAsync(a => a.VisitId == visitDto.Id));
+
+        if (appointment == null)
+            return;
 
         AppContext.ShowDialog<NewAppointmentForm>(form => form.SetData(appointment!, AppointmentAction.FollowUp));
     }

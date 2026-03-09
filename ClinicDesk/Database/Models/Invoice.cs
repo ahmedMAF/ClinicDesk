@@ -4,8 +4,8 @@ public class Invoice
 {
     public int Id { get; set; }
 
-    public int VisitId { get; set; }
-    public Visit Visit { get; set; } = null!;
+    public int PatientId { get; set; }
+    public Patient Patient { get; set; } = null!;
 
     public decimal TotalAmount { get; set; }
     public DateTime IssuedAt { get; set; } = DateTime.Now;

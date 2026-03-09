@@ -1,12 +1,5 @@
 ﻿using ClinicDesk.Database;
-using ClinicDesk.Database.Models;
 using ClinicDesk.Utilities;
-using ReaLTaiizor.Colors;
-using ReaLTaiizor.Manager;
-using ReaLTaiizor.Util;
-using System.Xml.Linq;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace ClinicDesk.Forms;
 
@@ -58,16 +51,7 @@ public partial class SplashForm : Form
         if (settings.IsDental)
             TeethHelper.Initialize();
 
-        switch (settings.AccountType)
-        {
-            case AccountType.AllInOne:
-                AppContext.ShowForm<AllInOneForm>();
-                break;
-
-            default:
-                AppContext.ShowForm<LoginForm>();
-                break;
-        }
+        AppContext.ShowForm<LoginForm>();
 
         _doneInit = true;
 

@@ -55,6 +55,7 @@
             materialLabel13 = new ReaLTaiizor.Controls.MaterialLabel();
             backupTxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             materialCard2 = new ReaLTaiizor.Controls.MaterialCard();
+            useConnChk = new ReaLTaiizor.Controls.MaterialSwitch();
             apiUrltxt = new ReaLTaiizor.Controls.MaterialTextBoxEdit();
             materialLabel14 = new ReaLTaiizor.Controls.MaterialLabel();
             apiSwt = new ReaLTaiizor.Controls.MaterialSwitch();
@@ -154,7 +155,7 @@
             accountCbo.FormattingEnabled = true;
             accountCbo.IntegralHeight = false;
             accountCbo.ItemHeight = 43;
-            accountCbo.Items.AddRange(new object[] { "Choose Type...", "Doctor", "Secretary", "All-In-One" });
+            accountCbo.Items.AddRange(new object[] { "Choose Type...", "Doctor", "Secretary" });
             accountCbo.Location = new Point(181, 335);
             accountCbo.Margin = new Padding(3, 4, 3, 4);
             accountCbo.MaxDropDownItems = 4;
@@ -605,6 +606,7 @@
             // materialCard2
             // 
             materialCard2.BackColor = Color.FromArgb(255, 255, 255);
+            materialCard2.Controls.Add(useConnChk);
             materialCard2.Controls.Add(apiUrltxt);
             materialCard2.Controls.Add(materialLabel14);
             materialCard2.Controls.Add(apiSwt);
@@ -619,6 +621,24 @@
             materialCard2.Padding = new Padding(16, 19, 16, 19);
             materialCard2.Size = new Size(557, 210);
             materialCard2.TabIndex = 21;
+            // 
+            // useConnChk
+            // 
+            useConnChk.AutoSize = true;
+            useConnChk.Checked = true;
+            useConnChk.CheckState = CheckState.Checked;
+            useConnChk.Depth = 0;
+            useConnChk.Location = new Point(14, 174);
+            useConnChk.Margin = new Padding(0);
+            useConnChk.MouseLocation = new Point(-1, -1);
+            useConnChk.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            useConnChk.Name = "useConnChk";
+            useConnChk.Ripple = true;
+            useConnChk.Size = new Size(215, 37);
+            useConnChk.TabIndex = 18;
+            useConnChk.Text = "Use Connection Check";
+            useConnChk.UseAccentColor = false;
+            useConnChk.UseVisualStyleBackColor = true;
             // 
             // apiUrltxt
             // 
@@ -844,6 +864,7 @@
             // 
             // progressBar
             // 
+            progressBar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             progressBar.Location = new Point(608, 724);
             progressBar.MarqueeAnimationSpeed = 40;
             progressBar.Name = "progressBar";
@@ -922,5 +943,6 @@
         private ReaLTaiizor.Controls.MaterialTextBoxEdit usernameTxt;
         private ReaLTaiizor.Controls.MaterialLabel materialLabel16;
         private ProgressBar progressBar;
+        private ReaLTaiizor.Controls.MaterialSwitch useConnChk;
     }
 }
