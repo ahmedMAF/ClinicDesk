@@ -121,7 +121,7 @@ public partial class BillingForm : MaterialForm
             Method = method
         };
 
-        ClinicDb.SafeExecNonQueryAsync<Payment>(table => table.Add(payment));
+        ClinicDb.SafeExecNonQuery<Payment>(table => table.Add(payment));
         await ClinicDb.Instance.SaveChangesAsync();
 
         await RefreshList();
@@ -178,7 +178,7 @@ public partial class BillingForm : MaterialForm
             TotalAmount = bill
         };
 
-        ClinicDb.SafeExecNonQueryAsync<Invoice>(table => table.Add(invoice));
+        ClinicDb.SafeExecNonQuery<Invoice>(table => table.Add(invoice));
         await ClinicDb.Instance.SaveChangesAsync();
 
         await RefreshList();

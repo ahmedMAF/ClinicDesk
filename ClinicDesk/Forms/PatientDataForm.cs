@@ -92,7 +92,7 @@ public partial class PatientDataForm : MaterialForm
             if (Settings.Instance.IsDental)
                 TeethHelper.MarkMissingTeethByAge(Patient.Teeth!, Patient.AgeYears);
 
-            ClinicDb.SafeExecNonQueryAsync<Patient>(table => table.Add(Patient));
+            ClinicDb.SafeExecNonQuery<Patient>(table => table.Add(Patient));
         }
         else
         {
