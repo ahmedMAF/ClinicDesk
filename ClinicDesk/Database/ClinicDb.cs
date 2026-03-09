@@ -20,7 +20,7 @@ public class ClinicDb : DbContext
     private static DbServerType _dbServerType;
     private static bool _wasMySqlRunning;
     private static Timer _timer = null!;
-    private static bool _lastStatus;
+    private static bool _lastStatus = true;
 
     public static bool IsServerInstalled =>_dbServerType != DbServerType.None;
 
