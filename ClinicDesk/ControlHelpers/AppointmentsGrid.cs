@@ -182,6 +182,7 @@ public class AppointmentsGrid : GridButtonHelper
             return;
 
         AppContext.ShowDialog<PatientProfileForm>(form => form.SetData(patient));
+        await RefreshList();
     }
     
     private async void visitBtn_Click(int rowIndex)
@@ -360,9 +361,7 @@ public class AppointmentsGrid : GridButtonHelper
         if (date.HasValue)
             _date = date.Value;
 
-        // FIXME: This may cause a race condition, doing it on server only may help, but is it right?
-        if (Settings.Instance.IsServer)
-            await Utils.MarkMissedAppointments();
+        await Utils.MarkMissedAppointments();
 
         await PopulateGrid();
     }

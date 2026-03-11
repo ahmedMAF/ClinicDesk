@@ -519,8 +519,11 @@
             Controls.Add(materialCard1);
             Controls.Add(saveBtn);
             Icon = (Icon)resources.GetObject("$this.Icon");
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "SettingsForm";
             ShowInTaskbar = false;
+            Sizable = false;
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Settings";
             Load += SettingsForm_Load;

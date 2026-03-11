@@ -1,5 +1,4 @@
 ﻿using ClinicDesk.ControlHelpers;
-using ClinicDesk.Database;
 using ClinicDesk.Database.Models;
 using ClinicDesk.Utilities;
 using ReaLTaiizor.Child.Material;
@@ -57,10 +56,8 @@ public partial class PatientProfileForm : MaterialForm
 
     private async void editBtn_Click(object sender, EventArgs e)
     {
-        Hide();
         AppContext.ShowDialog<PatientDataForm>(form => form.SetData(_patient));
         RefreshUI();
-        Show();
     }
 
     private void chartBtn_Click(object sender, EventArgs e)
