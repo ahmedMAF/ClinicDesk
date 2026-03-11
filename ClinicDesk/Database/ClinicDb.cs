@@ -146,7 +146,12 @@ public class ClinicDb : DbContext
         if (server is "localhost" or "127.0.0.1")
             RunDatabaseService();
 
-        return Create($"Server={server};Port={port};Database={db};User={user};Password={pass};", out _);
+        bool success = Create($"Server={server};Port={port};Database={db};User={user};Password={pass};", out ClinicDb? instance);
+
+        if (success)
+            Instance = instance!;
+
+        return success;
     }
 
     internal static bool Create(out ClinicDb? db)

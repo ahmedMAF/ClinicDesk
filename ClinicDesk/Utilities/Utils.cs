@@ -16,7 +16,7 @@ internal static class Utils
 {
     public static string GetBloodTypeString(BloodType type) => type switch
     {
-        BloodType.NotSpecified => "Normal",
+        BloodType.NotSpecified => "Not Specified",
         BloodType.APos => "A+",
         BloodType.ANeg => "A-",
         BloodType.BPos => "B+",
