@@ -284,7 +284,7 @@
             // NewAppointmentForm
             // 
             AutoScaleMode = AutoScaleMode.None;
-            ClientSize = new Size(610, 437);
+            ClientSize = new Size(610, 489);
             Controls.Add(saveBtn);
             Controls.Add(materialCard2);
             Controls.Add(materialCard1);

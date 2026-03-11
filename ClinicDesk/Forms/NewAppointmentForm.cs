@@ -51,7 +51,7 @@ public partial class NewAppointmentForm : MaterialForm
 
         string[] doctorsNames = [.. _doctors.Select(u => u.Name)];
 
-        doctorCbo.Items.AddRange(doctors);
+        doctorCbo.Items.AddRange(doctorsNames);
 
         if (_appointment == null)
             return;
