@@ -1,4 +1,5 @@
-﻿using MemoryPack;
+﻿using ClinicDesk.Utilities;
+using MemoryPack;
 
 namespace ClinicDesk;
 
@@ -33,10 +34,13 @@ public partial class Settings
     public DateTime LastSeen { get; internal set; }
 
     [MemoryPackIgnore]
-    public bool IsServer => Server is "127.0.0.1" or "localhost";
+    public DateTime NextBackup => LastBackup.AddDays(BackupDays);
 
     [MemoryPackIgnore]
-    public DateTime NextBackup => LastBackup.AddDays(BackupDays);
+    public bool IsServer { get; private set; }
+
+    [MemoryPackIgnore]
+    public bool IsLanServer { get; private set; }
 
     internal static void Initialize()
     {
@@ -50,6 +54,8 @@ public partial class Settings
         {
             Instance = new Settings();
             SaveSettings();
+
+            Instance.CheckIP();
         }
     }
     
@@ -57,11 +63,19 @@ public partial class Settings
     {
         byte[] bytes = File.ReadAllBytes(SettingsPath);
         Instance = MemoryPackSerializer.Deserialize<Settings>(bytes) ?? new Settings();
+
+        Instance.CheckIP();
     }
 
     public static void SaveSettings()
     {
         byte[] bytes = MemoryPackSerializer.Serialize(Instance);
         File.WriteAllBytes(SettingsPath, bytes);
+    }
+
+    private void CheckIP()
+    {
+        IsServer = Server is "127.0.0.1" or "localhost";
+        IsLanServer = Utils.IsLanAddress(Server).GetAwaiter().GetResult();
     }
 }

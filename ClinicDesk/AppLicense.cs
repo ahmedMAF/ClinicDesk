@@ -15,6 +15,7 @@ public static class AppLicense
     public static bool IsAvailable => File.Exists(GetDefaultLicensePath());
 
     public static bool ExpiresInWeek => _license != null && _license.Expiration > DateTime.UtcNow && _license.Expiration <= DateTime.UtcNow.AddDays(7);
+    public static int ExpiresIn => _license != null && _license.Expiration > DateTime.UtcNow ? (int)Math.Ceiling((_license.Expiration - DateTime.UtcNow).TotalDays) : 0;
 
     internal static bool Validate()
     {

@@ -41,8 +41,8 @@ public class AppContext : ApplicationContext
             return;
         }
 
-        if (settings.IsServer && AppLicense.ExpiresInWeek)
-            MessageBox.Show("Your license is expiring soon! Please contact support to renew it.", "License Expiration", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        if (AppLicense.ExpiresInWeek)
+            MessageBox.Show($"Your license expires in {AppLicense.ExpiresIn} days! Please contact support to renew it.", "License Expiration", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
         ShowForm<SplashForm>();
     }
@@ -193,6 +193,7 @@ public class AppContext : ApplicationContext
         }
 
         _connectionLostForm?.Close();
+        _connectionLostForm = null!;
     }
 
     private void ApplicationExit(object? sender, EventArgs e)

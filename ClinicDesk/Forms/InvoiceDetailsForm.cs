@@ -55,15 +55,4 @@ public partial class InvoiceDetailsForm : MaterialForm
 
         RefreshList();
     }
-    
-    private void RefreshUI()
-    {
-        if (InvokeRequired)
-        {
-            BeginInvoke(RefreshUI);
-            return;
-        }
-
-        RefreshList();
-    }
 }

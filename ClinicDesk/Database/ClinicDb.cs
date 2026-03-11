@@ -1,8 +1,6 @@
 ﻿using ClinicDesk.Database.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using System;
-using System.Data;
 using System.Data.Common;
 using System.Diagnostics;
 using System.ServiceProcess;
@@ -19,7 +17,8 @@ public class ClinicDb : DbContext
 
     private static DbServerType _dbServerType;
     private static bool _wasMySqlRunning;
-    private static Timer _timer = null!;
+    private static Timer _lanTimer = null!;
+    private static Timer _wanTimer = null!;
     private static bool _lastStatus = true;
 
     public static bool IsServerInstalled =>_dbServerType != DbServerType.None;
@@ -37,9 +36,7 @@ public class ClinicDb : DbContext
 
     internal ClinicDb(DbContextOptions<ClinicDb> options) : base(options)
     {
-        if (Settings.Instance.IsServer)
-            Database.Migrate();
-
+        Database.Migrate();
         IsRunning = true;
     }
 
@@ -64,16 +61,31 @@ public class ClinicDb : DbContext
         if (result == DialogResult.Cancel)
             Application.Exit();
 
-        if (Settings.Instance.UseConnectionCheck)
-        {
-            _timer = new Timer
-            {
-                AutoReset = true,
-                Interval = 2000
-            };
+        Settings settings = Settings.Instance;
 
-            _timer.Elapsed += async (_, _) => await CheckStatusAsync();
-            _timer.Start();
+        if (settings.UseConnectionCheck)
+        {
+            if (settings.IsLanServer)
+            {
+                _lanTimer = new Timer
+                {
+                    AutoReset = true,
+                    Interval = 2000
+                };
+
+                _lanTimer.Elapsed += async (_, _) => await CheckStatusAsync();
+                _lanTimer.Start();
+            }
+            else
+            {
+                _wanTimer = new Timer
+                {
+                    AutoReset = true,
+                    Interval = 1500
+                };
+
+                _wanTimer.Elapsed += async (_, _) => await CheckStatusAsync();
+            }
         }
     }
 
@@ -92,13 +104,18 @@ public class ClinicDb : DbContext
             isAvailable = false;
         }
 
+        Debug.WriteLine($"Tick: {isAvailable} and last: {_lastStatus}");
+
         if (isAvailable != _lastStatus)
         {
             _lastStatus = isAvailable;
             ConnectionStateChanged?.Invoke(isAvailable);
 
             if (isAvailable)
+            {
                 AppContext.HideConnectionLostDialog();
+                _wanTimer?.Stop();
+            }
             else
                 AppContext.ShowConnectionLostDialog();
         }
@@ -168,17 +185,17 @@ public class ClinicDb : DbContext
         }
         catch (DbUpdateException dbEx)
         {
-            // Handle EF-specific errors
+            // EF-specific errors
             Console.WriteLine($"Database update error: {dbEx.Message}");
         }
         catch (DbException sqlEx)
         {
-            // Handle SQL errors
+            // SQL errors
             Console.WriteLine($"SQL error: {sqlEx.Message}");
         }
         catch (Exception ex)
         {
-            // Handle any other error
+            HandleLostConnectionOnWanServer();
             Console.WriteLine($"Unexpected error: {ex.Message}");
         }
 
@@ -193,21 +210,33 @@ public class ClinicDb : DbContext
         }
         catch (DbUpdateException dbEx)
         {
-            // Handle EF-specific errors
+            // EF-specific errors
             Console.WriteLine($"Database update error: {dbEx.Message}");
         }
         catch (DbException sqlEx)
         {
-            // Handle SQL errors
+            // SQL errors
             Console.WriteLine($"SQL error: {sqlEx.Message}");
         }
         catch (Exception ex)
         {
-            // Handle any other error
+            HandleLostConnectionOnWanServer();
             Console.WriteLine($"Unexpected error: {ex.Message}");
         }
     }
 
+
+    private static void HandleLostConnectionOnWanServer()
+    {
+        if (Settings.Instance.IsLanServer)
+            return;
+        
+        Task.Run(AppContext.ShowConnectionLostDialog);
+        _lastStatus = false;
+        ConnectionStateChanged?.Invoke(false);
+
+        _wanTimer.Start();
+    }
 
     private static void RunDatabaseService()
     {
@@ -375,7 +404,8 @@ public class ClinicDb : DbContext
 
     internal static void Shutdown()
     {
-        _timer?.Stop();
+        _wanTimer?.Stop();
+        _lanTimer?.Stop();
         StopDatabaseService();
     }
 }

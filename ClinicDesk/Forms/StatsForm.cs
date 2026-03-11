@@ -1,6 +1,7 @@
 ﻿using ClinicDesk.Database;
 using ClinicDesk.Database.Dto;
 using ClinicDesk.Database.Models;
+using Microsoft.EntityFrameworkCore;
 using ReaLTaiizor.Forms;
 using System.Data;
 
@@ -13,12 +14,12 @@ public partial class StatsForm : MaterialForm
         InitializeComponent();
     }
 
-    private void StatsForm_Load(object sender, EventArgs e)
+    private async void StatsForm_Load(object sender, EventArgs e)
     {
-        RefreshStats();
+        await RefreshStats();
     }
 
-    private void RefreshStats()
+    private async Task RefreshStats()
     {
         ClinicDb db = ClinicDb.Instance;
 
@@ -31,34 +32,34 @@ public partial class StatsForm : MaterialForm
             IQueryable<Appointment> appointmentsQuery = db.Appointments
                 .Where(a => allTimeChk.Checked || (a.Date >= start && a.Date <= end));
 
-            int totalApps = appointmentsQuery.Count();
-            int totalPatients = appointmentsQuery
+            int totalApps = await appointmentsQuery.CountAsync();
+            int totalPatients = await appointmentsQuery
                 .Select(a => a.PatientId)
                 .Distinct()
-                .Count();
+                .CountAsync();
 
             // Group by appointment status into a dictionary for fast lookup
-            Dictionary<AppointmentStatus, int> statusCounts = appointmentsQuery
+            Dictionary<AppointmentStatus, int> statusCounts = await appointmentsQuery
                 .GroupBy(a => a.Status)
                 .Select(g => new AppointmentStat(g.Key, g.Count()))
-                .ToDictionary(x => x.Status, x => x.Count);
+                .ToDictionaryAsync(x => x.Status, x => x.Count);
 
             // Filter invoices
             IQueryable<Invoice> invoicesQuery = db.Invoices
                 .Where(i => allTimeChk.Checked || (i.IssuedAt >= start && i.IssuedAt <= end));
 
-            int totalBills = invoicesQuery.Count();
-            decimal totalAmount = invoicesQuery.Sum(i => i.TotalAmount);
-            decimal totalPaid = invoicesQuery
+            int totalBills = await invoicesQuery.CountAsync();
+            decimal totalAmount = await invoicesQuery.SumAsync(i => i.TotalAmount);
+            decimal totalPaid = await invoicesQuery
                 .SelectMany(i => i.Payments)
-                .Sum(p => p.Amount);
+                .SumAsync(p => p.Amount);
 
             // Payment method stats
-            List<PaymentMethodStat> paymentMethodStats = invoicesQuery
+            List<PaymentMethodStat> paymentMethodStats = await invoicesQuery
                 .SelectMany(i => i.Payments)
                 .GroupBy(p => p.Method)
                 .Select(g => new PaymentMethodStat(g.Sum(p => p.Amount), g.Count(), g.Key))
-                .ToList();
+                .ToListAsync();
 
             // Update summary textboxes
             numOfAppsTxt.Text = totalApps.ToString();
@@ -99,20 +100,9 @@ public partial class StatsForm : MaterialForm
         }
     }
 
-    private void RefreshUI()
+    private async void showBtn_Click(object sender, EventArgs e)
     {
-        if (InvokeRequired)
-        {
-            BeginInvoke(RefreshUI);
-            return;
-        }
-
-        RefreshStats();
-    }
-
-    private void showBtn_Click(object sender, EventArgs e)
-    {
-        RefreshUI();
+        await RefreshStats();
     }
 
     private void allTimeChk_CheckedChanged(object sender, EventArgs e)
