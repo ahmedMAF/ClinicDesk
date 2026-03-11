@@ -52,7 +52,7 @@
             invoicesGrd.Name = "invoicesGrd";
             invoicesGrd.ReadOnly = true;
             invoicesGrd.RowHeadersWidth = 51;
-            invoicesGrd.Size = new Size(1150, 500);
+            invoicesGrd.Size = new Size(1250, 594);
             invoicesGrd.TabIndex = 5;
             invoicesGrd.CellPainting += invoicesGrd_CellPainting;
             invoicesGrd.RowPrePaint += invoicesGrd_RowPrePaint;
@@ -86,7 +86,7 @@
             phoneTxt.Name = "phoneTxt";
             phoneTxt.PasswordChar = '\0';
             phoneTxt.PrefixSuffixText = null;
-            phoneTxt.ReadOnly = false;
+            phoneTxt.ReadOnly = true;
             phoneTxt.RightToLeft = RightToLeft.No;
             phoneTxt.SelectedText = "";
             phoneTxt.SelectionLength = 0;
@@ -128,7 +128,7 @@
             nameTxt.Name = "nameTxt";
             nameTxt.PasswordChar = '\0';
             nameTxt.PrefixSuffixText = null;
-            nameTxt.ReadOnly = false;
+            nameTxt.ReadOnly = true;
             nameTxt.RightToLeft = RightToLeft.No;
             nameTxt.SelectedText = "";
             nameTxt.SelectionLength = 0;
@@ -152,7 +152,7 @@
             billingBtn.HighEmphasis = true;
             billingBtn.Icon = null;
             billingBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            billingBtn.Location = new Point(1044, 75);
+            billingBtn.Location = new Point(1144, 75);
             billingBtn.Margin = new Padding(4, 6, 4, 6);
             billingBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             billingBtn.Name = "billingBtn";
@@ -167,6 +167,7 @@
             // 
             // billTxt
             // 
+            billTxt.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             billTxt.AnimateReadOnly = false;
             billTxt.AutoCompleteMode = AutoCompleteMode.None;
             billTxt.AutoCompleteSource = AutoCompleteSource.None;
@@ -177,7 +178,7 @@
             billTxt.HideSelection = true;
             billTxt.Hint = "Bill Amount";
             billTxt.LeadingIcon = null;
-            billTxt.Location = new Point(925, 75);
+            billTxt.Location = new Point(1025, 75);
             billTxt.MaxLength = 32767;
             billTxt.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.OUT;
             billTxt.Name = "billTxt";
@@ -199,7 +200,7 @@
             // BillingForm
             // 
             AutoScaleMode = AutoScaleMode.None;
-            ClientSize = new Size(1168, 647);
+            ClientSize = new Size(1268, 741);
             Controls.Add(billTxt);
             Controls.Add(billingBtn);
             Controls.Add(materialLabel2);

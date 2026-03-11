@@ -23,6 +23,18 @@ public partial class PatientProfileForm : MaterialForm
     internal void SetData(Patient patient)
     {
         _patient = patient;
+
+        nameTxt.Text = _patient.Name;
+        sexTxt.Text = _patient.Sex.ToString();
+        ageTxt.Text = _patient.AgeYears.ToString();
+        maritalTxt.Text = _patient.MaritalStatus.ToString();
+
+        bloodTypeTxt.Text = Utils.GetBloodTypeString(_patient.BloodType);
+
+        foreach (string disease in _patient.ChronicDiseases)
+            chronicDiseasesLst.Items.Add(new MaterialListBoxItem(disease));
+
+        notesTxt.Text = _patient.Notes;
     }
 
     private void PatientProfileForm_Load(object sender, EventArgs e)

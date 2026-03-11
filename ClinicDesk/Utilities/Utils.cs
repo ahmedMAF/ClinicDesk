@@ -16,7 +16,7 @@ internal static class Utils
 {
     public static string GetBloodTypeString(BloodType type) => type switch
     {
-        BloodType.NotSpecified => "Normal",
+        BloodType.NotSpecified => "Not Specified",
         BloodType.APos => "A+",
         BloodType.ANeg => "A-",
         BloodType.BPos => "B+",
@@ -208,7 +208,7 @@ internal static class Utils
 
         invoicesGrd.Columns.Add(new DataGridViewTextBoxColumn
         {
-            Width = 180,
+            Width = 170,
             DataPropertyName = "TotalAmount",
             HeaderText = "Total Amount",
             DefaultCellStyle = { Format = "0.00" }
@@ -216,7 +216,7 @@ internal static class Utils
 
         invoicesGrd.Columns.Add(new DataGridViewTextBoxColumn
         {
-            Width = 180,
+            Width = 170,
             DataPropertyName = "PaidAmount",
             HeaderText = "Paid Amount",
             DefaultCellStyle = { Format = "0.00" }
@@ -224,7 +224,7 @@ internal static class Utils
 
         invoicesGrd.Columns.Add(new DataGridViewTextBoxColumn
         {
-            Width = 180,
+            Width = 170,
             DataPropertyName = "RemainingAmount",
             HeaderText = "Remaining Amount",
             DefaultCellStyle = { Format = "0.00" }
