@@ -57,10 +57,8 @@ public partial class PatientProfileForm : MaterialForm
 
     private async void editBtn_Click(object sender, EventArgs e)
     {
-        Hide();
         AppContext.ShowDialog<PatientDataForm>(form => form.SetData(_patient));
         RefreshUI();
-        Show();
     }
 
     private void chartBtn_Click(object sender, EventArgs e)

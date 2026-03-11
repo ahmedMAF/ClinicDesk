@@ -13,8 +13,6 @@ public class AppContext : ApplicationContext
 {
     private static readonly Dictionary<Type, Form> _openForms = [];
 
-    private static Form _lastForm = null!;
-    private static Form _formOverlay = null!;
     private static Form _connectionLostForm = null!;
 
     public static Form CurrentForm { get; private set; } = null!;
@@ -59,24 +57,29 @@ public class AppContext : ApplicationContext
         {
             formT = (T)form;
             formT.BringToFront();
-            formT.Focus();
+            formT.Activate();
         }
         else
         {
-            formT = new();
+            formT = new()
+            {
+                ShowInTaskbar = true,
+                MinimizeBox = true,
+                StartPosition = FormStartPosition.CenterScreen
+            };
+
             _openForms[formType] = formT;
 
             if (formT is MaterialForm mat)
                 MaterialSkinManager.Instance.AddFormToManage(mat);
 
-            formT.FormClosed += (s, e) => _openForms.Remove(formType);
+            formT.FormClosing += (s, e) => _openForms.Remove(formType);
             
             actionBeforeShow?.Invoke(formT);
             formT.Show();
             actionAfterShow?.Invoke(formT);
         }
 
-        _lastForm = CurrentForm;
         CurrentForm = formT;
 
         return formT;
@@ -86,51 +89,53 @@ public class AppContext : ApplicationContext
     {
         Type formType = typeof(T);
 
-        T form = new();
-        _openForms[formType] = form;
+        T form = new()
+        {
+            ShowInTaskbar = false,
+            MinimizeBox = false,
+            StartPosition = FormStartPosition.CenterParent
+        };
 
         if (form is MaterialForm mat)
             MaterialSkinManager.Instance.AddFormToManage(mat);
 
-        form.FormClosed += (s, e) => _openForms.Remove(formType);
-
-        actionBeforeShow?.Invoke(form);
-        _lastForm = CurrentForm;
-        CurrentForm = form;
-
-        Form overlay = new()
+        using Form overlay = new()
         {
             BackColor = Color.Black,
             Opacity = 0.5,
-            MinimizeBox = false,
-            MaximizeBox = false,
-            Text = "",
-            ShowIcon = false,
-            ControlBox = false,
             FormBorderStyle = FormBorderStyle.None,
-            Size = _lastForm.Size,
             ShowInTaskbar = false,
-            Owner = _lastForm,
-            Visible = true,
-            Location = _lastForm.Location,
-            Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom,
+            StartPosition = FormStartPosition.Manual,
+            Enabled = false,
+            Size = CurrentForm.Size,
+            Location = CurrentForm.Location,
+            Owner = CurrentForm
         };
 
-        // close overlay when dialog closes
-        form.FormClosed += (_, _) =>
+        form.Owner = overlay;
+        Form previous = CurrentForm;
+        CurrentForm = form;
+
+        actionBeforeShow?.Invoke(form);
+
+        overlay.Show();
+
+        DialogResult result = DialogResult.None;
+
+        try
+        {
+            result = form.ShowDialog(overlay);
+        }
+        finally
         {
             Form owner = overlay.Owner;
             overlay.Close();
             owner.BringToFront();
             owner.Activate();
-        };
 
-        overlay.Show();
-
-        DialogResult result = form.ShowDialog();
-
-        CurrentForm = _lastForm;
-        actionAfterShow?.Invoke(form, result);
+            CurrentForm = previous;
+            actionAfterShow?.Invoke(form, result);
+        }
 
         return result;
     }
@@ -146,34 +151,38 @@ public class AppContext : ApplicationContext
             return;
         }
 
-        _formOverlay = new Form()
+        using Form overlay = new()
         {
             BackColor = Color.Black,
             Opacity = 0.5,
-            MinimizeBox = false,
-            MaximizeBox = false,
-            Text = "",
-            ShowIcon = false,
-            ControlBox = false,
             FormBorderStyle = FormBorderStyle.None,
-            Size = CurrentForm.Size,
             ShowInTaskbar = false,
-            Owner = CurrentForm,
-            Visible = true,
+            StartPosition = FormStartPosition.Manual,
+            Enabled = false,
+            Size = CurrentForm.Size,
             Location = CurrentForm.Location,
-            Anchor = AnchorStyles.Left | AnchorStyles.Top | AnchorStyles.Right | AnchorStyles.Bottom,
+            Owner = CurrentForm
         };
 
-        _formOverlay.Show();
+        overlay.Show();
 
         _connectionLostForm = new ConnectionLostForm()
         {
             StartPosition = FormStartPosition.CenterParent,
-            Owner = CurrentForm
+            Owner = overlay
         };
 
-        _connectionLostForm.ShowDialog();
-        _formOverlay.Close();
+        try
+        {
+            _connectionLostForm.ShowDialog(overlay);
+        }
+        finally
+        {
+            Form owner = overlay.Owner;
+            overlay.Close();
+            owner.BringToFront();
+            owner.Activate();
+        }
     }
 
     internal static void HideConnectionLostDialog()
@@ -185,7 +194,6 @@ public class AppContext : ApplicationContext
         }
 
         _connectionLostForm?.Close();
-        _formOverlay?.Close();
     }
 
     private void ApplicationExit(object? sender, EventArgs e)

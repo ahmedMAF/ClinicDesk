@@ -164,7 +164,7 @@ public partial class MainForm : MaterialForm
         AppContext.ShowDialog<PatientDataForm>();
     }
 
-    private void searchBtn_Click(object sender, EventArgs e)
+    private async void searchBtn_Click(object sender, EventArgs e)
     {
         Patient patient = null!;
 
@@ -172,6 +172,7 @@ public partial class MainForm : MaterialForm
             return;
 
         AppContext.ShowDialog<PatientProfileForm>(form => form.SetData(patient));
+        await _grdHelper.RefreshList();
     }
 
     internal void SetData(User user)
