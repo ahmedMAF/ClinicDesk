@@ -1,8 +1,6 @@
 ﻿using ClinicDesk.Database.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using System;
-using System.Data;
 using System.Data.Common;
 using System.Diagnostics;
 using System.ServiceProcess;
@@ -19,10 +17,11 @@ public class ClinicDb : DbContext
 
     private static DbServerType _dbServerType;
     private static bool _wasMySqlRunning;
-    private static Timer _timer = null!;
+    private static Timer _lanTimer = null!;
+    private static Timer _wanTimer = null!;
     private static bool _lastStatus = true;
 
-    public static bool IsServerInstalled =>_dbServerType != DbServerType.None;
+    public static bool IsServerInstalled => _dbServerType != DbServerType.None;
 
     public static ClinicDb Instance { get; private set; } = null!;
     public static bool IsRunning { get; private set; }
@@ -38,9 +37,7 @@ public class ClinicDb : DbContext
 
     internal ClinicDb(DbContextOptions<ClinicDb> options) : base(options)
     {
-        if (Settings.Instance.IsServer)
-            Database.Migrate();
-
+        Database.Migrate();
         IsRunning = true;
     }
 
@@ -50,9 +47,6 @@ public class ClinicDb : DbContext
 
         do
         {
-            if (Settings.Instance.IsServer)
-                RunDatabaseService();
-
             bool success = Create(out ClinicDb? db);
 
             if (success)
@@ -61,25 +55,38 @@ public class ClinicDb : DbContext
                 result = DialogResult.OK;
             }
             else
-            {
                 result = MessageBox.Show($"Can't connect to the application's server, usually this is the secretary computer or the computer with the database.{Environment.NewLine}MySQL connection failed.", "Database Error", MessageBoxButtons.RetryCancel, MessageBoxIcon.Error);
-            }
         }
         while (result == DialogResult.Retry);
 
         if (result == DialogResult.Cancel)
             Application.Exit();
 
-        if (Settings.Instance.UseConnectionCheck)
-        {
-            _timer = new Timer
-            {
-                AutoReset = true,
-                Interval = 2000
-            };
+        Settings settings = Settings.Instance;
 
-            _timer.Elapsed += async (_, _) => await CheckStatusAsync();
-            _timer.Start();
+        if (settings.UseConnectionCheck)
+        {
+            if (settings.IsLanServer)
+            {
+                _lanTimer = new Timer
+                {
+                    AutoReset = true,
+                    Interval = 2000
+                };
+
+                _lanTimer.Elapsed += async (_, _) => await CheckStatusAsync();
+                _lanTimer.Start();
+            }
+            else
+            {
+                _wanTimer = new Timer
+                {
+                    AutoReset = true,
+                    Interval = 1500
+                };
+
+                _wanTimer.Elapsed += async (_, _) => await CheckStatusAsync();
+            }
         }
     }
 
@@ -98,13 +105,18 @@ public class ClinicDb : DbContext
             isAvailable = false;
         }
 
+        Debug.WriteLine($"Tick: {isAvailable} and last: {_lastStatus}");
+
         if (isAvailable != _lastStatus)
         {
             _lastStatus = isAvailable;
             ConnectionStateChanged?.Invoke(isAvailable);
 
             if (isAvailable)
+            {
                 AppContext.HideConnectionLostDialog();
+                _wanTimer?.Stop();
+            }
             else
                 AppContext.ShowConnectionLostDialog();
         }
@@ -134,17 +146,15 @@ public class ClinicDb : DbContext
         if (server is "localhost" or "127.0.0.1")
             RunDatabaseService();
 
-        bool success = Create($"Server={server};Port={port};Database={db};User={user};Password={pass};", out ClinicDb? instance);
-
-        if (success)
-            Instance = instance!;
-
-        return success;
+        return Create($"Server={server};Port={port};Database={db};User={user};Password={pass};", out _);
     }
 
     internal static bool Create(out ClinicDb? db)
     {
         Settings settings = Settings.Instance;
+
+        if (Settings.Instance.IsServer)
+            RunDatabaseService();
 
         return Create($"Server={settings.Server};Port={settings.Port};Database={settings.Database};User={settings.User};Password={settings.Password};", out db);
     }
@@ -176,17 +186,17 @@ public class ClinicDb : DbContext
         }
         catch (DbUpdateException dbEx)
         {
-            // Handle EF-specific errors
+            // EF-specific errors
             Console.WriteLine($"Database update error: {dbEx.Message}");
         }
         catch (DbException sqlEx)
         {
-            // Handle SQL errors
+            // SQL errors
             Console.WriteLine($"SQL error: {sqlEx.Message}");
         }
         catch (Exception ex)
         {
-            // Handle any other error
+            HandleLostConnectionOnWanServer();
             Console.WriteLine($"Unexpected error: {ex.Message}");
         }
 
@@ -201,21 +211,33 @@ public class ClinicDb : DbContext
         }
         catch (DbUpdateException dbEx)
         {
-            // Handle EF-specific errors
+            // EF-specific errors
             Console.WriteLine($"Database update error: {dbEx.Message}");
         }
         catch (DbException sqlEx)
         {
-            // Handle SQL errors
+            // SQL errors
             Console.WriteLine($"SQL error: {sqlEx.Message}");
         }
         catch (Exception ex)
         {
-            // Handle any other error
+            HandleLostConnectionOnWanServer();
             Console.WriteLine($"Unexpected error: {ex.Message}");
         }
     }
 
+
+    private static void HandleLostConnectionOnWanServer()
+    {
+        if (Settings.Instance.IsLanServer)
+            return;
+
+        Task.Run(AppContext.ShowConnectionLostDialog);
+        _lastStatus = false;
+        ConnectionStateChanged?.Invoke(false);
+
+        _wanTimer.Start();
+    }
 
     private static void RunDatabaseService()
     {
@@ -250,9 +272,9 @@ public class ClinicDb : DbContext
 
 
         ServiceController service = new(ServiceName);
-        
+
         _wasMySqlRunning = service.Status == ServiceControllerStatus.Running;
-        
+
         if (!_wasMySqlRunning)
         {
             service.Start();
@@ -278,11 +300,11 @@ public class ClinicDb : DbContext
         }
 
         ServiceController service = new(ServiceName);
-        
+
         if (service.Status != ServiceControllerStatus.Stopped)
             service.Stop();
     }
-    
+
     public static void AutoBackup()
     {
         Settings settings = Settings.Instance;
@@ -294,14 +316,14 @@ public class ClinicDb : DbContext
         Settings.SaveSettings();
         Backup();
     }
-    
+
     public static void Backup(string? path = null)
     {
         Settings settings = Settings.Instance;
-        
+
         if (!settings.IsServer)
             return;
-        
+
         string dumpFile = Path.Combine(path ?? settings.BackupPath, $"{settings.Database}_{DateTime.UtcNow:yyyyMMdd_HHmmss}.sql");
         string mySqlDumpPath = "";
 
@@ -383,7 +405,8 @@ public class ClinicDb : DbContext
 
     internal static void Shutdown()
     {
-        _timer?.Stop();
+        _wanTimer?.Stop();
+        _lanTimer?.Stop();
         StopDatabaseService();
     }
 }

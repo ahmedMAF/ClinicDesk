@@ -1,4 +1,3 @@
-using ClinicDesk.Controls;
 using ClinicDesk.Database;
 using ClinicDesk.Forms;
 using ReaLTaiizor.Colors;
@@ -42,8 +41,8 @@ public class AppContext : ApplicationContext
             return;
         }
 
-        if (settings.IsServer && AppLicense.ExpiresInWeek)
-            MessageBox.Show("Your license is expiring soon! Please contact support to renew it.", "License Expiration", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        if (AppLicense.ExpiresInWeek)
+            MessageBox.Show($"Your license expires in {AppLicense.ExpiresIn} days! Please contact support to renew it.", "License Expiration", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
         ShowForm<SplashForm>();
     }
@@ -74,7 +73,7 @@ public class AppContext : ApplicationContext
                 MaterialSkinManager.Instance.AddFormToManage(mat);
 
             formT.FormClosing += (s, e) => _openForms.Remove(formType);
-            
+
             actionBeforeShow?.Invoke(formT);
             formT.Show();
             actionAfterShow?.Invoke(formT);
@@ -84,7 +83,7 @@ public class AppContext : ApplicationContext
 
         return formT;
     }
-    
+
     public static DialogResult ShowDialog<T>(Action<T>? actionBeforeShow = null, Action<T, DialogResult>? actionAfterShow = null) where T : Form, new()
     {
         Type formType = typeof(T);
@@ -194,6 +193,7 @@ public class AppContext : ApplicationContext
         }
 
         _connectionLostForm?.Close();
+        _connectionLostForm = null!;
     }
 
     private void ApplicationExit(object? sender, EventArgs e)

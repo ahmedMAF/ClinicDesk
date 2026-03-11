@@ -11,10 +11,11 @@ public static class AppLicense
     private static License _license = null!;
 
     public static bool IsValid { get; private set; }
-    
+
     public static bool IsAvailable => File.Exists(GetDefaultLicensePath());
 
     public static bool ExpiresInWeek => _license != null && _license.Expiration > DateTime.UtcNow && _license.Expiration <= DateTime.UtcNow.AddDays(7);
+    public static int ExpiresIn => _license != null && _license.Expiration > DateTime.UtcNow ? (int)Math.Ceiling((_license.Expiration - DateTime.UtcNow).TotalDays) : 0;
 
     internal static bool Validate()
     {
@@ -23,7 +24,7 @@ public static class AppLicense
             MessageBox.Show("This app version is not licensed.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             return false;
         }
-        
+
         string licenseText = File.ReadAllText(GetDefaultLicensePath());
         _license = License.Load(licenseText);
 
@@ -53,7 +54,7 @@ public static class AppLicense
             return false;
         }
     }
-    
+
     internal static async Task<bool> RequestLicenseAsync(string serverUrl, string name, string email)
     {
         HttpClient httpClient = new();

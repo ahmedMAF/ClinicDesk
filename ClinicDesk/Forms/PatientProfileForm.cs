@@ -29,36 +29,13 @@ public partial class PatientProfileForm : MaterialForm
     private void PatientProfileForm_Load(object sender, EventArgs e)
     {
         chartBtn.Visible = Settings.Instance.AccountType != AccountType.Secretary;
-        RefreshUI();
-    }
-
-    private void RefreshUI()
-    {
-        if (InvokeRequired)
-        {
-            BeginInvoke(RefreshUI);
-            return;
-        }
-
-        nameTxt.Text = _patient.Name;
-        sexTxt.Text = _patient.Sex.ToString();
-        ageTxt.Text = _patient.AgeYears.ToString();
-        maritalTxt.Text = _patient.MaritalStatus.ToString();
-
-        bloodTypeTxt.Text = Utils.GetBloodTypeString(_patient.BloodType);
-
-        foreach (string disease in _patient.ChronicDiseases)
-            chronicDiseasesLst.Items.Add(new MaterialListBoxItem(disease));
-
-        notesTxt.Text = _patient.Notes;
-
         _grdHelper.RefreshList(null, _patient);
     }
 
     private async void editBtn_Click(object sender, EventArgs e)
     {
         AppContext.ShowDialog<PatientDataForm>(form => form.SetData(_patient));
-        RefreshUI();
+        _grdHelper.RefreshList(null, _patient);
     }
 
     private void chartBtn_Click(object sender, EventArgs e)

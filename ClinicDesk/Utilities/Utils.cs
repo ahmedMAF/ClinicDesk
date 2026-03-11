@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Management;
+using System.Net;
+using System.Net.Sockets;
 using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Text;
@@ -63,7 +65,7 @@ internal static class Utils
     public static Color DarkenColor(Color color, float factor)
     {
         factor = 1f - Math.Clamp(factor, 0f, 1f);
-        
+
         return Color.FromArgb(
             color.A,
             (int)(color.R * factor),
@@ -227,7 +229,7 @@ internal static class Utils
             HeaderText = "Remaining Amount",
             DefaultCellStyle = { Format = "0.00" }
         });
-        
+
         invoicesGrd.Columns.Add(new DataGridViewButtonColumn
         {
             Name = "detailsBtn",
@@ -252,6 +254,15 @@ internal static class Utils
             Width = 120,
             HeaderText = "",
             Text = "Pay Full",
+            UseColumnTextForButtonValue = true
+        });
+
+        invoicesGrd.Columns.Add(new DataGridViewButtonColumn
+        {
+            Name = "deleteBtn",
+            Width = 120,
+            HeaderText = "",
+            Text = "Delete",
             UseColumnTextForButtonValue = true
         });
     }
@@ -299,7 +310,7 @@ internal static class Utils
             UseColumnTextForButtonValue = true
         });
     }
-    
+
     public static async Task MarkMissedAppointments()
     {
         List<Appointment>? appointments = await ClinicDb.SafeExecAsync<Appointment, List<Appointment>>(table => table
@@ -311,7 +322,7 @@ internal static class Utils
 
         foreach (Appointment appointment in appointments)
             appointment.Status = AppointmentStatus.Missed;
-                
+
         // await ClinicDb.Instance.SaveChangesAsync();
     }
 
@@ -330,7 +341,7 @@ internal static class Utils
         if (e.KeyChar == '.' && ((TextBox)sender).Text.Contains('.'))
             e.Handled = true;
     }
-    
+
     public static void CloseForm_KeyPress(object sender, KeyPressEventArgs e)
     {
         if (e.KeyChar == (char)Keys.Escape)
@@ -346,7 +357,7 @@ internal static class Utils
     {
         return Convert.ToHexString(GetHardwareIdBytes());
     }
-    
+
     public static byte[] GetHardwareIdBytes()
     {
         string cpu = GetWMI("Win32_Processor", "ProcessorId");
@@ -361,9 +372,9 @@ internal static class Utils
         using var searcher = new ManagementObjectSearcher("SELECT SerialNumber, InterfaceType FROM Win32_DiskDrive");
 
         IEnumerable<ManagementObject> dirves = from ManagementObject obj in searcher.Get()
-                                             let interfaceType = obj["InterfaceType"]?.ToString()
-                                             where interfaceType != "USB"
-                                             select obj;
+                                               let interfaceType = obj["InterfaceType"]?.ToString()
+                                               where interfaceType != "USB"
+                                               select obj;
 
         foreach (ManagementObject obj in dirves)
             return obj["SerialNumber"]?.ToString()?.Trim() ?? "";
@@ -374,10 +385,10 @@ internal static class Utils
     private static string GetWMI(string wmiClass, string wmiProperty)
     {
         using ManagementObjectSearcher searcher = new($"SELECT {wmiProperty} FROM {wmiClass}");
-        
+
         foreach (ManagementBaseObject? obj in searcher.Get())
             return obj[wmiProperty]?.ToString() ?? "";
-            
+
         return "";
     }
 
@@ -433,5 +444,35 @@ internal static class Utils
         WindowsPrincipal principal = new(identity);
 
         return principal.IsInRole(WindowsBuiltInRole.Administrator);
+    }
+
+    public static async Task<bool> IsLanAddress(string address)
+    {
+        try
+        {
+            // Case 1: already an IP
+            if (!IPAddress.TryParse(address, out IPAddress? ip))
+            {
+                // Case 2: resolve domain
+                IPHostEntry entry = await Dns.GetHostEntryAsync(address);
+
+                ip = entry.AddressList.FirstOrDefault(x => x.AddressFamily == AddressFamily.InterNetwork);
+
+                if (ip == null)
+                    return false;
+            }
+
+            byte[] bytes = ip.GetAddressBytes();
+
+            return bytes[0] == 10 ||
+                bytes[0] == 172 && bytes[1] >= 16 && bytes[1] <= 31 ||
+                bytes[0] == 192 && bytes[1] == 168 ||
+                bytes[0] == 169 && bytes[1] == 254 ||
+                IPAddress.IsLoopback(ip);
+        }
+        catch
+        {
+            return false;
+        }
     }
 }

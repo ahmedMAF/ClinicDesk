@@ -25,7 +25,8 @@ public partial class BillingForm : MaterialForm
         {
             ["detailsBtn"] = detailsBtn_Click,
             ["payBtn"] = payBtn_Click,
-            ["payFullBtn"] = payFullBtn_Click
+            ["payFullBtn"] = payFullBtn_Click,
+            ["deleteBtn"] = deleteBtn_Click
         });
     }
 
@@ -109,6 +110,18 @@ public partial class BillingForm : MaterialForm
         await PerformPayment(invoice, invoice.RemainingAmount, "Cash");
     }
 
+    private async void deleteBtn_Click(int rowIndex)
+    {
+        InvoiceDto invoice = _invoices[rowIndex];
+
+        if (IsPayButtonDisabled(invoice) ||
+            MessageBox.Show($"Are you sure you want to delete this invoice with a value of \"{invoice.TotalAmount:0.00}\"?", "Delete Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+            return;
+
+        ClinicDb.SafeExecNonQuery<Invoice>(table => table.Remove(new Invoice { Id = invoice.Id }));
+        await ClinicDb.Instance.SaveChangesAsync();
+    }
+
     private async Task PerformPayment(InvoiceDto invoice, decimal amount, string method, DialogResult result = default)
     {
         if (result == DialogResult.Cancel)
@@ -156,22 +169,11 @@ public partial class BillingForm : MaterialForm
         return invoice.RemainingAmount == 0;
     }
 
-    private async void RefreshUI()
-    {
-        if (InvokeRequired)
-        {
-            BeginInvoke(RefreshUI);
-            return;
-        }
-
-        await RefreshList();
-    }
-
     private async void billingBtn_Click(object sender, EventArgs e)
     {
         if (!decimal.TryParse(billTxt.Text, out decimal bill) || bill <= 0)
             return;
-        
+
         Invoice invoice = new()
         {
             Patient = _patient,
