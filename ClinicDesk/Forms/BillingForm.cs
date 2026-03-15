@@ -13,8 +13,7 @@ public partial class BillingForm : MaterialForm
 {
     private Patient _patient = null!;
 
-    private List<Invoice> _invoices = null!;
-    private List<InvoiceDto> _invoicesDto = null!;
+    private List<InvoiceDto> _invoices = null!;
     private readonly GridButtonHelper _grdHelper;
 
     public BillingForm()
@@ -45,37 +44,31 @@ public partial class BillingForm : MaterialForm
 
     private async Task RefreshList()
     {
-        List<Invoice>? invoices = await ClinicDb.SafeExecAsync<Invoice, List<Invoice>>(table => table
+        List<InvoiceDto>? invoices = await ClinicDb.SafeExecAsync<Invoice, List<InvoiceDto>>(table => table
             .Include(i => i.Payments)
             .Where(i => i.PatientId == _patient.Id)
+            .Select(i => new InvoiceDto
+            {
+                Id = i.Id,
+                Invoice = i,
+                IssuedAt = i.IssuedAt,
+                TotalAmount = i.TotalAmount,
+                PaidAmount = i.Payments.Sum(p => p.Amount),
+            })
             .ToListAsync());
 
         if (invoices == null)
             return;
 
         _invoices = invoices;
-        _invoicesDto = invoices
-            .Select(i => new InvoiceDto
-            {
-                Id = i.Id,
-                IssuedAt = i.IssuedAt,
-                TotalAmount = i.TotalAmount,
-                PaidAmount = i.Payments.Sum(p => p.Amount),
-            })
-            .ToList();
 
-        for (int i = 0; i < _invoicesDto.Count; i++)
-            _invoicesDto[i].RemainingAmount = _invoicesDto[i].TotalAmount - _invoicesDto[i].PaidAmount;
+        for (int i = 0; i < _invoices.Count; i++)
+            _invoices[i].RemainingAmount = _invoices[i].TotalAmount - _invoices[i].PaidAmount;
 
-        _invoicesDto = _invoicesDto
-            .OrderBy(i => i.RemainingAmount == 0)
-            .ThenBy(i => i.IssuedAt)
-            .ToList();
+        for (int i = 0; i < _invoices.Count; i++)
+            _invoices[i].Serial = i + 1;
 
-        for (int i = 0; i < _invoicesDto.Count; i++)
-            _invoicesDto[i].Serial = i + 1;
-
-        invoicesGrd.DataSource = _invoicesDto;
+        invoicesGrd.DataSource = _invoices;
     }
 
     private async void detailsBtn_Click(int rowIndex)
@@ -93,7 +86,7 @@ public partial class BillingForm : MaterialForm
 
     private async void payBtn_Click(int rowIndex)
     {
-        InvoiceDto invoice = _invoicesDto[rowIndex];
+        InvoiceDto invoice = _invoices[rowIndex];
 
         if (IsPayButtonDisabled(invoice))
             return;
@@ -103,7 +96,7 @@ public partial class BillingForm : MaterialForm
 
     private async void payFullBtn_Click(int rowIndex)
     {
-        InvoiceDto invoice = _invoicesDto[rowIndex];
+        InvoiceDto invoice = _invoices[rowIndex];
 
         if (IsPayButtonDisabled(invoice) ||
             MessageBox.Show($"Are you sure you want to fully pay this invoice with a value of \"{invoice.RemainingAmount:0.00}\"?", "Payment Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
@@ -114,13 +107,12 @@ public partial class BillingForm : MaterialForm
 
     private async void deleteBtn_Click(int rowIndex)
     {
-        Invoice invoice = _invoices[rowIndex];
+        InvoiceDto invoice = _invoices[rowIndex];
 
-        if (IsPayButtonDisabled(_invoicesDto[rowIndex]) ||
-            MessageBox.Show($"Are you sure you want to delete this invoice with a value of \"{invoice.TotalAmount:0.00}\"?", "Delete Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+        if (MessageBox.Show($"Are you sure you want to delete this invoice with a value of \"{invoice.TotalAmount:0.00}\"?", "Delete Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
             return;
 
-        ClinicDb.SafeExecNonQuery<Invoice>(table => table.Remove(invoice));
+        ClinicDb.SafeExecNonQuery<Invoice>(table => table.Remove(invoice.Invoice));
         await ClinicDb.Instance.SaveChangesAsync();
 
         await RefreshList();

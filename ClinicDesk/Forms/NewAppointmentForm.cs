@@ -85,7 +85,7 @@ public partial class NewAppointmentForm : MaterialForm
         };
 
         bool confict = await ClinicDb.SafeExecAsync<Appointment, bool>(table => table
-            .AnyAsync(a => a.Status == AppointmentStatus.Pending && appointment.Date >= a.Date.AddMinutes(-11) && appointment.Date <= a.Date.AddMinutes(10)));
+            .AnyAsync(a => a.UserId == doctorId && a.Status == AppointmentStatus.Pending && appointment.Date >= a.Date.AddMinutes(-11) && appointment.Date <= a.Date.AddMinutes(10)));
 
         if (confict && MessageBox.Show($"There is another pending appointment in this time.{Environment.NewLine}Are you sure you want to continue?", "Conflict", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.No)
             return;

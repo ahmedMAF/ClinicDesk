@@ -1,9 +1,12 @@
-﻿namespace ClinicDesk.Database.Dto;
+﻿using ClinicDesk.Database.Models;
+
+namespace ClinicDesk.Database.Dto;
 
 internal class InvoiceDto
 {
     public int Id { get; set; }
     public int Serial { get; set; }
+    public Invoice Invoice { get; internal set; } = null!;
     public DateTime IssuedAt { get; set; }
     public decimal TotalAmount { get; set; }
     public decimal PaidAmount { get; set; }
