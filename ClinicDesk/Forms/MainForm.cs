@@ -78,7 +78,7 @@ public partial class MainForm : MaterialForm
     {
         Patient patient = null!;
 
-        if (AppContext.ShowDialog<PatientSearchForm>(actionAfterShow: (form, _) => patient = form.Patient) == DialogResult.Cancel)
+        if (AppContext.ShowDialog<PatientSearchForm>(form => form.SetData(true), (form, _) => patient = form.Patient) == DialogResult.Cancel)
             return;
 
         AppContext.ShowDialog<NewAppointmentForm>(form => form.SetData(patient));
