@@ -14,10 +14,16 @@ public partial class PaymentForm : MaterialForm
         InitializeComponent();
         DialogResult = DialogResult.Cancel;
     }
-    
-    public void SetData(decimal maxAmount)
+
+    public void SetData(decimal amount, bool fixedAmount = false)
     {
-        _maxAmount = maxAmount;
+        _maxAmount = amount;
+
+        if (!fixedAmount)
+            return;
+
+        amountTxt.Text = amount.ToString("0.00");
+        amountTxt.Enabled = false;
     }
 
     private void cancelBtn_Click(object sender, EventArgs e)

@@ -98,11 +98,10 @@ public partial class BillingForm : MaterialForm
     {
         InvoiceDto invoice = _invoices[rowIndex];
 
-        if (IsPayButtonDisabled(invoice) ||
-            MessageBox.Show($"Are you sure you want to fully pay this invoice with a value of \"{invoice.RemainingAmount:0.00}\"?", "Payment Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.No)
+        if (IsPayButtonDisabled(invoice))
             return;
 
-        await PerformPayment(invoice, invoice.RemainingAmount, "Cash");
+        AppContext.ShowDialog<PaymentForm>(form => form.SetData(invoice.RemainingAmount, true), async (form, result) => await PerformPayment(invoice, form.Amount, form.Method, result));
     }
 
     private async void deleteBtn_Click(int rowIndex)
