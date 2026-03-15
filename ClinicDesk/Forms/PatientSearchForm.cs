@@ -12,6 +12,7 @@ namespace ClinicDesk.Forms;
 public partial class PatientSearchForm : MaterialForm
 {
     private List<Patient> _patients = null!;
+    private bool _allowAdd;
     private readonly GridButtonHelper _patientGrid;
 
     internal Patient Patient { get; private set; } = null!;
@@ -21,10 +22,16 @@ public partial class PatientSearchForm : MaterialForm
         InitializeComponent();
 
         Utils.SetupPatientsDataGrid(patientsGrd);
+
         _patientGrid = new GridButtonHelper(patientsGrd, new Dictionary<string, Action<int>>
         {
             ["chooseBtn"] = chooseBtn_Click
         });
+    }
+
+    internal void SetData(bool allowAdd)
+    {
+        _allowAdd = allowAdd;
     }
 
     private void PatientSearchForm_Load(object sender, EventArgs e)
@@ -110,19 +117,25 @@ public partial class PatientSearchForm : MaterialForm
         }
 
         // Patient not found.
-        if (MessageBox.Show("Patient was not found, do you want to add a new patient?", "Search Result", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+        if (!_allowAdd)
         {
-            Hide();
-
-            if (AppContext.ShowDialog<PatientDataForm>(form => form.SetData(nameTxt.Text, phoneTxt.Text), (form, _) => Patient = form.Patient) == DialogResult.Cancel)
-            {
-                Show();
-                return;
-            }
-
-            DialogResult = DialogResult.OK;
-            Close();
+            MessageBox.Show("Patient was not found!", "Search Result");
+            return;
         }
+
+        if (MessageBox.Show("Patient was not found, do you want to add a new patient?", "Search Result", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            return;
+        
+        Hide();
+
+        if (AppContext.ShowDialog<PatientDataForm>(form => form.SetData(nameTxt.Text, phoneTxt.Text), (form, _) => Patient = form.Patient) == DialogResult.Cancel)
+        {
+            Show();
+            return;
+        }
+
+        DialogResult = DialogResult.OK;
+        Close();
     }
 
     private void nameTxt_KeyPress(object sender, KeyPressEventArgs e)
