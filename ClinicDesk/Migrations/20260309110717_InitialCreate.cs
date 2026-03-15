@@ -131,12 +131,6 @@ namespace ClinicDesk.Migrations
                 {
                     table.PrimaryKey("PK_Visits", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Visits_Invoices_InvoiceId",
-                        column: x => x.InvoiceId,
-                        principalTable: "Invoices",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_Visits_Patients_PatientId",
                         column: x => x.PatientId,
                         principalTable: "Patients",

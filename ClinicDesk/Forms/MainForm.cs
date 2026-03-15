@@ -27,13 +27,7 @@ public partial class MainForm : MaterialForm
         newPatientBtn.Visible = notDoctor;
         billingBtn.Visible = notDoctor;
 
-        bool showConnectionIndicator = settings.UseConnectionCheck && settings.AccountType != AccountType.AllInOne;
-        statusStrip.Visible = showConnectionIndicator;
-
-        if (!showConnectionIndicator)
-        {
-            
-        }
+        statusStrip.Visible = settings.UseConnectionCheck;
 
         if (!notDoctor)
         {
@@ -43,7 +37,7 @@ public partial class MainForm : MaterialForm
 
         FormClosed += (s, e) =>
         {
-            if (showConnectionIndicator)
+            if (settings.UseConnectionCheck)
                 ClinicDb.ConnectionStateChanged -= ConnectionStateChanged;
 
             if (useApi)
@@ -52,7 +46,7 @@ public partial class MainForm : MaterialForm
             Application.Exit();
         };
 
-        if (showConnectionIndicator)
+        if (settings.UseConnectionCheck)
             ClinicDb.ConnectionStateChanged += ConnectionStateChanged;
 
         if (useApi)

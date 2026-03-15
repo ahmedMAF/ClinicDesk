@@ -43,6 +43,13 @@ public partial class LoginForm : MaterialForm
             return;
         }
 
+        Settings.Instance.AccountType = user.Role switch
+        {
+            UserRole.Doctor => AccountType.Doctor,
+            UserRole.Secretary => AccountType.Secretary,
+            _ => throw new ArgumentOutOfRangeException()
+        };
+
         AppContext.ShowForm<MainForm>(form => form.SetData(user));
 
         _loginDone = true;

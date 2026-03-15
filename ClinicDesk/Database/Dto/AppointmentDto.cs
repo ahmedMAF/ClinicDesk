@@ -11,4 +11,5 @@ internal class AppointmentDto
     public DateTime Time { get; set; }
     public string Phone { get; set; } = "";
     public AppointmentStatus Status { get; set; }
+    public string DoctorName { get; set; } = "";
 }

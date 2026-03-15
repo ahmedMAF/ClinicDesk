@@ -36,11 +36,6 @@ public class AppointmentsGrid : GridButtonHelper
             case AccountType.Secretary:
                 ColumnActions["profileBtn"] = profileBtn_Click;
                 break;
-
-            case AccountType.AllInOne:
-                ColumnActions["profileBtn"] = profileBtn_Click;
-                ColumnActions["visitBtn"] = visitBtn_Click;
-                break;
         }
 
         SetupAppointmentsDataGrid();
@@ -104,25 +99,11 @@ public class AppointmentsGrid : GridButtonHelper
                 return;
 
             case AccountType.Secretary:
-                Grid.Columns.Add(new DataGridViewButtonColumn
+                Grid.Columns.Add(new DataGridViewTextBoxColumn
                 {
-                    Name = "profileBtn",
-                    Width = 180,
-                    HeaderText = "",
-                    Text = "View Profile",
-                    UseColumnTextForButtonValue = true
-                });
-
-                break;
-
-            case AccountType.AllInOne:
-                Grid.Columns.Add(new DataGridViewButtonColumn
-                {
-                    Name = "visitBtn",
-                    Width = 180,
-                    HeaderText = "",
-                    Text = "Open Visit",
-                    UseColumnTextForButtonValue = true
+                    Width = 120,
+                    DataPropertyName = "DoctorName",
+                    HeaderText = "Doctor"
                 });
 
                 Grid.Columns.Add(new DataGridViewButtonColumn
@@ -133,6 +114,7 @@ public class AppointmentsGrid : GridButtonHelper
                     Text = "View Profile",
                     UseColumnTextForButtonValue = true
                 });
+
                 break;
         }
 
@@ -379,7 +361,8 @@ public class AppointmentsGrid : GridButtonHelper
                 PatientName = a.Patient.Name,
                 PatientId = a.Patient.Id,
                 Phone = a.Patient.Phone!,
-                Status = a.Status
+                Status = a.Status,
+                DoctorName = a.User.Name
             })
             .OrderBy(a => a.Status)
             .ThenBy(a => a.Time)
