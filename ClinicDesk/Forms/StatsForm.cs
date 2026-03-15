@@ -24,13 +24,13 @@ public partial class StatsForm : MaterialForm
         ClinicDb db = ClinicDb.Instance;
 
         DateTime start = dateFromPkr.Value.Date;
-        DateTime end = dateToPkr.Value.Date;
+        DateTime end = dateToPkr.Value.Date.AddDays(1);
 
         try
         {
             // Filter appointments
             IQueryable<Appointment> appointmentsQuery = db.Appointments
-                .Where(a => allTimeChk.Checked || (a.Date >= start && a.Date <= end));
+                .Where(a => allTimeChk.Checked || (a.Date >= start && a.Date < end));
 
             int totalApps = await appointmentsQuery.CountAsync();
             int totalPatients = await appointmentsQuery
@@ -46,7 +46,7 @@ public partial class StatsForm : MaterialForm
 
             // Filter invoices
             IQueryable<Invoice> invoicesQuery = db.Invoices
-                .Where(i => allTimeChk.Checked || (i.IssuedAt >= start && i.IssuedAt <= end));
+                .Where(i => allTimeChk.Checked || (i.IssuedAt >= start && i.IssuedAt < end));
 
             int totalBills = await invoicesQuery.CountAsync();
             decimal totalAmount = await invoicesQuery.SumAsync(i => i.TotalAmount);
