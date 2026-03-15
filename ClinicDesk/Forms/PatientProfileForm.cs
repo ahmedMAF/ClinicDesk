@@ -23,7 +23,10 @@ public partial class PatientProfileForm : MaterialForm
     internal void SetData(Patient patient)
     {
         _patient = patient;
+    }
 
+    private void RefreshUI()
+    {
         nameTxt.Text = _patient.Name;
         sexTxt.Text = _patient.Sex.ToString();
         ageTxt.Text = _patient.AgeYears.ToString();
@@ -31,22 +34,26 @@ public partial class PatientProfileForm : MaterialForm
 
         bloodTypeTxt.Text = Utils.GetBloodTypeString(_patient.BloodType);
 
+        chronicDiseasesLst.Items.Clear();
+
         foreach (string disease in _patient.ChronicDiseases)
             chronicDiseasesLst.Items.Add(new MaterialListBoxItem(disease));
 
         notesTxt.Text = _patient.Notes;
+
+        _grdHelper.RefreshList(null, _patient);
     }
 
     private void PatientProfileForm_Load(object sender, EventArgs e)
     {
         chartBtn.Visible = Settings.Instance.AccountType != AccountType.Secretary;
-        _grdHelper.RefreshList(null, _patient);
+        RefreshUI();
     }
 
     private async void editBtn_Click(object sender, EventArgs e)
     {
         AppContext.ShowDialog<PatientDataForm>(form => form.SetData(_patient));
-        _grdHelper.RefreshList(null, _patient);
+        RefreshUI();
     }
 
     private void chartBtn_Click(object sender, EventArgs e)
