@@ -7,7 +7,7 @@ using ReaLTaiizor.Forms;
 
 namespace ClinicDesk.Forms;
 
-public partial class AppointmentForm : MaterialForm
+internal partial class AppointmentForm : MaterialForm
 {
     private readonly VisitsGrid _grdHelper;
 

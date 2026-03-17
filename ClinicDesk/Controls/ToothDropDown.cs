@@ -2,7 +2,7 @@
 
 namespace ClinicDesk.Controls;
 
-public partial class ToothDropDown : UserControl
+internal partial class ToothDropDown : UserControl
 {
     private Tooth _tooth = null!;
     private ToolStripDropDown _dropdown = null!;

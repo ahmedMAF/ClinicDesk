@@ -1,6 +1,6 @@
 namespace ClinicDesk.ControlHelpers;
 
-public enum AppointmentAction : byte
+internal enum AppointmentAction : byte
 {
     New,
     FollowUp,

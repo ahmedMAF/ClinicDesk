@@ -7,7 +7,7 @@ using System.Data;
 
 namespace ClinicDesk.Forms;
 
-public partial class StatsForm : MaterialForm
+internal partial class StatsForm : MaterialForm
 {
     private readonly SemaphoreSlim _refreshLock = new(1, 1);
 

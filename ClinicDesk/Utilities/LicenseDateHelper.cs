@@ -3,7 +3,7 @@ using Microsoft.Win32;
 
 namespace ClinicDesk.Utilities;
 
-public static class LicenseDateHelper
+internal static class LicenseDateHelper
 {
     private const string RegistryPath = @"Software\ClinicDesk\License";
     private const string ValueName = "LastSeenEncrypted";

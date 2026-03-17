@@ -6,7 +6,7 @@ using ReaLTaiizor.Forms;
 
 namespace ClinicDesk.Forms;
 
-public partial class MainForm : MaterialForm
+internal partial class MainForm : MaterialForm
 {
     private readonly AppointmentsGrid _grdHelper;
     private readonly SemaphoreSlim _refreshLock = new(1, 1);

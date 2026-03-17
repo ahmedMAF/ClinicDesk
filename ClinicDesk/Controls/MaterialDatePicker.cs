@@ -6,7 +6,7 @@ using static ReaLTaiizor.Manager.MaterialSkinManager;
 
 namespace ClinicDesk.Controls;
 
-public class MaterialDatePicker : Control
+internal class MaterialDatePicker : Control
 {/*
     [Browsable(false)]
     public int Depth { get; set; }

@@ -6,7 +6,7 @@ using ReaLTaiizor.Forms;
 
 namespace ClinicDesk.Forms;
 
-public partial class InvoiceDetailsForm : MaterialForm
+internal partial class InvoiceDetailsForm : MaterialForm
 {
     private Invoice _invoice = null!;
     private List<PaymentDto> _payments = null!;

@@ -7,7 +7,7 @@ namespace ClinicDesk.Utilities;
 ///  An allocation-free SVG to GDI path parser that supports the commands: <c>M, C, Q, L, V, H, Z</c> in relative and absolute coordinates
 ///  and with or without path command repeating.
 /// </summary>
-public static class SvgPathParser
+internal static class SvgPathParser
 {
     public static List<GraphicsPath> ParseMultiplePaths(ReadOnlySpan<char> data, PointF? scale = null, PointF? offset = null)
     {

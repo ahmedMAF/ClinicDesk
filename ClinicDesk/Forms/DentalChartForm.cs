@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ClinicDesk.Forms;
 
-public partial class DentalChartForm : MaterialForm
+internal partial class DentalChartForm : MaterialForm
 {
     private readonly StringBuilder _sb = new();
     

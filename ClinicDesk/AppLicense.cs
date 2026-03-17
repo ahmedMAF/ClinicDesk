@@ -5,7 +5,7 @@ using System.Net.Http.Json;
 
 namespace ClinicDesk;
 
-public static class AppLicense
+internal static class AppLicense
 {
     private static readonly string PublicKey = "MIIBKjCB4wYHKoZIzj0CATCB1wIBATAsBgcqhkjOPQEBAiEA/////wAAAAEAAAAAAAAAAAAAAAD///////////////8wWwQg/////wAAAAEAAAAAAAAAAAAAAAD///////////////wEIFrGNdiqOpPns+u9VXaYhrxlHQawzFOw9jvOPD4n0mBLAxUAxJ02CIbnBJNqZnjhE50mt4GffpAEIQNrF9Hy4SxCR/i85uVjpEDydwN9gS3rM6D0oTlF2JjClgIhAP////8AAAAA//////////+85vqtpxeehPO5ysL8YyVRAgEBA0IABK/qbAC/fQ5C5inBbSqi3wK+nKLVLc+COVT8wnMwTaRDtDbrfMk5AzDDpqSFW3PXV793SJyY8F/lp+Df3KuU2Z4=";
     private static License _license = null!;

@@ -7,6 +7,8 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationIcon>icon.ico</ApplicationIcon>
+    <SignAssembly>True</SignAssembly>
+    <AssemblyOriginatorKeyFile>clinic_desk.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -56,39 +58,5 @@
   <ItemGroup>
     <Folder Include="Migrations\" />
   </ItemGroup>
-
-  <Target Name="GenerateObfuscarConfig" BeforeTargets="PostBuildEvent;PostBuild">
-    <PropertyGroup>
-      <_ProjectDir>$(MSBuildProjectDirectory)\</_ProjectDir>
-      <_OutDir>$(OutputPath)</_OutDir>
-      <_InPath>$(_ProjectDir)$(_OutDir)</_InPath>
-      <_OutPath>$(_InPath)Obfuscator_Output</_OutPath>
-      <_KeyFile>$(_InPath)test.snk</_KeyFile>
-      <_ConfigFile>$(_InPath)obfuscar.generated.xml</_ConfigFile>
-    </PropertyGroup>
-
-    <ItemGroup>
-      <_ObfuscarLines Include="&lt;?xml version='1.0'?&gt;" />
-      <_ObfuscarLines Include="&lt;Obfuscator&gt;" />
-      <_ObfuscarLines Include="  &lt;Var name='InPath' value='$(_InPath)' /&gt;" />
-      <_ObfuscarLines Include="  &lt;Var name='OutPath' value='$(_OutPath)' /&gt;" />
-      <_ObfuscarLines Include="  &lt;Var name='HidePrivateApi' value='true' /&gt;" />
-      <!-- <_ObfuscarLines Include="  &lt;Var name='KeepPublicApi' value='false' /&gt;" /> -->
-      <_ObfuscarLines Include="  &lt;SkipNamespace name='ClinicDesk.Migrations' /&gt;" />
-      <_ObfuscarLines Include="  &lt;SkipNamespace name='ClinicDesk.Database.Models' /&gt;" />
-      <_ObfuscarLines Include="  &lt;Var name='KeyFile' value='$(_KeyFile)' /&gt;" />
-      <_ObfuscarLines Include=" " />
-      <_ObfuscarLines Include="  &lt;Module file='$(_InPath)$(AssemblyName)$(TargetExt)' /&gt;" />
-      <_ObfuscarLines Include="  &lt;Module file='$(_InPath)ClinicDesk.dll' /&gt;" />
-      <_ObfuscarLines Include="&lt;/Obfuscator&gt;" />
-    </ItemGroup>
-
-    <WriteLinesToFile File="$(_ConfigFile)" Overwrite="true" Lines="@(_ObfuscarLines)" />
-    <Message Importance="high" Text="Obfuscar config generated successfully at: $(_ConfigFile)" />
-  </Target>
-
-  <Target Name="RunObfuscar" AfterTargets="Build">
-    <Exec Command="dotnet tool run obfuscar.console $(_InPath)obfuscar.generated.xml" WorkingDirectory="$(MSBuildProjectDirectory)" />
-  </Target>
 
 </Project>

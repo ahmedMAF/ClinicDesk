@@ -1,6 +1,6 @@
 namespace ClinicDesk.ControlHelpers;
 
-public class GridButtonHelper
+internal class GridButtonHelper
 {
     protected readonly DataGridView Grid;
     protected Dictionary<string, Action<int>> ColumnActions;

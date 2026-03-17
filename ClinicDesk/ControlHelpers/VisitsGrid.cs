@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ClinicDesk.ControlHelpers;
 
-public class VisitsGrid : GridButtonHelper
+internal class VisitsGrid : GridButtonHelper
 {
     private Patient _patient = null!;
     private int? _originalVisitId;

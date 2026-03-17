@@ -9,7 +9,7 @@ using ClinicDesk.Utilities;
 
 namespace ClinicDesk.Forms;
 
-public partial class BillingForm : MaterialForm
+internal partial class BillingForm : MaterialForm
 {
     private Patient _patient = null!;
 

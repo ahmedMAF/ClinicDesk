@@ -5,7 +5,7 @@ using ReaLTaiizor.Forms;
 
 namespace ClinicDesk.Forms;
 
-public partial class PatientDataForm : MaterialForm
+internal partial class PatientDataForm : MaterialForm
 {
     private HashSet<string> _chronicDiseases = [];
 

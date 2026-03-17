@@ -8,7 +8,7 @@ using ReaLTaiizor.Forms;
 
 namespace ClinicDesk.Forms;
 
-public partial class AppointmentRequestsForm : MaterialForm
+internal partial class AppointmentRequestsForm : MaterialForm
 {
     private readonly GridButtonHelper _grdHelper;
     private List<AppointmentRequestDto> _requests = null!;

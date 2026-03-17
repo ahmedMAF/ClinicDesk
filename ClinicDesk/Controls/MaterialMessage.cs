@@ -9,7 +9,7 @@ using static ClinicDesk.Controls.MaterialAnimations;
 
 namespace ClinicDesk.Controls;
 
-public class MaterialMessage : MaterialForm
+internal class MaterialMessage : MaterialForm
 {
     private const int LeftRightPadding = 24;
     private const int ButtonPadding = 8;

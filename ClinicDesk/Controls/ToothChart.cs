@@ -5,7 +5,7 @@ using System.Drawing.Drawing2D;
 
 namespace ClinicDesk.Controls;
 
-public partial class ToothChart : Control
+internal partial class ToothChart : Control
 {
     private readonly List<ToothGraphic> _teethGp;
     
@@ -173,14 +173,14 @@ public partial class ToothChart : Control
     };
 }
 
-public class ToothGraphic
+internal class ToothGraphic
 {
     public int Number { get; set; }
     public string Name { get; set; } = null!;
     public GraphicsPath Path { get; set; } = null!;
 }
 
-public class ToothEventArgs : EventArgs
+internal class ToothEventArgs : EventArgs
 {
     public Tooth? Tooth { get; set; }
     public ToothGraphic? ToothGraphic { get; set; }

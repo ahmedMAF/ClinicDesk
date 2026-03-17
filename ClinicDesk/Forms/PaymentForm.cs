@@ -2,7 +2,7 @@
 
 namespace ClinicDesk.Forms;
 
-public partial class PaymentForm : MaterialForm
+internal partial class PaymentForm : MaterialForm
 {
     private decimal _maxAmount;
 

@@ -1,6 +1,6 @@
 ﻿namespace ClinicDesk;
 
-public enum AccountType : byte
+internal enum AccountType : byte
 {
     NotDefined,
     Doctor,

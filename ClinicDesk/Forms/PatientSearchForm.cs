@@ -9,7 +9,7 @@ using ClinicDesk.Utilities;
 
 namespace ClinicDesk.Forms;
 
-public partial class PatientSearchForm : MaterialForm
+internal partial class PatientSearchForm : MaterialForm
 {
     private List<Patient> _patients = null!;
     private bool _allowAdd;

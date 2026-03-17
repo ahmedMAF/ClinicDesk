@@ -2,7 +2,7 @@
 
 namespace ClinicDesk;
 
-public class Theme
+internal class Theme
 {
     public static Color BackgroundColor => Instance.BackgroundColor;
 

@@ -6,7 +6,7 @@ using ReaLTaiizor.Forms;
 
 namespace ClinicDesk.Forms;
 
-public partial class PatientProfileForm : MaterialForm
+internal partial class PatientProfileForm : MaterialForm
 {
     private readonly VisitsGrid _grdHelper;
 

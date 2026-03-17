@@ -8,7 +8,7 @@ using ReaLTaiizor.Util;
 
 namespace ClinicDesk;
 
-public class AppContext : ApplicationContext
+internal class AppContext : ApplicationContext
 {
     private static readonly Dictionary<Type, Form> _openForms = [];
 

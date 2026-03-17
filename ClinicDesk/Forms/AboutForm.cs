@@ -4,7 +4,7 @@ using System.Security.Policy;
 
 namespace ClinicDesk.Forms;
 
-public partial class AboutForm : MaterialForm
+internal partial class AboutForm : MaterialForm
 {
     public AboutForm()
     {

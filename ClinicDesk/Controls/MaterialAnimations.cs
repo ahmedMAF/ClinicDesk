@@ -1,6 +1,6 @@
 ﻿namespace ClinicDesk.Controls;
 
-public class MaterialAnimations
+internal class MaterialAnimations
 {
     public enum AnimationRunType
     {

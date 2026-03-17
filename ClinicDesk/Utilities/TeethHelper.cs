@@ -4,7 +4,7 @@ using ClinicDesk.Database.Models;
 
 namespace ClinicDesk.Utilities;
 
-public static class TeethHelper
+internal static class TeethHelper
 {
     public static List<ToothGraphic> Teeth
     {

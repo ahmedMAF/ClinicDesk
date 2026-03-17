@@ -7,7 +7,7 @@ using ReaLTaiizor.Forms;
 
 namespace ClinicDesk.Forms;
 
-public partial class AllPaymentsForm : MaterialForm
+internal partial class AllPaymentsForm : MaterialForm
 {
     private readonly SemaphoreSlim _refreshLock = new(1, 1);
 

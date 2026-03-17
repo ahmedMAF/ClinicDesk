@@ -6,7 +6,7 @@ using ReaLTaiizor.Util;
 
 namespace ClinicDesk.Forms;
 
-public partial class SplashForm : Form
+internal partial class SplashForm : Form
 {
     private bool _doneInit;
 

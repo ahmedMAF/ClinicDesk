@@ -2,4 +2,4 @@
 
 namespace ClinicDesk.Database.Dto;
 
-public record AppointmentStat(AppointmentStatus Status, int Count);
+internal record AppointmentStat(AppointmentStatus Status, int Count);

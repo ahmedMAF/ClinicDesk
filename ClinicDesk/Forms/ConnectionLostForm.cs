@@ -2,7 +2,7 @@
 
 namespace ClinicDesk.Forms;
 
-public partial class ConnectionLostForm : MaterialForm
+internal partial class ConnectionLostForm : MaterialForm
 {
     public ConnectionLostForm()
     {

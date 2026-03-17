@@ -2,7 +2,7 @@ using System.ComponentModel;
 
 namespace ClinicDesk.Controls;
 
-public partial class Tutorial : UserControl
+internal partial class Tutorial : UserControl
 {
     private static readonly Dictionary<Type, List<TutorialStep>> Tutorials = [];
     
@@ -68,7 +68,7 @@ public partial class Tutorial : UserControl
     }
 }
 
-public class TutorialStep
+internal class TutorialStep
 {
     public Point TextLocation { get; set; }
     public Point Location { get; set; }

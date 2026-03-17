@@ -4,7 +4,7 @@ using ReaLTaiizor.Forms;
 
 namespace ClinicDesk.Forms;
 
-public partial class InstallForm : MaterialForm
+internal partial class InstallForm : MaterialForm
 {
     private bool _doneInstall;
 

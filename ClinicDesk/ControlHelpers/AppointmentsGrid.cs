@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ClinicDesk.ControlHelpers;
 
-public class AppointmentsGrid : GridButtonHelper
+internal class AppointmentsGrid : GridButtonHelper
 {
     private readonly AccountType _accountType;
     

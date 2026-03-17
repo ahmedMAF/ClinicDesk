@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ClinicDesk.Forms;
 
-public partial class NewAppointmentForm : MaterialForm
+internal partial class NewAppointmentForm : MaterialForm
 {
     private Patient _patient = null!;
     private AppointmentAction _action;

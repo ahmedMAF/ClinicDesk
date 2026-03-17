@@ -4,7 +4,7 @@ using MemoryPack;
 namespace ClinicDesk;
 
 [MemoryPackable]
-public partial class Settings
+internal partial class Settings
 {
     [MemoryPackIgnore]
     private static readonly string SettingsPath = Path.Combine(
