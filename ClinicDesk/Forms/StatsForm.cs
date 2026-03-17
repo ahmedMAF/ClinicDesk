@@ -9,6 +9,8 @@ namespace ClinicDesk.Forms;
 
 public partial class StatsForm : MaterialForm
 {
+    private readonly SemaphoreSlim _refreshLock = new(1, 1);
+
     public StatsForm()
     {
         InitializeComponent();
@@ -17,6 +19,28 @@ public partial class StatsForm : MaterialForm
     private async void StatsForm_Load(object sender, EventArgs e)
     {
         await RefreshStats();
+    }
+
+    private async void showBtn_Click(object sender, EventArgs e)
+    {
+        // already running, ignore this call
+        if (!await _refreshLock.WaitAsync(0))
+            return;
+
+        try
+        {
+            await RefreshStats();
+        }
+        finally
+        {
+            _refreshLock.Release();
+        }
+    }
+
+    private void allTimeChk_CheckedChanged(object sender, EventArgs e)
+    {
+        dateFromPkr.Enabled = !allTimeChk.Checked;
+        dateToPkr.Enabled = !allTimeChk.Checked;
     }
 
     private async Task RefreshStats()
@@ -98,16 +122,5 @@ public partial class StatsForm : MaterialForm
         {
             Close();
         }
-    }
-
-    private async void showBtn_Click(object sender, EventArgs e)
-    {
-        await RefreshStats();
-    }
-
-    private void allTimeChk_CheckedChanged(object sender, EventArgs e)
-    {
-        dateFromPkr.Enabled = !allTimeChk.Checked;
-        dateToPkr.Enabled = !allTimeChk.Checked;
     }
 }
