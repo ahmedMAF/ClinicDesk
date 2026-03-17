@@ -74,8 +74,8 @@
       <_ObfuscarLines Include="  &lt;Var name='OutPath' value='$(_OutPath)' /&gt;" />
       <_ObfuscarLines Include="  &lt;Var name='HidePrivateApi' value='true' /&gt;" />
       <!-- <_ObfuscarLines Include="  &lt;Var name='KeepPublicApi' value='false' /&gt;" /> -->
-      <_ObfuscarLines Include="  &lt;SkipNamespace name='*.Migrations' /&gt;" />
-      <_ObfuscarLines Include="  &lt;SkipNamespace name='*.Entities' /&gt;" />
+      <_ObfuscarLines Include="  &lt;SkipNamespace name='ClinicDesk.Migrations' /&gt;" />
+      <_ObfuscarLines Include="  &lt;SkipNamespace name='ClinicDesk.Database.Models' /&gt;" />
       <_ObfuscarLines Include="  &lt;Var name='KeyFile' value='$(_KeyFile)' /&gt;" />
       <_ObfuscarLines Include=" " />
       <_ObfuscarLines Include="  &lt;Module file='$(_InPath)$(AssemblyName)$(TargetExt)' /&gt;" />
