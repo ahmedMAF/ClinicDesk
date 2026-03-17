@@ -14,10 +14,10 @@ public partial class Settings
     );
 
     [MemoryPackIgnore]
-    private bool? _isServer = null!;
+    private bool? _isServer = null;
 
     [MemoryPackIgnore]
-    private bool? _isLanServer = null!;
+    private bool? _isLanServer = null;
 
     [MemoryPackIgnore]
     public static Settings Instance { get; private set; } = null!;
