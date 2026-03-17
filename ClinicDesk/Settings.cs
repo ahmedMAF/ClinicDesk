@@ -12,7 +12,13 @@ public partial class Settings
         "ClinicDesk",
         "settings.bin"
     );
-    
+
+    [MemoryPackIgnore]
+    private bool? _isServer = null!;
+
+    [MemoryPackIgnore]
+    private bool? _isLanServer = null!;
+
     [MemoryPackIgnore]
     public static Settings Instance { get; private set; } = null!;
 
@@ -37,10 +43,28 @@ public partial class Settings
     public DateTime NextBackup => LastBackup.AddDays(BackupDays);
 
     [MemoryPackIgnore]
-    public bool IsServer { get; private set; }
+    public bool IsServer
+    {
+        get
+        {
+            if (!_isServer.HasValue)
+                _isServer = Server is "127.0.0.1" or "localhost";
+
+            return _isServer.Value;
+        }
+    }
 
     [MemoryPackIgnore]
-    public bool IsLanServer { get; private set; }
+    public bool IsLanServer
+    {
+        get
+        {
+            if (!_isLanServer.HasValue)
+                _isLanServer = Utils.IsLanAddress(Server).GetAwaiter().GetResult();
+
+            return _isLanServer.Value;
+        }
+    }
 
     internal static void Initialize()
     {
@@ -55,16 +79,16 @@ public partial class Settings
             Instance = new Settings();
             SaveSettings();
 
-            Instance.CheckIP();
+            Instance.ResetIP();
         }
     }
-    
+
     private static void LoadSettings()
     {
         byte[] bytes = File.ReadAllBytes(SettingsPath);
         Instance = MemoryPackSerializer.Deserialize<Settings>(bytes) ?? new Settings();
 
-        Instance.CheckIP();
+        Instance.ResetIP();
     }
 
     public static void SaveSettings()
@@ -73,9 +97,9 @@ public partial class Settings
         File.WriteAllBytes(SettingsPath, bytes);
     }
 
-    private void CheckIP()
+    private void ResetIP()
     {
-        IsServer = Server is "127.0.0.1" or "localhost";
-        IsLanServer = Utils.IsLanAddress(Server).GetAwaiter().GetResult();
+        _isServer = null;
+        _isLanServer = null;
     }
 }
