@@ -8,4 +8,9 @@ public partial class ConnectionLostForm : MaterialForm
     {
         InitializeComponent();
     }
+
+    private void exitBtn_Click(object sender, EventArgs e)
+    {
+        Application.Exit();
+    }
 }
