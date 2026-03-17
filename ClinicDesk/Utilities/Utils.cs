@@ -311,6 +311,48 @@ internal static class Utils
         });
     }
 
+    public static void SetupAllPaymentsDataGrid(DataGridView paymentsGrd)
+    {
+        SetupDataGrid(paymentsGrd);
+
+        paymentsGrd.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Width = 50,
+            DataPropertyName = "Serial",
+            HeaderText = "No."
+        });
+
+        paymentsGrd.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Width = 200,
+            DataPropertyName = "PatientName",
+            HeaderText = "Name"
+        });
+
+        paymentsGrd.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Width = 180,
+            DataPropertyName = "Amount",
+            HeaderText = "Amount",
+            DefaultCellStyle = { Format = "0.00" }
+        });
+
+        paymentsGrd.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Width = 180,
+            DataPropertyName = "Method",
+            HeaderText = "Method"
+        });
+
+        paymentsGrd.Columns.Add(new DataGridViewTextBoxColumn
+        {
+            Width = 200,
+            DataPropertyName = "PaidAt",
+            HeaderText = "Paid At",
+            DefaultCellStyle = { Format = "dd-MM-yyyy hh:mm tt" }
+        });
+    }
+
     public static async Task MarkMissedAppointments()
     {
         List<Appointment>? appointments = await ClinicDb.SafeExecAsync<Appointment, List<Appointment>>(table => table

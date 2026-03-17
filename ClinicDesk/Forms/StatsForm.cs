@@ -21,6 +21,11 @@ public partial class StatsForm : MaterialForm
         await RefreshStats();
     }
 
+    private void showPaymentsBtn_Click(object sender, EventArgs e)
+    {
+        AppContext.ShowDialog<AllPaymentsForm>();
+    }
+
     private async void showBtn_Click(object sender, EventArgs e)
     {
         // already running, ignore this call
