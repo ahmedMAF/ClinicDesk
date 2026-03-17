@@ -38,6 +38,7 @@
             columnHeader3 = new ColumnHeader();
             columnHeader4 = new ColumnHeader();
             materialCard2 = new ReaLTaiizor.Controls.MaterialCard();
+            showPaymentsBtn = new ReaLTaiizor.Controls.MaterialButton();
             methodList = new ReaLTaiizor.Controls.MaterialListView();
             columnHeader1 = new ColumnHeader();
             columnHeader5 = new ColumnHeader();
@@ -168,7 +169,7 @@
             materialCard1.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialCard1.Name = "materialCard1";
             materialCard1.Padding = new Padding(14);
-            materialCard1.Size = new Size(407, 417);
+            materialCard1.Size = new Size(407, 463);
             materialCard1.TabIndex = 14;
             // 
             // appointmentList
@@ -203,6 +204,7 @@
             // materialCard2
             // 
             materialCard2.BackColor = Color.FromArgb(255, 255, 255);
+            materialCard2.Controls.Add(showPaymentsBtn);
             materialCard2.Controls.Add(methodList);
             materialCard2.Controls.Add(numOfBillsTxt);
             materialCard2.Controls.Add(materialLabel9);
@@ -219,8 +221,31 @@
             materialCard2.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             materialCard2.Name = "materialCard2";
             materialCard2.Padding = new Padding(14);
-            materialCard2.Size = new Size(400, 417);
+            materialCard2.Size = new Size(400, 463);
             materialCard2.TabIndex = 15;
+            // 
+            // showPaymentsBtn
+            // 
+            showPaymentsBtn.AutoSize = false;
+            showPaymentsBtn.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            showPaymentsBtn.CharacterCasing = ReaLTaiizor.Controls.MaterialButton.CharacterCasingEnum.Normal;
+            showPaymentsBtn.Density = ReaLTaiizor.Controls.MaterialButton.MaterialButtonDensity.Default;
+            showPaymentsBtn.Depth = 0;
+            showPaymentsBtn.HighEmphasis = true;
+            showPaymentsBtn.Icon = null;
+            showPaymentsBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
+            showPaymentsBtn.Location = new Point(224, 409);
+            showPaymentsBtn.Margin = new Padding(4, 6, 4, 6);
+            showPaymentsBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
+            showPaymentsBtn.Name = "showPaymentsBtn";
+            showPaymentsBtn.NoAccentTextColor = Color.Empty;
+            showPaymentsBtn.Size = new Size(158, 36);
+            showPaymentsBtn.TabIndex = 37;
+            showPaymentsBtn.Text = "Show All Payments";
+            showPaymentsBtn.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
+            showPaymentsBtn.UseAccentColor = false;
+            showPaymentsBtn.UseVisualStyleBackColor = true;
+            showPaymentsBtn.Click += showPaymentsBtn_Click;
             // 
             // methodList
             // 
@@ -426,7 +451,6 @@
             // 
             // dateFromPkr
             // 
-            dateFromPkr.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             dateFromPkr.CustomFormat = "  dd/MM/yyyy";
             dateFromPkr.Enabled = false;
             dateFromPkr.Format = DateTimePickerFormat.Custom;
@@ -437,6 +461,7 @@
             // 
             // materialCard3
             // 
+            materialCard3.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             materialCard3.BackColor = Color.FromArgb(255, 255, 255);
             materialCard3.Controls.Add(allTimeChk);
             materialCard3.Controls.Add(showBtn);
@@ -456,11 +481,12 @@
             // 
             // allTimeChk
             // 
+            allTimeChk.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             allTimeChk.AutoSize = true;
             allTimeChk.Checked = true;
             allTimeChk.CheckState = CheckState.Checked;
             allTimeChk.Depth = 0;
-            allTimeChk.Location = new Point(493, 23);
+            allTimeChk.Location = new Point(548, 85);
             allTimeChk.Margin = new Padding(0);
             allTimeChk.MouseLocation = new Point(-1, -1);
             allTimeChk.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
@@ -476,6 +502,7 @@
             // 
             // showBtn
             // 
+            showBtn.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             showBtn.AutoSize = false;
             showBtn.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             showBtn.CharacterCasing = ReaLTaiizor.Controls.MaterialButton.CharacterCasingEnum.Normal;
@@ -484,7 +511,7 @@
             showBtn.HighEmphasis = true;
             showBtn.Icon = null;
             showBtn.IconType = ReaLTaiizor.Controls.MaterialButton.MaterialIconType.Rebase;
-            showBtn.Location = new Point(493, 76);
+            showBtn.Location = new Point(659, 84);
             showBtn.Margin = new Padding(4, 6, 4, 6);
             showBtn.MouseState = ReaLTaiizor.Helper.MaterialDrawHelper.MaterialMouseState.HOVER;
             showBtn.Name = "showBtn";
@@ -499,7 +526,6 @@
             // 
             // dateToPkr
             // 
-            dateToPkr.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             dateToPkr.CustomFormat = "  dd/MM/yyyy";
             dateToPkr.Enabled = false;
             dateToPkr.Format = DateTimePickerFormat.Custom;
@@ -654,7 +680,7 @@
             // StatsForm
             // 
             AutoScaleMode = AutoScaleMode.None;
-            ClientSize = new Size(875, 688);
+            ClientSize = new Size(871, 733);
             Controls.Add(materialCard3);
             Controls.Add(materialCard2);
             Controls.Add(materialCard1);
@@ -707,5 +733,6 @@
         private ColumnHeader columnHeader3;
         private ColumnHeader columnHeader4;
         private ColumnHeader columnHeader5;
+        private ReaLTaiizor.Controls.MaterialButton showPaymentsBtn;
     }
 }

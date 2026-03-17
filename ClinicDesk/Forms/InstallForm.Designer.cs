@@ -87,7 +87,7 @@
             installBtn.Name = "installBtn";
             installBtn.NoAccentTextColor = Color.Empty;
             installBtn.Size = new Size(158, 36);
-            installBtn.TabIndex = 0;
+            installBtn.TabIndex = 16;
             installBtn.Text = "Install";
             installBtn.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Contained;
             installBtn.UseAccentColor = false;
@@ -130,7 +130,7 @@
             dbServerTxt.SelectionStart = 0;
             dbServerTxt.ShortcutsEnabled = true;
             dbServerTxt.Size = new Size(312, 48);
-            dbServerTxt.TabIndex = 2;
+            dbServerTxt.TabIndex = 8;
             dbServerTxt.TabStop = false;
             dbServerTxt.TextAlign = HorizontalAlignment.Left;
             dbServerTxt.TrailingIcon = null;
@@ -183,7 +183,7 @@
             dbPortTxt.SelectionStart = 0;
             dbPortTxt.ShortcutsEnabled = true;
             dbPortTxt.Size = new Size(312, 48);
-            dbPortTxt.TabIndex = 6;
+            dbPortTxt.TabIndex = 9;
             dbPortTxt.TabStop = false;
             dbPortTxt.TextAlign = HorizontalAlignment.Left;
             dbPortTxt.TrailingIcon = null;
@@ -225,7 +225,7 @@
             dbNameTxt.SelectionStart = 0;
             dbNameTxt.ShortcutsEnabled = true;
             dbNameTxt.Size = new Size(312, 48);
-            dbNameTxt.TabIndex = 8;
+            dbNameTxt.TabIndex = 10;
             dbNameTxt.TabStop = false;
             dbNameTxt.TextAlign = HorizontalAlignment.Left;
             dbNameTxt.TrailingIcon = null;
@@ -267,7 +267,7 @@
             dbUserTxt.SelectionStart = 0;
             dbUserTxt.ShortcutsEnabled = true;
             dbUserTxt.Size = new Size(312, 48);
-            dbUserTxt.TabIndex = 10;
+            dbUserTxt.TabIndex = 11;
             dbUserTxt.TabStop = false;
             dbUserTxt.TextAlign = HorizontalAlignment.Left;
             dbUserTxt.TrailingIcon = null;
@@ -363,7 +363,7 @@
             licenseServerUrlTxt.SelectionStart = 0;
             licenseServerUrlTxt.ShortcutsEnabled = true;
             licenseServerUrlTxt.Size = new Size(312, 48);
-            licenseServerUrlTxt.TabIndex = 15;
+            licenseServerUrlTxt.TabIndex = 0;
             licenseServerUrlTxt.TabStop = false;
             licenseServerUrlTxt.Text = "http://localhost/api/getlicense";
             licenseServerUrlTxt.TextAlign = HorizontalAlignment.Left;
@@ -406,7 +406,7 @@
             nameTxt.SelectionStart = 0;
             nameTxt.ShortcutsEnabled = true;
             nameTxt.Size = new Size(312, 48);
-            nameTxt.TabIndex = 17;
+            nameTxt.TabIndex = 1;
             nameTxt.TabStop = false;
             nameTxt.TextAlign = HorizontalAlignment.Left;
             nameTxt.TrailingIcon = null;
@@ -448,7 +448,7 @@
             emailTxt.SelectionStart = 0;
             emailTxt.ShortcutsEnabled = true;
             emailTxt.Size = new Size(312, 48);
-            emailTxt.TabIndex = 19;
+            emailTxt.TabIndex = 2;
             emailTxt.TabStop = false;
             emailTxt.TextAlign = HorizontalAlignment.Left;
             emailTxt.TrailingIcon = null;
@@ -511,7 +511,7 @@
             browseBtn.Name = "browseBtn";
             browseBtn.NoAccentTextColor = Color.Empty;
             browseBtn.Size = new Size(48, 48);
-            browseBtn.TabIndex = 23;
+            browseBtn.TabIndex = 14;
             browseBtn.Text = "...";
             browseBtn.Type = ReaLTaiizor.Controls.MaterialButton.MaterialButtonType.Outlined;
             browseBtn.UseAccentColor = false;
@@ -529,7 +529,7 @@
             daysSld.RangeMin = 1;
             daysSld.Size = new Size(450, 40);
             daysSld.StepChange = 1;
-            daysSld.TabIndex = 16;
+            daysSld.TabIndex = 15;
             daysSld.Text = "Backup Frequency";
             daysSld.Value = 2;
             daysSld.ValueSuffix = " Days";
@@ -583,7 +583,7 @@
             backupTxt.SelectionStart = 0;
             backupTxt.ShortcutsEnabled = true;
             backupTxt.Size = new Size(257, 48);
-            backupTxt.TabIndex = 6;
+            backupTxt.TabIndex = 13;
             backupTxt.TabStop = false;
             backupTxt.TextAlign = HorizontalAlignment.Left;
             backupTxt.TrailingIcon = null;
@@ -623,7 +623,7 @@
             useConnChk.Name = "useConnChk";
             useConnChk.Ripple = true;
             useConnChk.Size = new Size(215, 37);
-            useConnChk.TabIndex = 18;
+            useConnChk.TabIndex = 6;
             useConnChk.Text = "Use Connection Check";
             useConnChk.UseAccentColor = false;
             useConnChk.UseVisualStyleBackColor = true;
@@ -653,7 +653,7 @@
             apiUrltxt.SelectionStart = 0;
             apiUrltxt.ShortcutsEnabled = true;
             apiUrltxt.Size = new Size(312, 48);
-            apiUrltxt.TabIndex = 17;
+            apiUrltxt.TabIndex = 7;
             apiUrltxt.TabStop = false;
             apiUrltxt.Text = "http://localhost/api/getlicense";
             apiUrltxt.TextAlign = HorizontalAlignment.Left;
@@ -683,7 +683,7 @@
             apiSwt.Name = "apiSwt";
             apiSwt.Ripple = true;
             apiSwt.Size = new Size(215, 37);
-            apiSwt.TabIndex = 15;
+            apiSwt.TabIndex = 5;
             apiSwt.Text = "Use Appointments API";
             apiSwt.UseAccentColor = false;
             apiSwt.UseVisualStyleBackColor = true;
@@ -700,7 +700,7 @@
             isDentalSwt.Name = "isDentalSwt";
             isDentalSwt.Ripple = true;
             isDentalSwt.Size = new Size(165, 37);
-            isDentalSwt.TabIndex = 14;
+            isDentalSwt.TabIndex = 4;
             isDentalSwt.Text = "Dentist Version";
             isDentalSwt.UseAccentColor = false;
             isDentalSwt.UseVisualStyleBackColor = true;
